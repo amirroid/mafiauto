@@ -33,4 +33,6 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":core:design-system")
+include(":core:resources")
+
 includeBuild("build-logic")

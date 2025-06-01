@@ -34,7 +34,13 @@ private fun Project.configureCommonMain(sourceSets: NamedDomainObjectContainer<K
         implementation(libs.findLibrary("androidx-lifecycle-viewmodel").get())
         implementation(libs.findLibrary("androidx-lifecycle-runtimeCompose").get())
 
-        implementIfNotSelf(":core:design-system")
+        val resources = ":core:resources"
+        val designSystem = ":core:design-system"
+        val avoidAddsList = listOf(resources, designSystem)
+        if (project.path !in avoidAddsList) {
+            implementIfNotSelf(resources)
+            implementIfNotSelf(designSystem)
+        }
     }
 }
 

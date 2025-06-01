@@ -4,14 +4,14 @@ import androidx.compose.ui.graphics.Color
 import ir.amirroid.mafiauto.design_system.core.ColorScheme
 
 val NeonBlueColorScheme = ColorScheme(
-    primary = Color(0xFF00FFFF),
-    onPrimary = Color(0xFF000000),
-    secondary = Color(0xFF0088FF),
+    primary = Color(0xFF00E5FF),
+    onPrimary = Color(0xFF001F2F),
+    secondary = Color(0xFF2979FF),
     onSecondary = Color(0xFFFFFFFF),
-    background = Color(0xFF0A0A0A),
-    onBackground = Color(0xFF00E5FF),
-    surface = Color(0xFF1A1A1A),
-    onSurface = Color(0xFFE0F7FA),
+    background = Color(0xFF0B0F14),
+    onBackground = Color(0xFF80D8FF),
+    surface = Color(0xFF101820),
+    onSurface = Color(0xFFB2EBF2)
 )
 
 val DarkBlueColorScheme = ColorScheme(
