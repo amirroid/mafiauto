@@ -1,6 +1,3 @@
-rootProject.name = "Mafiauto"
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
 pluginManagement {
     repositories {
         google {
@@ -26,11 +23,12 @@ dependencyResolutionManagement {
         }
         mavenCentral()
     }
-    versionCatalogs.create("androidLibs") {
-        from(files("gradle/androidLibs.versions.toml"))
+    versionCatalogs {
+        create("libs") {
+            from(files("../gradle/libs.versions.toml"))
+        }
     }
 }
 
-include(":composeApp")
-include(":core:design-system")
-includeBuild("build-logic")
+rootProject.name = "build-logic"
+include(":convention")
