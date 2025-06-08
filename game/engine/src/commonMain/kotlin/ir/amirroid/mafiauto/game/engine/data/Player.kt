@@ -15,3 +15,6 @@ data class Player(
 ) {
     var isAlive by mutableStateOf(true)
 }
+
+
+fun List<Player>.findWithId(id: Int) = find { it.id == id }

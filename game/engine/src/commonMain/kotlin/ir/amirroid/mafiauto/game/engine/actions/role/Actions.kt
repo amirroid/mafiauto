@@ -4,26 +4,24 @@ import ir.amirroid.mafiauto.game.engine.state.GameState
 
 data class KillAction(
     override val actorKey: String,
-    val targetPlayerId: Int,
-    override val delayInDays: Int = 0
+    override val targetId: Int
 ) : RoleAction {
     override fun apply(gameState: GameState) {
-//        gameState.killPlayer(targetPlayerId)
+        gameState.kill(targetId)
     }
 }
 
 data class SaveAction(
-    override val actorKey: String,
-    val targetPlayerId: Int
+    override val actorKey: String, override val targetId: Int,
 ) : RoleAction {
     override fun apply(gameState: GameState) {
-//        gameState.savePlayer(targetPlayerId)
+        gameState.save(targetId)
     }
 }
 
 data class InvestigateAction(
     override val actorKey: String,
-    val targetPlayerId: Int
+    override val targetId: Int
 ) : RoleAction {
     override fun apply(gameState: GameState) {
 //        val alignment = gameState.getPlayerAlignment(targetPlayerId)
@@ -31,8 +29,7 @@ data class InvestigateAction(
 }
 
 data class SilentAction(
-    override val actorKey: String,
-    val targetPlayerId: Int
+    override val actorKey: String, override val targetId: Int,
 ) : RoleAction {
     override fun apply(gameState: GameState) {
 //        gameState.silencePlayer(targetPlayerId)
@@ -41,7 +38,7 @@ data class SilentAction(
 
 data class ConvertAction(
     override val actorKey: String,
-    val targetPlayerId: Int,
+    override val targetId: Int,
     val newRoleKey: String
 ) : RoleAction {
     override fun apply(gameState: GameState) {
@@ -51,7 +48,7 @@ data class ConvertAction(
 
 data class RevealRoleAction(
     override val actorKey: String,
-    val targetPlayerId: Int
+    override val targetId: Int
 ) : RoleAction {
     override fun apply(gameState: GameState) {
 //        val role = gameState.getPlayerRole(targetPlayerId)
