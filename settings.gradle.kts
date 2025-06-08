@@ -35,4 +35,6 @@ include(":composeApp")
 include(":core:design-system")
 include(":core:resources")
 
+include(":game:engine")
+
 includeBuild("build-logic")
