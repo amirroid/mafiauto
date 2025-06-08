@@ -14,6 +14,7 @@ data class Player(
     val isVisibleToMafia: Boolean
 ) {
     var isAlive by mutableStateOf(true)
+    var isKick by mutableStateOf(false)
 }
 
 

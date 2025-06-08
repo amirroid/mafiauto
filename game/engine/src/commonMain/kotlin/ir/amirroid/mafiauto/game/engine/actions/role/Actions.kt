@@ -1,7 +1,9 @@
 package ir.amirroid.mafiauto.game.engine.actions.role
 
+import androidx.compose.runtime.Immutable
 import ir.amirroid.mafiauto.game.engine.state.GameState
 
+@Immutable
 data class KillAction(
     override val actorKey: String,
     override val targetId: Int
@@ -11,6 +13,7 @@ data class KillAction(
     }
 }
 
+@Immutable
 data class SaveAction(
     override val actorKey: String, override val targetId: Int,
 ) : RoleAction {
@@ -19,6 +22,7 @@ data class SaveAction(
     }
 }
 
+@Immutable
 data class InvestigateAction(
     override val actorKey: String,
     override val targetId: Int
@@ -28,6 +32,7 @@ data class InvestigateAction(
     }
 }
 
+@Immutable
 data class SilentAction(
     override val actorKey: String, override val targetId: Int,
 ) : RoleAction {
@@ -36,6 +41,7 @@ data class SilentAction(
     }
 }
 
+@Immutable
 data class ConvertAction(
     override val actorKey: String,
     override val targetId: Int,
@@ -46,6 +52,7 @@ data class ConvertAction(
     }
 }
 
+@Immutable
 data class RevealRoleAction(
     override val actorKey: String,
     override val targetId: Int
