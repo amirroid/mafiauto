@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ir.amirroid.mafiauto.intro.screen.IntroScreen
 import ir.amirroid.mafiauto.navigation.utils.Screen
 
 @Composable
@@ -14,6 +15,10 @@ fun MainNavigation() {
         navController = navController,
         startDestination = Screen.Intro
     ) {
-        composable<Screen.Intro> { }
+        composable<Screen.Intro> {
+            IntroScreen(
+                onStartGame = {}
+            )
+        }
     }
 }

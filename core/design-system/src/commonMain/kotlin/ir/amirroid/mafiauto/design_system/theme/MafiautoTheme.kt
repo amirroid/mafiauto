@@ -6,15 +6,17 @@ import androidx.compose.runtime.CompositionLocalProvider
 import ir.amirroid.mafiauto.design_system.core.PressScaleIndication
 import ir.amirroid.mafiauto.design_system.core.LocalColorScheme
 import ir.amirroid.mafiauto.design_system.core.LocalShapes
+import ir.amirroid.mafiauto.design_system.core.LocalTypography
 
 @Composable
 fun MafiautoTheme(
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
-        LocalColorScheme provides NeonBlueColorScheme,
+        LocalColorScheme provides NeonRedColorScheme,
         LocalIndication provides PressScaleIndication,
         LocalShapes provides AppShapes,
+        LocalTypography provides AppTypography,
         content = content
     )
 }

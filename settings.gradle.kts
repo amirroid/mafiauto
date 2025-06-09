@@ -38,4 +38,6 @@ include(":core:navigation")
 
 include(":game:engine")
 
+include(":feature:intro")
+
 includeBuild("build-logic")

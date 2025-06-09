@@ -14,6 +14,17 @@ val NeonBlueColorScheme = ColorScheme(
     onSurface = Color(0xFFB2EBF2)
 )
 
+val NeonRedColorScheme = ColorScheme(
+    primary = Color(0xFFFF1744),
+    onPrimary = Color(0xFF2F000A),
+    secondary = Color(0xFFFF5252),
+    onSecondary = Color(0xFFFFFFFF),
+    background = Color(0xFF140B0E),
+    onBackground = Color.White,
+    surface = Color(0xFF201014),
+    onSurface = Color(0xFFE0E0E0)
+)
+
 val DarkBlueColorScheme = ColorScheme(
     primary = Color(0xFF0D47A1),
     onPrimary = Color(0xFFFFFFFF),

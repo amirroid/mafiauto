@@ -8,4 +8,7 @@ object AppTheme {
 
     val shapes: Shapes
         @Composable get() = LocalShapes.current
+
+    val typography: Typography
+        @Composable get() = LocalTypography.current
 }
