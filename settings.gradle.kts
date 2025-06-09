@@ -34,6 +34,7 @@ dependencyResolutionManagement {
 include(":composeApp")
 include(":core:design-system")
 include(":core:resources")
+include(":core:navigation")
 
 include(":game:engine")
 

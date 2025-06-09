@@ -20,6 +20,7 @@ import ir.amirroid.mafiauto.design_system.components.MSurface
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.design_system.theme.MafiautoTheme
+import ir.amirroid.mafiauto.navigation.MainNavigation
 import ir.amirroid.mafiauto.resources.Resources
 import mafiauto.composeapp.generated.resources.Res
 import mafiauto.composeapp.generated.resources.compose_multiplatform
@@ -37,28 +38,29 @@ fun App() {
             color = AppTheme.colorScheme.background,
             contentColor = AppTheme.colorScheme.onBackground
         ) {
-            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Text(
-                        stringResource(Resources.strings.appName),
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Black
-                    )
-                    MButton(onClick = { showContent = !showContent }) {
-                        Text("Click me!")
-                    }
-                    AnimatedVisibility(showContent) {
-                        Column(
-                            Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Image(painterResource(Res.drawable.compose_multiplatform), null)
-                        }
-                    }
-                }
-            }
+            MainNavigation()
+//            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+//                Column(
+//                    horizontalAlignment = Alignment.CenterHorizontally,
+//                ) {
+//                    Text(
+//                        stringResource(Resources.strings.appName),
+//                        fontSize = 20.sp,
+//                        fontWeight = FontWeight.Black
+//                    )
+//                    MButton(onClick = { showContent = !showContent }) {
+//                        Text("Click me!")
+//                    }
+//                    AnimatedVisibility(showContent) {
+//                        Column(
+//                            Modifier.fillMaxWidth(),
+//                            horizontalAlignment = Alignment.CenterHorizontally
+//                        ) {
+//                            Image(painterResource(Res.drawable.compose_multiplatform), null)
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 }
