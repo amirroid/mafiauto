@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import ir.amirroid.mafiauto.common.compose.components.ScreenContent
+import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
@@ -60,13 +60,13 @@ fun IntroScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                Text(
+                MText(
                     text = stringResource(Resources.strings.introTitle),
                     style = AppTheme.typography.h1,
                     color = colorScheme.onBackground
                 )
 
-                Text(
+                MText(
                     text = stringResource(Resources.strings.introDescription),
                     style = AppTheme.typography.body,
                     color = colorScheme.onBackground.copy(alpha = 0.9f)
@@ -78,7 +78,7 @@ fun IntroScreen(
                         .fillMaxWidth()
                         .height(48.dp)
                 ) {
-                    Text(
+                    MText(
                         text = stringResource(Resources.strings.startGame),
                         style = AppTheme.typography.button
                     )

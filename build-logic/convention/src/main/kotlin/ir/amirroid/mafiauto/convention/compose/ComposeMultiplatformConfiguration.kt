@@ -33,17 +33,18 @@ private fun Project.configureCommonMain(sourceSets: NamedDomainObjectContainer<K
 
         implementation(libs.findLibrary("androidx-lifecycle-viewmodel").get())
         implementation(libs.findLibrary("androidx-lifecycle-runtimeCompose").get())
+        implementation(libs.findLibrary("composeIcons-evaIcons").get())
 
         val resources = ":core:resources"
         val designSystem = ":core:design-system"
         val commonCompose = ":core:common:compose"
 
-        val avoidAddsList = listOf(resources, designSystem)
+        val avoidAddsList = listOf(resources, designSystem, commonCompose)
         if (project.path !in avoidAddsList) {
             implementIfNotSelf(resources)
-            implementIfNotSelf(designSystem)
             implementIfNotSelf(commonCompose)
         }
+        implementIfNotSelf(designSystem)
     }
 }
 

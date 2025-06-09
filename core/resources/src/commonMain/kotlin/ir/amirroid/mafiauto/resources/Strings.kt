@@ -4,6 +4,8 @@ import mafiauto.core.resources.generated.resources.Res
 import mafiauto.core.resources.generated.resources.app_name
 import mafiauto.core.resources.generated.resources.intro_description
 import mafiauto.core.resources.generated.resources.intro_title
+import mafiauto.core.resources.generated.resources.select_roles
+import mafiauto.core.resources.generated.resources.start
 import mafiauto.core.resources.generated.resources.start_game
 
 object Strings {
@@ -11,4 +13,6 @@ object Strings {
     val introTitle = Res.string.intro_title
     val introDescription = Res.string.intro_description
     val startGame = Res.string.start_game
+    val start = Res.string.start
+    val selectRoles = Res.string.select_roles
 }

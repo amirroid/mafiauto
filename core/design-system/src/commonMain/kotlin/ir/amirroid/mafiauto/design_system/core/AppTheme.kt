@@ -1,8 +1,12 @@
 package ir.amirroid.mafiauto.design_system.core
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
 
 object AppTheme {
+    val horizontalPadding = 24.dp
+    val verticalPadding = 16.dp
+
     val colorScheme: ColorScheme
         @Composable get() = LocalColorScheme.current
 

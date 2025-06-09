@@ -3,4 +3,6 @@
     <string name="intro_title">The night is dark...</string>
     <string name="intro_description">In the shadows, the mafia has awakened.\nWill you survive the chaos?</string>
     <string name="start_game">Start Game</string>
+    <string name="select_roles">Select Roles</string>
+    <string name="start">Start</string>
 </resources>

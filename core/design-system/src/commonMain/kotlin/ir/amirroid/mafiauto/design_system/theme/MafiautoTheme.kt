@@ -1,6 +1,8 @@
 package ir.amirroid.mafiauto.design_system.theme
 
 import androidx.compose.foundation.LocalIndication
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import ir.amirroid.mafiauto.design_system.core.PressScaleIndication
@@ -12,11 +14,15 @@ import ir.amirroid.mafiauto.design_system.core.LocalTypography
 fun MafiautoTheme(
     content: @Composable () -> Unit
 ) {
+    val typography = AppTypography
+    val colorScheme = NeonRedColorScheme
     CompositionLocalProvider(
-        LocalColorScheme provides NeonRedColorScheme,
+        LocalColorScheme provides colorScheme,
         LocalIndication provides PressScaleIndication,
         LocalShapes provides AppShapes,
-        LocalTypography provides AppTypography,
+        LocalTypography provides typography,
+        LocalTextStyle provides typography.body,
+        LocalContentColor provides colorScheme.onBackground,
         content = content
     )
 }

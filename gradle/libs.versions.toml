@@ -15,6 +15,8 @@ kotlinx-serialization = "1.8.1"
 koin-bom = "4.0.4"
 nav3Core = "1.0.0-alpha03"
 navigationCompose = "2.9.0-beta02"
+haze = "1.6.4"
+composeIcons = "1.1.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -34,6 +36,11 @@ navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-co
 plugin-android-compiler = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 plugin-compose-compiler = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose" }
 plugin-kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
+haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "haze" }
+
+composeIcons-evaIcons = { module = "br.com.devsrsouza.compose.icons:eva-icons", version.ref = "composeIcons" }
 
 # Koin
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }

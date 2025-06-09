@@ -37,16 +37,15 @@ fun MSurface(
         Box(
             modifier =
                 modifier
-                    .then(
-                        if (border == null) Modifier else Modifier.border(border, shape = shape)
-                    )
                     .clickable(
                         enabled = enabled,
                         onClick = onClick,
                         interactionSource = interactionSource,
                         indication = LocalIndication.current
                     )
-
+                    .then(
+                        if (border == null) Modifier else Modifier.border(border, shape = shape)
+                    )
                     .minimumInteractiveComponentSize()
                     .clip(shape)
                     .background(color),
