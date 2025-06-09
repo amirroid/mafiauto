@@ -10,6 +10,9 @@ object ButtonDefaults {
     private val buttonHorizontalPadding = 24.dp
     private val buttonVerticalPadding = 8.dp
 
+    val defaultBorderWidth = 1.5.dp
+    val minHeight = 40.dp
+
     val primaryButtonColors: ButtonColors
         @Composable get() = AppTheme.colorScheme.let {
             ButtonColors(it.primary, it.onPrimary)

@@ -35,9 +35,11 @@ include(":composeApp")
 include(":core:design-system")
 include(":core:resources")
 include(":core:navigation")
+include(":core:common:compose")
 
 include(":game:engine")
 
 include(":feature:intro")
+include(":feature:lobby")
 
 includeBuild("build-logic")

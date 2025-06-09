@@ -36,10 +36,13 @@ private fun Project.configureCommonMain(sourceSets: NamedDomainObjectContainer<K
 
         val resources = ":core:resources"
         val designSystem = ":core:design-system"
+        val commonCompose = ":core:common:compose"
+
         val avoidAddsList = listOf(resources, designSystem)
         if (project.path !in avoidAddsList) {
             implementIfNotSelf(resources)
             implementIfNotSelf(designSystem)
+            implementIfNotSelf(commonCompose)
         }
     }
 }

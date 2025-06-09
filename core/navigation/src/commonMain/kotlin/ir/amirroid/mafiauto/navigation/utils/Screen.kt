@@ -5,4 +5,7 @@ import kotlinx.serialization.Serializable
 sealed interface Screen {
     @Serializable
     data object Intro : Screen
+
+    @Serializable
+    data object Lobby : Screen
 }

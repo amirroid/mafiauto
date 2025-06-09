@@ -6,5 +6,5 @@ import androidx.compose.ui.graphics.Color
 @Immutable
 data class ButtonColors(
     val containerColor: Color,
-    val contentColor: Color
+    val contentColor: Color,
 )
