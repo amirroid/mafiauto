@@ -29,10 +29,8 @@ class GameState(
         private set
 
     override val players = players.toMutableStateList()
-        private set
 
     val pendingActions = mutableStateListOf<ScheduledAction>()
-        private set
 
     fun nextPhase() {
         phase = when (phase) {

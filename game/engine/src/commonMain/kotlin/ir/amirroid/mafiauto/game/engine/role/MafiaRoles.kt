@@ -2,19 +2,18 @@ package ir.amirroid.mafiauto.game.engine.role
 
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.game.engine.actions.role.*
+import ir.amirroid.mafiauto.resources.Resources
 
-data class GodFather(val targetId: Int?) : Role {
+data object GodFather : Role {
     override val key = RoleKeys.GOD_FATHER
-    override val englishName = "Godfather"
-    override val persianName = "پدرخوانده"
+    override val name = Resources.strings.godFather
     override val alignment = Alignment.Mafia
-    override fun getNightAction() = targetId?.let { KillAction(key, it) }
+    override fun getNightAction() = null
 }
 
-data class Mafia(val targetId: Int?) : Role {
+data object Mafia : Role {
     override val key = RoleKeys.MAFIA
-    override val englishName = "Mafia"
-    override val persianName = "مافیا"
+    override val name = Resources.strings.mafia
     override val alignment = Alignment.Mafia
     override fun getNightAction() = null
 }

@@ -1,10 +1,10 @@
 package ir.amirroid.mafiauto.game.engine.role
 
 import ir.amirroid.mafiauto.game.engine.actions.role.RoleAction
+import org.jetbrains.compose.resources.StringResource
 
 sealed interface Role {
-    val englishName: String
-    val persianName: String
+    val name: StringResource
     val alignment: Alignment
     val key: String
 

@@ -1,3 +1,5 @@
+import ir.amirroid.mafiauto.buildSrc.ProjectPaths
+
 plugins {
     alias(libs.plugins.local.android.application)
     alias(libs.plugins.local.compose.multiplatform)
@@ -7,6 +9,7 @@ plugins {
 
 kotlin.sourceSets.commonMain {
     dependencies {
-        implementation(project(":core:navigation"))
+        implementation(project(ProjectPaths.navigation))
+        implementation(project(ProjectPaths.di))
     }
 }

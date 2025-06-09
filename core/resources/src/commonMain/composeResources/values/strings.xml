@@ -5,4 +5,18 @@
     <string name="start_game">Start Game</string>
     <string name="select_roles">Select Roles</string>
     <string name="start">Start</string>
+
+    <string name="god_father">Godfather</string>
+    <string name="mafia">Mafia</string>
+    <string name="joker">Joker</string>
+    <string name="cult_leader">Cult Leader</string>
+    <string name="doctor">Doctor</string>
+    <string name="detective">Detective</string>
+    <string name="civilian">Civilian</string>
+    <string name="sniper">Sniper</string>
+    <string name="silencer">Silencer</string>
+    <string name="bomber">Bomber</string>
+    <string name="bulletproof">Bulletproof</string>
+    <string name="mayor">Mayor</string>
+    <string name="oracle">Oracle</string>
 </resources>
