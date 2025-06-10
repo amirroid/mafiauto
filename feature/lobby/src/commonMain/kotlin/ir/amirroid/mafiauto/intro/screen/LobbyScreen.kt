@@ -116,7 +116,7 @@ private fun LobbyTopBar(selectedCount: Int) {
         buildAnnotatedString {
             append(stringResource(Resources.strings.selectPlayers))
             withStyle(SpanStyle(color = LocalContentColor.current.copy(.7f), fontSize = 16.sp)) {
-                append(" - $selectedCount ")
+                append("  - $selectedCount ")
                 append(stringResource(Resources.strings.selected))
             }
         }
@@ -198,7 +198,8 @@ private fun AddPlayerBar(
             colors = TextFieldsDefaults.outlinedTextFieldColors,
             placeholder = {
                 MText(stringResource(Resources.strings.addNewPlayerHint))
-            }
+            },
+            singleLine = true
         )
         MButton(
             onClick = {
