@@ -10,6 +10,7 @@ kotlin.sourceSets.commonMain {
     dependencies {
         listOf(
             ProjectPaths.lobby,
+            ProjectPaths.assignRoles,
             ProjectPaths.engine,
             ProjectPaths.domain,
             ProjectPaths.data,

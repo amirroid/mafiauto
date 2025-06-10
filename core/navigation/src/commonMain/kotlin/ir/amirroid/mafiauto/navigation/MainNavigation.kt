@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ir.amirroid.mafiauto.assign_roles.screen.AssignRolesScreen
 import ir.amirroid.mafiauto.intro.screen.IntroScreen
 import ir.amirroid.mafiauto.intro.screen.LobbyScreen
 import ir.amirroid.mafiauto.navigation.utils.Screen
@@ -40,6 +41,12 @@ fun MainNavigation() {
         }
         composable<Screen.Lobby> {
             LobbyScreen(
+                onBack = navController::navigateUp,
+                onPickPlayers = { navController.navigate(Screen.AssignRoles) }
+            )
+        }
+        composable<Screen.AssignRoles> {
+            AssignRolesScreen(
                 onBack = navController::navigateUp
             )
         }

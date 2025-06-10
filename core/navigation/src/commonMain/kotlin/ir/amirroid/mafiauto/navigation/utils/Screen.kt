@@ -8,4 +8,7 @@ sealed interface Screen {
 
     @Serializable
     data object Lobby : Screen
+
+    @Serializable
+    data object AssignRoles : Screen
 }

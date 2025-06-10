@@ -15,6 +15,7 @@ kotlin {
                 listOf(
                     ProjectPaths.intro,
                     ProjectPaths.lobby,
+                    ProjectPaths.assignRoles,
                 ).forEach {
                     implementation(project(it))
                 }

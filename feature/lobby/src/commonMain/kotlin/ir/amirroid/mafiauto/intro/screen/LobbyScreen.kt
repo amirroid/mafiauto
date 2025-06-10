@@ -62,6 +62,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun LobbyScreen(
     onBack: () -> Unit,
+    onPickPlayers: () -> Unit,
     viewModel: LobbyViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -99,7 +100,7 @@ fun LobbyScreen(
                 focusManager.clearFocus()
                 viewModel.addNewPlayer()
             },
-            onNextClick = {},
+            onNextClick = onPickPlayers,
             modifier = Modifier
                 .fillMaxWidth()
                 .hazeEffect(hazeState, hazeStyle)
