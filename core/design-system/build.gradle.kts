@@ -5,7 +5,7 @@ plugins {
 
 kotlin.sourceSets.commonMain {
     dependencies {
-        implementation(libs.haze)
-        implementation(libs.haze.materials)
+        api(libs.haze)
+        api(libs.haze.materials)
     }
 }

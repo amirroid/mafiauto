@@ -1,14 +1,14 @@
 package ir.amirroid.mafiauto.design_system.theme
 
 import androidx.compose.foundation.LocalIndication
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import ir.amirroid.mafiauto.design_system.core.PressScaleIndication
 import ir.amirroid.mafiauto.design_system.core.LocalColorScheme
 import ir.amirroid.mafiauto.design_system.core.LocalShapes
 import ir.amirroid.mafiauto.design_system.core.LocalTypography
+import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
+import ir.amirroid.mafiauto.design_system.locales.LocalTextStyle
 
 @Composable
 fun MafiautoTheme(

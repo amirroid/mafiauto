@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -17,6 +16,7 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import ir.amirroid.mafiauto.design_system.components.MSurface
 import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.design_system.locales.LocalTextStyle
 
 @Composable
 fun MButton(

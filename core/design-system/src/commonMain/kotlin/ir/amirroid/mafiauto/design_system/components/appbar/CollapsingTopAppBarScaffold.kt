@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -34,12 +33,15 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
 import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.design_system.locales.LocalTextStyle
 import kotlin.math.roundToInt
 
 fun calculateTargetOffset(
@@ -70,10 +72,10 @@ fun CollapsingTopAppBarScaffold(
     title: @Composable () -> Unit,
     state: CollapsingAppBarState = rememberCollapsingAppBarState(),
     navigationIcon: (@Composable () -> Unit)? = null,
+    hazeState: HazeState = rememberHazeState(),
+    hazeStyle: HazeStyle = HazeMaterials.thin(AppTheme.colorScheme.surface),
     content: @Composable (PaddingValues) -> Unit
 ) {
-    val hazeState = rememberHazeState()
-    val hazeStyle = HazeMaterials.regular(AppTheme.colorScheme.surface)
     val density = LocalDensity.current
 
     var navigationIconRect by remember { mutableStateOf<Rect?>(null) }

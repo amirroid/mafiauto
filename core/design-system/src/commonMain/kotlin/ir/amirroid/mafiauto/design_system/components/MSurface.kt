@@ -7,17 +7,15 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
 
 @Composable
 fun MSurface(
@@ -31,25 +29,24 @@ fun MSurface(
     border: BorderStroke? = null,
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(
-        LocalContentColor provides contentColor,
+    Box(
+        modifier =
+            modifier
+                .clickable(
+                    enabled = enabled,
+                    onClick = onClick,
+                    interactionSource = interactionSource,
+                    indication = LocalIndication.current
+                )
+                .then(
+                    if (border == null) Modifier else Modifier.border(border, shape = shape)
+                )
+                .clip(shape)
+                .background(color),
+        propagateMinConstraints = true,
     ) {
-        Box(
-            modifier =
-                modifier
-                    .clickable(
-                        enabled = enabled,
-                        onClick = onClick,
-                        interactionSource = interactionSource,
-                        indication = LocalIndication.current
-                    )
-                    .then(
-                        if (border == null) Modifier else Modifier.border(border, shape = shape)
-                    )
-                    .minimumInteractiveComponentSize()
-                    .clip(shape)
-                    .background(color),
-            propagateMinConstraints = true,
+        CompositionLocalProvider(
+            LocalContentColor provides contentColor
         ) {
             content()
         }
@@ -64,16 +61,15 @@ fun MSurface(
     contentColor: Color = AppTheme.colorScheme.onSurface,
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(
-        LocalContentColor provides contentColor,
+    Box(
+        modifier =
+            modifier
+                .clip(shape)
+                .background(color),
+        propagateMinConstraints = true
     ) {
-        Box(
-            modifier =
-                modifier
-                    .minimumInteractiveComponentSize()
-                    .clip(shape)
-                    .background(color),
-            propagateMinConstraints = true
+        CompositionLocalProvider(
+            LocalContentColor provides contentColor,
         ) {
             content()
         }
