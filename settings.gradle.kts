@@ -38,6 +38,7 @@ include(":core:navigation")
 include(":core:di")
 include(":core:data")
 include(":core:domain")
+include(":core:database")
 include(":core:common:compose")
 
 include(":game:engine")

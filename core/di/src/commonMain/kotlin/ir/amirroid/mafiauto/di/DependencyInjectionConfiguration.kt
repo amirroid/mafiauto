@@ -1,5 +1,7 @@
 package ir.amirroid.mafiauto.di
 
+import ir.amirroid.mafiauto.database.di.databaseModule
+import ir.amirroid.mafiauto.di.modules.dispatcherModule
 import ir.amirroid.mafiauto.di.modules.otherModules
 import ir.amirroid.mafiauto.di.modules.repositoryModule
 import ir.amirroid.mafiauto.di.modules.useCaseModule
@@ -15,7 +17,9 @@ object DependencyInjectionConfiguration {
                 otherModules,
                 viewModelModule,
                 useCaseModule,
-                repositoryModule
+                repositoryModule,
+                dispatcherModule,
+                databaseModule
             )
         }
     }

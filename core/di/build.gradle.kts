@@ -13,6 +13,7 @@ kotlin.sourceSets.commonMain {
             ProjectPaths.engine,
             ProjectPaths.domain,
             ProjectPaths.data,
+            ProjectPaths.database,
         ).forEach {
             implementation(project(it))
         }

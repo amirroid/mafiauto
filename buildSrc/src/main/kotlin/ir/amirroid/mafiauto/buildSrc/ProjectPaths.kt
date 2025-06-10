@@ -8,6 +8,7 @@ object ProjectPaths {
     const val di = ":core:di"
     const val resources = ":core:resources"
     const val data = ":core:data"
+    const val database = ":core:database"
     const val domain = ":core:domain"
 
     // Features
