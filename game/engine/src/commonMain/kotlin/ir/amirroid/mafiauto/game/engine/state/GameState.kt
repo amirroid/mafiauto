@@ -10,6 +10,7 @@ import androidx.compose.runtime.toMutableStateList
 import ir.amirroid.mafiauto.game.engine.actions.GameActions
 import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
 import ir.amirroid.mafiauto.game.engine.data.Player
+import ir.amirroid.mafiauto.game.engine.utils.PlayersHolder
 
 
 enum class Phase {
@@ -18,17 +19,16 @@ enum class Phase {
 
 @Stable
 class GameState(
-    players: List<Player>,
     initialPhase: Phase = Phase.Day,
     initialDay: Int = 0
-) : GameActions() {
+) : GameActions(), PlayersHolder {
     var day by mutableIntStateOf(initialDay)
         private set
 
     var phase by mutableStateOf(initialPhase)
         private set
 
-    override val players = players.toMutableStateList()
+    override val players = mutableStateListOf<Player>()
 
     val pendingActions = mutableStateListOf<ScheduledAction>()
 

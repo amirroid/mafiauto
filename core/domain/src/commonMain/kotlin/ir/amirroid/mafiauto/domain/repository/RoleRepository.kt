@@ -4,4 +4,6 @@ import ir.amirroid.mafiauto.domain.model.RoleDescriptor
 
 interface RoleRepository {
     fun getAllRoles(): List<RoleDescriptor>
+    fun getAllSelectedRoles(): List<RoleDescriptor>
+    fun selectRoles(newRoles: List<RoleDescriptor>)
 }

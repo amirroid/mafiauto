@@ -100,7 +100,10 @@ fun LobbyScreen(
                 focusManager.clearFocus()
                 viewModel.addNewPlayer()
             },
-            onNextClick = onPickPlayers,
+            onNextClick = {
+                viewModel.selectPlayers()
+                onPickPlayers.invoke()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .hazeEffect(hazeState, hazeStyle)

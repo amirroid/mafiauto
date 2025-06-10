@@ -77,7 +77,9 @@ fun AssignRolesScreen(
         }
 
         BottomBar(
-            onNextClick = {},
+            onNextClick = {
+                viewModel.selectRoles()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .hazeEffect(hazeState, hazeStyle)

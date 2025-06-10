@@ -3,10 +3,10 @@ package ir.amirroid.mafiauto.intro.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.amirroid.mafiauto.domain.model.Player
-import ir.amirroid.mafiauto.domain.model.RoleDescriptor
 import ir.amirroid.mafiauto.domain.usecase.player.AddPlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.GetAllPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.RemovePlayerUseCase
+import ir.amirroid.mafiauto.domain.usecase.player.SelectNewPlayersUseCase
 import ir.amirroid.mafiauto.intro.state.LobbyScreenState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +20,7 @@ class LobbyViewModel(
     private val getAllPlayersUseCase: GetAllPlayersUseCase,
     private val addPlayerUseCase: AddPlayerUseCase,
     private val removePlayerUseCase: RemovePlayerUseCase,
+    private val selectNewPlayersUseCase: SelectNewPlayersUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _state = MutableStateFlow(LobbyScreenState())
@@ -66,5 +67,9 @@ class LobbyViewModel(
             }.toList()
             current.copy(selectedPlayers = updatedSelection)
         }
+    }
+
+    fun selectPlayers() {
+        selectNewPlayersUseCase.invoke(state.value.selectedPlayers)
     }
 }

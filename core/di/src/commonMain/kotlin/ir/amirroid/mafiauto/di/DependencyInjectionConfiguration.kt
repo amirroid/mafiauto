@@ -6,6 +6,7 @@ import ir.amirroid.mafiauto.di.modules.otherModules
 import ir.amirroid.mafiauto.di.modules.repositoryModule
 import ir.amirroid.mafiauto.di.modules.useCaseModule
 import ir.amirroid.mafiauto.di.modules.viewModelModule
+import ir.amirroid.mafiauto.game.engine.di.gameEngineModule
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 
@@ -19,7 +20,8 @@ object DependencyInjectionConfiguration {
                 useCaseModule,
                 repositoryModule,
                 dispatcherModule,
-                databaseModule
+                databaseModule,
+                gameEngineModule
             )
         }
     }
