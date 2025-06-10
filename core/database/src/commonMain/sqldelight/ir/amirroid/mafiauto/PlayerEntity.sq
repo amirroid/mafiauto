@@ -5,3 +5,9 @@ CREATE TABLE Player (
 
 getAllPlayers:
 SELECT * FROM Player;
+
+addPlayer:
+INSERT INTO Player(name) VALUES (?);
+
+deletePlayer:
+DELETE FROM Player WHERE id = ?;

@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.design_system.components.appbar
 
+import androidx.compose.animation.core.animate
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
@@ -8,7 +9,7 @@ import androidx.compose.ui.unit.dp
 @Stable
 class CollapsingAppBarState(
     val maxHeightPx: Float,
-    val minHeightPx: Float
+    val minHeightPx: Float,
 ) {
     var heightPx by mutableFloatStateOf(maxHeightPx)
 
@@ -17,6 +18,12 @@ class CollapsingAppBarState(
 
     fun update(delta: Float) {
         heightPx = (heightPx + delta).coerceIn(minHeightPx, maxHeightPx)
+    }
+
+    suspend fun animateTo(targetHeight: Float) {
+        animate(heightPx, targetHeight) { value, _ ->
+            heightPx = value
+        }
     }
 }
 

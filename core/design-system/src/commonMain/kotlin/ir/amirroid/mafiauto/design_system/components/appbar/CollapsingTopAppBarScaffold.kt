@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -93,8 +94,12 @@ fun CollapsingTopAppBarScaffold(
 
     val nestedScrollConnection = remember(state) {
         object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                state.update(available.y)
+            override fun onPostScroll(
+                consumed: Offset,
+                available: Offset,
+                source: NestedScrollSource
+            ): Offset {
+                state.update(consumed.y)
                 return Offset.Zero
             }
         }
@@ -145,7 +150,8 @@ fun CollapsingTopAppBarScaffold(
                     .offset { animatedOffset }
             ) {
                 CompositionLocalProvider(
-                    LocalTextStyle provides AppTheme.typography.h1.copy(fontSize = fontSize)
+                    LocalTextStyle provides AppTheme.typography.h1.copy(fontSize = fontSize),
+                    LocalContentColor provides AppTheme.colorScheme.onSurface
                 ) {
                     title()
                 }

@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.data.repository
+package ir.amirroid.mafiauto.data.repository.role
 
 import ir.amirroid.mafiauto.data.mappers.role.toDescriptor
 import ir.amirroid.mafiauto.domain.model.RoleDescriptor

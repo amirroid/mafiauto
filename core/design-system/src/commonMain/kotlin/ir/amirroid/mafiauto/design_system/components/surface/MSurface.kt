@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.design_system.components
+package ir.amirroid.mafiauto.design_system.components.surface
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.LocalIndication

@@ -4,5 +4,7 @@ import ir.amirroid.mafiauto.database.models.player.PlayerEntity
 import kotlinx.coroutines.flow.Flow
 
 interface PlayerDao {
-    suspend fun getAll(): Flow<List<PlayerEntity>>
+    fun getAll(): Flow<List<PlayerEntity>>
+    suspend fun addPlayer(name: String)
+    suspend fun deletePlayer(id: Long)
 }

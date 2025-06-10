@@ -11,9 +11,17 @@ class PlayerDaoImpl(
     private val queries: PlayerEntityQueries,
     private val dispatcher: CoroutineDispatcher
 ) : PlayerDao {
-    override suspend fun getAll(): Flow<List<PlayerEntity>> {
+    override fun getAll(): Flow<List<PlayerEntity>> {
         return queries.getAllPlayers { id, name ->
             PlayerEntity(id, name)
         }.asFlow().mapToList(dispatcher)
+    }
+
+    override suspend fun addPlayer(name: String) {
+        queries.addPlayer(name).await()
+    }
+
+    override suspend fun deletePlayer(id: Long) {
+        queries.deletePlayer(id).await()
     }
 }

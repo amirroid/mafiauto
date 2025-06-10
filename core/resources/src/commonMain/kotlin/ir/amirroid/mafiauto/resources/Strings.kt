@@ -9,8 +9,12 @@ object Strings {
     val introDescription = Res.string.intro_description
     val startGame = Res.string.start_game
     val start = Res.string.start
+    val selected = Res.string.selected
+    val addNewPlayerHint = Res.string.add_new_player_hint
     val next = Res.string.next
+    val add = Res.string.add
     val selectRoles = Res.string.select_roles
+    val selectPlayers = Res.string.select_players
 
     val godFather = Res.string.god_father
     val mafia = Res.string.mafia

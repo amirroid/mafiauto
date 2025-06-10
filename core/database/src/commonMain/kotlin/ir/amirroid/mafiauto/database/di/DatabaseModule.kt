@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.database.di
 
 import app.cash.sqldelight.db.SqlDriver
 import ir.amirroid.mafiauto.AppDatabase
+import ir.amirroid.mafiauto.PlayerEntityQueries
 import ir.amirroid.mafiauto.database.dao.player.PlayerDao
 import ir.amirroid.mafiauto.database.dao.player.PlayerDaoImpl
 import org.koin.core.module.Module
@@ -13,9 +14,9 @@ expect fun Module.configureDriver()
 
 val databaseModule = module {
     configureDriver()
-    single {
+    single<AppDatabase> {
         AppDatabase(get<SqlDriver>())
     }
-    single { get<AppDatabase>().playerEntityQueries }
+    single<PlayerEntityQueries> { get<AppDatabase>().playerEntityQueries }
     singleOf(::PlayerDaoImpl).bind<PlayerDao>()
 }

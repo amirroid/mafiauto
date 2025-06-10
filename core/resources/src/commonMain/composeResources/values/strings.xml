@@ -4,8 +4,12 @@
     <string name="intro_description">In the shadows, the mafia has awakened.\nWill you survive the chaos?</string>
     <string name="start_game">Start Game</string>
     <string name="select_roles">Select Roles</string>
+    <string name="select_players">Select Players</string>
+    <string name="add_new_player_hint">Who are you... really?</string>
     <string name="start">Start</string>
     <string name="next">Next</string>
+    <string name="selected">Selected</string>
+    <string name="add">Add</string>
 
     <string name="god_father">Godfather</string>
     <string name="mafia">Mafia</string>

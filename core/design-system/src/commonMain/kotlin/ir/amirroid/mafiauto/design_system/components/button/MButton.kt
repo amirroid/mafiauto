@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
-import ir.amirroid.mafiauto.design_system.components.MSurface
+import ir.amirroid.mafiauto.design_system.components.surface.MSurface
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.design_system.locales.LocalTextStyle
 
