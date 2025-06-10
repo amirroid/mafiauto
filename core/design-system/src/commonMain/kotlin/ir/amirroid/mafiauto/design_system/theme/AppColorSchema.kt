@@ -11,7 +11,9 @@ val NeonBlueColorScheme = ColorScheme(
     background = Color(0xFF0B0F14),
     onBackground = Color(0xFF80D8FF),
     surface = Color(0xFF101820),
-    onSurface = Color(0xFFB2EBF2)
+    onSurface = Color(0xFFB2EBF2),
+    disabled = Color(0xFF37424A),
+    onDisabled = Color(0xFF90A4AE)
 )
 
 val NeonRedColorScheme = ColorScheme(
@@ -22,7 +24,9 @@ val NeonRedColorScheme = ColorScheme(
     background = Color(0xFF140B0E),
     onBackground = Color.White,
     surface = Color(0xFF201014),
-    onSurface = Color(0xFFE0E0E0)
+    onSurface = Color(0xFFE0E0E0),
+    disabled = Color(0xFF4A2A2A),
+    onDisabled = Color(0xFFBCAAA4)
 )
 
 val DarkBlueColorScheme = ColorScheme(
@@ -34,4 +38,6 @@ val DarkBlueColorScheme = ColorScheme(
     onBackground = Color(0xFF90CAF9),
     surface = Color(0xFF102039),
     onSurface = Color(0xFFBBDEFB),
+    disabled = Color(0xFF263238),
+    onDisabled = Color(0xFF90A4AE)
 )

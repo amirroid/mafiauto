@@ -15,12 +15,12 @@ object ButtonDefaults {
 
     val primaryButtonColors: ButtonColors
         @Composable get() = AppTheme.colorScheme.let {
-            ButtonColors(it.primary, it.onPrimary)
+            ButtonColors(it.primary, it.onPrimary, it.disabled, it.onDisabled)
         }
 
     val secondaryButtonColors: ButtonColors
         @Composable get() = AppTheme.colorScheme.let {
-            ButtonColors(it.primary, it.onPrimary)
+            ButtonColors(it.primary, it.onPrimary, it.disabled, it.onDisabled)
         }
 
     val defaultShape: Shape

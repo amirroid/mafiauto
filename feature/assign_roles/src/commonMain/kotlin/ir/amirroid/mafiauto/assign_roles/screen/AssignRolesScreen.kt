@@ -80,6 +80,7 @@ fun AssignRolesScreen(
             onNextClick = {
                 viewModel.selectRoles()
             },
+            enabledNextPage = selectedRoles.size == viewModel.selectedPlayersCount,
             modifier = Modifier
                 .fillMaxWidth()
                 .hazeEffect(hazeState, hazeStyle)
@@ -130,7 +131,8 @@ private fun RolesList(
 @Composable
 private fun BottomBar(
     onNextClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enabledNextPage: Boolean
 ) {
     Box(
         modifier = modifier,
@@ -138,7 +140,8 @@ private fun BottomBar(
     ) {
         MButton(
             onClick = onNextClick,
-            modifier = Modifier.height(48.dp)
+            modifier = Modifier.height(48.dp),
+            enabled = enabledNextPage
         ) {
             MText(stringResource(Resources.strings.next))
             MIcon(

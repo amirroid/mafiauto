@@ -52,6 +52,7 @@ import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
 import ir.amirroid.mafiauto.domain.model.Player
+import ir.amirroid.mafiauto.game.engine.GameInfo
 import ir.amirroid.mafiauto.intro.viewmodel.LobbyViewModel
 import ir.amirroid.mafiauto.resources.Resources
 import kotlinx.coroutines.launch
@@ -95,6 +96,7 @@ fun LobbyScreen(
 
         AddPlayerBar(
             newPlayerName = state.newPlayerName,
+            nextPageEnabled = state.selectedPlayers.size >= GameInfo.MIN_PLAYERS,
             onNewPlayerNameChange = viewModel::updateNewPlayerName,
             onAddClick = {
                 focusManager.clearFocus()
@@ -188,8 +190,10 @@ private fun AddPlayerBar(
     onNewPlayerNameChange: (String) -> Unit,
     onAddClick: () -> Unit,
     onNextClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    nextPageEnabled: Boolean
 ) {
+    val isNewPlayerNameNotEmpty = newPlayerName.isNotEmpty()
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -207,9 +211,10 @@ private fun AddPlayerBar(
         )
         MButton(
             onClick = {
-                if (newPlayerName.isNotEmpty()) onAddClick.invoke() else onNextClick.invoke()
+                if (isNewPlayerNameNotEmpty) onAddClick.invoke() else onNextClick.invoke()
             },
-            modifier = Modifier.height(48.dp)
+            modifier = Modifier.height(48.dp),
+            enabled = nextPageEnabled || isNewPlayerNameNotEmpty
         ) {
             AnimatedContent(newPlayerName.isEmpty()) { isEmpty ->
                 if (isEmpty) {

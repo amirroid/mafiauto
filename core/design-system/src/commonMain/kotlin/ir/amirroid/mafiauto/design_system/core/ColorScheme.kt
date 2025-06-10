@@ -13,7 +13,9 @@ data class ColorScheme(
     val background: Color,
     val onBackground: Color,
     val surface: Color,
-    val onSurface: Color
+    val onSurface: Color,
+    val disabled: Color,
+    val onDisabled: Color,
 )
 
 

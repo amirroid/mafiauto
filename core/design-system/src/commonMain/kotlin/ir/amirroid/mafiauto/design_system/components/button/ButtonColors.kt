@@ -7,4 +7,6 @@ import androidx.compose.ui.graphics.Color
 data class ButtonColors(
     val containerColor: Color,
     val contentColor: Color,
+    val disabledContainerColor: Color,
+    val disabledContentColor: Color,
 )

@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.assign_roles.viewmodel
 
 import androidx.lifecycle.ViewModel
 import ir.amirroid.mafiauto.domain.model.RoleDescriptor
+import ir.amirroid.mafiauto.domain.usecase.player.GetSelectedPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.role.GetAllRoleDescriptorsUseCase
 import ir.amirroid.mafiauto.domain.usecase.role.SelectNewRolesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,9 +11,12 @@ import kotlinx.coroutines.flow.update
 
 class AssignRolesViewModel(
     getAllRoleDescriptorsUseCase: GetAllRoleDescriptorsUseCase,
+    getAllSelectedPlayersUseCase: GetSelectedPlayersUseCase,
     private val selectNewRolesUseCase: SelectNewRolesUseCase
 ) : ViewModel() {
     val roles = getAllRoleDescriptorsUseCase()
+
+    val selectedPlayersCount = getAllSelectedPlayersUseCase.invoke().size
 
     private val _selectedRoles = MutableStateFlow(emptySet<RoleDescriptor>())
     val selectedRoles = _selectedRoles.map { it.toList() }
