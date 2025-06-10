@@ -59,11 +59,15 @@ fun MSurface(
     shape: Shape = RectangleShape,
     color: Color = AppTheme.colorScheme.surface,
     contentColor: Color = AppTheme.colorScheme.onSurface,
+    border: BorderStroke? = null,
     content: @Composable () -> Unit
 ) {
     Box(
         modifier =
             modifier
+                .then(
+                    if (border == null) Modifier else Modifier.border(border, shape = shape)
+                )
                 .clip(shape)
                 .background(color),
         propagateMinConstraints = true

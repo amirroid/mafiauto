@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline
-import compose.icons.evaicons.outline.ArrowIosBack
 import compose.icons.evaicons.outline.ArrowIosForward
 import compose.icons.evaicons.outline.Plus
 import dev.chrisbanes.haze.hazeEffect
@@ -45,13 +44,13 @@ import ir.amirroid.mafiauto.common.compose.operators.plus
 import ir.amirroid.mafiauto.design_system.components.appbar.CollapsingTopAppBarScaffold
 import ir.amirroid.mafiauto.design_system.components.appbar.rememberCollapsingAppBarState
 import ir.amirroid.mafiauto.design_system.components.button.MButton
-import ir.amirroid.mafiauto.design_system.components.button.MIconButton
 import ir.amirroid.mafiauto.design_system.components.field.MTextField
 import ir.amirroid.mafiauto.design_system.components.field.TextFieldsDefaults
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.list.selectable.MToggleListItem
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
 import ir.amirroid.mafiauto.domain.model.Player
 import ir.amirroid.mafiauto.intro.viewmodel.LobbyViewModel
 import ir.amirroid.mafiauto.resources.Resources
@@ -105,6 +104,7 @@ fun LobbyScreen(
                 .fillMaxWidth()
                 .hazeEffect(hazeState, hazeStyle)
                 .allPadding()
+                .imePadding()
                 .navigationBarsPadding()
         )
     }
