@@ -43,8 +43,8 @@ import ir.amirroid.mafiauto.design_system.components.list.selectable.MToggleList
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
-import ir.amirroid.mafiauto.domain.model.RoleDescriptor
 import ir.amirroid.mafiauto.resources.Resources
+import ir.amirroid.mafiauto.ui_models.role.RoleUiModel
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -108,9 +108,9 @@ private fun AssignRolesTopBar(selectedCount: Int) {
 
 @Composable
 private fun RolesList(
-    roles: List<RoleDescriptor>,
-    selectedRoles: List<RoleDescriptor>,
-    onToggle: (RoleDescriptor) -> Unit,
+    roles: List<RoleUiModel>,
+    selectedRoles: List<RoleUiModel>,
+    onToggle: (RoleUiModel) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues()
 ) {

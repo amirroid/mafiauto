@@ -58,8 +58,8 @@ import ir.amirroid.mafiauto.design_system.components.surface.MSurface
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
-import ir.amirroid.mafiauto.reveal.models.PlayerWithRoleUiModel
 import ir.amirroid.mafiauto.reveal.viewmodel.RevealRolesViewModel
+import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -145,7 +145,7 @@ fun PlayersList(
         modifier = modifier,
         contentPadding = contentPadding,
         userScrollEnabled = false,
-        key = { playersWithRoles[it].playerId },
+        key = { playersWithRoles[it].player.id },
         pageSize = PageSize.Fixed(itemHeight),
         pageSpacing = 12.dp
     ) { index ->
@@ -176,7 +176,7 @@ fun PlayerWithRoleItem(item: PlayerWithRoleUiModel, isFocused: Boolean) {
             modifier = Modifier.fillMaxSize().padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            MText(text = item.playerName, style = AppTheme.typography.h3)
+            MText(text = item.player.name, style = AppTheme.typography.h3)
             Column(
                 modifier = if (PlatformCapabilities.blurSupported) Modifier.blur(
                     8.dp * lockPercent,
@@ -186,12 +186,12 @@ fun PlayerWithRoleItem(item: PlayerWithRoleUiModel, isFocused: Boolean) {
             ) {
                 MText(
                     text = buildString {
-                        append(stringResource(item.roleName))
+                        append(stringResource(item.role.name))
                         append(" - ")
-                        append(stringResource(item.roleAlignment))
+                        append(stringResource(item.role.alignment))
                     }
                 )
-                MText(text = stringResource(item.roleExplanation))
+                MText(text = stringResource(item.role.explanation))
             }
         }
     }

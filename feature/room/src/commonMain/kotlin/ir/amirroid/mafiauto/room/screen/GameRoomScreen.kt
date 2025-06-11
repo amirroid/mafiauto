@@ -60,7 +60,7 @@ fun RoomPlayersList(
                 },
                 onClick = {},
                 modifier = Modifier.height(48.dp),
-                shape = AppTheme.shapes.small
+                shape = AppTheme.shapes.medium
             )
         }
     }

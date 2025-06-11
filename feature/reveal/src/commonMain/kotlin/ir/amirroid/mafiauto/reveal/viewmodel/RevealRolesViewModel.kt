@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import ir.amirroid.mafiauto.domain.usecase.game.GetPlayerWithRolesAndSaveUseCase
-import ir.amirroid.mafiauto.reveal.mappers.toUiModel
+import ir.amirroid.mafiauto.ui_models.player_with_role.toUiModel
 
 class RevealRolesViewModel(
     getPlayerWithRolesAndSaveUseCase: GetPlayerWithRolesAndSaveUseCase

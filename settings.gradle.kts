@@ -39,6 +39,7 @@ include(":core:di")
 include(":core:data")
 include(":core:domain")
 include(":core:database")
+include(":core:ui-models")
 include(":core:common:compose")
 
 include(":game:engine")

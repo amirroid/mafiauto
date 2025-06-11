@@ -10,6 +10,7 @@ object ProjectPaths {
     const val data = ":core:data"
     const val database = ":core:database"
     const val domain = ":core:domain"
+    const val uiModels = ":core:ui-models"
 
     // Features
     const val intro = ":feature:intro"

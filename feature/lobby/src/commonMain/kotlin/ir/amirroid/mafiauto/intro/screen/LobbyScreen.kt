@@ -51,10 +51,10 @@ import ir.amirroid.mafiauto.design_system.components.list.selectable.MToggleList
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
-import ir.amirroid.mafiauto.domain.model.Player
 import ir.amirroid.mafiauto.game.engine.GameInfo
 import ir.amirroid.mafiauto.intro.viewmodel.LobbyViewModel
 import ir.amirroid.mafiauto.resources.Resources
+import ir.amirroid.mafiauto.ui_models.player.PlayerUiModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -131,10 +131,10 @@ private fun LobbyTopBar(selectedCount: Int) {
 
 @Composable
 private fun PlayerList(
-    players: List<Player>,
-    selectedPlayers: List<Player>,
-    onToggle: (Player) -> Unit,
-    onDelete: (Player) -> Unit,
+    players: List<PlayerUiModel>,
+    selectedPlayers: List<PlayerUiModel>,
+    onToggle: (PlayerUiModel) -> Unit,
+    onDelete: (PlayerUiModel) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
@@ -158,7 +158,7 @@ private fun PlayerList(
 
 @Composable
 fun PlayerItem(
-    player: Player,
+    player: PlayerUiModel,
     selected: Boolean,
     onClick: () -> Unit,
     onDelete: () -> Unit,

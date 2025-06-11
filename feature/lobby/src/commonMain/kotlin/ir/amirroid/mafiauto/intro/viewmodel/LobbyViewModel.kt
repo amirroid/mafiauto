@@ -8,6 +8,9 @@ import ir.amirroid.mafiauto.domain.usecase.player.GetAllPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.RemovePlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.SelectNewPlayersUseCase
 import ir.amirroid.mafiauto.intro.state.LobbyScreenState
+import ir.amirroid.mafiauto.ui_models.player.PlayerUiModel
+import ir.amirroid.mafiauto.ui_models.player.toDomain
+import ir.amirroid.mafiauto.ui_models.player.toUiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,11 +37,11 @@ class LobbyViewModel(
         getAllPlayersUseCase()
             .distinctUntilChanged()
             .collectLatest { players ->
-                _state.update { it.copy(players = players) }
+                _state.update { it.copy(players = players.toUiModels()) }
             }
     }
 
-    fun togglePlayerSelection(player: Player) {
+    fun togglePlayerSelection(player: PlayerUiModel) {
         _state.update { current ->
             val updatedSelection = current.selectedPlayers.toMutableSet().apply {
                 if (!add(player)) remove(player)
@@ -59,7 +62,7 @@ class LobbyViewModel(
         updateNewPlayerName("")
     }
 
-    fun deletePlayer(player: Player) = viewModelScope.launch(dispatcher) {
+    fun deletePlayer(player: PlayerUiModel) = viewModelScope.launch(dispatcher) {
         removePlayerUseCase.invoke(player.id)
         _state.update { current ->
             val updatedSelection = current.selectedPlayers.toMutableSet().apply {
@@ -70,6 +73,9 @@ class LobbyViewModel(
     }
 
     fun selectPlayers() {
-        selectNewPlayersUseCase.invoke(state.value.selectedPlayers)
+        selectNewPlayersUseCase.invoke(state.value.selectedPlayers.toDomains())
     }
+
+    private fun List<Player>.toUiModels() = map { it.toUiModel() }
+    private fun List<PlayerUiModel>.toDomains() = map { it.toDomain() }
 }
