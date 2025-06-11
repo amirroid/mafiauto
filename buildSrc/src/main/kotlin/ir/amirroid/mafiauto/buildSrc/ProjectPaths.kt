@@ -15,6 +15,7 @@ object ProjectPaths {
     const val intro = ":feature:intro"
     const val lobby = ":feature:lobby"
     const val assignRoles = ":feature:assign_roles"
+    const val reveal = ":feature:reveal"
 
     // Engine
     const val engine = ":game:engine"

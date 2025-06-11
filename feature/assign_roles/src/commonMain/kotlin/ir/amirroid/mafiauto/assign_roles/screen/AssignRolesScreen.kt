@@ -52,6 +52,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun AssignRolesScreen(
     onBack: () -> Unit,
+    onPickRoles: () -> Unit,
     viewModel: AssignRolesViewModel = koinViewModel()
 ) {
     val selectedRoles by viewModel.selectedRoles.collectAsStateWithLifecycle(emptyList())
@@ -79,6 +80,7 @@ fun AssignRolesScreen(
         BottomBar(
             onNextClick = {
                 viewModel.selectRoles()
+                onPickRoles.invoke()
             },
             enabledNextPage = selectedRoles.size == viewModel.selectedPlayersCount,
             modifier = Modifier
@@ -110,7 +112,7 @@ private fun RolesList(
     selectedRoles: List<RoleDescriptor>,
     onToggle: (RoleDescriptor) -> Unit,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    contentPadding: PaddingValues = PaddingValues()
 ) {
     LazyColumn(
         modifier = modifier,

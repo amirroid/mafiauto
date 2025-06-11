@@ -12,7 +12,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
@@ -21,7 +20,7 @@ import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
 fun MSurface(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    shape: Shape = RectangleShape,
+    shape: Shape = AppTheme.shapes.medium,
     color: Color = AppTheme.colorScheme.surface,
     contentColor: Color = AppTheme.colorScheme.onSurface,
     enabled: Boolean = true,
@@ -56,7 +55,7 @@ fun MSurface(
 @Composable
 fun MSurface(
     modifier: Modifier = Modifier,
-    shape: Shape = RectangleShape,
+    shape: Shape = AppTheme.shapes.medium,
     color: Color = AppTheme.colorScheme.surface,
     contentColor: Color = AppTheme.colorScheme.onSurface,
     border: BorderStroke? = null,

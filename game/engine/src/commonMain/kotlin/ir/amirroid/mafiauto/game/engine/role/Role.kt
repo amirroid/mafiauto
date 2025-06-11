@@ -5,6 +5,7 @@ import org.jetbrains.compose.resources.StringResource
 
 sealed interface Role {
     val name: StringResource
+    val explanation: StringResource
     val alignment: Alignment
     val key: String
 

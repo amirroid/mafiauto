@@ -16,6 +16,7 @@ kotlin {
                     ProjectPaths.intro,
                     ProjectPaths.lobby,
                     ProjectPaths.assignRoles,
+                    ProjectPaths.reveal,
                 ).forEach {
                     implementation(project(it))
                 }

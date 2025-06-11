@@ -11,6 +11,7 @@ kotlin.sourceSets.commonMain {
         listOf(
             ProjectPaths.lobby,
             ProjectPaths.assignRoles,
+            ProjectPaths.reveal,
             ProjectPaths.engine,
             ProjectPaths.domain,
             ProjectPaths.data,

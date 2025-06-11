@@ -16,12 +16,16 @@ val AppTypography = Typography(
         fontSize = 22.sp,
         fontWeight = FontWeight.SemiBold,
     ),
+    h3 = TextStyle(
+        fontSize = 20.sp,
+        fontWeight = FontWeight.SemiBold,
+    ),
     body = TextStyle(
         fontSize = 16.sp,
         fontWeight = FontWeight.Normal,
     ),
     caption = TextStyle(
-        fontSize = 12.sp,
+        fontSize = 14.sp,
         fontWeight = FontWeight.Light,
     ),
     button = TextStyle(

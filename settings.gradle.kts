@@ -46,5 +46,6 @@ include(":game:engine")
 include(":feature:intro")
 include(":feature:lobby")
 include(":feature:assign_roles")
+include(":feature:reveal")
 
 includeBuild("build-logic")

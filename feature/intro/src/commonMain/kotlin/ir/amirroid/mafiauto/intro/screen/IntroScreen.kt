@@ -79,7 +79,7 @@ fun IntroScreen(
                         .height(48.dp)
                 ) {
                     MText(
-                        text = stringResource(Resources.strings.startGame),
+                        text = stringResource(Resources.strings.startNewGame),
                         style = AppTheme.typography.button
                     )
                 }

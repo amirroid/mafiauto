@@ -11,6 +11,7 @@ import ir.amirroid.mafiauto.assign_roles.screen.AssignRolesScreen
 import ir.amirroid.mafiauto.intro.screen.IntroScreen
 import ir.amirroid.mafiauto.intro.screen.LobbyScreen
 import ir.amirroid.mafiauto.navigation.utils.Screen
+import ir.amirroid.mafiauto.reveal.screen.RevealRolesScreen
 
 @Composable
 fun MainNavigation() {
@@ -47,6 +48,12 @@ fun MainNavigation() {
         }
         composable<Screen.AssignRoles> {
             AssignRolesScreen(
+                onBack = navController::navigateUp,
+                onPickRoles = { navController.navigate(Screen.RevealRoles) }
+            )
+        }
+        composable<Screen.RevealRoles> {
+            RevealRolesScreen(
                 onBack = navController::navigateUp
             )
         }
