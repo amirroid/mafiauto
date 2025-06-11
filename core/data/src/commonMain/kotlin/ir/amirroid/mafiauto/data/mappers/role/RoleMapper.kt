@@ -10,7 +10,8 @@ fun Role.toDescriptor(): RoleDescriptor {
         name = name,
         explanation = explanation,
         alignment = alignment.toDomain(),
-        key = key
+        key = key,
+        hasNightAction = hasNightAction
     )
 }
 

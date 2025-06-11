@@ -8,5 +8,5 @@ data class RoleUiModel(
     val key: String,
     val name: StringResource,
     val explanation: StringResource,
-    val alignment: StringResource
+    val alignment: StringResource,
 )

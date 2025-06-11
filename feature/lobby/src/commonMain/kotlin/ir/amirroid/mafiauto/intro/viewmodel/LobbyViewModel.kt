@@ -9,7 +9,6 @@ import ir.amirroid.mafiauto.domain.usecase.player.RemovePlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.SelectNewPlayersUseCase
 import ir.amirroid.mafiauto.intro.state.LobbyScreenState
 import ir.amirroid.mafiauto.ui_models.player.PlayerUiModel
-import ir.amirroid.mafiauto.ui_models.player.toDomain
 import ir.amirroid.mafiauto.ui_models.player.toUiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,14 +28,15 @@ class LobbyViewModel(
     private val _state = MutableStateFlow(LobbyScreenState())
     val state = _state.asStateFlow()
 
+    private var playerDomains = emptyList<Player>()
+
     init {
         observePlayers()
     }
 
     private fun observePlayers() = viewModelScope.launch(dispatcher) {
-        getAllPlayersUseCase()
-            .distinctUntilChanged()
-            .collectLatest { players ->
+        getAllPlayersUseCase().distinctUntilChanged().collectLatest { players ->
+                playerDomains = players
                 _state.update { it.copy(players = players.toUiModels()) }
             }
     }
@@ -77,5 +77,7 @@ class LobbyViewModel(
     }
 
     private fun List<Player>.toUiModels() = map { it.toUiModel() }
-    private fun List<PlayerUiModel>.toDomains() = map { it.toDomain() }
+    private fun List<PlayerUiModel>.toDomains() = map { uiModel ->
+        playerDomains.first { it.id == uiModel.id }
+    }
 }

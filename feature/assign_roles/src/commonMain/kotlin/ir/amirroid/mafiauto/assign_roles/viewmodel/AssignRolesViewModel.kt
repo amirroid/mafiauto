@@ -1,11 +1,11 @@
 package ir.amirroid.mafiauto.assign_roles.viewmodel
 
 import androidx.lifecycle.ViewModel
+import ir.amirroid.mafiauto.domain.model.RoleDescriptor
 import ir.amirroid.mafiauto.domain.usecase.player.GetSelectedPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.role.GetAllRoleDescriptorsUseCase
 import ir.amirroid.mafiauto.domain.usecase.role.SelectNewRolesUseCase
 import ir.amirroid.mafiauto.ui_models.role.RoleUiModel
-import ir.amirroid.mafiauto.ui_models.role.toDomain
 import ir.amirroid.mafiauto.ui_models.role.toUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -16,7 +16,8 @@ class AssignRolesViewModel(
     getAllSelectedPlayersUseCase: GetSelectedPlayersUseCase,
     private val selectNewRolesUseCase: SelectNewRolesUseCase
 ) : ViewModel() {
-    val roles = getAllRoleDescriptorsUseCase().map { it.toUiModel() }
+    private val rolesDescriptors = getAllRoleDescriptorsUseCase()
+    val roles = rolesDescriptors.map { it.toUiModel() }
 
     val selectedPlayersCount = getAllSelectedPlayersUseCase.invoke().size
 
@@ -32,4 +33,7 @@ class AssignRolesViewModel(
     fun selectRoles() {
         selectNewRolesUseCase.invoke(_selectedRoles.value.map { it.toDomain() })
     }
+
+
+    private fun RoleUiModel.toDomain() = rolesDescriptors.first { it.key == key }
 }

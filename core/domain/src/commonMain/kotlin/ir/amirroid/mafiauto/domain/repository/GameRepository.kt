@@ -1,9 +1,10 @@
 package ir.amirroid.mafiauto.domain.repository
 
-import ir.amirroid.mafiauto.domain.model.PlayerWithRole
+import kotlinx.coroutines.flow.StateFlow
+
 
 interface GameRepository {
-    fun assignRoles(): List<PlayerWithRole>
-    fun savePlayersWithRoles(data: List<PlayerWithRole>)
-    fun getAllSavedPlayersWithRoles(): List<PlayerWithRole>
+    val statusChecksCount: StateFlow<Int>
+    fun onStatusChecked()
+    fun undoStatusCheck()
 }

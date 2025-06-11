@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.di.modules
 
 import ir.amirroid.mafiauto.domain.usecase.game.*
+import ir.amirroid.mafiauto.domain.usecase.player_role.*
 import ir.amirroid.mafiauto.domain.usecase.role.*
 import ir.amirroid.mafiauto.domain.usecase.player.*
 import org.koin.core.module.dsl.factoryOf
@@ -16,4 +17,7 @@ val useCaseModule = module {
     factoryOf(::SelectNewRolesUseCase)
     factoryOf(::GetPlayerWithRolesAndSaveUseCase)
     factoryOf(::GetAllPlayersWithRolesUseCase)
+    factoryOf(::OnStatusCheckedUseCase)
+    factoryOf(::UndoStatusCheckUseCase)
+    factoryOf(::GetStatusCheckCountUseCase)
 }

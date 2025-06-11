@@ -9,6 +9,7 @@ data object GodFather : Role {
     override val name = Resources.strings.godFather
     override val explanation = Resources.strings.godFatherExplanation
     override val alignment = Alignment.Mafia
+    override val hasNightAction = true
     override fun getNightAction() = null
 }
 
@@ -17,5 +18,6 @@ data object Mafia : Role {
     override val name = Resources.strings.mafia
     override val explanation = Resources.strings.mafiaExplanation
     override val alignment = Alignment.Mafia
+    override val hasNightAction = false
     override fun getNightAction() = null
 }

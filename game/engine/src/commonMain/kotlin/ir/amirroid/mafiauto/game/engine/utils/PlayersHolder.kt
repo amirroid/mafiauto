@@ -1,8 +1,8 @@
 package ir.amirroid.mafiauto.game.engine.utils
 
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import ir.amirroid.mafiauto.game.engine.data.Player
+import kotlinx.coroutines.flow.MutableStateFlow
 
 interface PlayersHolder {
-    val players: SnapshotStateList<Player>
+    val _players: MutableStateFlow<List<Player>>
 }

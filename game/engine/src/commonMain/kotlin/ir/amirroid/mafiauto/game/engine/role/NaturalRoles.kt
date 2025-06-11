@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.game.engine.role
 
+import ir.amirroid.mafiauto.game.engine.data.Player
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.resources.Resources
 
@@ -8,6 +9,7 @@ data object Joker : Role {
     override val name = Resources.strings.joker
     override val explanation = Resources.strings.jokerExplanation
     override val alignment = Alignment.Neutral
+    override val hasNightAction = false
     override fun getNightAction() = null
 }
 
@@ -16,5 +18,14 @@ data object CultLeader : Role {
     override val name = Resources.strings.cultLeader
     override val explanation = Resources.strings.cultLeaderExplanation
     override val alignment = Alignment.Neutral
+    override val hasNightAction = true
     override fun getNightAction() = null
+    override fun getNightActionTargetPlayers(
+        previewsTarget: Player?,
+        allPlayers: List<Player>
+    ): List<Player> {
+        return allPlayers.filter { player ->
+            player.role !is CultLeader
+        }
+    }
 }
