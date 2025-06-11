@@ -12,6 +12,7 @@ object Strings {
     val start = Res.string.start
     val selected = Res.string.selected
     val player = Res.string.player
+    val ok = Res.string.ok
     val addNewPlayerHint = Res.string.add_new_player_hint
     val previews = Res.string.previews
     val next = Res.string.next

@@ -9,6 +9,7 @@ import ir.amirroid.mafiauto.design_system.core.LocalShapes
 import ir.amirroid.mafiauto.design_system.core.LocalTypography
 import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
 import ir.amirroid.mafiauto.design_system.locales.LocalTextStyle
+import ir.amirroid.mafiauto.design_system.locales.WithHazeContent
 
 @Composable
 fun MafiautoTheme(
@@ -16,13 +17,15 @@ fun MafiautoTheme(
 ) {
     val typography = AppTypography
     val colorScheme = NeonRedColorScheme
-    CompositionLocalProvider(
-        LocalColorScheme provides colorScheme,
-        LocalIndication provides PressScaleIndication,
-        LocalShapes provides AppShapes,
-        LocalTypography provides typography,
-        LocalTextStyle provides typography.body,
-        LocalContentColor provides colorScheme.onBackground,
-        content = content
-    )
+    WithHazeContent {
+        CompositionLocalProvider(
+            LocalColorScheme provides colorScheme,
+            LocalIndication provides PressScaleIndication,
+            LocalShapes provides AppShapes,
+            LocalTypography provides typography,
+            LocalTextStyle provides typography.body,
+            LocalContentColor provides colorScheme.onBackground,
+            content = content
+        )
+    }
 }
