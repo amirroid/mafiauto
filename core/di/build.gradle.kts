@@ -12,6 +12,7 @@ kotlin.sourceSets.commonMain {
             ProjectPaths.lobby,
             ProjectPaths.assignRoles,
             ProjectPaths.reveal,
+            ProjectPaths.room,
             ProjectPaths.engine,
             ProjectPaths.domain,
             ProjectPaths.data,

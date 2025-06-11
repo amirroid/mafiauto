@@ -12,6 +12,7 @@ import ir.amirroid.mafiauto.intro.screen.IntroScreen
 import ir.amirroid.mafiauto.intro.screen.LobbyScreen
 import ir.amirroid.mafiauto.navigation.utils.Screen
 import ir.amirroid.mafiauto.reveal.screen.RevealRolesScreen
+import ir.amirroid.mafiauto.room.screen.GameRoomScreen
 
 @Composable
 fun MainNavigation() {
@@ -54,6 +55,12 @@ fun MainNavigation() {
         }
         composable<Screen.RevealRoles> {
             RevealRolesScreen(
+                onBack = navController::navigateUp,
+                onStartGame = { navController.navigate(Screen.GameRoom) }
+            )
+        }
+        composable<Screen.GameRoom> {
+            GameRoomScreen(
                 onBack = navController::navigateUp
             )
         }

@@ -27,4 +27,8 @@ class GameRepositoryImpl(
     override fun savePlayersWithRoles(data: List<PlayerWithRole>) {
         playersWithRoleMemoryHelper.setValue(data)
     }
+
+    override fun getAllSavedPlayersWithRoles(): List<PlayerWithRole> {
+        return playersWithRoleMemoryHelper.value
+    }
 }

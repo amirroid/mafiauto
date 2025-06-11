@@ -69,6 +69,7 @@ private val itemHeight = 200.dp
 @Composable
 fun RevealRolesScreen(
     onBack: () -> Unit,
+    onStartGame: () -> Unit,
     viewModel: RevealRolesViewModel = koinViewModel()
 ) {
     val playerWithRoles = viewModel.playerWithRoles
@@ -113,7 +114,7 @@ fun RevealRolesScreen(
             onPreviews = {
                 viewModel.currentPlayerIndex = currentPlayerIndex.minus(1).coerceAtLeast(0)
             },
-            onStart = {},
+            onStart = onStartGame,
             currentPlayer = currentPlayerIndex + 1,
             isLastItem = currentPlayerIndex == playerWithRoles.size.minus(1),
             modifier = Modifier
@@ -168,7 +169,8 @@ fun PlayerWithRoleItem(item: PlayerWithRoleUiModel, isFocused: Boolean) {
 
     MSurface(
         contentColor = contentColor,
-        color = containerColor
+        color = containerColor,
+        shape = AppTheme.shapes.large
     ) {
         Column(
             modifier = Modifier.fillMaxSize().padding(16.dp),

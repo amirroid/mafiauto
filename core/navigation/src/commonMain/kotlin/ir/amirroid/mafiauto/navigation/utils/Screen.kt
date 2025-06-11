@@ -14,4 +14,7 @@ sealed interface Screen {
 
     @Serializable
     data object RevealRoles : Screen
+
+    @Serializable
+    data object GameRoom : Screen
 }

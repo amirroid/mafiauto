@@ -20,6 +20,7 @@ object Strings {
     val selectPlayers = Res.string.select_players
     val revealRoles = Res.string.reveal_roles
     val neutral = Res.string.neutral
+    val gameRoom = Res.string.game_room
 
 
     // Roles
