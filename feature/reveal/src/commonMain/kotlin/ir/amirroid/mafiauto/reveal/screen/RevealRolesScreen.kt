@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -31,6 +33,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline
@@ -59,6 +63,8 @@ import ir.amirroid.mafiauto.reveal.viewmodel.RevealRolesViewModel
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
+private val itemHeight = 200.dp
+
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 fun RevealRolesScreen(
@@ -71,6 +77,19 @@ fun RevealRolesScreen(
     val hazeStyle = HazeMaterials.thin(AppTheme.colorScheme.surface)
     val collapsingAppBarState = rememberCollapsingAppBarState()
 
+    val density = LocalDensity.current
+    val windowInfo = LocalWindowInfo.current
+    val statusBar = WindowInsets.statusBars
+    val bottomPadding = run {
+        with(density) {
+            windowInfo.containerSize.height.toDp()
+                .minus(itemHeight)
+                .minus(statusBar.getTop(density).toDp())
+                .minus(collapsingAppBarState.minHeightPx.toDp())
+                .minus(12.dp)
+        }
+    }
+
     Box(contentAlignment = Alignment.BottomCenter) {
         CollapsingTopAppBarScaffold(
             title = { RevealTopBar() },
@@ -82,7 +101,7 @@ fun RevealRolesScreen(
             PlayersList(
                 playersWithRoles = playerWithRoles,
                 currentPlayerIndex = currentPlayerIndex,
-                contentPadding = paddingValues + PaddingValues(bottom = 400.dp) + defaultContentPadding()
+                contentPadding = paddingValues + PaddingValues(bottom = bottomPadding) + defaultContentPadding()
             )
         }
 
@@ -126,7 +145,7 @@ fun PlayersList(
         contentPadding = contentPadding,
         userScrollEnabled = false,
         key = { playersWithRoles[it].playerId },
-        pageSize = PageSize.Fixed(200.dp),
+        pageSize = PageSize.Fixed(itemHeight),
         pageSpacing = 12.dp
     ) { index ->
         val item = playersWithRoles[index]
@@ -170,9 +189,7 @@ fun PlayerWithRoleItem(item: PlayerWithRoleUiModel, isFocused: Boolean) {
                         append(stringResource(item.roleAlignment))
                     }
                 )
-                MText(
-                    text = stringResource(item.roleExplanation),
-                )
+                MText(text = stringResource(item.roleExplanation))
             }
         }
     }
