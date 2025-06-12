@@ -1,8 +1,14 @@
 package ir.amirroid.mafiauto.ui_models.phase
 
 import ir.amirroid.mafiauto.domain.model.GamePhase
-import ir.amirroid.mafiauto.resources.Resources
+import ir.amirroid.mafiauto.ui_models.player_with_role.toUiModel
 
-fun GamePhase.toUiModel(): GamePhaseUiModel {
-    return GamePhaseUiModel.valueOf(name)
+fun GamePhase.toUiModel() = when (this) {
+    is GamePhase.Day -> GamePhaseUiModel.Day
+    is GamePhase.Night -> GamePhaseUiModel.Night
+    is GamePhase.Voting -> GamePhaseUiModel.Voting
+    is GamePhase.Result -> GamePhaseUiModel.Result
+    is GamePhase.Defending -> GamePhaseUiModel.Defending(
+        defenders = defenders.map { it.toUiModel() }
+    )
 }

@@ -2,12 +2,15 @@ package ir.amirroid.mafiauto.room.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentPhaseUseCase
+import ir.amirroid.mafiauto.domain.usecase.game.GetDefenseCandidatesUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetStatusCheckCountUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GoToNextPhaseUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.KickPlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.OnStatusCheckedUseCase
+import ir.amirroid.mafiauto.domain.usecase.game.StartDefendingUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.StartGameUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.UnKickPlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.UndoStatusCheckUseCase
@@ -31,10 +34,15 @@ class GameRoomViewModel(
     private val unKickPlayerUseCase: UnKickPlayerUseCase,
     private val coroutineDispatcher: CoroutineDispatcher,
     private val getCurrentPhaseUseCase: GetCurrentPhaseUseCase,
-    private val goToNextPhaseUseCase: GoToNextPhaseUseCase
+    private val goToNextPhaseUseCase: GoToNextPhaseUseCase,
+    private val getDefenseCandidatesUseCase: GetDefenseCandidatesUseCase,
+    private val startDefendingUseCase: StartDefendingUseCase
+
 ) : ViewModel() {
     private val _state = MutableStateFlow(GameRoomScreenState())
     val state: StateFlow<GameRoomScreenState> = _state
+
+    private var domainPlayers = emptyList<PlayerWithRole>()
 
     init {
         startGameUseCase.invoke()
@@ -46,6 +54,7 @@ class GameRoomViewModel(
     private fun observeInRoomPlayers() = viewModelScope.launch(coroutineDispatcher) {
         getAllInRoomPlayersUseCase().collect { players ->
             _state.update {
+                domainPlayers = players
                 it.copy(players = players.map { player -> player.toUiModel() })
             }
         }
@@ -90,4 +99,17 @@ class GameRoomViewModel(
     fun unKick(playerId: Long) = unKickPlayerUseCase.invoke(playerId)
 
     fun nextPhase() = goToNextPhaseUseCase.invoke()
+
+    fun startDefending(playerVotes: Map<PlayerWithRoleUiModel, Int>): Boolean {
+        val domainPlayerVotes = playerVotes.mapKeys { (player, _) -> player.toDomain() }
+        val defenders = getDefenseCandidatesUseCase(domainPlayerVotes)
+        if (defenders.isNotEmpty()) {
+            startDefendingUseCase(defenders)
+            return false
+        }
+        return true
+    }
+
+
+    private fun PlayerWithRoleUiModel.toDomain() = domainPlayers.first { it.player.id == player.id }
 }

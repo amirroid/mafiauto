@@ -1,11 +1,12 @@
 package ir.amirroid.mafiauto.data.repository.game
 
+import ir.amirroid.mafiauto.data.mappers.phase.toDomain
 import ir.amirroid.mafiauto.data.mappers.player.toEngine
 import ir.amirroid.mafiauto.data.mappers.player_role.toPlayerRoleDomain
-import ir.amirroid.mafiauto.domain.model.GamePhase
 import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import ir.amirroid.mafiauto.domain.repository.GameRepository
 import ir.amirroid.mafiauto.game.engine.GameEngine
+import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.provider.RolesProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -15,7 +16,7 @@ class GameRepositoryImpl(
     private val rolesProvider: RolesProvider
 ) : GameRepository {
     override val statusChecksCount = engine.statusCheckCount
-    override val currentPhase = engine.currentPhase.map { GamePhase.valueOf(it.name) }
+    override val currentPhase = engine.currentPhase.map { it.toDomain() }
 
     override fun startNewGame(players: List<PlayerWithRole>) {
         val enginePlayers = players.map {
@@ -32,10 +33,32 @@ class GameRepositoryImpl(
     }
 
     override fun nextPhase() = engine.proceedToNextPhase()
+    override fun startDefending(players: List<PlayerWithRole>) =
+        engine.proceedToDefendingPhase(getEnginePlayersFromDomain(players))
 
     override fun onStatusChecked() = engine.incrementStatusCheckCount()
     override fun undoStatusCheck() = engine.decreaseStatusCheckCount()
 
     override fun kickPlayer(playerId: Long) = engine.kickPlayer(playerId)
     override fun unKickPlayer(playerId: Long) = engine.unKickPlayer(playerId)
+
+    override fun getDefenseCandidates(playerVotes: Map<PlayerWithRole, Int>): List<PlayerWithRole> {
+        return engine
+            .getDefenseCandidates(playerVotes.mapKeys { (player, _) -> player.toEngine() })
+            .map {
+                it.toPlayerRoleDomain()
+            }
+    }
+
+
+    private fun getEnginePlayersFromDomain(
+        players: List<PlayerWithRole>
+    ): List<Player> {
+        val ids = players.map { it.player.id }
+        return engine.players.value.filter { it.id in ids }
+    }
+
+    private fun PlayerWithRole.toEngine(): Player {
+        return engine.players.value.first { it.id == player.id }
+    }
 }

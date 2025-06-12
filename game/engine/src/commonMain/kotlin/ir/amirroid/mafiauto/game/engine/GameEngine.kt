@@ -3,16 +3,13 @@ package ir.amirroid.mafiauto.game.engine
 import androidx.compose.runtime.Immutable
 import ir.amirroid.mafiauto.game.engine.actions.GameActions
 import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
-import ir.amirroid.mafiauto.game.engine.data.Player
+import ir.amirroid.mafiauto.game.engine.models.Phase
+import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.utils.PlayersHolder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
-
-enum class Phase {
-    Night, Day, Voting, Result
-}
 
 @Immutable
 class GameEngine(
@@ -35,16 +32,21 @@ class GameEngine(
     fun proceedToNextPhase() {
         _currentPhase.update { phase ->
             when (phase) {
-                Phase.Day -> Phase.Voting
-                Phase.Voting -> Phase.Night
-                Phase.Night -> {
+                is Phase.Day -> Phase.Voting
+                is Phase.Defending -> Phase.Night
+                is Phase.Voting -> Phase.Night
+                is Phase.Night -> {
                     incrementDay()
                     Phase.Day
                 }
 
-                Phase.Result -> Phase.Day
+                is Phase.Result -> Phase.Day
             }
         }
+    }
+
+    fun proceedToDefendingPhase(defenders: List<Player>) {
+        _currentPhase.update { Phase.Defending(defenders) }
     }
 
     private fun incrementDay() {
@@ -103,6 +105,17 @@ class GameEngine(
             }
         }
     }
+
+    fun getDefenseCandidates(
+        playerVotes: Map<Player, Int>
+    ): List<Player> {
+        val threshold = (playerVotes.size - 1) / 2
+        return playerVotes
+            .filter { it.value >= threshold }
+            .keys
+            .toList()
+    }
+
 
     override fun updatePlayers(newPlayers: List<Player>) {
         _players.update { newPlayers }

@@ -1,6 +1,6 @@
 package ir.amirroid.mafiauto.game.engine.role
 
-import ir.amirroid.mafiauto.game.engine.data.Player
+import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.resources.Resources
 

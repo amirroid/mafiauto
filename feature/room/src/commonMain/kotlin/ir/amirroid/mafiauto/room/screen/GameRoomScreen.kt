@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
@@ -58,8 +59,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 fun GameRoomScreen(
-    onBack: () -> Unit,
-    viewModel: GameRoomViewModel = koinViewModel()
+    onBack: () -> Unit, viewModel: GameRoomViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val players = state.players
@@ -67,6 +67,7 @@ fun GameRoomScreen(
     val statusChecksCount = state.statusChecksCount
     val showStatus = state.showStatus
     val currentPhase = state.currentPhase
+    val canCheckStatus = remember(players) { players.count { it.player.isInGame.not() } > 0 }
 
     val hazeState = rememberHazeState()
     val hazeStyle: HazeStyle = HazeMaterials.thin(AppTheme.colorScheme.surface)
@@ -90,15 +91,12 @@ fun GameRoomScreen(
         BottomBar(
             currentPhase = currentPhase,
             statusChecksCount = statusChecksCount,
+            canCheckStatus = canCheckStatus,
             onCheckStatus = viewModel::increaseStatusCheck,
             onDecreaseCheckStatus = viewModel::decreaseStatusCheck,
             onNextPhase = viewModel::nextPhase,
-            modifier = Modifier
-                .fillMaxWidth()
-                .hazeEffect(hazeState, hazeStyle)
-                .allPadding()
-                .imePadding()
-                .navigationBarsPadding()
+            modifier = Modifier.fillMaxWidth().hazeEffect(hazeState, hazeStyle).allPadding()
+                .imePadding().navigationBarsPadding()
         )
     }
     pickedPlayerToShowRole?.let {
@@ -112,10 +110,42 @@ fun GameRoomScreen(
     if (showStatus) {
         ShowStatusDialog(players = players, onDismissRequest = viewModel::hideShowStatus)
     }
-    if (currentPhase == GamePhaseUiModel.Voting) {
+    VotingPhaseDialog(
+        currentPhase = currentPhase,
+        players = players,
+        onStartDefending = viewModel::startDefending,
+        onNextPhase = viewModel::nextPhase
+    )
+}
+
+@Composable
+fun VotingPhaseDialog(
+    currentPhase: GamePhaseUiModel,
+    players: List<PlayerWithRoleUiModel>,
+    onStartDefending: (Map<PlayerWithRoleUiModel, Int>) -> Boolean,
+    onNextPhase: () -> Unit
+) {
+    if (currentPhase is GamePhaseUiModel.Voting || currentPhase is GamePhaseUiModel.Defending) {
+        val isVotingPhase = currentPhase is GamePhaseUiModel.Voting
+        val votePlayers = when (currentPhase) {
+            is GamePhaseUiModel.Defending -> currentPhase.defenders
+            else -> players
+        }
+        val totalVotes = remember(players) {
+            players.filter { it.player.isInGame }.size - 1
+        }
         VotingDialog(
-            players = players,
-            onDismissRequest = viewModel::nextPhase
+            players = votePlayers,
+            totalVotes = totalVotes,
+            onSelectedPlayers = { votes ->
+                if (isVotingPhase) {
+                    onStartDefending(votes)
+                } else {
+                    onNextPhase()
+                    true
+                }
+            },
+            onDismissRequest = onNextPhase
         )
     }
 }
@@ -134,9 +164,7 @@ fun RoomPlayersList(
     ) {
         items(players, key = { it.player.id }) { item ->
             PlayerItem(
-                playerWithRole = item,
-                onClick = { onPickPlayer.invoke(item) }
-            )
+                playerWithRole = item, onClick = { onPickPlayer.invoke(item) })
         }
     }
 }
@@ -182,17 +210,18 @@ fun GameRoomAppBar() {
 private fun BottomBar(
     statusChecksCount: Int,
     currentPhase: GamePhaseUiModel,
+    canCheckStatus: Boolean,
     onCheckStatus: () -> Unit,
     onNextPhase: () -> Unit,
     onDecreaseCheckStatus: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        modifier = modifier, verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         StatusChecksSection(
             count = statusChecksCount,
+            canCheckStatus = canCheckStatus,
             onCheck = onCheckStatus,
             onDecrease = onDecreaseCheckStatus
         )
@@ -204,6 +233,7 @@ private fun BottomBar(
 @Composable
 fun StatusChecksSection(
     count: Int,
+    canCheckStatus: Boolean,
     onDecrease: () -> Unit,
     onCheck: () -> Unit,
 ) {
@@ -216,7 +246,7 @@ fun StatusChecksSection(
             MIcon(EvaIcons.Outline.Minus, contentDescription = null)
         }
         MText(count.toString(), style = AppTheme.typography.h2)
-        MIconButton(onClick = onCheck) {
+        MIconButton(onClick = onCheck, enabled = canCheckStatus) {
             MIcon(EvaIcons.Outline.Plus, contentDescription = null)
         }
     }
@@ -225,8 +255,7 @@ fun StatusChecksSection(
 
 @Composable
 fun CurrentPhaseSection(
-    currentPhase: GamePhaseUiModel,
-    onNextPhase: () -> Unit
+    currentPhase: GamePhaseUiModel, onNextPhase: () -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,

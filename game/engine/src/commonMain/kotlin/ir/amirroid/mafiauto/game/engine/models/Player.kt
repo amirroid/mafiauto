@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.game.engine.data
+package ir.amirroid.mafiauto.game.engine.models
 
 import androidx.compose.runtime.Immutable
 import ir.amirroid.mafiauto.game.engine.role.Role

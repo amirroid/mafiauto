@@ -16,10 +16,13 @@ interface GameRepository {
     fun getAllPlayers(): Flow<List<PlayerWithRole>>
 
     fun nextPhase()
+    fun startDefending(players: List<PlayerWithRole>)
 
     fun onStatusChecked()
     fun undoStatusCheck()
 
     fun kickPlayer(playerId: Long)
     fun unKickPlayer(playerId: Long)
+
+    fun getDefenseCandidates(playerVotes: Map<PlayerWithRole, Int>): List<PlayerWithRole>
 }

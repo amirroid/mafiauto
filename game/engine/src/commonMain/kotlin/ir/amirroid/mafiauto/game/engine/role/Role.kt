@@ -1,7 +1,7 @@
 package ir.amirroid.mafiauto.game.engine.role
 
 import ir.amirroid.mafiauto.game.engine.actions.role.RoleAction
-import ir.amirroid.mafiauto.game.engine.data.Player
+import ir.amirroid.mafiauto.game.engine.models.Player
 import org.jetbrains.compose.resources.StringResource
 
 sealed interface Role {
