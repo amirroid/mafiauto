@@ -25,6 +25,7 @@ fun MListItem(
     colors: ListItemColors = ListItemDefaults.defaultColors,
     contentPadding: PaddingValues = ListItemDefaults.defaultContentPadding,
     borderWidth: Dp = ListItemDefaults.defaultBorderWidth,
+    enabled: Boolean = true,
     shape: Shape = ListItemDefaults.defaultShape
 ) {
     MSurface(
@@ -33,7 +34,8 @@ fun MListItem(
         contentColor = colors.contentColor,
         color = colors.containerColor,
         border = BorderStroke(borderWidth, colors.strokeColor),
-        shape = shape
+        shape = shape,
+        enabled = enabled
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(contentPadding),

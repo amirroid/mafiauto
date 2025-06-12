@@ -32,7 +32,10 @@ object ListItemDefaults {
                 contentColor = it.primary,
                 toggleContentColor = it.onPrimary,
                 toggleStrokeColor = Color.Transparent,
-                toggleContainerColor = it.primary
+                toggleContainerColor = it.primary,
+                disabledContainerColor = it.disabled,
+                disabledStrokeColor = it.disabled,
+                disabledContentColor = it.onDisabled,
             )
         }
 

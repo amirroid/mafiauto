@@ -163,6 +163,14 @@ class GameEngine(
         _currentPhase.update { Phase.Fate(targetPlayer = player) }
     }
 
+    fun applyLastCard(card: LastCard, pickedPlayers: List<Player>) {
+        val phase = currentPhase.value
+        if (phase !is Phase.LastCard) return
+        val targetPlayer = phase.player
+        card.applyAction(targetPlayer, pickedPlayers)
+        _currentPhase.update { Phase.Night }
+    }
+
     override fun updatePlayers(newPlayers: List<Player>) {
         _players.update { newPlayers }
     }

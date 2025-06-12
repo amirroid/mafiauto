@@ -6,5 +6,6 @@ import org.jetbrains.compose.resources.StringResource
 @Immutable
 data class LastCardUiModel(
     val name: StringResource,
-    val key: String
+    val key: String,
+    val targetCount: Int
 )

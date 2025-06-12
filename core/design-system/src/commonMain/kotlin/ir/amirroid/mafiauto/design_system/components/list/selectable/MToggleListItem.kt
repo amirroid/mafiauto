@@ -21,16 +21,29 @@ fun MToggleListItem(
     colors: ToggleListItemColors = ListItemDefaults.defaultToggleColors,
     contentPadding: PaddingValues = ListItemDefaults.defaultContentPadding,
     borderWidth: Dp = ListItemDefaults.defaultBorderWidth,
+    enabled: Boolean = true,
     shape: Shape = ListItemDefaults.defaultShape
 ) {
     val strokeColor by animateColorAsState(
-        if (selected) colors.toggleStrokeColor else colors.strokeColor
+        when {
+            !enabled -> colors.disabledStrokeColor
+            selected -> colors.toggleStrokeColor
+            else -> colors.strokeColor
+        }
     )
     val contentColor by animateColorAsState(
-        if (selected) colors.toggleContentColor else colors.contentColor
+        when {
+            !enabled -> colors.disabledContentColor
+            selected -> colors.toggleContentColor
+            else -> colors.contentColor
+        }
     )
     val containerColor by animateColorAsState(
-        if (selected) colors.toggleContainerColor else colors.containerColor
+        when {
+            !enabled -> colors.disabledContainerColor
+            selected -> colors.toggleContainerColor
+            else -> colors.containerColor
+        }
     )
     MListItem(
         text = text,
@@ -39,6 +52,7 @@ fun MToggleListItem(
         contentPadding = contentPadding,
         borderWidth = borderWidth,
         shape = shape,
+        enabled = enabled,
         colors = ListItemColors(
             strokeColor = strokeColor,
             contentColor = contentColor,

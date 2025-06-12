@@ -11,4 +11,7 @@ data class ToggleListItemColors(
     val toggleContainerColor: Color,
     val toggleContentColor: Color,
     val toggleStrokeColor: Color,
+    val disabledStrokeColor: Color,
+    val disabledContainerColor: Color,
+    val disabledContentColor: Color,
 )

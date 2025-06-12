@@ -2,7 +2,9 @@ package ir.amirroid.mafiauto.room.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ir.amirroid.mafiauto.domain.model.LastCardDescriptor
 import ir.amirroid.mafiauto.domain.model.PlayerWithRole
+import ir.amirroid.mafiauto.domain.usecase.game.ApplyLastCardUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllLastCardsUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentPhaseUseCase
@@ -17,6 +19,7 @@ import ir.amirroid.mafiauto.domain.usecase.game.StartGameUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.UnKickPlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.UndoStatusCheckUseCase
 import ir.amirroid.mafiauto.room.state.GameRoomScreenState
+import ir.amirroid.mafiauto.ui_models.last_card.LastCardUiModel
 import ir.amirroid.mafiauto.ui_models.last_card.toUiModel
 import ir.amirroid.mafiauto.ui_models.phase.toUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
@@ -41,12 +44,14 @@ class GameRoomViewModel(
     private val getDefenseCandidatesUseCase: GetDefenseCandidatesUseCase,
     private val startDefendingUseCase: StartDefendingUseCase,
     private val handleDefenseVoteResultUseCase: HandleDefenseVoteResultUseCase,
-    private val getAllLastCardsUseCase: GetAllLastCardsUseCase
+    private val getAllLastCardsUseCase: GetAllLastCardsUseCase,
+    private val applyLastCardUseCase: ApplyLastCardUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(GameRoomScreenState())
     val state: StateFlow<GameRoomScreenState> = _state
 
     private var domainPlayers = emptyList<PlayerWithRole>()
+    private var domainLastCards = emptyList<LastCardDescriptor>()
 
     init {
         startGameUseCase.invoke()
@@ -58,6 +63,7 @@ class GameRoomViewModel(
 
     private fun observeLastCards() = viewModelScope.launch(coroutineDispatcher) {
         getAllLastCardsUseCase().collect { cards ->
+            domainLastCards = cards
             _state.update {
                 it.copy(lastCards = cards.map { card -> card.toUiModel() })
             }
@@ -66,8 +72,8 @@ class GameRoomViewModel(
 
     private fun observeInRoomPlayers() = viewModelScope.launch(coroutineDispatcher) {
         getAllInRoomPlayersUseCase().collect { players ->
+            domainPlayers = players
             _state.update {
-                domainPlayers = players
                 it.copy(players = players.map { player -> player.toUiModel() })
             }
         }
@@ -128,5 +134,11 @@ class GameRoomViewModel(
         handleDefenseVoteResultUseCase.invoke(domainPlayerVotes)
     }
 
+
+    fun applyLastCard(card: LastCardUiModel, pickedPlayers: List<PlayerWithRoleUiModel>) {
+        applyLastCardUseCase.invoke(card.toDomain(), pickedPlayers.map { it.toDomain() })
+    }
+
     private fun PlayerWithRoleUiModel.toDomain() = domainPlayers.first { it.player.id == player.id }
+    private fun LastCardUiModel.toDomain() = domainLastCards.first { it.key == key }
 }

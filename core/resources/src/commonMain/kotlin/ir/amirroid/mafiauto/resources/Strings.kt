@@ -30,6 +30,7 @@ object Strings {
     val voting = Res.string.voting
     val day = Res.string.day
     val lastCard = Res.string.last_card
+    val selectTargetPlayers = Res.string.select_target_players
     val card = Res.string.card
 
 

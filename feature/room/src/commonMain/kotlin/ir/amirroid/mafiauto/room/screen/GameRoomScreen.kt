@@ -122,7 +122,8 @@ fun GameRoomScreen(
         LastCardDialog(
             cards = state.lastCards,
             targetPlayer = currentPhase.player,
-            onDismissRequest = viewModel::nextPhase
+            onApply = viewModel::applyLastCard,
+            players = players
         )
     }
 }

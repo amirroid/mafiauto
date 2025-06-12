@@ -25,6 +25,7 @@
     <string name="voting">Voting</string>
     <string name="last_card">Last card</string>
     <string name="card">Card</string>
+    <string name="select_target_players">Select target players</string>
 
     <string name="neutral">Neutral</string>
 
