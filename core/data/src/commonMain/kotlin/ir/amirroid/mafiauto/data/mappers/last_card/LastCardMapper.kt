@@ -5,6 +5,7 @@ import ir.amirroid.mafiauto.game.engine.last_card.LastCard
 
 fun LastCard.toDomain() = LastCardDescriptor(
     name = name,
+    explanation = explanation,
     key = key,
     targetCount = targetCount
 )

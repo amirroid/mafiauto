@@ -167,6 +167,7 @@ class GameEngine(
         val phase = currentPhase.value
         if (phase !is Phase.LastCard) return
         val targetPlayer = phase.player
+        updatePlayer(targetPlayer) { copy(isAlive = false) }
         card.applyAction(targetPlayer, pickedPlayers)
         _currentPhase.update { Phase.Night }
     }

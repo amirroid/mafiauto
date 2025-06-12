@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.room.dialogs
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import ir.amirroid.mafiauto.common.compose.base.snapshotStateListSaver
@@ -36,7 +37,6 @@ import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.last_card.LastCardUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
-import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -55,12 +55,6 @@ fun LastCardDialog(
 
     val selectedPlayers = rememberSaveable(saver = snapshotStateListSaver()) {
         mutableStateListOf<PlayerWithRoleUiModel>()
-    }
-
-    LaunchedEffect(selectedCardIndex) {
-        if (selectedCardIndex == null) return@LaunchedEffect
-        delay(4000)
-        pickingPlayers = true
     }
 
     BaseBlurredPopup(
@@ -100,15 +94,17 @@ fun LastCardDialog(
             }
             Spacer(Modifier.height(24.dp))
             if (pickingPlayers && selectedCardIndex != null) {
+                val requiredTargetCount = cards[selectedCardIndex!!].targetCount
                 PlayersList(
                     players = players,
                     selectedPlayers = selectedPlayers,
-                    requiredTargetCount = cards[selectedCardIndex!!].targetCount
+                    requiredTargetCount = requiredTargetCount
                 )
                 Spacer(Modifier.height(16.dp))
                 MButton(
                     onClick = { visible = false },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = selectedPlayers.size == requiredTargetCount
                 ) {
                     MText(stringResource(Resources.strings.ok))
                 }
@@ -118,6 +114,14 @@ fun LastCardDialog(
                     selectedCardIndex = selectedCardIndex,
                     onCardSelected = { selectedCardIndex = it }
                 )
+                AnimatedVisibility(selectedCardIndex != null) {
+                    MButton(
+                        onClick = { pickingPlayers = true },
+                        modifier = Modifier.padding(top = 16.dp).fillMaxWidth(),
+                    ) {
+                        MText(stringResource(Resources.strings.ok))
+                    }
+                }
             }
         }
     }
@@ -132,14 +136,23 @@ private fun LastCardList(
     AnimatedList(
         items = cards,
         itemKey = { _, it -> it.key },
-        justItemVisible = selectedCardIndex
+        justItemVisible = selectedCardIndex,
+        modifier = Modifier.heightIn(max = 350.dp)
     ) { index, card ->
         val isSelected = selectedCardIndex == index
         MListItem(
             text = {
                 AnimatedContent(isSelected) { selected ->
                     if (selected) {
-                        MText(stringResource(card.name))
+                        Column(modifier = Modifier.padding(vertical = 12.dp)) {
+                            MText(stringResource(card.name), fontWeight = FontWeight.Bold)
+                            AnimatedVisibility(selected) {
+                                MText(
+                                    stringResource(card.explanation),
+                                    modifier = Modifier.padding(top = 8.dp)
+                                )
+                            }
+                        }
                     } else {
                         MText("${stringResource(Resources.strings.card)} ${index + 1}")
                     }

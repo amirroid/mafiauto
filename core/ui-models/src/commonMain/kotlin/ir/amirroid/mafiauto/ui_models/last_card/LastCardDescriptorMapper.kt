@@ -4,6 +4,7 @@ import ir.amirroid.mafiauto.domain.model.LastCardDescriptor
 
 fun LastCardDescriptor.toUiModel() = LastCardUiModel(
     name = name,
+    explanation = explanation,
     key = key,
     targetCount = targetCount
 )
