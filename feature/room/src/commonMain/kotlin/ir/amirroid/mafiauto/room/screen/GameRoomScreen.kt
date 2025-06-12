@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -20,7 +22,9 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import compose.icons.EvaIcons
+import compose.icons.evaicons.Fill
 import compose.icons.evaicons.Outline
+import compose.icons.evaicons.fill.ArrowIosForward
 import compose.icons.evaicons.outline.Minus
 import compose.icons.evaicons.outline.Plus
 import dev.chrisbanes.haze.HazeStyle
@@ -34,6 +38,7 @@ import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.thenIf
 import ir.amirroid.mafiauto.common.compose.operators.plus
 import ir.amirroid.mafiauto.design_system.components.appbar.SmallTopAppBarScaffold
+import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.button.MIconButton
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.list.ListItemDefaults
@@ -44,6 +49,7 @@ import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.room.dialogs.ShowPlayerRoleDialog
 import ir.amirroid.mafiauto.room.dialogs.ShowStatusDialog
 import ir.amirroid.mafiauto.room.viewmodel.GameRoomViewModel
+import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -59,6 +65,7 @@ fun GameRoomScreen(
     val pickedPlayerToShowRole = state.pickedPlayerToShowRole
     val statusChecksCount = state.statusChecksCount
     val showStatus = state.showStatus
+    val currentPhase = state.currentPhase
 
     val hazeState = rememberHazeState()
     val hazeStyle: HazeStyle = HazeMaterials.thin(AppTheme.colorScheme.surface)
@@ -80,9 +87,11 @@ fun GameRoomScreen(
             }
         }
         BottomBar(
+            currentPhase = currentPhase,
             statusChecksCount = statusChecksCount,
             onCheckStatus = viewModel::increaseStatusCheck,
             onDecreaseCheckStatus = viewModel::decreaseStatusCheck,
+            onNextPhase = viewModel::nextPhase,
             modifier = Modifier
                 .fillMaxWidth()
                 .hazeEffect(hazeState, hazeStyle)
@@ -165,18 +174,22 @@ fun GameRoomAppBar() {
 @Composable
 private fun BottomBar(
     statusChecksCount: Int,
+    currentPhase: GamePhaseUiModel,
     onCheckStatus: () -> Unit,
+    onNextPhase: () -> Unit,
     onDecreaseCheckStatus: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         StatusChecksSection(
             count = statusChecksCount,
             onCheck = onCheckStatus,
             onDecrease = onDecreaseCheckStatus
         )
+        CurrentPhaseSection(currentPhase = currentPhase, onNextPhase = onNextPhase)
     }
 }
 
@@ -198,6 +211,36 @@ fun StatusChecksSection(
         MText(count.toString(), style = AppTheme.typography.h2)
         MIconButton(onClick = onCheck) {
             MIcon(EvaIcons.Outline.Plus, contentDescription = null)
+        }
+    }
+}
+
+
+@Composable
+fun CurrentPhaseSection(
+    currentPhase: GamePhaseUiModel,
+    onNextPhase: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        MText(
+            stringResource(currentPhase.displayName),
+            style = AppTheme.typography.h3,
+            modifier = Modifier.weight(1f)
+        )
+        MButton(
+            onClick = onNextPhase,
+            modifier = Modifier.height(48.dp),
+            enabled = currentPhase == GamePhaseUiModel.Day
+        ) {
+            MText(stringResource(Resources.strings.voting))
+            MIcon(
+                imageVector = EvaIcons.Fill.ArrowIosForward,
+                contentDescription = null,
+                modifier = Modifier.padding(start = 8.dp).size(20.dp)
+            )
         }
     }
 }

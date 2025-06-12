@@ -24,4 +24,6 @@ val useCaseModule = module {
     factoryOf(::StartGameUseCase)
     factoryOf(::KickPlayerUseCase)
     factoryOf(::UnKickPlayerUseCase)
+    factoryOf(::GetCurrentPhaseUseCase)
+    factoryOf(::GoToNextPhaseUseCase)
 }

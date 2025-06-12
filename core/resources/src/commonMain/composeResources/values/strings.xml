@@ -20,6 +20,9 @@
     <string name="kick">Kick</string>
     <string name="un_kick">Let Back In</string>
     <string name="kills">Kills</string>
+    <string name="day">Day</string>
+    <string name="night">Night</string>
+    <string name="voting">Voting</string>
 
     <string name="neutral">Neutral</string>
 

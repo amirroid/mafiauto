@@ -26,6 +26,9 @@ object Strings {
     val statusChecks = Res.string.status_checks
     val unKick = Res.string.un_kick
     val kick = Res.string.kick
+    val night = Res.string.night
+    val voting = Res.string.voting
+    val day = Res.string.day
 
 
     // Roles

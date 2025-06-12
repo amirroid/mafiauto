@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.data.repository.game
 
 import ir.amirroid.mafiauto.data.mappers.player.toEngine
 import ir.amirroid.mafiauto.data.mappers.player_role.toPlayerRoleDomain
+import ir.amirroid.mafiauto.domain.model.GamePhase
 import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import ir.amirroid.mafiauto.domain.repository.GameRepository
 import ir.amirroid.mafiauto.game.engine.GameEngine
@@ -14,6 +15,7 @@ class GameRepositoryImpl(
     private val rolesProvider: RolesProvider
 ) : GameRepository {
     override val statusChecksCount = engine.statusCheckCount
+    override val currentPhase = engine.currentPhase.map { GamePhase.valueOf(it.name) }
 
     override fun startNewGame(players: List<PlayerWithRole>) {
         val enginePlayers = players.map {
@@ -23,9 +25,13 @@ class GameRepositoryImpl(
         engine.updatePlayers(enginePlayers)
     }
 
+    override fun resetGame() = engine.reset()
+
     override fun getAllPlayers(): Flow<List<PlayerWithRole>> {
         return engine.players.map { players -> players.map { it.toPlayerRoleDomain() } }
     }
+
+    override fun nextPhase() = engine.proceedToNextPhase()
 
     override fun onStatusChecked() = engine.incrementStatusCheckCount()
     override fun undoStatusCheck() = engine.decreaseStatusCheckCount()

@@ -7,6 +7,8 @@ class StartGameUseCase(
     private val gameRepository: GameRepository,
     private val playerRoleRepository: PlayerRoleRepository
 ) {
-    operator fun invoke() =
+    operator fun invoke() {
+        gameRepository.resetGame()
         gameRepository.startNewGame(players = playerRoleRepository.getAllSavedPlayersWithRoles())
+    }
 }

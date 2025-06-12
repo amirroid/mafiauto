@@ -3,13 +3,16 @@ package ir.amirroid.mafiauto.room.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
+import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentPhaseUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetStatusCheckCountUseCase
+import ir.amirroid.mafiauto.domain.usecase.game.GoToNextPhaseUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.KickPlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.OnStatusCheckedUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.StartGameUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.UnKickPlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.UndoStatusCheckUseCase
 import ir.amirroid.mafiauto.room.state.GameRoomScreenState
+import ir.amirroid.mafiauto.ui_models.phase.toUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.toUiModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -26,7 +29,9 @@ class GameRoomViewModel(
     private val onUndoStatusCheckUseCase: UndoStatusCheckUseCase,
     private val kickPlayerUseCase: KickPlayerUseCase,
     private val unKickPlayerUseCase: UnKickPlayerUseCase,
-    private val coroutineDispatcher: CoroutineDispatcher
+    private val coroutineDispatcher: CoroutineDispatcher,
+    private val getCurrentPhaseUseCase: GetCurrentPhaseUseCase,
+    private val goToNextPhaseUseCase: GoToNextPhaseUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(GameRoomScreenState())
     val state: StateFlow<GameRoomScreenState> = _state
@@ -35,12 +40,21 @@ class GameRoomViewModel(
         startGameUseCase.invoke()
         observeStatusCheckCount()
         observeInRoomPlayers()
+        observeCurrentPhase()
     }
 
     private fun observeInRoomPlayers() = viewModelScope.launch(coroutineDispatcher) {
         getAllInRoomPlayersUseCase().collect { players ->
             _state.update {
                 it.copy(players = players.map { player -> player.toUiModel() })
+            }
+        }
+    }
+
+    private fun observeCurrentPhase() = viewModelScope.launch(coroutineDispatcher) {
+        getCurrentPhaseUseCase().collect { phase ->
+            _state.update {
+                it.copy(currentPhase = phase.toUiModel())
             }
         }
     }
@@ -74,4 +88,6 @@ class GameRoomViewModel(
 
     fun kick(playerId: Long) = kickPlayerUseCase.invoke(playerId)
     fun unKick(playerId: Long) = unKickPlayerUseCase.invoke(playerId)
+
+    fun nextPhase() = goToNextPhaseUseCase.invoke()
 }
