@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.domain.repository
 
 import ir.amirroid.mafiauto.domain.model.GamePhase
+import ir.amirroid.mafiauto.domain.model.LastCardDescriptor
 import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface GameRepository {
     val statusChecksCount: StateFlow<Int>
     val currentPhase: Flow<GamePhase>
+    val lastCards: Flow<List<LastCardDescriptor>>
 
     fun startNewGame(players: List<PlayerWithRole>)
     fun resetGame()
@@ -23,6 +25,8 @@ interface GameRepository {
 
     fun kickPlayer(playerId: Long)
     fun unKickPlayer(playerId: Long)
+
+    fun handleDefenseVoteResult(voteMap: Map<PlayerWithRole, Int>)
 
     fun getDefenseCandidates(playerVotes: Map<PlayerWithRole, Int>): List<PlayerWithRole>
 }

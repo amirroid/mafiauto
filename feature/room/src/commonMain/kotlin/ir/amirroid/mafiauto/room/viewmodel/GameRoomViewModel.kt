@@ -4,10 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
+import ir.amirroid.mafiauto.domain.usecase.game.GetAllLastCardsUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentPhaseUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetDefenseCandidatesUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetStatusCheckCountUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GoToNextPhaseUseCase
+import ir.amirroid.mafiauto.domain.usecase.game.HandleDefenseVoteResultUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.KickPlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.OnStatusCheckedUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.StartDefendingUseCase
@@ -15,6 +17,7 @@ import ir.amirroid.mafiauto.domain.usecase.game.StartGameUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.UnKickPlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.UndoStatusCheckUseCase
 import ir.amirroid.mafiauto.room.state.GameRoomScreenState
+import ir.amirroid.mafiauto.ui_models.last_card.toUiModel
 import ir.amirroid.mafiauto.ui_models.phase.toUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.toUiModel
@@ -36,8 +39,9 @@ class GameRoomViewModel(
     private val getCurrentPhaseUseCase: GetCurrentPhaseUseCase,
     private val goToNextPhaseUseCase: GoToNextPhaseUseCase,
     private val getDefenseCandidatesUseCase: GetDefenseCandidatesUseCase,
-    private val startDefendingUseCase: StartDefendingUseCase
-
+    private val startDefendingUseCase: StartDefendingUseCase,
+    private val handleDefenseVoteResultUseCase: HandleDefenseVoteResultUseCase,
+    private val getAllLastCardsUseCase: GetAllLastCardsUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(GameRoomScreenState())
     val state: StateFlow<GameRoomScreenState> = _state
@@ -49,6 +53,15 @@ class GameRoomViewModel(
         observeStatusCheckCount()
         observeInRoomPlayers()
         observeCurrentPhase()
+        observeLastCards()
+    }
+
+    private fun observeLastCards() = viewModelScope.launch(coroutineDispatcher) {
+        getAllLastCardsUseCase().collect { cards ->
+            _state.update {
+                it.copy(lastCards = cards.map { card -> card.toUiModel() })
+            }
+        }
     }
 
     private fun observeInRoomPlayers() = viewModelScope.launch(coroutineDispatcher) {
@@ -110,6 +123,10 @@ class GameRoomViewModel(
         return true
     }
 
+    fun submitDefense(playerVotes: Map<PlayerWithRoleUiModel, Int>) {
+        val domainPlayerVotes = playerVotes.mapKeys { (player, _) -> player.toDomain() }
+        handleDefenseVoteResultUseCase.invoke(domainPlayerVotes)
+    }
 
     private fun PlayerWithRoleUiModel.toDomain() = domainPlayers.first { it.player.id == player.id }
 }

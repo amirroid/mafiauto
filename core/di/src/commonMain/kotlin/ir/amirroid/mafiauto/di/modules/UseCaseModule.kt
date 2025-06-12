@@ -28,4 +28,6 @@ val useCaseModule = module {
     factoryOf(::GoToNextPhaseUseCase)
     factoryOf(::StartDefendingUseCase)
     factoryOf(::GetDefenseCandidatesUseCase)
+    factoryOf(::HandleDefenseVoteResultUseCase)
+    factoryOf(::GetAllLastCardsUseCase)
 }

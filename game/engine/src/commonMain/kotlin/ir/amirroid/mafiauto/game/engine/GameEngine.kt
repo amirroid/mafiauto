@@ -3,8 +3,10 @@ package ir.amirroid.mafiauto.game.engine
 import androidx.compose.runtime.Immutable
 import ir.amirroid.mafiauto.game.engine.actions.GameActions
 import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
+import ir.amirroid.mafiauto.game.engine.last_card.LastCard
 import ir.amirroid.mafiauto.game.engine.models.Phase
 import ir.amirroid.mafiauto.game.engine.models.Player
+import ir.amirroid.mafiauto.game.engine.provider.last_card.LastCardsProvider
 import ir.amirroid.mafiauto.game.engine.utils.PlayersHolder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,20 +15,23 @@ import kotlinx.coroutines.flow.update
 
 @Immutable
 class GameEngine(
+    private val lastCardsProvider: LastCardsProvider,
     private val initialPhase: Phase = Phase.Day,
-    private val initialDay: Int = 0
+    private val initialDay: Int = 0,
 ) : GameActions(), PlayersHolder {
 
     private val _currentDay = MutableStateFlow(initialDay)
     private val _currentPhase = MutableStateFlow(initialPhase)
     private val _players = MutableStateFlow(emptyList<Player>())
     private val _scheduledActions = MutableStateFlow(emptyList<ScheduledAction>())
+    private val _lastCards = MutableStateFlow(emptyList<LastCard>())
     private val _statusCheckCount = MutableStateFlow(0)
 
     val currentDay: StateFlow<Int> = _currentDay
     val currentPhase: StateFlow<Phase> = _currentPhase
     val players: StateFlow<List<Player>> = _players
     val scheduledActions: StateFlow<List<ScheduledAction>> = _scheduledActions
+    val lastCards: StateFlow<List<LastCard>> = _lastCards
     val statusCheckCount: StateFlow<Int> = _statusCheckCount
 
     fun proceedToNextPhase() {
@@ -41,6 +46,7 @@ class GameEngine(
                 }
 
                 is Phase.Result -> Phase.Day
+                else -> phase
             }
         }
     }
@@ -58,6 +64,7 @@ class GameEngine(
         _currentPhase.value = initialPhase
         _scheduledActions.value = emptyList()
         _statusCheckCount.value = 0
+        _lastCards.value = lastCardsProvider.getAllLastCards()
     }
 
     fun incrementStatusCheckCount() {
@@ -116,6 +123,45 @@ class GameEngine(
             .toList()
     }
 
+    fun handleDefenseVoteResult(voteMap: Map<Player, Int>) {
+        val validVotes = voteMap.filterValues { it > 0 }
+        val maxVoteCount = validVotes.maxOfOrNull { it.value } ?: 0
+        val topCandidates = validVotes.filterValues { it == maxVoteCount }.keys
+
+        when {
+            topCandidates.size == 1 -> {
+                val selectedPlayer = topCandidates.first()
+                proceedToLastCardPhase(selectedPlayer)
+            }
+
+            topCandidates.size > 1 -> {
+                val randomPlayer = topCandidates.random()
+                _currentPhase.update { Phase.Fate(targetPlayer = randomPlayer) }
+            }
+
+            validVotes.size == 1 -> {
+                val threshold = (voteMap.size - 1) / 2
+                val entry = validVotes.entries.first()
+                if (entry.value >= threshold) {
+                    proceedToLastCardPhase(entry.key)
+                } else {
+                    _currentPhase.update { Phase.Night }
+                }
+            }
+
+            else -> {
+                _currentPhase.update { Phase.Night }
+            }
+        }
+    }
+
+    private fun proceedToLastCardPhase(player: Player) {
+        _currentPhase.update { Phase.LastCard(player) }
+    }
+
+    private fun goToLastCard(player: Player) {
+        _currentPhase.update { Phase.Fate(targetPlayer = player) }
+    }
 
     override fun updatePlayers(newPlayers: List<Player>) {
         _players.update { newPlayers }

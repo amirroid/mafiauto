@@ -47,6 +47,7 @@ import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
+import ir.amirroid.mafiauto.room.dialogs.LastCardDialog
 import ir.amirroid.mafiauto.room.dialogs.ShowPlayerRoleDialog
 import ir.amirroid.mafiauto.room.dialogs.ShowStatusDialog
 import ir.amirroid.mafiauto.room.dialogs.VotingDialog
@@ -114,8 +115,16 @@ fun GameRoomScreen(
         currentPhase = currentPhase,
         players = players,
         onStartDefending = viewModel::startDefending,
+        onSubmitDefense = viewModel::submitDefense,
         onNextPhase = viewModel::nextPhase
     )
+    if (currentPhase is GamePhaseUiModel.LastCard) {
+        LastCardDialog(
+            cards = state.lastCards,
+            targetPlayer = currentPhase.player,
+            onDismissRequest = viewModel::nextPhase
+        )
+    }
 }
 
 @Composable
@@ -123,6 +132,7 @@ fun VotingPhaseDialog(
     currentPhase: GamePhaseUiModel,
     players: List<PlayerWithRoleUiModel>,
     onStartDefending: (Map<PlayerWithRoleUiModel, Int>) -> Boolean,
+    onSubmitDefense: (Map<PlayerWithRoleUiModel, Int>) -> Unit,
     onNextPhase: () -> Unit
 ) {
     if (currentPhase is GamePhaseUiModel.Voting || currentPhase is GamePhaseUiModel.Defending) {
@@ -141,7 +151,7 @@ fun VotingPhaseDialog(
                 if (isVotingPhase) {
                     onStartDefending(votes)
                 } else {
-                    onNextPhase()
+                    onSubmitDefense(votes)
                     true
                 }
             },

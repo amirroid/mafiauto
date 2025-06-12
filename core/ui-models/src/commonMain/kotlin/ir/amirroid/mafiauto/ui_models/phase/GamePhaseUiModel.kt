@@ -10,6 +10,12 @@ sealed class GamePhaseUiModel(val displayName: StringResource) {
     data class Defending(val defenders: List<PlayerWithRoleUiModel>) :
         GamePhaseUiModel(Resources.strings.voting)
 
+    data class LastCard(val player: PlayerWithRoleUiModel) :
+        GamePhaseUiModel(Resources.strings.voting)
+
+    data class Fate(val targetPlayer: PlayerWithRoleUiModel) :
+        GamePhaseUiModel(Resources.strings.voting)
+
     data object Night : GamePhaseUiModel(Resources.strings.night)
     data object Result : GamePhaseUiModel(Resources.strings.day)
 }

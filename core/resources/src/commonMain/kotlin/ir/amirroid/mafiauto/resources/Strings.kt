@@ -29,6 +29,8 @@ object Strings {
     val night = Res.string.night
     val voting = Res.string.voting
     val day = Res.string.day
+    val lastCard = Res.string.last_card
+    val card = Res.string.card
 
 
     // Roles
@@ -60,4 +62,15 @@ object Strings {
     val oracleExplanation = Res.string.oracle_explanation
     val jokerExplanation = Res.string.joker_explanation
     val cultLeaderExplanation = Res.string.cult_leader_explanation
+
+
+    val braceletLastCardExplanation = Res.string.bracelet_last_card_explanation
+    val silenceLastCardExplanation = Res.string.silence_last_card_explanation
+    val faceUpLastCardExplanation = Res.string.face_up_last_card_explanation
+    val beautifulMindLastCardExplanation = Res.string.beautiful_mind_last_card_explanation
+
+    val braceletCardName = Res.string.card_bracelet
+    val silenceCardName = Res.string.card_silence
+    val faceUpCardName = Res.string.card_face_up
+    val beautifulMindCardName = Res.string.card_beautiful_mind
 }

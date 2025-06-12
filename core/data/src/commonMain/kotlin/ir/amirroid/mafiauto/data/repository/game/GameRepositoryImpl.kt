@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.data.repository.game
 
+import ir.amirroid.mafiauto.data.mappers.last_card.toDomain
 import ir.amirroid.mafiauto.data.mappers.phase.toDomain
 import ir.amirroid.mafiauto.data.mappers.player.toEngine
 import ir.amirroid.mafiauto.data.mappers.player_role.toPlayerRoleDomain
@@ -7,7 +8,7 @@ import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import ir.amirroid.mafiauto.domain.repository.GameRepository
 import ir.amirroid.mafiauto.game.engine.GameEngine
 import ir.amirroid.mafiauto.game.engine.models.Player
-import ir.amirroid.mafiauto.game.engine.provider.RolesProvider
+import ir.amirroid.mafiauto.game.engine.provider.roles.RolesProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -15,8 +16,10 @@ class GameRepositoryImpl(
     private val engine: GameEngine,
     private val rolesProvider: RolesProvider
 ) : GameRepository {
+
     override val statusChecksCount = engine.statusCheckCount
     override val currentPhase = engine.currentPhase.map { it.toDomain() }
+    override val lastCards = engine.lastCards.map { cards -> cards.map { it.toDomain() } }
 
     override fun startNewGame(players: List<PlayerWithRole>) {
         val enginePlayers = players.map {
@@ -28,13 +31,28 @@ class GameRepositoryImpl(
 
     override fun resetGame() = engine.reset()
 
-    override fun getAllPlayers(): Flow<List<PlayerWithRole>> {
-        return engine.players.map { players -> players.map { it.toPlayerRoleDomain() } }
-    }
-
     override fun nextPhase() = engine.proceedToNextPhase()
+
     override fun startDefending(players: List<PlayerWithRole>) =
         engine.proceedToDefendingPhase(getEnginePlayersFromDomain(players))
+
+    override fun getAllPlayers(): Flow<List<PlayerWithRole>> {
+        return engine.players.map { players ->
+            players.map { it.toPlayerRoleDomain() }
+        }
+    }
+
+    override fun handleDefenseVoteResult(voteMap: Map<PlayerWithRole, Int>) {
+        engine.handleDefenseVoteResult(
+            voteMap.mapKeys { (player, _) -> player.toEngine() }
+        )
+    }
+
+    override fun getDefenseCandidates(playerVotes: Map<PlayerWithRole, Int>): List<PlayerWithRole> {
+        return engine
+            .getDefenseCandidates(playerVotes.mapKeys { (player, _) -> player.toEngine() })
+            .map { it.toPlayerRoleDomain() }
+    }
 
     override fun onStatusChecked() = engine.incrementStatusCheckCount()
     override fun undoStatusCheck() = engine.decreaseStatusCheckCount()
@@ -42,18 +60,7 @@ class GameRepositoryImpl(
     override fun kickPlayer(playerId: Long) = engine.kickPlayer(playerId)
     override fun unKickPlayer(playerId: Long) = engine.unKickPlayer(playerId)
 
-    override fun getDefenseCandidates(playerVotes: Map<PlayerWithRole, Int>): List<PlayerWithRole> {
-        return engine
-            .getDefenseCandidates(playerVotes.mapKeys { (player, _) -> player.toEngine() })
-            .map {
-                it.toPlayerRoleDomain()
-            }
-    }
-
-
-    private fun getEnginePlayersFromDomain(
-        players: List<PlayerWithRole>
-    ): List<Player> {
+    private fun getEnginePlayersFromDomain(players: List<PlayerWithRole>): List<Player> {
         val ids = players.map { it.player.id }
         return engine.players.value.filter { it.id in ids }
     }

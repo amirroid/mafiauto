@@ -23,6 +23,8 @@
     <string name="day">Day</string>
     <string name="night">Night</string>
     <string name="voting">Voting</string>
+    <string name="last_card">Last card</string>
+    <string name="card">Card</string>
 
     <string name="neutral">Neutral</string>
 
@@ -53,4 +55,15 @@
     <string name="oracle_explanation">The Oracle peers into the beyond. If they die, their final vision reveals the alignment of one player. Death does not silence them — it speaks through them, one last time.</string>
     <string name="joker_explanation">The Joker doesn't care who wins — only that they lose. Their goal is chaos. If they’re executed by vote, they win the game instantly. So go ahead, accuse them... that's exactly what they want.</string>
     <string name="cult_leader_explanation">The Cult Leader whispers promises in the dark. Each night, they recruit a new follower. Their power grows in secret, consuming the town from within. By the time anyone notices, it's already too late.</string>
+
+
+    <string name="card_bracelet">Bracelet</string>
+    <string name="card_silence">Silence of the Lambs</string>
+    <string name="card_face_up">Face Change</string>
+    <string name="card_beautiful_mind">Beautiful Mind</string>
+
+    <string name="bracelet_last_card_explanation">Puts a magical bracelet on you that blocks the next elimination attempt. Only works once.</string>
+    <string name="silence_last_card_explanation">Silences all accusations against you in the next phase. No one can vote or defend against you.</string>
+    <string name="face_up_last_card_explanation">Swap your identity with another player, redirecting all current votes to them.</string>
+    <string name="beautiful_mind_last_card_explanation">Grants you one secret vote at the end of the round, possibly changing the outcome.</string>
 </resources>

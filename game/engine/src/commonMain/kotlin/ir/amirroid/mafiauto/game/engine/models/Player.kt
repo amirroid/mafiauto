@@ -1,15 +1,14 @@
 package ir.amirroid.mafiauto.game.engine.models
 
-import androidx.compose.runtime.Immutable
 import ir.amirroid.mafiauto.game.engine.role.Role
 
-@Immutable
 data class Player(
     val id: Long,
     val name: String,
     val role: Role,
     val isAlive: Boolean = true,
-    val isKick: Boolean = false
+    val isKick: Boolean = false,
+    val canBackWithSave: Boolean = true
 )
 
 
