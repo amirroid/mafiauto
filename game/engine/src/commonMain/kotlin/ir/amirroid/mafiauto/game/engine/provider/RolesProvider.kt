@@ -21,4 +21,6 @@ class RolesProvider {
             Oracle
         )
     }
+
+    fun findRole(key: String) = getAllRoles().first { it.key == key }
 }

@@ -22,12 +22,13 @@ class GameEngine(
 
     private val _currentDay = MutableStateFlow(initialDay)
     private val _currentPhase = MutableStateFlow(initialPhase)
-    override val _players = MutableStateFlow(emptyList<Player>())
+    private val _players = MutableStateFlow(emptyList<Player>())
     private val _scheduledActions = MutableStateFlow(emptyList<ScheduledAction>())
     private val _statusCheckCount = MutableStateFlow(0)
 
     val currentDay: StateFlow<Int> = _currentDay
     val currentPhase: StateFlow<Phase> = _currentPhase
+    val players: StateFlow<List<Player>> = _players
     val scheduledActions: StateFlow<List<ScheduledAction>> = _scheduledActions
     val statusCheckCount: StateFlow<Int> = _statusCheckCount
 
@@ -63,5 +64,47 @@ class GameEngine(
 
     fun decreaseStatusCheckCount() {
         _statusCheckCount.update { it.minus(1).coerceAtLeast(0) }
+    }
+
+    fun kickPlayer(playerId: Long) {
+        updatePlayer(playerId) { copy(isKick = true) }
+    }
+
+    fun unKickPlayer(playerId: Long) {
+        updatePlayer(playerId) { copy(isKick = false) }
+    }
+
+
+    private fun updatePlayer(
+        targetId: Long,
+        transform: Player.() -> Player
+    ) {
+        _players.update {
+            it.toMutableList().apply {
+                val index = indexOfFirst { player -> player.id == targetId }
+                if (index != -1) {
+                    this[index] = this[index].transform()
+                }
+            }
+        }
+    }
+
+
+    private fun updatePlayer(
+        target: Player,
+        transform: Player.() -> Player
+    ) {
+        _players.update {
+            it.toMutableList().apply {
+                val index = indexOfFirst { player -> player.id == target.id }
+                if (index != -1) {
+                    this[index] = this[index].transform()
+                }
+            }
+        }
+    }
+
+    override fun updatePlayers(newPlayers: List<Player>) {
+        _players.update { newPlayers }
     }
 }

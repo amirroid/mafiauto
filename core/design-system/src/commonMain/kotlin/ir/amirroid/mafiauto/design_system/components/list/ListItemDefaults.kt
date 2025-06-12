@@ -20,6 +20,10 @@ object ListItemDefaults {
             ListItemColors(it.primary, it.primary)
         }
 
+    val filledColors: ListItemColors
+        @Composable get() = AppTheme.colorScheme.let {
+            ListItemColors(Color.Transparent, it.onPrimary, it.primary)
+        }
 
     val defaultToggleColors: ToggleListItemColors
         @Composable get() = AppTheme.colorScheme.let {

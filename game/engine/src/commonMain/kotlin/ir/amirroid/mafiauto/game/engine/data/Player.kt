@@ -1,21 +1,16 @@
 package ir.amirroid.mafiauto.game.engine.data
 
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.Immutable
 import ir.amirroid.mafiauto.game.engine.role.Role
 
-@Stable
+@Immutable
 data class Player(
-    val id: Int,
+    val id: Long,
     val name: String,
     val role: Role,
-    val isVisibleToMafia: Boolean
-) {
-    var isAlive by mutableStateOf(true)
-    var isKick by mutableStateOf(false)
-}
+    val isAlive: Boolean = true,
+    val isKick: Boolean = false
+)
 
 
-fun List<Player>.findWithId(id: Int) = find { it.id == id }
+fun List<Player>.findWithId(id: Long) = find { it.id == id }

@@ -20,4 +20,8 @@ val useCaseModule = module {
     factoryOf(::OnStatusCheckedUseCase)
     factoryOf(::UndoStatusCheckUseCase)
     factoryOf(::GetStatusCheckCountUseCase)
+    factoryOf(::GetAllInRoomPlayersUseCase)
+    factoryOf(::StartGameUseCase)
+    factoryOf(::KickPlayerUseCase)
+    factoryOf(::UnKickPlayerUseCase)
 }

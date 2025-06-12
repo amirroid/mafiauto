@@ -4,5 +4,7 @@ import ir.amirroid.mafiauto.domain.model.Player
 
 fun Player.toUiModel() = PlayerUiModel(
     name = name,
-    id = id
+    id = id,
+    isAlive = isAlive,
+    isKick = isKick
 )

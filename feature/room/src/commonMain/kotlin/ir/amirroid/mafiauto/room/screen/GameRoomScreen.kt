@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import compose.icons.EvaIcons
@@ -29,11 +30,12 @@ import dev.chrisbanes.haze.rememberHazeState
 import ir.amirroid.mafiauto.common.compose.components.BackButton
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
+import ir.amirroid.mafiauto.common.compose.modifiers.thenIf
 import ir.amirroid.mafiauto.common.compose.operators.plus
 import ir.amirroid.mafiauto.design_system.components.appbar.SmallTopAppBarScaffold
-import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.button.MIconButton
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
+import ir.amirroid.mafiauto.design_system.components.list.ListItemDefaults
 import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
@@ -86,7 +88,12 @@ fun GameRoomScreen(
         )
     }
     pickedPlayerToShowRole?.let {
-        ShowPlayerRoleDialog(it, onDismissRequest = viewModel::clearPickedPlayer)
+        ShowPlayerRoleDialog(
+            it,
+            onKick = { viewModel.kick(it.player.id) },
+            onUnKick = { viewModel.unKick(it.player.id) },
+            onDismissRequest = viewModel::clearPickedPlayer
+        )
     }
 }
 
@@ -103,16 +110,43 @@ fun RoomPlayersList(
         modifier = modifier
     ) {
         items(players, key = { it.player.id }) { item ->
-            MListItem(
-                text = {
-                    MText(item.player.name)
-                },
-                onClick = { onPickPlayer.invoke(item) },
-                modifier = Modifier.height(48.dp),
-                shape = AppTheme.shapes.medium
+            PlayerItem(
+                playerWithRole = item,
+                onClick = { onPickPlayer.invoke(item) }
             )
         }
     }
+}
+
+@Composable
+fun PlayerItem(playerWithRole: PlayerWithRoleUiModel, onClick: () -> Unit) {
+    val colors = when {
+        playerWithRole.player.isAlive -> ListItemDefaults.defaultColors
+        else -> ListItemDefaults.filledColors
+    }
+    val primaryColor = AppTheme.colorScheme.primary
+    MListItem(
+        text = {
+            MText(
+                playerWithRole.player.name,
+                modifier = Modifier.thenIf(playerWithRole.player.isKick) {
+                    drawWithContent {
+                        drawContent()
+                        drawLine(
+                            color = primaryColor,
+                            start = center.copy(x = 0f),
+                            end = center.copy(x = size.width),
+                            strokeWidth = 2.dp.toPx()
+                        )
+                    }
+                }.fillMaxWidth()
+            )
+        },
+        onClick = onClick,
+        modifier = Modifier.height(48.dp),
+        shape = AppTheme.shapes.medium,
+        colors = colors
+    )
 }
 
 @Composable

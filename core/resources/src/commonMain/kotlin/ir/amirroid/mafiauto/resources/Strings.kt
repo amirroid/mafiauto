@@ -23,6 +23,8 @@ object Strings {
     val neutral = Res.string.neutral
     val gameRoom = Res.string.game_room
     val statusChecks = Res.string.status_checks
+    val unKick = Res.string.un_kick
+    val kick = Res.string.kick
 
 
     // Roles

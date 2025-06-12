@@ -17,6 +17,8 @@
     <string name="game_room">Game room</string>
     <string name="ok">Ok</string>
     <string name="status_checks">Status checks</string>
+    <string name="kick">Kick</string>
+    <string name="un_kick">Let Back In</string>
 
     <string name="neutral">Neutral</string>
 
