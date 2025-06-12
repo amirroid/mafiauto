@@ -48,6 +48,7 @@ import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.room.dialogs.ShowPlayerRoleDialog
 import ir.amirroid.mafiauto.room.dialogs.ShowStatusDialog
+import ir.amirroid.mafiauto.room.dialogs.VotingDialog
 import ir.amirroid.mafiauto.room.viewmodel.GameRoomViewModel
 import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
@@ -110,6 +111,12 @@ fun GameRoomScreen(
     }
     if (showStatus) {
         ShowStatusDialog(players = players, onDismissRequest = viewModel::hideShowStatus)
+    }
+    if (currentPhase == GamePhaseUiModel.Voting) {
+        VotingDialog(
+            players = players,
+            onDismissRequest = viewModel::nextPhase
+        )
     }
 }
 

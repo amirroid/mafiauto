@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.design_system.components.dialog
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -30,12 +31,14 @@ fun MDialog(
             color = AppTheme.colorScheme.background,
             contentColor = AppTheme.colorScheme.onBackground,
             modifier = Modifier
-                .fillMaxWidth(.9f)
                 .widthIn(max = 400.dp)
-                .padding(24.dp)
+                .fillMaxWidth(.83f)
                 .pointerInput(Unit) { detectTapGestures() },
-            content = content,
             shape = AppTheme.shapes.large
-        )
+        ) {
+            Box(Modifier.padding(20.dp)) {
+                content.invoke()
+            }
+        }
     }
 }

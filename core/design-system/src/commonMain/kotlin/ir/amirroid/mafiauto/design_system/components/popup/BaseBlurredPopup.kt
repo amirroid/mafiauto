@@ -60,6 +60,7 @@ fun BaseBlurredPopup(
                 modifier = Modifier.fillMaxSize()
                     .pointerInput(Unit) {
                         detectTapGestures {
+                            if (!dismissOnBackPress) return@detectTapGestures
                             onDismissRequest?.let { visibleAnim = false }
                         }
                     }

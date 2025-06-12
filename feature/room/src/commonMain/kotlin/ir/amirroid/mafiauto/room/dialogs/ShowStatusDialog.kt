@@ -45,8 +45,7 @@ fun ShowStatusDialog(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             MText(stringResource(Resources.strings.statusChecks), style = AppTheme.typography.h2)

@@ -34,7 +34,7 @@ fun ShowPlayerRoleDialog(
         onDismissRequest = onDismissRequest
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier.fillMaxWidth(),
         ) {
             MText(text = playerWithRole.player.name, style = AppTheme.typography.h3)
             MText(

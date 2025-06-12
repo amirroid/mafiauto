@@ -8,4 +8,6 @@ data class PlayerUiModel(
     val id: Long,
     val isKick: Boolean,
     val isAlive: Boolean
-)
+) {
+    val isInGame = isAlive && !isKick
+}
