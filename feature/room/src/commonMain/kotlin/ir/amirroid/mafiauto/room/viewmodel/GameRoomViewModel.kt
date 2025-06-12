@@ -8,7 +8,7 @@ import ir.amirroid.mafiauto.domain.usecase.game.KickPlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.OnStatusCheckedUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.StartGameUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.UnKickPlayerUseCase
-import ir.amirroid.mafiauto.domain.usecase.player_role.GetAllPlayersWithRolesUseCase
+import ir.amirroid.mafiauto.domain.usecase.game.UndoStatusCheckUseCase
 import ir.amirroid.mafiauto.room.state.GameRoomScreenState
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.toUiModel
@@ -23,6 +23,7 @@ class GameRoomViewModel(
     private val getAllInRoomPlayersUseCase: GetAllInRoomPlayersUseCase,
     private val getStatusCheckCountUseCase: GetStatusCheckCountUseCase,
     private val onStatusCheckedUseCase: OnStatusCheckedUseCase,
+    private val onUndoStatusCheckUseCase: UndoStatusCheckUseCase,
     private val kickPlayerUseCase: KickPlayerUseCase,
     private val unKickPlayerUseCase: UnKickPlayerUseCase,
     private val coroutineDispatcher: CoroutineDispatcher
@@ -52,7 +53,16 @@ class GameRoomViewModel(
         }
     }
 
-    fun addStatusCheck() = onStatusCheckedUseCase()
+    fun increaseStatusCheck() {
+        _state.update { it.copy(showStatus = true) }
+        onStatusCheckedUseCase()
+    }
+
+    fun decreaseStatusCheck() = onUndoStatusCheckUseCase()
+
+    fun hideShowStatus() {
+        _state.update { it.copy(showStatus = false) }
+    }
 
     fun pickPlayerToShowRole(playerWithRole: PlayerWithRoleUiModel) {
         _state.update { it.copy(pickedPlayerToShowRole = playerWithRole) }

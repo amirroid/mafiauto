@@ -27,9 +27,7 @@ fun ShowPlayerRoleDialog(
     onUnKick: () -> Unit,
     onDismissRequest: () -> Unit
 ) {
-    var visible by remember {
-        mutableStateOf(true)
-    }
+    var visible by remember { mutableStateOf(true) }
     val kicked = playerWithRole.player.isKick
     MDialog(
         isVisible = visible,

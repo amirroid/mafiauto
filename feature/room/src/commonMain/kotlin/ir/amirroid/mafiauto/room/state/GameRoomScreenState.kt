@@ -7,5 +7,6 @@ import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 data class GameRoomScreenState(
     val players: List<PlayerWithRoleUiModel> = emptyList(),
     val statusChecksCount: Int = 0,
-    val pickedPlayerToShowRole: PlayerWithRoleUiModel? = null
+    val pickedPlayerToShowRole: PlayerWithRoleUiModel? = null,
+    val showStatus: Boolean = false
 )

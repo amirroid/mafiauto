@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline
+import compose.icons.evaicons.outline.Minus
 import compose.icons.evaicons.outline.Plus
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeEffect
@@ -41,6 +42,7 @@ import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.room.dialogs.ShowPlayerRoleDialog
+import ir.amirroid.mafiauto.room.dialogs.ShowStatusDialog
 import ir.amirroid.mafiauto.room.viewmodel.GameRoomViewModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import org.jetbrains.compose.resources.stringResource
@@ -56,6 +58,7 @@ fun GameRoomScreen(
     val players = state.players
     val pickedPlayerToShowRole = state.pickedPlayerToShowRole
     val statusChecksCount = state.statusChecksCount
+    val showStatus = state.showStatus
 
     val hazeState = rememberHazeState()
     val hazeStyle: HazeStyle = HazeMaterials.thin(AppTheme.colorScheme.surface)
@@ -78,7 +81,8 @@ fun GameRoomScreen(
         }
         BottomBar(
             statusChecksCount = statusChecksCount,
-            onCheckStatus = viewModel::addStatusCheck,
+            onCheckStatus = viewModel::increaseStatusCheck,
+            onDecreaseCheckStatus = viewModel::decreaseStatusCheck,
             modifier = Modifier
                 .fillMaxWidth()
                 .hazeEffect(hazeState, hazeStyle)
@@ -94,6 +98,9 @@ fun GameRoomScreen(
             onUnKick = { viewModel.unKick(it.player.id) },
             onDismissRequest = viewModel::clearPickedPlayer
         )
+    }
+    if (showStatus) {
+        ShowStatusDialog(players = players, onDismissRequest = viewModel::hideShowStatus)
     }
 }
 
@@ -159,6 +166,7 @@ fun GameRoomAppBar() {
 private fun BottomBar(
     statusChecksCount: Int,
     onCheckStatus: () -> Unit,
+    onDecreaseCheckStatus: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -167,6 +175,7 @@ private fun BottomBar(
         StatusChecksSection(
             count = statusChecksCount,
             onCheck = onCheckStatus,
+            onDecrease = onDecreaseCheckStatus
         )
     }
 }
@@ -175,6 +184,7 @@ private fun BottomBar(
 @Composable
 fun StatusChecksSection(
     count: Int,
+    onDecrease: () -> Unit,
     onCheck: () -> Unit,
 ) {
     Row(
@@ -182,6 +192,9 @@ fun StatusChecksSection(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         MText("${stringResource(Resources.strings.statusChecks)}:", modifier = Modifier.weight(1f))
+        MIconButton(onClick = onDecrease) {
+            MIcon(EvaIcons.Outline.Minus, contentDescription = null)
+        }
         MText(count.toString(), style = AppTheme.typography.h2)
         MIconButton(onClick = onCheck) {
             MIcon(EvaIcons.Outline.Plus, contentDescription = null)
