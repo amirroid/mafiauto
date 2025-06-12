@@ -64,7 +64,7 @@ class GameEngine(
         _currentPhase.value = initialPhase
         _scheduledActions.value = emptyList()
         _statusCheckCount.value = 0
-        _lastCards.value = lastCardsProvider.getAllLastCards()
+        _lastCards.value = lastCardsProvider.getAllLastCards().shuffled()
     }
 
     fun incrementStatusCheckCount() {
