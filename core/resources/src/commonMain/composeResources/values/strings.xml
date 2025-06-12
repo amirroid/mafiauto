@@ -2,10 +2,10 @@
     <string name="app_name">Mafiauto</string>
     <string name="intro_title">The night is dark...</string>
     <string name="intro_description">In the shadows, the mafia has awakened.\nWill you survive the chaos?</string>
-    <string name="start_game">Start game</string>
+    <string name="start_game">Start Game</string>
     <string name="start_new_game">Start a new game</string>
-    <string name="select_roles">Select roles</string>
-    <string name="select_players">Select players</string>
+    <string name="select_roles">Select Roles</string>
+    <string name="select_players">Select Players</string>
     <string name="add_new_player_hint">Who are you... really?</string>
     <string name="start">Start</string>
     <string name="previews">Previews</string>
@@ -13,8 +13,8 @@
     <string name="selected">Selected</string>
     <string name="add">Add</string>
     <string name="player">Player</string>
-    <string name="reveal_roles">Reveal roles</string>
-    <string name="game_room">Game room</string>
+    <string name="reveal_roles">Reveal Roles</string>
+    <string name="game_room">Game Room</string>
     <string name="ok">Ok</string>
     <string name="status_checks">Status checks</string>
     <string name="kick">Kick</string>

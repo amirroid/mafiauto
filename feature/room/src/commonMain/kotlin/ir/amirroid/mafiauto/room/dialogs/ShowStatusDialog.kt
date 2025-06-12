@@ -34,7 +34,7 @@ fun ShowStatusDialog(
     val deadAlignmentsWithCounts = remember(players) {
         players
             .groupBy { it.role.alignment }
-            .mapValues { (_, group) -> group.count { !it.player.isAlive } }
+            .mapValues { (_, group) -> group.count { it.player.let { player -> !player.isAlive || player.isKick } } }
             .entries
             .sortedByDescending { it.value }
     }

@@ -11,7 +11,14 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -114,18 +121,50 @@ private fun RolesList(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues()
 ) {
-    LazyColumn(
+    val groupedRoles = remember(roles) {
+        roles.groupBy { it.alignment }
+    }
+    val shape = AppTheme.shapes.large
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
         modifier = modifier,
         contentPadding = contentPadding,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(roles, key = { it.key }) { role ->
-            val selected = remember(selectedRoles) { selectedRoles.contains(role) }
-            MToggleListItem(
-                text = { MText(stringResource(role.name)) },
-                selected = selected,
-                onClick = { onToggle.invoke(role) }
-            )
+        groupedRoles.forEach { (alignment, roles) ->
+            item("alignment-$alignment", contentType = "alignment", span = { GridItemSpan(2) }) {
+                Text(
+                    text = stringResource(alignment),
+                    style = AppTheme.typography.caption,
+                    color = AppTheme.colorScheme.primary,
+                    modifier = Modifier.padding(top = 12.dp)
+                )
+            }
+            itemsIndexed(
+                roles,
+                key = { _, item -> item.key },
+                contentType = { _, _ -> "role" }) { index, role ->
+                val selected = remember(selectedRoles) { selectedRoles.contains(role) }
+                val itemShape = when {
+                    index == roles.size - 1 -> shape
+                    index % 2 == 0 -> shape.copy(
+                        bottomEnd = CornerSize(2.dp),
+                        topEnd = CornerSize(2.dp)
+                    )
+
+                    else -> shape.copy(
+                        bottomStart = CornerSize(2.dp),
+                        topStart = CornerSize(2.dp)
+                    )
+                }
+                MToggleListItem(
+                    text = { MText(stringResource(role.name)) },
+                    selected = selected,
+                    onClick = { onToggle.invoke(role) },
+                    shape = itemShape
+                )
+            }
         }
     }
 }
