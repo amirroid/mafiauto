@@ -20,6 +20,10 @@ val AppTypography = Typography(
         fontSize = 20.sp,
         fontWeight = FontWeight.SemiBold,
     ),
+    h4 = TextStyle(
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Medium,
+    ),
     body = TextStyle(
         fontSize = 16.sp,
         fontWeight = FontWeight.Normal,

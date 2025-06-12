@@ -9,6 +9,7 @@ data class Typography(
     val h1: TextStyle,
     val h2: TextStyle,
     val h3: TextStyle,
+    val h4: TextStyle,
     val body: TextStyle,
     val caption: TextStyle,
     val button: TextStyle
