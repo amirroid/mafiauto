@@ -68,7 +68,9 @@ fun MainNavigation() {
             )
         }
         composable<Screen.NightActions> {
-            NightActionsScreen()
+            NightActionsScreen(
+                onBack = navController::navigateUp
+            )
         }
     }
 }

@@ -36,6 +36,7 @@ object Strings {
     val card = Res.string.card
     val killed = Res.string.killed
     val nightActions = Res.string.night_actions
+    val complete = Res.string.complete
 
 
     // Roles

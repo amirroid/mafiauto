@@ -34,4 +34,8 @@ class NightActionsViewModel(
             it.toMutableMap().apply { put(player, target) }.toMap()
         }
     }
+
+    fun applyActions() {
+
+    }
 }

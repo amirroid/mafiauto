@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.night.screen
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -63,6 +64,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 fun NightActionsScreen(
+    onBack: () -> Unit,
     viewModel: NightActionsViewModel = koinViewModel()
 ) {
     val hazeState = rememberHazeState()
@@ -103,6 +105,11 @@ fun NightActionsScreen(
             enabledPreviews = pagerState.canScrollBackward,
             onNext = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) } },
             onPreviews = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
+            isLastItem = pagerState.canScrollForward.not(),
+            onComplete = {
+                viewModel.applyActions()
+                onBack.invoke()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .hazeEffect(hazeState, hazeStyle)
@@ -133,7 +140,8 @@ fun SelectOptionPlayersList(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
             MText(
                 buildString {
@@ -182,6 +190,8 @@ fun NightActionsAppBar() {
 fun BottomBar(
     enabledNext: Boolean,
     enabledPreviews: Boolean,
+    isLastItem: Boolean,
+    onComplete: () -> Unit,
     onNext: () -> Unit,
     onPreviews: () -> Unit,
     modifier: Modifier = Modifier
@@ -208,17 +218,17 @@ fun BottomBar(
         }
 
         MButton(
-            onClick = onNext,
+            onClick = if (isLastItem) onComplete else onNext,
             modifier = Modifier.height(48.dp),
             enabled = enabledNext
         ) {
-//                    AnimatedContent(isLastItem) {
-//                        if (it) {
-//                            MText(stringResource(Resources.strings.start))
-//                        } else {
-            MText(stringResource(Resources.strings.next))
-//                        }
-//                    }
+            AnimatedContent(isLastItem) {
+                if (it) {
+                    MText(stringResource(Resources.strings.complete))
+                } else {
+                    MText(stringResource(Resources.strings.next))
+                }
+            }
             MIcon(
                 imageVector = EvaIcons.Outline.ArrowIosForward,
                 contentDescription = null,
