@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,7 +47,7 @@ fun ShowStatusDialog(
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            MText(stringResource(Resources.strings.statusChecks), style = AppTheme.typography.h2)
+            MText(stringResource(Resources.strings.statusCheck), style = AppTheme.typography.h2)
             Spacer(Modifier)
             deadAlignmentsWithCounts.forEach { (alignment, deadCount) ->
                 Row(

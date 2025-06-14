@@ -17,6 +17,7 @@ object Strings {
     val addNewPlayerHint = Res.string.add_new_player_hint
     val previews = Res.string.previews
     val next = Res.string.next
+    val back = Res.string.back
     val add = Res.string.add
     val selectRoles = Res.string.select_roles
     val selectPlayers = Res.string.select_players
@@ -24,6 +25,7 @@ object Strings {
     val neutral = Res.string.neutral
     val gameRoom = Res.string.game_room
     val statusChecks = Res.string.status_checks
+    val statusCheck = Res.string.status_check
     val unKick = Res.string.un_kick
     val kick = Res.string.kick
     val night = Res.string.night
@@ -32,6 +34,8 @@ object Strings {
     val lastCard = Res.string.last_card
     val selectTargetPlayers = Res.string.select_target_players
     val card = Res.string.card
+    val killed = Res.string.killed
+    val nightActions = Res.string.night_actions
 
 
     // Roles

@@ -21,7 +21,7 @@ class CollapsingAppBarState(
     }
 
     suspend fun animateTo(targetHeight: Float) {
-        animate(heightPx, targetHeight) { value, _ ->
+        animate(heightPx, targetHeight.coerceIn(minHeightPx, maxHeightPx)) { value, _ ->
             heightPx = value
         }
     }
@@ -30,8 +30,7 @@ class CollapsingAppBarState(
 
 @Composable
 fun rememberCollapsingAppBarState(
-    maxHeight: Dp = 128.dp,
-    minHeight: Dp = 56.dp
+    maxHeight: Dp = 128.dp, minHeight: Dp = 56.dp
 ): CollapsingAppBarState {
     val density = LocalDensity.current
     val maxPx = with(density) { maxHeight.toPx() }

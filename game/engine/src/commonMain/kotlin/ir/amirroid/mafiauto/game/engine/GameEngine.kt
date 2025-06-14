@@ -4,6 +4,7 @@ import androidx.compose.runtime.Immutable
 import ir.amirroid.mafiauto.game.engine.actions.GameActions
 import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
+import ir.amirroid.mafiauto.game.engine.models.NightTargetOptions
 import ir.amirroid.mafiauto.game.engine.models.Phase
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.provider.last_card.LastCardsProvider
@@ -38,8 +39,11 @@ class GameEngine(
         _currentPhase.update { phase ->
             when (phase) {
                 is Phase.Day -> Phase.Voting
-                is Phase.Defending -> Phase.Night
-                is Phase.Voting -> Phase.Night
+                is Phase.Defending, is Phase.Voting -> {
+                    proceedToNightPhase()
+                    _currentPhase.value
+                }
+
                 is Phase.Night -> {
                     incrementDay()
                     Phase.Day
@@ -144,14 +148,10 @@ class GameEngine(
                 val entry = validVotes.entries.first()
                 if (entry.value >= threshold) {
                     proceedToLastCardPhase(entry.key)
-                } else {
-                    _currentPhase.update { Phase.Night }
-                }
+                } else proceedToNightPhase()
             }
 
-            else -> {
-                _currentPhase.update { Phase.Night }
-            }
+            else -> proceedToNightPhase()
         }
     }
 
@@ -159,17 +159,20 @@ class GameEngine(
         _currentPhase.update { Phase.LastCard(player) }
     }
 
-    private fun goToLastCard(player: Player) {
-        _currentPhase.update { Phase.Fate(targetPlayer = player) }
+    private fun proceedToNightPhase() {
+        val allPlayers = _players.value
+        val options = allPlayers.filter { it.role.hasNightAction }.map {
+            NightTargetOptions(it, it.role.getNightActionTargetPlayers(null, allPlayers))
+        }
+        _currentPhase.update { Phase.Night(options) }
     }
 
     fun applyLastCard(card: LastCard, pickedPlayers: List<Player>) {
         val phase = currentPhase.value
         if (phase !is Phase.LastCard) return
         val targetPlayer = phase.player
-        updatePlayer(targetPlayer) { copy(isAlive = false) }
         card.applyAction(targetPlayer, pickedPlayers)
-        _currentPhase.update { Phase.Night }
+        proceedToNightPhase()
     }
 
     override fun updatePlayers(newPlayers: List<Player>) {

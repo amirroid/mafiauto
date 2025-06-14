@@ -38,7 +38,7 @@ sealed interface Phase {
     /**
      * Night phase where special roles perform their actions (e.g. killing, saving, investigating).
      */
-    data object Night : Phase
+    data class Night(val options: List<NightTargetOptions>) : Phase
 
     /**
      * Result phase where the outcome of the previous night/day is revealed to players.

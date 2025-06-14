@@ -6,6 +6,6 @@ sealed interface GamePhase {
     data class Defending(val defenders: List<PlayerWithRole>) : GamePhase
     data class LastCard(val player: PlayerWithRole) : GamePhase
     data class Fate(val targetPlayer: PlayerWithRole) : GamePhase
-    data object Night : GamePhase
+    data class Night(val options: List<NightTargetOptions>) : GamePhase
     data object Result : GamePhase
 }

@@ -10,6 +10,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.button.MOutlinedButton
@@ -38,10 +41,16 @@ fun ShowPlayerRoleDialog(
         ) {
             MText(text = playerWithRole.player.name, style = AppTheme.typography.h3)
             MText(
-                text = buildString {
+                text = buildAnnotatedString {
                     append(stringResource(playerWithRole.role.name))
                     append(" - ")
                     append(stringResource(playerWithRole.role.alignment))
+                    if (playerWithRole.player.isAlive.not()) {
+                        append(" - ")
+                        withStyle(SpanStyle(color = AppTheme.colorScheme.primary)) {
+                            append(stringResource(Resources.strings.killed))
+                        }
+                    }
                 },
                 modifier = Modifier.padding(top = 8.dp)
             )

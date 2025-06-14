@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.ui_models.phase
 
 import ir.amirroid.mafiauto.resources.Resources
+import ir.amirroid.mafiauto.ui_models.night_target_otpions.NightTargetOptionsUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import org.jetbrains.compose.resources.StringResource
 
@@ -16,6 +17,8 @@ sealed class GamePhaseUiModel(val displayName: StringResource) {
     data class Fate(val targetPlayer: PlayerWithRoleUiModel) :
         GamePhaseUiModel(Resources.strings.voting)
 
-    data object Night : GamePhaseUiModel(Resources.strings.night)
+    data class Night(val options: List<NightTargetOptionsUiModel>) :
+        GamePhaseUiModel(Resources.strings.night)
+
     data object Result : GamePhaseUiModel(Resources.strings.day)
 }

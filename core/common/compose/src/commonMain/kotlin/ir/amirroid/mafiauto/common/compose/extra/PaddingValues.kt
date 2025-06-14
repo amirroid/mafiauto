@@ -18,3 +18,9 @@ fun defaultContentPadding() =
         horizontal = horizontalPadding,
         vertical = verticalPadding
     ) + WindowInsets.systemBars.asPaddingValues() + WindowInsets.ime.asPaddingValues()
+
+@Composable
+fun defaultHorizontalContentPadding() =
+    PaddingValues(
+        horizontal = horizontalPadding,
+    )

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -60,7 +61,9 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 fun GameRoomScreen(
-    onBack: () -> Unit, viewModel: GameRoomViewModel = koinViewModel()
+    onBack: () -> Unit,
+    onNight: () -> Unit,
+    viewModel: GameRoomViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val players = state.players
@@ -72,6 +75,10 @@ fun GameRoomScreen(
 
     val hazeState = rememberHazeState()
     val hazeStyle: HazeStyle = HazeMaterials.thin(AppTheme.colorScheme.surface)
+
+    LaunchedEffect(currentPhase) {
+        if (currentPhase is GamePhaseUiModel.Night) onNight.invoke()
+    }
 
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
         SmallTopAppBarScaffold(

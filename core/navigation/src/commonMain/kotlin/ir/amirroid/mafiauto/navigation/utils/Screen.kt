@@ -17,4 +17,7 @@ sealed interface Screen {
 
     @Serializable
     data object GameRoom : Screen
+
+    @Serializable
+    data object NightActions : Screen
 }

@@ -1,11 +1,12 @@
 package ir.amirroid.mafiauto.ui_models.phase
 
 import ir.amirroid.mafiauto.domain.model.GamePhase
+import ir.amirroid.mafiauto.ui_models.night_target_otpions.toUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.toUiModel
 
 fun GamePhase.toUiModel() = when (this) {
     is GamePhase.Day -> GamePhaseUiModel.Day
-    is GamePhase.Night -> GamePhaseUiModel.Night
+    is GamePhase.Night -> GamePhaseUiModel.Night(options = options.map { it.toUiModel() })
     is GamePhase.Voting -> GamePhaseUiModel.Voting
     is GamePhase.Result -> GamePhaseUiModel.Result
     is GamePhase.Fate -> GamePhaseUiModel.Fate(targetPlayer = targetPlayer.toUiModel())

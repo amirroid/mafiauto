@@ -49,5 +49,6 @@ include(":feature:lobby")
 include(":feature:assign_roles")
 include(":feature:reveal")
 include(":feature:room")
+include(":feature:night")
 
 includeBuild("build-logic")

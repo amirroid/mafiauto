@@ -11,6 +11,7 @@ import ir.amirroid.mafiauto.assign_roles.screen.AssignRolesScreen
 import ir.amirroid.mafiauto.intro.screen.IntroScreen
 import ir.amirroid.mafiauto.intro.screen.LobbyScreen
 import ir.amirroid.mafiauto.navigation.utils.Screen
+import ir.amirroid.mafiauto.night.screen.NightActionsScreen
 import ir.amirroid.mafiauto.reveal.screen.RevealRolesScreen
 import ir.amirroid.mafiauto.room.screen.GameRoomScreen
 
@@ -20,7 +21,8 @@ fun MainNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Intro, enterTransition = {
+        startDestination = Screen.Lobby,
+        enterTransition = {
             slideIntoContainer(SlideDirection.Left)
         },
         exitTransition = {
@@ -61,8 +63,12 @@ fun MainNavigation() {
         }
         composable<Screen.GameRoom> {
             GameRoomScreen(
-                onBack = navController::navigateUp
+                onBack = navController::navigateUp,
+                onNight = { navController.navigate(Screen.NightActions) }
             )
+        }
+        composable<Screen.NightActions> {
+            NightActionsScreen()
         }
     }
 }
