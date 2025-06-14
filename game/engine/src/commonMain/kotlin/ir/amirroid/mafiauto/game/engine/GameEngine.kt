@@ -35,23 +35,22 @@ class GameEngine(
     val lastCards: StateFlow<List<LastCard>> = _lastCards
     val statusCheckCount: StateFlow<Int> = _statusCheckCount
 
+    private fun updatePhase(newPhase: Phase) = _currentPhase.update { newPhase }
+
     fun proceedToNextPhase() {
-        _currentPhase.update { phase ->
-            when (phase) {
-                is Phase.Day -> Phase.Voting
-                is Phase.Defending, is Phase.Voting -> {
-                    proceedToNightPhase()
-                    _currentPhase.value
-                }
-
-                is Phase.Night -> {
-                    incrementDay()
-                    Phase.Day
-                }
-
-                is Phase.Result -> Phase.Day
-                else -> phase
+        when (_currentPhase.value) {
+            is Phase.Day -> updatePhase(Phase.Voting)
+            is Phase.Defending, is Phase.Voting -> {
+                proceedToNightPhase()
             }
+
+            is Phase.Night -> {
+                incrementDay()
+                updatePhase(Phase.Day)
+            }
+
+            is Phase.Result -> updatePhase(Phase.Day)
+            else -> Unit
         }
     }
 
