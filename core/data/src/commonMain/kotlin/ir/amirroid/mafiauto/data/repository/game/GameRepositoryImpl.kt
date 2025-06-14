@@ -5,10 +5,12 @@ import ir.amirroid.mafiauto.data.mappers.phase.toDomain
 import ir.amirroid.mafiauto.data.mappers.player.toEngine
 import ir.amirroid.mafiauto.data.mappers.player_role.toPlayerRoleDomain
 import ir.amirroid.mafiauto.domain.model.LastCardDescriptor
+import ir.amirroid.mafiauto.domain.model.NightActionDescriptor
 import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import ir.amirroid.mafiauto.domain.repository.GameRepository
 import ir.amirroid.mafiauto.game.engine.GameEngine
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
+import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.provider.roles.RolesProvider
 import kotlinx.coroutines.flow.Flow
@@ -56,6 +58,10 @@ class GameRepositoryImpl(
             .map { it.toPlayerRoleDomain() }
     }
 
+    override fun handleNightActions(actions: List<NightActionDescriptor>) {
+        engine.handleNightActions(actions.map { it.toEngine() })
+    }
+
     override fun applyLastCard(card: LastCardDescriptor, pickedPlayers: List<PlayerWithRole>) {
         engine.applyLastCard(card.toEngine(), getEnginePlayersFromDomain(pickedPlayers))
     }
@@ -77,5 +83,12 @@ class GameRepositoryImpl(
 
     private fun LastCardDescriptor.toEngine(): LastCard {
         return engine.lastCards.value.first { it.key == key }
+    }
+
+    private fun NightActionDescriptor.toEngine(): NightAction {
+        return NightAction(
+            player = player.toEngine(),
+            target = target.toEngine(),
+        )
     }
 }

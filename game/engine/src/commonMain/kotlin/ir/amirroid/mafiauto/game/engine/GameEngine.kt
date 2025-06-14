@@ -4,6 +4,7 @@ import androidx.compose.runtime.Immutable
 import ir.amirroid.mafiauto.game.engine.actions.GameActions
 import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
+import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.NightTargetOptions
 import ir.amirroid.mafiauto.game.engine.models.Phase
 import ir.amirroid.mafiauto.game.engine.models.Player
@@ -42,11 +43,6 @@ class GameEngine(
             is Phase.Day -> updatePhase(Phase.Voting)
             is Phase.Defending, is Phase.Voting -> {
                 proceedToNightPhase()
-            }
-
-            is Phase.Night -> {
-                incrementDay()
-                updatePhase(Phase.Day)
             }
 
             is Phase.Result -> updatePhase(Phase.Day)
@@ -172,6 +168,11 @@ class GameEngine(
         val targetPlayer = phase.player
         card.applyAction(targetPlayer, pickedPlayers)
         proceedToNightPhase()
+    }
+
+    fun handleNightActions(actions: List<NightAction>) {
+        incrementDay()
+        _currentPhase.update { Phase.Day }
     }
 
     override fun updatePlayers(newPlayers: List<Player>) {

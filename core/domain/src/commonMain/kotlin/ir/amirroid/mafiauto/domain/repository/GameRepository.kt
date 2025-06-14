@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.domain.repository
 
 import ir.amirroid.mafiauto.domain.model.GamePhase
 import ir.amirroid.mafiauto.domain.model.LastCardDescriptor
+import ir.amirroid.mafiauto.domain.model.NightActionDescriptor
 import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,6 +30,8 @@ interface GameRepository {
     fun handleDefenseVoteResult(voteMap: Map<PlayerWithRole, Int>)
 
     fun getDefenseCandidates(playerVotes: Map<PlayerWithRole, Int>): List<PlayerWithRole>
+
+    fun handleNightActions(actions: List<NightActionDescriptor>)
 
     fun applyLastCard(card: LastCardDescriptor, pickedPlayers: List<PlayerWithRole>)
 }
