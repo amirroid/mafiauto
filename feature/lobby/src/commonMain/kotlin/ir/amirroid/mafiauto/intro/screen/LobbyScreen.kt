@@ -108,7 +108,7 @@ fun LobbyScreen(
                 viewModel.selectPlayers()
                 onPickPlayers.invoke()
             },
-            onWarning = { scope.launch { snakeBarController.show(Resources.strings.selectPlayersHint) } },
+            onWarning = { snakeBarController.show(Resources.strings.selectPlayersHint) },
             modifier = Modifier
                 .fillMaxWidth()
                 .hazeEffect(hazeState, hazeStyle)

@@ -4,10 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -19,19 +21,20 @@ import org.jetbrains.compose.resources.StringResource
 
 @Stable
 class SnakeBarControllerState(
-    private val hapticFeedback: HapticFeedback
+    private val hapticFeedback: HapticFeedback,
+    private val scope: CoroutineScope
 ) {
     private val _snacks = MutableStateFlow(emptyList<SnackBarData>())
     internal val snacks = _snacks.asStateFlow()
 
     private var lastJob: Job? = null
 
-    suspend fun show(
+    fun show(
         text: StringResource,
         time: Long = 4000
-    ) = coroutineScope {
+    ) {
         lastJob?.cancel()
-        lastJob = launch {
+        lastJob = scope.launch {
             hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
             _snacks.update { oldData ->
                 oldData.forEach { it.visible = false }
@@ -46,8 +49,9 @@ class SnakeBarControllerState(
 @Composable
 fun rememberSnakeBarControllerState(): SnakeBarControllerState {
     val hapticFeedback = LocalHapticFeedback.current
+    val scope = rememberCoroutineScope()
     return remember {
-        SnakeBarControllerState(hapticFeedback)
+        SnakeBarControllerState(hapticFeedback, scope)
     }
 }
 
