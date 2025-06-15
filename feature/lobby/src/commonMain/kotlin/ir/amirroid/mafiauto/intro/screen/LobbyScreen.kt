@@ -111,9 +111,9 @@ fun LobbyScreen(
             onWarning = { snakeBarController.show(Resources.strings.selectPlayersHint) },
             modifier = Modifier
                 .fillMaxWidth()
+                .imePadding()
                 .hazeEffect(hazeState, hazeStyle)
                 .allPadding()
-                .imePadding()
                 .navigationBarsPadding()
         )
     }
