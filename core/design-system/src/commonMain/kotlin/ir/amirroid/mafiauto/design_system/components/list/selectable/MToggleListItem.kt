@@ -16,6 +16,7 @@ import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 fun MToggleListItem(
     selected: Boolean,
     onClick: (Boolean) -> Unit,
+    onLongClick: (() -> Unit)? = null,
     text: @Composable BoxScope.() -> Unit,
     modifier: Modifier = Modifier,
     colors: ToggleListItemColors = ListItemDefaults.defaultToggleColors,
@@ -57,6 +58,7 @@ fun MToggleListItem(
             strokeColor = strokeColor,
             contentColor = contentColor,
             containerColor = containerColor
-        )
+        ),
+        onLongClick = onLongClick
     )
 }

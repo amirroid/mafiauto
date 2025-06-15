@@ -5,6 +5,7 @@ import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
@@ -19,6 +20,9 @@ import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
 @Composable
 fun MSurface(
     onClick: () -> Unit,
+    onLongClick: (() -> Unit)? = null,
+    onDoubleClick: (() -> Unit)? = null,
+    onClickWhenDisabled: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     shape: Shape = AppTheme.shapes.medium,
     color: Color = AppTheme.colorScheme.surface,
@@ -31,11 +35,22 @@ fun MSurface(
     Box(
         modifier =
             modifier
-                .clickable(
+                .combinedClickable(
                     enabled = enabled,
                     onClick = onClick,
+                    onDoubleClick = onDoubleClick,
+                    onLongClick = onLongClick,
                     interactionSource = interactionSource,
                     indication = LocalIndication.current
+                )
+                .then(
+                    if (onClickWhenDisabled != null && !enabled)
+                        Modifier.clickable(
+                            onClick = onClickWhenDisabled,
+                            interactionSource = interactionSource,
+                            indication = null
+                        )
+                    else Modifier
                 )
                 .then(
                     if (border == null) Modifier else Modifier.border(border, shape = shape)

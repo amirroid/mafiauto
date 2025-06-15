@@ -65,11 +65,14 @@
 
     <string name="card_bracelet">Bracelet</string>
     <string name="card_silence">Silence of the Lambs</string>
-    <string name="card_face_up">Face Change</string>
+    <string name="card_face_up">Face Up</string>
     <string name="card_beautiful_mind">Beautiful Mind</string>
 
     <string name="bracelet_last_card_explanation">Puts a magical bracelet on you that blocks the next elimination attempt. Only works once.</string>
     <string name="silence_last_card_explanation">Silences all accusations against you in the next phase. No one can vote or defend against you.</string>
     <string name="face_up_last_card_explanation">Swap your identity with another player, redirecting all current votes to them.</string>
     <string name="beautiful_mind_last_card_explanation">Grants you one secret vote at the end of the round, possibly changing the outcome.</string>
+
+
+    <string name="assign_roles_hint">Number of roles must match player count, and Mafia must be fewer than non-Mafia.</string>
 </resources>

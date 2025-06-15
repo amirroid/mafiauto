@@ -21,6 +21,7 @@ import ir.amirroid.mafiauto.design_system.components.list.ListItemDefaults
 fun MListItem(
     text: @Composable BoxScope.() -> Unit,
     onClick: () -> Unit,
+    onLongClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     colors: ListItemColors = ListItemDefaults.defaultColors,
     contentPadding: PaddingValues = ListItemDefaults.defaultContentPadding,
@@ -35,7 +36,8 @@ fun MListItem(
         color = colors.containerColor,
         border = BorderStroke(borderWidth, colors.strokeColor),
         shape = shape,
-        enabled = enabled
+        enabled = enabled,
+        onLongClick = onLongClick
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(contentPadding),

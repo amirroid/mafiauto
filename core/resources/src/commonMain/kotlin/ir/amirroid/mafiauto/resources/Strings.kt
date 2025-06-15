@@ -79,4 +79,7 @@ object Strings {
     val silenceCardName = Res.string.card_silence
     val faceUpCardName = Res.string.card_face_up
     val beautifulMindCardName = Res.string.card_beautiful_mind
+
+
+    val assignRolesHint = Res.string.assign_roles_hint
 }

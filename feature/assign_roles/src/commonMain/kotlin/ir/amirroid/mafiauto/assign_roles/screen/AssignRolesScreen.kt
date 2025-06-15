@@ -20,8 +20,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -37,6 +39,7 @@ import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
+import ir.amirroid.mafiauto.assign_roles.dialogs.RoleExplanationDialog
 import ir.amirroid.mafiauto.assign_roles.viewmodel.AssignRolesViewModel
 import ir.amirroid.mafiauto.common.compose.components.BackButton
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
@@ -47,11 +50,13 @@ import ir.amirroid.mafiauto.design_system.components.appbar.rememberCollapsingAp
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.list.selectable.MToggleListItem
+import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.role.RoleUiModel
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -62,10 +67,16 @@ fun AssignRolesScreen(
     onPickRoles: () -> Unit,
     viewModel: AssignRolesViewModel = koinViewModel()
 ) {
-    val selectedRoles by viewModel.selectedRoles.collectAsStateWithLifecycle(emptyList())
     val hazeState = rememberHazeState()
     val hazeStyle = HazeMaterials.thin(AppTheme.colorScheme.surface)
     val collapsingAppBarState = rememberCollapsingAppBarState()
+    val scope = rememberCoroutineScope()
+
+    val selectedRoles by viewModel.selectedRoles.collectAsStateWithLifecycle(emptyList())
+    val previewRole = viewModel.selectedRoleToPreviewExplanation
+    val enabledNextPage = remember(selectedRoles) { viewModel.checkConditions() }
+
+    val snakeBarController = LocalSnakeBarControllerState.current
 
     Box(contentAlignment = Alignment.BottomCenter) {
         CollapsingTopAppBarScaffold(
@@ -80,7 +91,8 @@ fun AssignRolesScreen(
                 selectedRoles = selectedRoles,
                 onToggle = viewModel::toggleRole,
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = paddingValues + PaddingValues(bottom = 80.dp) + defaultContentPadding()
+                contentPadding = paddingValues + PaddingValues(bottom = 80.dp) + defaultContentPadding(),
+                onShowPreview = viewModel::showPreview
             )
         }
 
@@ -89,7 +101,8 @@ fun AssignRolesScreen(
                 viewModel.selectRoles()
                 onPickRoles.invoke()
             },
-            enabledNextPage = selectedRoles.size == viewModel.selectedPlayersCount,
+            onWarning = { scope.launch { snakeBarController.show(Resources.strings.assignRolesHint) } },
+            enabledNextPage = enabledNextPage,
             modifier = Modifier
                 .fillMaxWidth()
                 .hazeEffect(hazeState, hazeStyle)
@@ -97,6 +110,10 @@ fun AssignRolesScreen(
                 .imePadding()
                 .navigationBarsPadding()
         )
+    }
+
+    previewRole?.let {
+        RoleExplanationDialog(it, onDismissRequest = viewModel::dismissPreview)
     }
 }
 
@@ -118,6 +135,7 @@ private fun RolesList(
     roles: List<RoleUiModel>,
     selectedRoles: List<RoleUiModel>,
     onToggle: (RoleUiModel) -> Unit,
+    onShowPreview: (RoleUiModel) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues()
 ) {
@@ -133,7 +151,7 @@ private fun RolesList(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         groupedRoles.forEach { (alignment, roles) ->
-            item("alignment-$alignment", contentType = "alignment", span = { GridItemSpan(2) }) {
+            item("alignment$alignment", contentType = "alignment", span = { GridItemSpan(2) }) {
                 Text(
                     text = stringResource(alignment),
                     style = AppTheme.typography.caption,
@@ -143,7 +161,7 @@ private fun RolesList(
             }
             itemsIndexed(
                 roles,
-                key = { _, item -> item.key },
+                key = { _, item -> "role${item.key}" },
                 contentType = { _, _ -> "role" }) { index, role ->
                 val selected = remember(selectedRoles) { selectedRoles.contains(role) }
                 val itemShape = when {
@@ -162,7 +180,8 @@ private fun RolesList(
                     text = { MText(stringResource(role.name)) },
                     selected = selected,
                     onClick = { onToggle.invoke(role) },
-                    shape = itemShape
+                    shape = itemShape,
+                    onLongClick = { onShowPreview.invoke(role) }
                 )
             }
         }
@@ -172,6 +191,7 @@ private fun RolesList(
 @Composable
 private fun BottomBar(
     onNextClick: () -> Unit,
+    onWarning: () -> Unit,
     modifier: Modifier = Modifier,
     enabledNextPage: Boolean
 ) {
@@ -182,7 +202,8 @@ private fun BottomBar(
         MButton(
             onClick = onNextClick,
             modifier = Modifier.height(48.dp),
-            enabled = enabledNextPage
+            enabled = enabledNextPage,
+            onClickWhenDisabled = onWarning
         ) {
             MText(stringResource(Resources.strings.next))
             MIcon(

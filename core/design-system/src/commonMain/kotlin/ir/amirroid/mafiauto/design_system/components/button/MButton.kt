@@ -27,6 +27,7 @@ import ir.amirroid.mafiauto.design_system.locales.LocalTextStyle
 fun MButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onClickWhenDisabled: (() -> Unit)? = null,
     colors: ButtonColors = ButtonDefaults.primaryButtonColors,
     shape: Shape = ButtonDefaults.defaultShape,
     enabled: Boolean = true,
@@ -47,7 +48,8 @@ fun MButton(
         shape = shape,
         contentColor = contentColor,
         enabled = enabled,
-        color = containerColor
+        color = containerColor,
+        onClickWhenDisabled = onClickWhenDisabled
     ) {
         CompositionLocalProvider(LocalTextStyle provides AppTheme.typography.button) {
             Row(
@@ -64,6 +66,7 @@ fun MButton(
 fun MOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onClickWhenDisabled: (() -> Unit)? = null,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors,
     shape: Shape = ButtonDefaults.defaultShape,
     enabled: Boolean = true,
@@ -86,7 +89,8 @@ fun MOutlinedButton(
         contentColor = contentColor,
         enabled = enabled,
         color = Color.Transparent,
-        border = BorderStroke(borderWidth, borderColor)
+        border = BorderStroke(borderWidth, borderColor),
+        onClickWhenDisabled = onClickWhenDisabled
     ) {
         CompositionLocalProvider(LocalTextStyle provides AppTheme.typography.button) {
             Row(

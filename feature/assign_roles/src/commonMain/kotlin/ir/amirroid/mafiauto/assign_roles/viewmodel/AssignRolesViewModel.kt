@@ -1,7 +1,8 @@
 package ir.amirroid.mafiauto.assign_roles.viewmodel
 
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import ir.amirroid.mafiauto.domain.model.RoleDescriptor
+import ir.amirroid.mafiauto.domain.model.Alignment
 import ir.amirroid.mafiauto.domain.usecase.player.GetSelectedPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.role.GetAllRoleDescriptorsUseCase
 import ir.amirroid.mafiauto.domain.usecase.role.SelectNewRolesUseCase
@@ -19,10 +20,11 @@ class AssignRolesViewModel(
     private val rolesDescriptors = getAllRoleDescriptorsUseCase()
     val roles = rolesDescriptors.map { it.toUiModel() }
 
-    val selectedPlayersCount = getAllSelectedPlayersUseCase.invoke().size
-
     private val _selectedRoles = MutableStateFlow(emptySet<RoleUiModel>())
     val selectedRoles = _selectedRoles.map { it.toList() }
+
+    var selectedRoleToPreviewExplanation by mutableStateOf<RoleUiModel?>(null)
+    private val selectedPlayersCount = getAllSelectedPlayersUseCase.invoke().size
 
     fun toggleRole(role: RoleUiModel) {
         _selectedRoles.update {
@@ -30,10 +32,23 @@ class AssignRolesViewModel(
         }
     }
 
+    fun showPreview(role: RoleUiModel) {
+        selectedRoleToPreviewExplanation = role
+    }
+
+    fun dismissPreview() {
+        selectedRoleToPreviewExplanation = null
+    }
+
     fun selectRoles() {
         selectNewRolesUseCase.invoke(_selectedRoles.value.map { it.toDomain() })
     }
 
+    fun checkConditions(): Boolean {
+        val selectedRole = _selectedRoles.value
+        return selectedRole.size == selectedPlayersCount &&
+                selectedRole.count { it.toDomain().alignment != Alignment.Mafia } > selectedRole.count { it.toDomain().alignment == Alignment.Mafia }
+    }
 
     private fun RoleUiModel.toDomain() = rolesDescriptors.first { it.key == key }
 }
