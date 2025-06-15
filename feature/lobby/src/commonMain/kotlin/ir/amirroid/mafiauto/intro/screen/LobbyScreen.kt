@@ -48,6 +48,7 @@ import ir.amirroid.mafiauto.design_system.components.field.MTextField
 import ir.amirroid.mafiauto.design_system.components.field.TextFieldsDefaults
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.list.selectable.MToggleListItem
+import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
@@ -72,6 +73,7 @@ fun LobbyScreen(
     val focusManager = LocalFocusManager.current
     val collapsingAppBarState = rememberCollapsingAppBarState()
     val scope = rememberCoroutineScope()
+    val snakeBarController = LocalSnakeBarControllerState.current
 
     Box(contentAlignment = Alignment.BottomCenter) {
         CollapsingTopAppBarScaffold(
@@ -106,6 +108,7 @@ fun LobbyScreen(
                 viewModel.selectPlayers()
                 onPickPlayers.invoke()
             },
+            onWarning = { scope.launch { snakeBarController.show(Resources.strings.selectPlayersHint) } },
             modifier = Modifier
                 .fillMaxWidth()
                 .hazeEffect(hazeState, hazeStyle)
@@ -189,6 +192,7 @@ private fun AddPlayerBar(
     newPlayerName: String,
     onNewPlayerNameChange: (String) -> Unit,
     onAddClick: () -> Unit,
+    onWarning: () -> Unit,
     onNextClick: () -> Unit,
     modifier: Modifier = Modifier,
     nextPageEnabled: Boolean
@@ -213,6 +217,7 @@ private fun AddPlayerBar(
             onClick = {
                 if (isNewPlayerNameNotEmpty) onAddClick.invoke() else onNextClick.invoke()
             },
+            onClickWhenDisabled = onWarning,
             modifier = Modifier.height(48.dp),
             enabled = nextPageEnabled || isNewPlayerNameNotEmpty
         ) {

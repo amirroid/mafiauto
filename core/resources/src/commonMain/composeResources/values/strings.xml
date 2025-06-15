@@ -74,5 +74,6 @@
     <string name="beautiful_mind_last_card_explanation">Grants you one secret vote at the end of the round, possibly changing the outcome.</string>
 
 
-    <string name="assign_roles_hint">Number of roles must match player count, and Mafia must be fewer than non-Mafia.</string>
+    <string name="assign_roles_hint">Number of roles must match player count, and Mafia must be fewer than non-Mafia</string>
+    <string name="select_players_hint">At least 5 players are required to start the game</string>
 </resources>

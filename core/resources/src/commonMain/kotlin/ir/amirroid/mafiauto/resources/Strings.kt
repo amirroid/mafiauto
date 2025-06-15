@@ -82,4 +82,5 @@ object Strings {
 
 
     val assignRolesHint = Res.string.assign_roles_hint
+    val selectPlayersHint = Res.string.select_players_hint
 }
