@@ -62,6 +62,8 @@ class GameRepositoryImpl(
         engine.handleNightActions(actions.map { it.toEngine() })
     }
 
+    override fun handleFate() = engine.handleFatePhase()
+
     override fun applyLastCard(card: LastCardDescriptor, pickedPlayers: List<PlayerWithRole>) {
         engine.applyLastCard(card.toEngine(), getEnginePlayersFromDomain(pickedPlayers))
     }

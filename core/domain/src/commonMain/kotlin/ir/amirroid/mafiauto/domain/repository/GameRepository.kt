@@ -32,6 +32,7 @@ interface GameRepository {
     fun getDefenseCandidates(playerVotes: Map<PlayerWithRole, Int>): List<PlayerWithRole>
 
     fun handleNightActions(actions: List<NightActionDescriptor>)
+    fun handleFate()
 
     fun applyLastCard(card: LastCardDescriptor, pickedPlayers: List<PlayerWithRole>)
 }

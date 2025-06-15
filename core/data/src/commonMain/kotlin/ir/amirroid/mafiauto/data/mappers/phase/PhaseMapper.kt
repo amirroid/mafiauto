@@ -9,7 +9,10 @@ fun Phase.toDomain() = when (this) {
     is Phase.Day -> GamePhase.Day
     is Phase.Night -> GamePhase.Night(options = options.map { it.toDomain() })
     is Phase.Voting -> GamePhase.Voting
-    is Phase.Fate -> GamePhase.Fate(targetPlayer = targetPlayer.toPlayerRoleDomain())
+    is Phase.Fate -> GamePhase.Fate(
+        targetPlayer = targetPlayer.toPlayerRoleDomain(),
+        sameVotesDefenders = sameVotesDefenders.map { it.toPlayerRoleDomain() })
+
     is Phase.LastCard -> GamePhase.LastCard(player = player.toPlayerRoleDomain())
     is Phase.Result -> GamePhase.Result
     is Phase.Defending -> GamePhase.Defending(

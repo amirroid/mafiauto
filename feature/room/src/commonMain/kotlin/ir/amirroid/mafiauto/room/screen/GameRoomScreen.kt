@@ -48,6 +48,7 @@ import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
+import ir.amirroid.mafiauto.room.dialogs.FateDialog
 import ir.amirroid.mafiauto.room.dialogs.LastCardDialog
 import ir.amirroid.mafiauto.room.dialogs.ShowPlayerRoleDialog
 import ir.amirroid.mafiauto.room.dialogs.ShowStatusDialog
@@ -133,6 +134,13 @@ fun GameRoomScreen(
             players = players
         )
     }
+    if (currentPhase is GamePhaseUiModel.Fate) {
+        FateDialog(
+            targetPlayer = currentPhase.targetPlayer,
+            sameVotesDefenders = currentPhase.sameVotesDefenders,
+            onDismissRequest = viewModel::handleFate
+        )
+    }
 }
 
 @Composable
@@ -163,6 +171,7 @@ fun VotingPhaseDialog(
                     true
                 }
             },
+            allPlayers = players,
             onDismissRequest = onNextPhase
         )
     }

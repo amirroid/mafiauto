@@ -37,6 +37,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun VotingDialog(
     players: List<PlayerWithRoleUiModel>,
+    allPlayers: List<PlayerWithRoleUiModel>,
     totalVotes: Int,
     onSelectedPlayers: (Map<PlayerWithRoleUiModel, Int>) -> Boolean,
     onDismissRequest: () -> Unit
@@ -113,7 +114,9 @@ fun VotingDialog(
 
             MButton(
                 onClick = {
-                    val votesCount = players.associateWith { votes[it.player.id] ?: 0 }
+                    val votesCount = allPlayers
+                        .filter { it.player.isInGame }
+                        .associateWith { votes[it.player.id] ?: 0 }
                     visible = !onSelectedPlayers.invoke(votesCount)
                 },
                 modifier = Modifier

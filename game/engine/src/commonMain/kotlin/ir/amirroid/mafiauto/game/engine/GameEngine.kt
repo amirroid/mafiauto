@@ -128,26 +128,30 @@ class GameEngine(
         val topCandidates = validVotes.filterValues { it == maxVoteCount }.keys
 
         when {
-            topCandidates.size == 1 -> {
-                val selectedPlayer = topCandidates.first()
-                proceedToLastCardPhase(selectedPlayer)
-            }
-
             topCandidates.size > 1 -> {
                 val randomPlayer = topCandidates.random()
-                _currentPhase.update { Phase.Fate(targetPlayer = randomPlayer) }
+                _currentPhase.update {
+                    Phase.Fate(
+                        targetPlayer = randomPlayer,
+                        sameVotesDefenders = topCandidates.toList()
+                    )
+                }
             }
 
-            validVotes.size == 1 -> {
+            validVotes.isNotEmpty() -> {
                 val threshold = (voteMap.size - 1) / 2
-                val entry = validVotes.entries.first()
-                if (entry.value >= threshold) {
-                    proceedToLastCardPhase(entry.key)
+                val entry = validVotes.filterValues { it >= threshold }.keys.firstOrNull()
+                if (entry != null) {
+                    proceedToLastCardPhase(entry)
                 } else proceedToNightPhase()
             }
 
             else -> proceedToNightPhase()
         }
+    }
+
+    fun handleFatePhase() {
+        proceedToLastCardPhase((_currentPhase.value as Phase.Fate).targetPlayer)
     }
 
     private fun proceedToLastCardPhase(player: Player) {

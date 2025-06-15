@@ -32,4 +32,5 @@ val useCaseModule = module {
     factoryOf(::GetAllLastCardsUseCase)
     factoryOf(::ApplyLastCardUseCase)
     factoryOf(::HandleNightActionsUseCase)
+    factoryOf(::HandleFatePhaseUseCase)
 }

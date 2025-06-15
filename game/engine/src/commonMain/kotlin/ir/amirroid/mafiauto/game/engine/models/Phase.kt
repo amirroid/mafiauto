@@ -33,7 +33,7 @@ sealed interface Phase {
      *
      * @property targetPlayer the player selected by random chance.
      */
-    data class Fate(val targetPlayer: Player) : Phase
+    data class Fate(val targetPlayer: Player, val sameVotesDefenders: List<Player>) : Phase
 
     /**
      * Night phase where special roles perform their actions (e.g. killing, saving, investigating).
