@@ -69,7 +69,7 @@ data object ShootAction : RoleAction {
             }
 
             Alignment.Civilian -> updatePlayer(updatedPlayers, shooter.id) {
-                copy(isAlive = false)
+                copy(isAlive = false, currentHealthPoints = 1)
             }
 
             Alignment.Neutral -> updatedPlayers

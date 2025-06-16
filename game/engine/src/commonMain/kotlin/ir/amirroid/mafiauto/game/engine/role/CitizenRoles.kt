@@ -54,6 +54,7 @@ data object Sniper : Role {
     override val executionOrder: Int = 3
     override val isOptionalAbility: Boolean = true
     override val maxAbilityUses: Int = 2
+    override val healthPoints: Int = 2
     override fun getNightAction() = ShootAction
 }
 
