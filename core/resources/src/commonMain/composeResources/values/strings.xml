@@ -33,6 +33,9 @@
     <string name="complete">Complete</string>
     <string name="death_lottery">Death Lottery</string>
     <string name="warning">Warning</string>
+    <string name="night_actions_result">Night’s Reckoning</string>
+    <string name="death_count">Death count</string>
+    <string name="revived_count">Revived count</string>
 
     <string name="neutral">Neutral</string>
 
@@ -50,19 +53,19 @@
     <string name="mayor">Mayor</string>
     <string name="oracle">Oracle</string>
 
-    <string name="god_father_explanation">The Godfather is the mastermind of the Mafia — silent, ruthless, and always in control. While others carry out the dirty work, the Godfather gives the final word. No one suspects him, but he decides who dies.</string>
-    <string name="mafia_explanation">A loyal servant of the Mafia, you operate in the shadows. Each night, you gather with your fellow killers to choose your next victim. Blood spills quietly, and fear spreads — just the way you like it.</string>
-    <string name="doctor_explanation">The Doctor is the guardian angel of the town. Each night, they choose one person to protect — perhaps even themselves. When the Mafia strikes, the Doctor's hands may be the only thing keeping death at bay.</string>
-    <string name="detective_explanation">The Detective hunts the truth in the shadows. Each night, they secretly investigate one player, searching for clues. A single discovery could tip the balance — but expose the Detective, and it may be their last case.</string>
-    <string name="civilian_explanation">A Civilian has no special power — only their instincts and voice. They must survive the night, spot the liars, and guide the town through the storm. The darkness surrounds them, and they must stand tall.</string>
-    <string name="sniper_explanation">The Sniper is a silent protector with one shot — and one chance. When the time is right, they can take a deadly risk to eliminate someone they believe is evil. But beware: one mistake can cost everything.</string>
-    <string name="silencer_explanation">The Silencer is the voice of silence in the Mafia. Each night, they choose a target who will be muted the next day — unable to speak, unable to defend. Fear grows in the silence they leave behind.</string>
-    <string name="bomber_explanation">The Bomber plays for no one but chaos. Their goal? Detonate and take others with them. Hidden in plain sight, they wait for the perfect moment to blow everything to hell.</string>
-    <string name="bulletproof_explanation">The Bulletproof is no easy target. Armed with an unbreakable will and a hidden armor, they can survive a deadly attack — but only once. After that, the shadows close in like on anyone else.</string>
-    <string name="mayor_explanation">The Mayor holds power in broad daylight. At any moment, they may reveal themselves and their vote will count double. A beacon of hope — or a dangerous misstep — depending on when they rise.</string>
-    <string name="oracle_explanation">The Oracle peers into the beyond. If they die, their final vision reveals the alignment of one player. Death does not silence them — it speaks through them, one last time.</string>
-    <string name="joker_explanation">The Joker doesn't care who wins — only that they lose. Their goal is chaos. If they’re executed by vote, they win the game instantly. So go ahead, accuse them... that's exactly what they want.</string>
-    <string name="cult_leader_explanation">The Cult Leader whispers promises in the dark. Each night, they recruit a new follower. Their power grows in secret, consuming the town from within. By the time anyone notices, it's already too late.</string>
+    <string name="god_father_explanation">The Godfather stays in the shadows, commanding every move with cold precision while others carry out his deadly will.</string>
+    <string name="mafia_explanation">As a loyal Mafia member, you gather under the veil of night to silently choose who will not survive until morning.</string>
+    <string name="doctor_explanation">Each night you quietly defy death, selecting one person to protect and hoping your instincts are faster than a killer’s blade.</string>
+    <string name="detective_explanation">Under cover of darkness, you investigate one soul each night, hunting for truth before the enemy hunts you down first.</string>
+    <string name="civilian_explanation">You hold no special power but your voice, standing against the unknown with courage, suspicion, and sheer will to survive.</string>
+    <string name="sniper_explanation">With one bullet and no forgiveness, you wait for the perfect moment to take a life and pray you chose the right target.</string>
+    <string name="silencer_explanation">You strike without blood, silencing a voice each night and watching the town crumble under confusion and fear.</string>
+    <string name="bomber_explanation">You walk among them with a smile, hiding the chaos inside until the moment comes to take them all down in flames.</string>
+    <string name="bulletproof_explanation">Wearing unseen armor, you withstand a deadly blow once, but after that you’re just another name on the list.</string>
+    <string name="mayor_explanation">Your vote hides in plain sight, ready to be revealed when the stakes are high enough to change the town’s destiny.</string>
+    <string name="oracle_explanation">If death comes, you don’t leave empty-handed — your final vision uncovers one truth before you disappear forever.</string>
+    <string name="joker_explanation">You thrive on madness, winning only if they vote you out, so play the fool and let them hand you your twisted victory.</string>
+    <string name="cult_leader_explanation">You corrupt from within, converting one mind at a time until the town realizes — too late — that it belongs to you.</string>
 
 
     <string name="card_bracelet">Bracelet</string>

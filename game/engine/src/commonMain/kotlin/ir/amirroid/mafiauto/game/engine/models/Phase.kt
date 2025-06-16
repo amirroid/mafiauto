@@ -3,45 +3,54 @@ package ir.amirroid.mafiauto.game.engine.models
 sealed interface Phase {
 
     /**
-     * Day phase where players discuss and try to identify suspicious behavior.
+     * Phase where players discuss freely to identify suspicious behavior
+     * and try to persuade others before any voting begins.
      */
     data object Day : Phase
 
     /**
-     * Main voting phase where each player casts a vote against a suspect.
+     * Phase where all players vote publicly to accuse a suspect of being evil.
      */
     data object Voting : Phase
 
     /**
-     * Players with the highest number of votes defend themselves.
+     * Phase where the most-voted players are given a chance to defend themselves
+     * before a final vote or decision is made.
      *
-     * @property defenders the list of players required to defend.
+     * @property defenders The list of players who must defend themselves.
      */
     data class Defending(val defenders: List<Player>) : Phase
 
     /**
-     * Phase where a player about to be eliminated is given the chance to play a last-minute card
-     * such as "Beautiful Mind", "Handcuff", etc.
+     * Phase where a player at risk of elimination is given a chance
+     * to use a last-minute ability or card (e.g., "Beautiful Mind", "Handcuff").
      *
-     * @property player the player who may play a special card.
+     * @property player The player who may play a special ability or card.
      */
     data class LastCard(val player: Player) : Phase
 
     /**
-     * Final random elimination when multiple players tie in votes
-     * and no clear decision can be made — one will be eliminated by chance.
+     * Phase used when multiple players tie in the vote count
+     * and no clear elimination can be determined. One player is chosen at random.
      *
-     * @property targetPlayer the player selected by random chance.
+     * @property targetPlayer The player selected by chance for elimination.
+     * @property sameVotesDefenders The players who were tied in the vote.
      */
     data class Fate(val targetPlayer: Player, val sameVotesDefenders: List<Player>) : Phase
 
     /**
-     * Night phase where special roles perform their actions (e.g. killing, saving, investigating).
+     * Phase that occurs at night when special roles (e.g., Mafia, Doctor, Investigator)
+     * secretly perform their actions.
+     *
+     * @property options A list of possible targets for night actions.
      */
     data class Night(val options: List<NightTargetOptions>) : Phase
 
     /**
-     * Result phase where the outcome of the previous night/day is revealed to players.
+     * Phase where the outcome of night actions (e.g., deaths, revivals, investigations)
+     * is revealed to all players before transitioning back to the Day phase.
+     *
+     * @property result The result of all night actions, including deaths and revivals.
      */
-    data object Result : Phase
+    data class Result(val result: NightActionsResult) : Phase
 }

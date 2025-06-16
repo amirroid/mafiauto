@@ -55,6 +55,9 @@ object Strings {
     val mayor = Res.string.mayor
     val oracle = Res.string.oracle
     val warning = Res.string.warning
+    val nightActionsResult = Res.string.night_actions_result
+    val revivedCount = Res.string.revived_count
+    val deathCount = Res.string.death_count
 
     // Explanations
     val godFatherExplanation = Res.string.god_father_explanation

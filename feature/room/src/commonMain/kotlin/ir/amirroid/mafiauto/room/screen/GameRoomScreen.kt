@@ -50,6 +50,7 @@ import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.room.dialogs.FateDialog
 import ir.amirroid.mafiauto.room.dialogs.LastCardDialog
+import ir.amirroid.mafiauto.room.dialogs.NightActionsResultDialog
 import ir.amirroid.mafiauto.room.dialogs.ShowPlayerRoleDialog
 import ir.amirroid.mafiauto.room.dialogs.ShowStatusDialog
 import ir.amirroid.mafiauto.room.dialogs.VotingDialog
@@ -139,6 +140,12 @@ fun GameRoomScreen(
             targetPlayer = currentPhase.targetPlayer,
             sameVotesDefenders = currentPhase.sameVotesDefenders,
             onDismissRequest = viewModel::handleFate
+        )
+    }
+    if (currentPhase is GamePhaseUiModel.Result) {
+        NightActionsResultDialog(
+            result = currentPhase.result,
+            onDismissRequest = viewModel::nextPhase
         )
     }
 }

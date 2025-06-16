@@ -11,5 +11,5 @@ sealed interface GamePhase {
     ) : GamePhase
 
     data class Night(val options: List<NightTargetOptions>) : GamePhase
-    data object Result : GamePhase
+    data class Result(val result: NightActionsResult) : GamePhase
 }

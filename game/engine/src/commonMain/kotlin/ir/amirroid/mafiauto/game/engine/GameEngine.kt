@@ -3,6 +3,7 @@ package ir.amirroid.mafiauto.game.engine
 import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
 import ir.amirroid.mafiauto.game.engine.models.NightAction
+import ir.amirroid.mafiauto.game.engine.models.NightActionsResult
 import ir.amirroid.mafiauto.game.engine.models.NightTargetOptions
 import ir.amirroid.mafiauto.game.engine.models.Phase
 import ir.amirroid.mafiauto.game.engine.models.Player
@@ -81,7 +82,6 @@ class GameEngine(
         updatePlayer(playerId) { copy(isKick = false) }
     }
 
-
     private fun updatePlayer(
         targetId: Long,
         transform: Player.() -> Player
@@ -89,21 +89,6 @@ class GameEngine(
         _players.update {
             it.toMutableList().apply {
                 val index = indexOfFirst { player -> player.id == targetId }
-                if (index != -1) {
-                    this[index] = this[index].transform()
-                }
-            }
-        }
-    }
-
-
-    private fun updatePlayer(
-        target: Player,
-        transform: Player.() -> Player
-    ) {
-        _players.update {
-            it.toMutableList().apply {
-                val index = indexOfFirst { player -> player.id == target.id }
                 if (index != -1) {
                     this[index] = this[index].transform()
                 }
@@ -193,7 +178,8 @@ class GameEngine(
 
     private fun proceedToResultPhase() {
         val inDayActions = _scheduledActions.value.filter { it.executeOnDay == _currentDay.value }
-        var currentPlayers = _players.value
+        val initialPlayers = _players.value
+        var currentPlayers = initialPlayers
         inDayActions.forEach { scheduledAction ->
             val playerRoleAction =
                 scheduledAction.action.player.role.getNightAction() ?: return@forEach
@@ -203,7 +189,22 @@ class GameEngine(
             }
         }
         updatePlayers(currentPlayers)
-        _currentPhase.update { Phase.Result }
+        val result = getNightActionsResult(initialPlayers, currentPlayers)
+        _currentPhase.update { Phase.Result(result) }
+    }
+
+    private fun getNightActionsResult(
+        initialPlayers: List<Player>,
+        newPlayers: List<Player>
+    ): NightActionsResult {
+        return NightActionsResult(
+            deathCount = (initialPlayers.count { it.isAlive } - newPlayers.count { it.isAlive }).coerceAtLeast(
+                0
+            ),
+            revivedCount = (newPlayers.count { it.isAlive } - initialPlayers.count { it.isAlive }).coerceAtLeast(
+                0
+            )
+        )
     }
 
     override fun updatePlayers(newPlayers: List<Player>) {
