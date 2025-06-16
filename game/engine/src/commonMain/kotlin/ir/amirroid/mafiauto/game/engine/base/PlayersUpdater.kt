@@ -1,7 +1,7 @@
-package ir.amirroid.mafiauto.game.engine.utils
+package ir.amirroid.mafiauto.game.engine.base
 
 import ir.amirroid.mafiauto.game.engine.models.Player
 
-interface PlayersHolder {
+interface PlayersUpdater {
     fun updatePlayers(newPlayers: List<Player>)
 }

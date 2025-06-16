@@ -18,5 +18,6 @@ data class SnackBarData(
 }
 
 enum class SnackBaType(val displayName: StringResource) {
-    WARNING(Resources.strings.warning)
+    WARNING(Resources.strings.warning),
+    INFO(Resources.strings.info)
 }

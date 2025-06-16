@@ -14,11 +14,15 @@ object BraceletCard : LastCard {
         player: Player,
         pickedPlayers: List<Player>,
         allPlayers: List<Player>,
-        handle: LastCardHandler
+        handler: LastCardHandler
     ) {
         val target = pickedPlayers.firstOrNull() ?: return
-        handle.newMessage(Resources.strings.doneMessage)
-        handle(updatePlayer(players = allPlayers, target.id) { copy(canUseAbility = false) })
+        handler.sendMessage(Resources.strings.doneMessage)
+        handler.updatePlayers(
+            updatePlayer(
+                players = allPlayers,
+                target.id
+            ) { copy(canUseAbility = false) })
     }
 }
 
@@ -33,7 +37,7 @@ object SilenceCard : LastCard {
         player: Player,
         pickedPlayers: List<Player>,
         allPlayers: List<Player>,
-        handle: LastCardHandler
+        handler: LastCardHandler
     ) {
         if (pickedPlayers.isEmpty()) return
         var updatedPlayers = allPlayers
@@ -42,8 +46,8 @@ object SilenceCard : LastCard {
                 copy(isSilenced = true)
             }
         }
-        handle.newMessage(Resources.strings.doneMessage)
-        handle(updatedPlayers)
+        handler.sendMessage(Resources.strings.doneMessage)
+        handler.updatePlayers(updatedPlayers)
     }
 }
 
@@ -56,7 +60,7 @@ object FaceUpCard : LastCard {
         player: Player,
         pickedPlayers: List<Player>,
         allPlayers: List<Player>,
-        handle: LastCardHandler
+        handler: LastCardHandler
     ) {
         val target = pickedPlayers.firstOrNull() ?: return
         val withoutCurrent = updatePlayer(allPlayers, player.id) {
@@ -65,8 +69,8 @@ object FaceUpCard : LastCard {
         val finalPlayers = updatePlayer(withoutCurrent, target.id) {
             copy(role = player.role)
         }
-        handle.newMessage(Resources.strings.doneMessage)
-        handle(finalPlayers)
+        handler.sendMessage(Resources.strings.doneMessage)
+        handler.updatePlayers(finalPlayers)
     }
 }
 
@@ -79,17 +83,17 @@ object BeautifulMindCard : LastCard {
         player: Player,
         pickedPlayers: List<Player>,
         allPlayers: List<Player>,
-        handle: LastCardHandler
+        handler: LastCardHandler
     ) {
         val target = pickedPlayers.firstOrNull() ?: return
         if (target.role.alignment == Alignment.Neutral) {
             val newPlayers = updatePlayer(allPlayers, target.id) {
                 copy(isAlive = false, canBackWithSave = false)
             }
-            handle.newMessage(Resources.strings.correctGuess)
-            handle(newPlayers)
+            handler.sendMessage(Resources.strings.correctGuess)
+            handler.updatePlayers(newPlayers)
         } else {
-            handle.newMessage(Resources.strings.wrongGuess)
+            handler.sendMessage(Resources.strings.wrongGuess)
         }
     }
 }

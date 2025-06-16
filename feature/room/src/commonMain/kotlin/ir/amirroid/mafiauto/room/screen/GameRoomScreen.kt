@@ -49,6 +49,7 @@ import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.list.ListItemDefaults
 import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarControllerState
+import ir.amirroid.mafiauto.design_system.components.snakebar.SnackBaType
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
@@ -90,7 +91,9 @@ fun GameRoomScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.messages.collect(snakeBarController::show)
+        viewModel.messages.collect {
+            snakeBarController.show(it, type = SnackBaType.INFO)
+        }
     }
 
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {

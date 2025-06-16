@@ -1,6 +1,8 @@
 package ir.amirroid.mafiauto.game.engine
 
+import ir.amirroid.mafiauto.game.engine.actions.role.NightActionHandler
 import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
+import ir.amirroid.mafiauto.game.engine.base.MessageHandler
 import ir.amirroid.mafiauto.game.engine.base.PlayerTransformer
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
 import ir.amirroid.mafiauto.game.engine.last_card.LastCardHandler
@@ -10,7 +12,7 @@ import ir.amirroid.mafiauto.game.engine.models.NightTargetOptions
 import ir.amirroid.mafiauto.game.engine.models.Phase
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.provider.last_card.LastCardsProvider
-import ir.amirroid.mafiauto.game.engine.utils.PlayersHolder
+import ir.amirroid.mafiauto.game.engine.base.PlayersUpdater
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +26,7 @@ class GameEngine(
     private val lastCardsProvider: LastCardsProvider,
     private val initialPhase: Phase = Phase.Day,
     private val initialDay: Int = 0,
-) : PlayersHolder, PlayerTransformer {
+) : PlayersUpdater, MessageHandler, PlayerTransformer, LastCardHandler {
     private val _currentDay = MutableStateFlow(initialDay)
     private val _currentPhase = MutableStateFlow(initialPhase)
     private val _players = MutableStateFlow(emptyList<Player>())
@@ -43,19 +45,9 @@ class GameEngine(
 
     private val nightActionsHistory = mutableMapOf<Int, List<NightAction>>()
 
-    private val lastCardHandler by lazy {
-        object : LastCardHandler {
-            override fun invoke(newPlayers: List<Player>?) {
-                newPlayers?.let { updatePlayers(it) }
-            }
-
-            override fun newMessage(message: StringResource) {
-                sendMessage(message)
-            }
-        }
+    override fun sendMessage(message: StringResource) {
+        _messages.trySend(message)
     }
-
-    private fun sendMessage(message: StringResource) = _messages.trySend(message)
 
     private fun updatePhase(newPhase: Phase) = _currentPhase.update { newPhase }
 
@@ -188,7 +180,7 @@ class GameEngine(
             player = targetPlayer,
             pickedPlayers = pickedPlayers,
             allPlayers = _players.value,
-            handle = lastCardHandler
+            handler = this
         )
         proceedToNightPhase()
     }
@@ -207,20 +199,53 @@ class GameEngine(
     }
 
     private fun proceedToResultPhase() {
-        val inDayActions = _scheduledActions.value.filter { it.executeOnDay == _currentDay.value }
+        val inDayActions = getActionsForCurrentDay()
         val initialPlayers = _players.value
         var currentPlayers = initialPlayers
-        inDayActions.forEach { scheduledAction ->
+
+        val nightActionHandler = createNightActionHandler { newPlayers ->
+            currentPlayers = newPlayers
+        }
+
+        applyNightActions(inDayActions, { currentPlayers }, nightActionHandler)
+        currentPlayers = currentPlayers.map { it.copy(canUseAbility = true) }
+        updatePlayers(currentPlayers)
+
+        val result = getNightActionsResult(initialPlayers, currentPlayers)
+        _currentPhase.update { Phase.Result(result) }
+    }
+
+    private fun getActionsForCurrentDay(): List<ScheduledAction> {
+        return _scheduledActions.value.filter { it.executeOnDay == _currentDay.value }
+    }
+
+    private fun createNightActionHandler(onPlayersUpdated: (List<Player>) -> Unit): NightActionHandler {
+        return object : NightActionHandler {
+            override fun sendMessage(message: StringResource) {
+                sendMessage(message)
+            }
+
+            override fun updatePlayers(newPlayers: List<Player>) {
+                onPlayersUpdated(newPlayers)
+            }
+        }
+    }
+
+    private fun applyNightActions(
+        actions: List<ScheduledAction>,
+        players: () -> List<Player>,
+        handler: NightActionHandler
+    ) {
+        actions.forEach { scheduledAction ->
             val playerRoleAction =
                 scheduledAction.action.player.role.getNightAction() ?: return@forEach
 
-            playerRoleAction.apply(scheduledAction.action, players = currentPlayers) { newPlayers ->
-                newPlayers?.let { currentPlayers = it }
-            }
+            playerRoleAction.apply(
+                nightAction = scheduledAction.action,
+                players = players.invoke(),
+                handler = handler
+            )
         }
-        updatePlayers(currentPlayers.map { it.copy(canUseAbility = true) })
-        val result = getNightActionsResult(initialPlayers, currentPlayers)
-        _currentPhase.update { Phase.Result(result) }
     }
 
     private fun getNightActionsResult(
