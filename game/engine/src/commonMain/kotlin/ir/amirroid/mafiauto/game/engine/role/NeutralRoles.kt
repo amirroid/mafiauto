@@ -10,6 +10,7 @@ data object Joker : Role {
     override val explanation = Resources.strings.jokerExplanation
     override val alignment = Alignment.Neutral
     override val hasNightAction = false
+    override val executionOrder: Int = 3
     override fun getNightAction() = null
 }
 
@@ -19,6 +20,7 @@ data object CultLeader : Role {
     override val explanation = Resources.strings.cultLeaderExplanation
     override val alignment = Alignment.Neutral
     override val hasNightAction = true
+    override val executionOrder: Int = 3
     override fun getNightAction() = null
     override fun getNightActionTargetPlayers(
         previewsTarget: Player?,

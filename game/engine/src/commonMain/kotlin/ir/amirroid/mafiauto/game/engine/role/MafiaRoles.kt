@@ -12,6 +12,9 @@ data object GodFather : Role {
     override val alignment = Alignment.Mafia
     override val hasNightAction = true
     override fun getNightAction() = KillAction
+    override val executionOrder: Int
+        get() = 1
+
     override fun getNightActionTargetPlayers(
         previewsTarget: Player?,
         allPlayers: List<Player>
@@ -27,4 +30,6 @@ data object Mafia : Role {
     override val alignment = Alignment.Mafia
     override val hasNightAction = false
     override fun getNightAction() = null
+    override val executionOrder: Int
+        get() = 2
 }

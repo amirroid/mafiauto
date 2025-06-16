@@ -17,7 +17,7 @@ data object KillAction : RoleAction {
 
 data object SaveAction : RoleAction {
     override fun apply(nightAction: NightAction, players: List<Player>, handle: HandleNightAction) {
-        if (nightAction.target.canBackWithSave.not()) return
+        if (nightAction.target.canBackWithSave.not() || nightAction.target.isAlive) return
         val newHealthPoints = nightAction.target.currentHealthPoints + 1
         handle.invoke(
             updatePlayer(

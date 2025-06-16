@@ -9,6 +9,7 @@ import ir.amirroid.mafiauto.game.engine.models.NightTargetOptions
 import ir.amirroid.mafiauto.game.engine.models.Phase
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.provider.last_card.LastCardsProvider
+import ir.amirroid.mafiauto.game.engine.role.Alignment
 import ir.amirroid.mafiauto.game.engine.utils.PlayersHolder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -162,7 +163,7 @@ class GameEngine(
         val allPlayers = _players.value
         val options = allPlayers.filter { it.role.hasNightAction }.map {
             NightTargetOptions(it, it.role.getNightActionTargetPlayers(null, allPlayers))
-        }
+        }.sortedBy { it.player.role.executionOrder }
         _currentPhase.update { Phase.Night(options) }
     }
 

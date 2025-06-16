@@ -13,6 +13,7 @@ data object Doctor : Role {
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
     override fun getNightAction() = SaveAction
+    override val executionOrder: Int = 3
     override fun getNightActionTargetPlayers(
         previewsTarget: Player?,
         allPlayers: List<Player>
@@ -29,6 +30,7 @@ data object Detective : Role {
     override val explanation = Resources.strings.detectiveExplanation
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
+    override val executionOrder: Int = 3
     override fun getNightAction() = null
 }
 
@@ -38,6 +40,7 @@ data object Civilian : Role {
     override val explanation = Resources.strings.civilianExplanation
     override val alignment = Alignment.Civilian
     override val hasNightAction = false
+    override val executionOrder: Int = 3
     override fun getNightAction() = null
 }
 
@@ -47,6 +50,7 @@ data object Sniper : Role {
     override val explanation = Resources.strings.sniperExplanation
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
+    override val executionOrder: Int = 3
     override fun getNightAction() = null
 }
 
@@ -55,6 +59,7 @@ data object Silencer : Role {
     override val name = Resources.strings.silencer
     override val explanation = Resources.strings.silencerExplanation
     override val alignment = Alignment.Mafia
+    override val executionOrder: Int = 3
     override val hasNightAction = true
     override fun getNightAction() = null
 }
@@ -65,6 +70,7 @@ data object Bomber : Role {
     override val explanation = Resources.strings.bomberExplanation
     override val alignment = Alignment.Neutral
     override val hasNightAction = true
+    override val executionOrder: Int = 3
     override fun getNightAction() = null
 }
 
@@ -74,6 +80,7 @@ data object Bulletproof : Role {
     override val explanation = Resources.strings.bulletproofExplanation
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
+    override val executionOrder: Int = 3
     override fun getNightAction() = null
 }
 
@@ -83,6 +90,7 @@ data object Mayor : Role {
     override val explanation = Resources.strings.mayorExplanation
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
+    override val executionOrder: Int = 3
     override fun getNightAction() = null
 }
 
@@ -92,5 +100,6 @@ data object Oracle : Role {
     override val explanation = Resources.strings.oracleExplanation
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
+    override val executionOrder: Int = 3
     override fun getNightAction() = null
 }
