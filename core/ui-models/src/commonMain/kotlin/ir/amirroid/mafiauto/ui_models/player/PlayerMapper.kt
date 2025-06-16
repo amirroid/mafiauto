@@ -7,5 +7,6 @@ fun Player.toUiModel() = PlayerUiModel(
     id = id,
     isAlive = isAlive,
     isKick = isKick,
-    isSilenced = isSilenced
+    isSilenced = isSilenced,
+    canUseAbility = canUseAbility
 )

@@ -10,7 +10,8 @@ data class Player(
     val isKick: Boolean = false,
     val canBackWithSave: Boolean = true,
     val currentHealthPoints: Int = role.healthPoints,
-    val isSilenced: Boolean = false
+    val isSilenced: Boolean = false,
+    val canUseAbility: Boolean = true
 ) {
     val isInGame = isAlive && !isKick
 }

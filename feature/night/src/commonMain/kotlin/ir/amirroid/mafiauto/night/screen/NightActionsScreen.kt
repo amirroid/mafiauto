@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -36,6 +37,7 @@ import compose.icons.evaicons.Outline
 import compose.icons.evaicons.outline.ArrowIosBack
 import compose.icons.evaicons.outline.ArrowIosDownward
 import compose.icons.evaicons.outline.ArrowIosForward
+import compose.icons.evaicons.outline.Lock
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
@@ -100,8 +102,10 @@ fun NightActionsScreen(
                 )
             }
         }
+        val nextEnabled =
+            selectedPlayers[options[pagerState.currentPage].player] != null || options[pagerState.currentPage].player.player.canUseAbility.not()
         BottomBar(
-            enabledNext = selectedPlayers[options[pagerState.currentPage].player] != null,
+            enabledNext = nextEnabled,
             enabledPreviews = pagerState.currentPage > 0,
             onNext = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) } },
             onPreviews = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
@@ -139,9 +143,9 @@ fun SelectOptionPlayersList(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             MText(
                 buildString {
@@ -150,6 +154,14 @@ fun SelectOptionPlayersList(
                     append(stringResource(playerOptions.player.role.name))
                 }
             )
+            if (playerOptions.player.player.canUseAbility.not()) {
+                MIcon(
+                    EvaIcons.Outline.Lock,
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+            Spacer(Modifier.weight(1f))
             val rotation by animateFloatAsState(if (isExpanded) 180f else 0f)
             MIconButton(onClick = { isExpanded = !isExpanded }) {
                 MIcon(
@@ -174,6 +186,7 @@ fun SelectOptionPlayersList(
                     selected = selectedPlayer == player,
                     onClick = { onSelect.invoke(player) },
                     text = { MText(player.player.name) },
+                    enabled = playerOptions.player.player.canUseAbility
                 )
             }
         }

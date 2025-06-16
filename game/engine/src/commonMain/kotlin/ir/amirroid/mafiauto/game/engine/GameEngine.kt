@@ -198,7 +198,7 @@ class GameEngine(
                 newPlayers?.let { currentPlayers = it }
             }
         }
-        updatePlayers(currentPlayers)
+        updatePlayers(currentPlayers.map { it.copy(canUseAbility = true) })
         val result = getNightActionsResult(initialPlayers, currentPlayers)
         _currentPhase.update { Phase.Result(result) }
     }

@@ -16,6 +16,8 @@ object BraceletCard : LastCard {
         allPlayers: List<Player>,
         handle: LastCardHandle
     ) {
+        val target = pickedPlayers.firstOrNull() ?: return
+        handle.invoke(updatePlayer(players = allPlayers, target.id) { copy(canUseAbility = false) })
     }
 }
 
