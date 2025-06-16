@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.game.engine
 
 import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
+import ir.amirroid.mafiauto.game.engine.base.PlayerTransformer
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
 import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.NightActionsResult
@@ -18,7 +19,7 @@ class GameEngine(
     private val lastCardsProvider: LastCardsProvider,
     private val initialPhase: Phase = Phase.Day,
     private val initialDay: Int = 0,
-) : PlayersHolder {
+) : PlayersHolder, PlayerTransformer {
     private val _currentDay = MutableStateFlow(initialDay)
     private val _currentPhase = MutableStateFlow(initialPhase)
     private val _players = MutableStateFlow(emptyList<Player>())
@@ -87,12 +88,7 @@ class GameEngine(
         transform: Player.() -> Player
     ) {
         _players.update {
-            it.toMutableList().apply {
-                val index = indexOfFirst { player -> player.id == targetId }
-                if (index != -1) {
-                    this[index] = this[index].transform()
-                }
-            }
+            updatePlayer(it, targetId, transform)
         }
     }
 
@@ -159,7 +155,13 @@ class GameEngine(
         val phase = currentPhase.value
         if (phase !is Phase.LastCard) return
         val targetPlayer = phase.player
-        card.applyAction(targetPlayer, pickedPlayers)
+        card.applyAction(
+            player = targetPlayer,
+            pickedPlayers = pickedPlayers,
+            allPlayers = _players.value
+        ) { newPlayers ->
+            newPlayers?.let { updatePlayers(it) }
+        }
         proceedToNightPhase()
     }
 

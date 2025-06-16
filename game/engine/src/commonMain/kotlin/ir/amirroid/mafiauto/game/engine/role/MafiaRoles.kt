@@ -19,7 +19,7 @@ data object GodFather : Role {
         previewsTarget: Player?,
         allPlayers: List<Player>
     ): List<Player> {
-        return allPlayers.filter { it.role.key != RoleKeys.GOD_FATHER }
+        return allPlayers.filter { it.role.key != RoleKeys.GOD_FATHER && it.isInGame }
     }
 }
 

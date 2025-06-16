@@ -7,7 +7,7 @@ class LastCardsProviderImpl : LastCardsProvider {
         return listOf(
             BraceletCard,
             SilenceCard,
-            FaceChangeCard,
+            FaceUpCard,
             BeautifulMindCard,
         )
     }
