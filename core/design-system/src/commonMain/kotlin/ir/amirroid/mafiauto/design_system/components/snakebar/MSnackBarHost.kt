@@ -1,6 +1,8 @@
 package ir.amirroid.mafiauto.design_system.components.snakebar
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
@@ -38,10 +40,10 @@ fun MSnackBarHost(
                     }
                     AnimatedVisibility(
                         visible,
-                        enter = slideInVertically { -it },
-                        exit = slideOutVertically { -it }
+                        enter = slideInVertically { -it } + scaleIn(initialScale = 1.1f),
+                        exit = slideOutVertically { -it } + scaleOut(targetScale = 1.1f)
                     ) {
-                        MSnakeBar(snackBar.text, hazeState)
+                        MSnakeBar(text = snackBar.text, type = snackBar.type, hazeState = hazeState)
                     }
                 }
             }

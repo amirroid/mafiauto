@@ -1,14 +1,20 @@
 package ir.amirroid.mafiauto.design_system.components.snakebar
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeEffect
@@ -23,24 +29,29 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun MSnakeBar(
     text: StringResource,
-    hazeState: HazeState
+    type: SnackBaType,
+    hazeState: HazeState,
+    shape: Shape = AppTheme.shapes.large,
+    strokeWidth: Dp = 1.dp
 ) {
     val primaryColor = AppTheme.colorScheme.primary
     Box(
         Modifier.fillMaxWidth()
+            .statusBarsPadding()
+            .padding(16.dp)
+            .clip(shape)
+            .border(strokeWidth, primaryColor, shape = shape)
             .hazeEffect(hazeState, HazeMaterials.thin(AppTheme.colorScheme.surface))
-            .drawWithContent {
-                drawContent()
-                drawLine(
-                    primaryColor,
-                    start = Offset(0f, size.height),
-                    end = Offset(size.width, size.height),
-                    strokeWidth = 1.dp.toPx()
-                )
-            }
-            .padding(horizontal = 16.dp, vertical = 24.dp)
+            .padding(horizontal = 16.dp, vertical = 12.dp)
             .statusBarsPadding()
     ) {
-        MText(stringResource(text), style = AppTheme.typography.h4)
+        Column {
+            MText(
+                stringResource(type.displayName),
+                style = AppTheme.typography.caption,
+                modifier = Modifier.alpha(.7f)
+            )
+            MText(stringResource(text), style = AppTheme.typography.h4)
+        }
     }
 }

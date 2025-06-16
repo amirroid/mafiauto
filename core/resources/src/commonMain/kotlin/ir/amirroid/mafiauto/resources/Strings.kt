@@ -54,6 +54,7 @@ object Strings {
     val bulletproof = Res.string.bulletproof
     val mayor = Res.string.mayor
     val oracle = Res.string.oracle
+    val warning = Res.string.warning
 
     // Explanations
     val godFatherExplanation = Res.string.god_father_explanation

@@ -102,10 +102,10 @@ fun NightActionsScreen(
         }
         BottomBar(
             enabledNext = selectedPlayers[options[pagerState.currentPage].player] != null,
-            enabledPreviews = pagerState.canScrollBackward,
+            enabledPreviews = pagerState.currentPage > 0,
             onNext = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) } },
             onPreviews = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
-            isLastItem = pagerState.canScrollForward.not(),
+            isLastItem = pagerState.currentPage == options.size - 1,
             onComplete = {
                 viewModel.applyActions()
                 onBack.invoke()
