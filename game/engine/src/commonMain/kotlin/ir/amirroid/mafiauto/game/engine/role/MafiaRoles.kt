@@ -33,3 +33,14 @@ data object Mafia : Role {
     override val executionOrder: Int
         get() = 2
 }
+
+
+data object Silencer : Role {
+    override val key = RoleKeys.SILENCER
+    override val name = Resources.strings.silencer
+    override val explanation = Resources.strings.silencerExplanation
+    override val alignment = Alignment.Mafia
+    override val executionOrder: Int = 2
+    override val hasNightAction = true
+    override fun getNightAction() = null
+}

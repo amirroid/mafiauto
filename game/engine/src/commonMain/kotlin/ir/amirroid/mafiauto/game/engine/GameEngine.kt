@@ -1,7 +1,5 @@
 package ir.amirroid.mafiauto.game.engine
 
-import androidx.compose.runtime.Immutable
-import ir.amirroid.mafiauto.game.engine.actions.GameActions
 import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
 import ir.amirroid.mafiauto.game.engine.models.NightAction
@@ -9,20 +7,17 @@ import ir.amirroid.mafiauto.game.engine.models.NightTargetOptions
 import ir.amirroid.mafiauto.game.engine.models.Phase
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.provider.last_card.LastCardsProvider
-import ir.amirroid.mafiauto.game.engine.role.Alignment
 import ir.amirroid.mafiauto.game.engine.utils.PlayersHolder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 
-@Immutable
 class GameEngine(
     private val lastCardsProvider: LastCardsProvider,
     private val initialPhase: Phase = Phase.Day,
     private val initialDay: Int = 0,
-) : GameActions(), PlayersHolder {
-
+) : PlayersHolder {
     private val _currentDay = MutableStateFlow(initialDay)
     private val _currentPhase = MutableStateFlow(initialPhase)
     private val _players = MutableStateFlow(emptyList<Player>())
@@ -36,6 +31,8 @@ class GameEngine(
     val scheduledActions: StateFlow<List<ScheduledAction>> = _scheduledActions
     val lastCards: StateFlow<List<LastCard>> = _lastCards
     val statusCheckCount: StateFlow<Int> = _statusCheckCount
+
+    private val nightActionsHistory = mutableMapOf<Int, List<NightAction>>()
 
     private fun updatePhase(newPhase: Phase) = _currentPhase.update { newPhase }
 
@@ -65,6 +62,7 @@ class GameEngine(
         _scheduledActions.value = emptyList()
         _statusCheckCount.value = 0
         _lastCards.value = lastCardsProvider.getAllLastCards().shuffled()
+        nightActionsHistory.clear()
     }
 
     fun incrementStatusCheckCount() {
@@ -161,8 +159,13 @@ class GameEngine(
 
     private fun proceedToNightPhase() {
         val allPlayers = _players.value
-        val options = allPlayers.filter { it.role.hasNightAction }.map {
-            NightTargetOptions(it, it.role.getNightActionTargetPlayers(null, allPlayers))
+        val options = allPlayers.filter { it.role.hasNightAction }.map { player ->
+            val previewsTarget = nightActionsHistory[_currentDay.value - 1]
+                ?.find { it.player.id == player.id }?.target
+            NightTargetOptions(
+                player,
+                player.role.getNightActionTargetPlayers(previewsTarget, allPlayers)
+            )
         }.sortedBy { it.player.role.executionOrder }
         _currentPhase.update { Phase.Night(options) }
     }
@@ -176,6 +179,7 @@ class GameEngine(
     }
 
     fun handleNightActions(actions: List<NightAction>) {
+        nightActionsHistory[_currentDay.value] = actions
         incrementDay()
         val newScheduledActions = actions.map { action ->
             ScheduledAction(

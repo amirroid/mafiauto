@@ -18,7 +18,7 @@ sealed interface Role {
     fun getNightActionTargetPlayers(
         previewsTarget: Player?,
         allPlayers: List<Player>
-    ): List<Player> = allPlayers
+    ): List<Player> = allPlayers.filter { it.isInGame }
 }
 
 enum class Alignment { Mafia, Civilian, Neutral }

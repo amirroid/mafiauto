@@ -10,7 +10,9 @@ data class Player(
     val isKick: Boolean = false,
     val canBackWithSave: Boolean = true,
     val currentHealthPoints: Int = role.healthPoints
-)
+) {
+    val isInGame = isAlive && !isKick
+}
 
 
 fun List<Player>.findWithId(id: Long) = find { it.id == id }

@@ -18,9 +18,9 @@ data object Doctor : Role {
         previewsTarget: Player?,
         allPlayers: List<Player>
     ): List<Player> {
-        return if (previewsTarget?.role?.key == RoleKeys.DOCTOR) {
+        return (if (previewsTarget?.role?.key == RoleKeys.DOCTOR) {
             allPlayers.filter { player -> player != previewsTarget }
-        } else allPlayers
+        } else allPlayers).filter { it.isInGame && it.canBackWithSave }
     }
 }
 
@@ -51,16 +51,6 @@ data object Sniper : Role {
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
     override val executionOrder: Int = 3
-    override fun getNightAction() = null
-}
-
-data object Silencer : Role {
-    override val key = RoleKeys.SILENCER
-    override val name = Resources.strings.silencer
-    override val explanation = Resources.strings.silencerExplanation
-    override val alignment = Alignment.Mafia
-    override val executionOrder: Int = 3
-    override val hasNightAction = true
     override fun getNightAction() = null
 }
 
