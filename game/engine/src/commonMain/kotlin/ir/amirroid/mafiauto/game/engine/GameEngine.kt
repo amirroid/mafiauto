@@ -176,7 +176,29 @@ class GameEngine(
 
     fun handleNightActions(actions: List<NightAction>) {
         incrementDay()
-        _currentPhase.update { Phase.Day }
+        val newScheduledActions = actions.map { action ->
+            ScheduledAction(
+                action,
+                executeOnDay = action.player.role.getNightAction()?.delayInDays?.let { _currentDay.value + it }
+            )
+        }
+        _scheduledActions.update { it + newScheduledActions }
+        proceedToResultPhase()
+    }
+
+    private fun proceedToResultPhase() {
+        val inDayActions = _scheduledActions.value.filter { it.executeOnDay == _currentDay.value }
+        var currentPlayers = _players.value
+        inDayActions.forEach { scheduledAction ->
+            val playerRoleAction =
+                scheduledAction.action.player.role.getNightAction() ?: return@forEach
+
+            playerRoleAction.apply(scheduledAction.action, players = currentPlayers) { newPlayers ->
+                newPlayers?.let { currentPlayers = it }
+            }
+        }
+        updatePlayers(currentPlayers)
+        _currentPhase.update { Phase.Result }
     }
 
     override fun updatePlayers(newPlayers: List<Player>) {

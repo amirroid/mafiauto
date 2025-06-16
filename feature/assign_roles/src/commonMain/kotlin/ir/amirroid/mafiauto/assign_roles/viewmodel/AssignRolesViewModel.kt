@@ -47,7 +47,8 @@ class AssignRolesViewModel(
     fun checkConditions(): Boolean {
         val selectedRole = _selectedRoles.value
         return selectedRole.size == selectedPlayersCount &&
-                selectedRole.count { it.toDomain().alignment != Alignment.Mafia } > selectedRole.count { it.toDomain().alignment == Alignment.Mafia }
+                selectedRole.count { it.toDomain().alignment != Alignment.Mafia } > selectedRole.count { it.toDomain().alignment == Alignment.Mafia } &&
+                selectedRole.count { it.toDomain().alignment == Alignment.Mafia } > 0
     }
 
     private fun RoleUiModel.toDomain() = rolesDescriptors.first { it.key == key }

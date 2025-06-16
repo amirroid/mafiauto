@@ -8,7 +8,8 @@ data class Player(
     val role: Role,
     val isAlive: Boolean = true,
     val isKick: Boolean = false,
-    val canBackWithSave: Boolean = true
+    val canBackWithSave: Boolean = true,
+    val currentHealthPoints: Int = role.healthPoints
 )
 
 

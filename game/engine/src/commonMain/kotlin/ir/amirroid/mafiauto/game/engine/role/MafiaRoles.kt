@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.game.engine.role
 
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.game.engine.actions.role.*
+import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.resources.Resources
 
 data object GodFather : Role {
@@ -10,7 +11,13 @@ data object GodFather : Role {
     override val explanation = Resources.strings.godFatherExplanation
     override val alignment = Alignment.Mafia
     override val hasNightAction = true
-    override fun getNightAction() = null
+    override fun getNightAction() = KillAction
+    override fun getNightActionTargetPlayers(
+        previewsTarget: Player?,
+        allPlayers: List<Player>
+    ): List<Player> {
+        return allPlayers.filter { it.role.key != RoleKeys.GOD_FATHER }
+    }
 }
 
 data object Mafia : Role {

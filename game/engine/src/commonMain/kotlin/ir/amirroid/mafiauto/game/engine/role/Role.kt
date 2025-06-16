@@ -11,6 +11,7 @@ sealed interface Role {
     val hasNightAction: Boolean
     val executionOrder: Int
         get() = 0
+    val healthPoints: Int get() = 1
     val key: String
 
     fun getNightAction(): RoleAction?

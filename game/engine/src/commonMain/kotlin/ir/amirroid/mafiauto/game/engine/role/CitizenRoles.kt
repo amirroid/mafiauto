@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.game.engine.role
 
+import ir.amirroid.mafiauto.game.engine.actions.role.SaveAction
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.resources.Resources
@@ -11,7 +12,7 @@ data object Doctor : Role {
     override val explanation = Resources.strings.doctorExplanation
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
-    override fun getNightAction() = null
+    override fun getNightAction() = SaveAction
     override fun getNightActionTargetPlayers(
         previewsTarget: Player?,
         allPlayers: List<Player>
