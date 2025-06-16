@@ -6,5 +6,6 @@ data class Player(
     val isAlive: Boolean = true,
     val isKick: Boolean = false,
     val isSilenced: Boolean = false,
-    val canUseAbility: Boolean = true
+    val canUseAbility: Boolean = true,
+    val remainingAbilityUses: Int = Int.MAX_VALUE,
 )

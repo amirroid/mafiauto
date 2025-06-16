@@ -9,7 +9,10 @@ data class PlayerUiModel(
     val isKick: Boolean,
     val isAlive: Boolean,
     val isSilenced: Boolean,
-    val canUseAbility: Boolean
+    val canUseAbility: Boolean,
+    val remainingAbilityUses: Int,
 ) {
     val isInGame = isAlive && !isKick
+    val hasLimitToUseAbilities = remainingAbilityUses != Int.MAX_VALUE
+    val canUseAbilityToNight = canUseAbility && remainingAbilityUses != 0
 }

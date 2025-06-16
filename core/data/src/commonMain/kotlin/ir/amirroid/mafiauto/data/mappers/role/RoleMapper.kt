@@ -11,7 +11,8 @@ fun Role.toDescriptor(): RoleDescriptor {
         explanation = explanation,
         alignment = alignment.toDomain(),
         key = key,
-        hasNightAction = hasNightAction
+        hasNightAction = hasNightAction,
+        isOptionalAbility = isOptionalAbility
     )
 }
 

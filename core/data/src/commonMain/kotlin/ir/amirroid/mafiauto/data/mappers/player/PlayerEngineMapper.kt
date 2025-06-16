@@ -10,6 +10,7 @@ fun EnginePlayer.toPlayerDomain(): Player {
         isAlive = isAlive,
         isKick = isKick,
         isSilenced = isSilenced,
-        canUseAbility = canUseAbility
+        canUseAbility = canUseAbility,
+        remainingAbilityUses = remainingAbilityUses
     )
 }

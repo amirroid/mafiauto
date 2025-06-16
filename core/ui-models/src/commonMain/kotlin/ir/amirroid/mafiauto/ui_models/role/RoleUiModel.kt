@@ -9,4 +9,5 @@ data class RoleUiModel(
     val name: StringResource,
     val explanation: StringResource,
     val alignment: StringResource,
+    val isOptionalAbility: Boolean
 )

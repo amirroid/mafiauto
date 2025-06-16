@@ -13,7 +13,8 @@ sealed interface Role {
         get() = 0
     val healthPoints: Int get() = 1
     val key: String
-
+    val maxAbilityUses: Int get() = Int.MAX_VALUE
+    val isOptionalAbility: Boolean get() = false
     fun getNightAction(): RoleAction?
     fun getNightActionTargetPlayers(
         previewsTarget: Player?,

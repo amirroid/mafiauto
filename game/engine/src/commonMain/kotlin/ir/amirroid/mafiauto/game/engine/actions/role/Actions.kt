@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.game.engine.actions.role
 
 import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.Player
+import ir.amirroid.mafiauto.game.engine.role.Alignment
 
 data object KillAction : RoleAction {
     override fun apply(
@@ -42,6 +43,39 @@ data object InvestigateAction : RoleAction {
         handler: NightActionHandler
     ) {
 
+    }
+}
+
+data object ShootAction : RoleAction {
+    override fun apply(
+        nightAction: NightAction,
+        players: List<Player>,
+        handler: NightActionHandler
+    ) {
+        if (nightAction.player.remainingAbilityUses == 0) return
+
+        val shooter = nightAction.player
+        val target = nightAction.target
+        val updatedPlayers = updatePlayer(players, shooter.id) {
+            copy(remainingAbilityUses = remainingAbilityUses - 1)
+        }
+
+        val finalPlayers = when (target.role.alignment) {
+            Alignment.Mafia -> updatePlayer(updatedPlayers, target.id) {
+                copy(
+                    isAlive = currentHealthPoints.minus(1) == 0,
+                    currentHealthPoints = currentHealthPoints - 1
+                )
+            }
+
+            Alignment.Civilian -> updatePlayer(updatedPlayers, shooter.id) {
+                copy(isAlive = false)
+            }
+
+            Alignment.Neutral -> updatedPlayers
+        }
+
+        handler.updatePlayers(finalPlayers)
     }
 }
 

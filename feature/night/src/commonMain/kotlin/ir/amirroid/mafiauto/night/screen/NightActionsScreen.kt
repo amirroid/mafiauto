@@ -102,8 +102,10 @@ fun NightActionsScreen(
                 )
             }
         }
-        val nextEnabled =
-            selectedPlayers[options[pagerState.currentPage].player] != null || options[pagerState.currentPage].player.player.canUseAbility.not()
+        val nextEnabled = selectedPlayers[options[pagerState.currentPage].player] != null ||
+                options[pagerState.currentPage].player.let {
+                    it.player.canUseAbilityToNight.not() || it.role.isOptionalAbility
+                }
         BottomBar(
             enabledNext = nextEnabled,
             enabledPreviews = pagerState.currentPage > 0,
@@ -132,8 +134,10 @@ fun SelectOptionPlayersList(
     onSelect: (PlayerWithRoleUiModel) -> Unit,
     contentPadding: PaddingValues = PaddingValues()
 ) {
-    val selectedPlayer = selectedPlayers[playerOptions.player]
+    val currentPlayerRole = playerOptions.player
+    val selectedPlayer = selectedPlayers[currentPlayerRole]
     var isExpanded by rememberSaveable { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -143,50 +147,62 @@ fun SelectOptionPlayersList(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             MText(
                 buildString {
-                    append(playerOptions.player.player.name)
+                    append(currentPlayerRole.player.name)
                     append(" - ")
-                    append(stringResource(playerOptions.player.role.name))
+                    append(stringResource(currentPlayerRole.role.name))
+                    if (currentPlayerRole.role.isOptionalAbility) {
+                        append(" - ${stringResource(Resources.strings.optional)}")
+                    }
+                    if (currentPlayerRole.player.hasLimitToUseAbilities) {
+                        append(" - ${currentPlayerRole.player.remainingAbilityUses}X")
+                    }
                 }
             )
-            if (playerOptions.player.player.canUseAbility.not()) {
+            if (!currentPlayerRole.player.canUseAbility) {
                 MIcon(
                     EvaIcons.Outline.Lock,
                     contentDescription = null,
                     modifier = Modifier.size(16.dp)
                 )
             }
-            Spacer(Modifier.weight(1f))
-            val rotation by animateFloatAsState(if (isExpanded) 180f else 0f)
+            Spacer(modifier = Modifier.weight(1f))
             MIconButton(onClick = { isExpanded = !isExpanded }) {
+                val rotation by animateFloatAsState(if (isExpanded) 180f else 0f)
                 MIcon(
                     EvaIcons.Outline.ArrowIosDownward,
                     contentDescription = null,
-                    modifier = Modifier.size(16.dp).rotate(rotation)
+                    modifier = Modifier
+                        .size(16.dp)
+                        .rotate(rotation)
                 )
             }
         }
-        AnimatedVisibility(isExpanded) {
+
+        AnimatedVisibility(visible = isExpanded) {
             MText(
-                stringResource(playerOptions.player.role.explanation),
-                style = AppTheme.typography.caption,
+                stringResource(currentPlayerRole.role.explanation),
+                style = AppTheme.typography.caption
             )
         }
+
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(top = 16.dp)
         ) {
-            items(playerOptions.availableTargets, key = { it.player.id }) { player ->
+            items(
+                items = playerOptions.availableTargets,
+                key = { it.player.id }
+            ) { targetPlayer ->
                 MToggleListItem(
-                    selected = selectedPlayer == player,
-                    onClick = { onSelect.invoke(player) },
-                    text = { MText(player.player.name) },
-                    enabled = playerOptions.player.player.canUseAbility
+                    selected = selectedPlayer == targetPlayer,
+                    onClick = { onSelect(targetPlayer) },
+                    text = { MText(targetPlayer.player.name) },
+                    enabled = currentPlayerRole.player.canUseAbilityToNight
                 )
             }
         }

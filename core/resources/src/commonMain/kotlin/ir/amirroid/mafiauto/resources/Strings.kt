@@ -43,6 +43,7 @@ object Strings {
     val doneMessage = Res.string.done_message
     val wrongGuess = Res.string.wrong_guess
     val correctGuess = Res.string.correct_guess
+    val optional = Res.string.optional
 
 
     // Roles

@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.game.engine.role
 
 import ir.amirroid.mafiauto.game.engine.actions.role.SaveAction
+import ir.amirroid.mafiauto.game.engine.actions.role.ShootAction
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.resources.Resources
@@ -51,7 +52,9 @@ data object Sniper : Role {
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
     override val executionOrder: Int = 3
-    override fun getNightAction() = null
+    override val isOptionalAbility: Boolean = true
+    override val maxAbilityUses: Int = 2
+    override fun getNightAction() = ShootAction
 }
 
 data object Bomber : Role {

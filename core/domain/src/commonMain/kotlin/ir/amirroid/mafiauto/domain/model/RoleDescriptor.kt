@@ -7,7 +7,8 @@ data class RoleDescriptor(
     val explanation: StringResource,
     val alignment: Alignment,
     val key: String,
-    val hasNightAction: Boolean
+    val hasNightAction: Boolean,
+    val isOptionalAbility: Boolean
 )
 
 enum class Alignment { Mafia, Civilian, Neutral }

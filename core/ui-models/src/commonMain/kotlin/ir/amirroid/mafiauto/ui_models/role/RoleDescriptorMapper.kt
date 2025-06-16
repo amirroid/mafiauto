@@ -13,5 +13,6 @@ fun RoleDescriptor.toUiModel() = RoleUiModel(
         Alignment.Mafia -> Resources.strings.mafia
         Alignment.Civilian -> Resources.strings.civilian
         Alignment.Neutral -> Resources.strings.neutral
-    }
+    },
+    isOptionalAbility = isOptionalAbility
 )

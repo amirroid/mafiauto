@@ -11,7 +11,8 @@ data class Player(
     val canBackWithSave: Boolean = true,
     val currentHealthPoints: Int = role.healthPoints,
     val isSilenced: Boolean = false,
-    val canUseAbility: Boolean = true
+    val canUseAbility: Boolean = true,
+    val remainingAbilityUses: Int = role.maxAbilityUses
 ) {
     val isInGame = isAlive && !isKick
 }
