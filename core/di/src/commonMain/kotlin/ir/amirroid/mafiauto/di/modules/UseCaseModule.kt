@@ -31,6 +31,7 @@ val useCaseModule = module {
     factoryOf(::HandleDefenseVoteResultUseCase)
     factoryOf(::GetAllLastCardsUseCase)
     factoryOf(::ApplyLastCardUseCase)
+    factoryOf(::GetCurrentDayUseCase)
     factoryOf(::HandleNightActionsUseCase)
     factoryOf(::HandleFatePhaseUseCase)
 }

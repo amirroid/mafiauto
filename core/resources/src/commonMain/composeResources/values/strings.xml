@@ -36,6 +36,8 @@
     <string name="night_actions_result">Night’s Reckoning</string>
     <string name="death_count">Death count</string>
     <string name="revived_count">Revived count</string>
+    <string name="introduction_round">Introduction Round</string>
+    <string name="round">Round</string>
 
     <string name="neutral">Neutral</string>
 

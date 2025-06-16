@@ -7,6 +7,7 @@ import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import ir.amirroid.mafiauto.domain.usecase.game.ApplyLastCardUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllLastCardsUseCase
+import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentDayUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentPhaseUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetDefenseCandidatesUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetStatusCheckCountUseCase
@@ -48,6 +49,7 @@ class GameRoomViewModel(
     private val getAllLastCardsUseCase: GetAllLastCardsUseCase,
     private val applyLastCardUseCase: ApplyLastCardUseCase,
     private val handleFatePhaseUseCase: HandleFatePhaseUseCase,
+    private val getCurrentDayUseCase: GetCurrentDayUseCase,
     private val coroutineDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _state = MutableStateFlow(GameRoomScreenState())
@@ -62,6 +64,15 @@ class GameRoomViewModel(
         observeInRoomPlayers()
         observeCurrentPhase()
         observeLastCards()
+        observeCurrentDay()
+    }
+
+    private fun observeCurrentDay() = viewModelScope.launch(coroutineDispatcher) {
+        getCurrentDayUseCase().collect { day ->
+            _state.update {
+                it.copy(currentDay = day)
+            }
+        }
     }
 
     private fun observeLastCards() = viewModelScope.launch(coroutineDispatcher) {

@@ -14,6 +14,7 @@ import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.provider.roles.RolesProvider
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 
 class GameRepositoryImpl(
@@ -22,6 +23,7 @@ class GameRepositoryImpl(
 ) : GameRepository {
 
     override val statusChecksCount = engine.statusCheckCount
+    override val currentDay = engine.currentDay
     override val currentPhase = engine.currentPhase.map { it.toDomain() }
     override val lastCards = engine.lastCards.map { cards -> cards.map { it.toDomain() } }
 

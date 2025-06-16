@@ -21,6 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import compose.icons.EvaIcons
@@ -47,6 +49,7 @@ import ir.amirroid.mafiauto.design_system.components.list.ListItemDefaults
 import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.room.dialogs.FateDialog
 import ir.amirroid.mafiauto.room.dialogs.LastCardDialog
@@ -73,6 +76,7 @@ fun GameRoomScreen(
     val statusChecksCount = state.statusChecksCount
     val showStatus = state.showStatus
     val currentPhase = state.currentPhase
+    val currentDay = state.currentDay
     val canCheckStatus = remember(players) { players.count { it.player.isInGame.not() } > 0 }
 
     val hazeState = rememberHazeState()
@@ -100,6 +104,7 @@ fun GameRoomScreen(
         }
         BottomBar(
             currentPhase = currentPhase,
+            currentDay = currentDay,
             statusChecksCount = statusChecksCount,
             canCheckStatus = canCheckStatus,
             onCheckStatus = viewModel::increaseStatusCheck,
@@ -242,6 +247,7 @@ fun GameRoomAppBar() {
 
 @Composable
 private fun BottomBar(
+    currentDay: Int,
     statusChecksCount: Int,
     currentPhase: GamePhaseUiModel,
     canCheckStatus: Boolean,
@@ -259,7 +265,11 @@ private fun BottomBar(
             onCheck = onCheckStatus,
             onDecrease = onDecreaseCheckStatus
         )
-        CurrentPhaseSection(currentPhase = currentPhase, onNextPhase = onNextPhase)
+        CurrentPhaseSection(
+            currentPhase = currentPhase,
+            currentDay = currentDay,
+            onNextPhase = onNextPhase
+        )
     }
 }
 
@@ -289,6 +299,7 @@ fun StatusChecksSection(
 
 @Composable
 fun CurrentPhaseSection(
+    currentDay: Int,
     currentPhase: GamePhaseUiModel, onNextPhase: () -> Unit
 ) {
     Row(
@@ -296,7 +307,18 @@ fun CurrentPhaseSection(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         MText(
-            stringResource(currentPhase.displayName),
+            buildAnnotatedString {
+                append(stringResource(currentPhase.displayName))
+                withStyle(
+                    AppTheme.typography.caption.toSpanStyle()
+                        .copy(color = LocalContentColor.current.copy(.7f))
+                ) {
+                    append("  ")
+                    if (currentDay == 0) {
+                        append(stringResource(Resources.strings.introductionRound))
+                    } else append("${stringResource(Resources.strings.round)} $currentDay")
+                }
+            },
             style = AppTheme.typography.h3,
             modifier = Modifier.weight(1f)
         )

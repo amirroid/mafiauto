@@ -30,6 +30,8 @@ object Strings {
     val kick = Res.string.kick
     val night = Res.string.night
     val voting = Res.string.voting
+    val round = Res.string.round
+    val introductionRound = Res.string.introduction_round
     val day = Res.string.day
     val lastCard = Res.string.last_card
     val selectTargetPlayers = Res.string.select_target_players

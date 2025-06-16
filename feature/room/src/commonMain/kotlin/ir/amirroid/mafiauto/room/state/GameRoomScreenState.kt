@@ -12,5 +12,6 @@ data class GameRoomScreenState(
     val pickedPlayerToShowRole: PlayerWithRoleUiModel? = null,
     val showStatus: Boolean = false,
     val currentPhase: GamePhaseUiModel = GamePhaseUiModel.Day,
-    val lastCards: List<LastCardUiModel> = emptyList()
+    val lastCards: List<LastCardUiModel> = emptyList(),
+    val currentDay: Int = 0
 )

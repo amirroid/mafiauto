@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface GameRepository {
     val statusChecksCount: StateFlow<Int>
+    val currentDay: StateFlow<Int>
     val currentPhase: Flow<GamePhase>
     val lastCards: Flow<List<LastCardDescriptor>>
 
