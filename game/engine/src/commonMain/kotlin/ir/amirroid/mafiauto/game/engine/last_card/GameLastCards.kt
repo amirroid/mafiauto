@@ -10,13 +10,37 @@ object BraceletCard : LastCard {
     override val explanation = Resources.strings.braceletLastCardExplanation
     override val key = LastCardKeys.BRACELET
     override val targetCount = 1
+    override fun applyAction(
+        player: Player,
+        pickedPlayers: List<Player>,
+        allPlayers: List<Player>,
+        handle: LastCardHandle
+    ) {
+    }
 }
 
 object SilenceCard : LastCard {
+
     override val name = Resources.strings.silenceCardName
     override val explanation = Resources.strings.silenceLastCardExplanation
     override val key = LastCardKeys.SILENCE
     override val targetCount = 2
+
+    override fun applyAction(
+        player: Player,
+        pickedPlayers: List<Player>,
+        allPlayers: List<Player>,
+        handle: LastCardHandle
+    ) {
+        if (pickedPlayers.isEmpty()) return
+        var updatedPlayers = allPlayers
+        pickedPlayers.forEach { target ->
+            updatedPlayers = updatePlayer(updatedPlayers, target.id) {
+                copy(isSilenced = true)
+            }
+        }
+        handle(updatedPlayers)
+    }
 }
 
 object FaceUpCard : LastCard {

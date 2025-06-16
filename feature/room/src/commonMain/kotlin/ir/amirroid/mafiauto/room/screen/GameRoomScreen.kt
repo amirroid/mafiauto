@@ -31,6 +31,7 @@ import compose.icons.evaicons.Outline
 import compose.icons.evaicons.fill.ArrowIosForward
 import compose.icons.evaicons.outline.Minus
 import compose.icons.evaicons.outline.Plus
+import compose.icons.evaicons.outline.VolumeMute
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
@@ -217,20 +218,30 @@ fun PlayerItem(playerWithRole: PlayerWithRoleUiModel, onClick: () -> Unit) {
     val primaryColor = AppTheme.colorScheme.primary
     MListItem(
         text = {
-            MText(
-                playerWithRole.player.name,
-                modifier = Modifier.thenIf(playerWithRole.player.isKick) {
-                    drawWithContent {
-                        drawContent()
-                        drawLine(
-                            color = primaryColor,
-                            start = center.copy(x = 0f),
-                            end = center.copy(x = size.width),
-                            strokeWidth = 2.dp.toPx()
-                        )
-                    }
-                }.fillMaxWidth()
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                MText(
+                    playerWithRole.player.name,
+                    modifier = Modifier
+                        .thenIf(playerWithRole.player.isKick) {
+                            drawWithContent {
+                                drawContent()
+                                drawLine(
+                                    color = primaryColor,
+                                    start = center.copy(x = 0f),
+                                    end = center.copy(x = size.width),
+                                    strokeWidth = 2.dp.toPx()
+                                )
+                            }
+                        }
+                        .weight(1f)
+                )
+                if (playerWithRole.player.isSilenced) {
+                    MIcon(
+                        imageVector = EvaIcons.Outline.VolumeMute,
+                        contentDescription = null
+                    )
+                }
+            }
         },
         onClick = onClick,
         modifier = Modifier.height(48.dp),

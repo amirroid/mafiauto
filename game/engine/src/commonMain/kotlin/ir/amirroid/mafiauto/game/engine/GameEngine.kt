@@ -40,7 +40,11 @@ class GameEngine(
 
     fun proceedToNextPhase() {
         when (_currentPhase.value) {
-            is Phase.Day -> updatePhase(Phase.Voting)
+            is Phase.Day -> {
+                unSilentPlayers()
+                updatePhase(Phase.Voting)
+            }
+
             is Phase.Defending, is Phase.Voting -> {
                 proceedToNightPhase()
             }
@@ -48,6 +52,10 @@ class GameEngine(
             is Phase.Result -> updatePhase(Phase.Day)
             else -> Unit
         }
+    }
+
+    private fun unSilentPlayers() {
+        updatePlayers(_players.value.map { it.copy(isSilenced = false) })
     }
 
     fun proceedToDefendingPhase(defenders: List<Player>) {

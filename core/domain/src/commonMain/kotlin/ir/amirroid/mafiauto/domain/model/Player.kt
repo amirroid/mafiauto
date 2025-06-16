@@ -5,4 +5,5 @@ data class Player(
     val name: String,
     val isAlive: Boolean = true,
     val isKick: Boolean = false,
+    val isSilenced: Boolean = false,
 )

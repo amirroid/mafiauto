@@ -17,6 +17,5 @@ interface LastCard : PlayerTransformer {
         pickedPlayers: List<Player>,
         allPlayers: List<Player>,
         handle: LastCardHandle
-    ) {
-    }
+    )
 }
