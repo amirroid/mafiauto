@@ -4,7 +4,10 @@ import ir.amirroid.mafiauto.game.engine.base.PlayerTransformer
 import ir.amirroid.mafiauto.game.engine.models.Player
 import org.jetbrains.compose.resources.StringResource
 
-typealias LastCardHandle = (List<Player>?) -> Unit
+interface LastCardHandler {
+    operator fun invoke(newPlayers: List<Player>?)
+    fun newMessage(message: StringResource)
+}
 
 interface LastCard : PlayerTransformer {
     val name: StringResource
@@ -16,6 +19,6 @@ interface LastCard : PlayerTransformer {
         player: Player,
         pickedPlayers: List<Player>,
         allPlayers: List<Player>,
-        handle: LastCardHandle
+        handle: LastCardHandler
     )
 }

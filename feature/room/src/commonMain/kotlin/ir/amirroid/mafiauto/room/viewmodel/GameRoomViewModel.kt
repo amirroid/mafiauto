@@ -10,6 +10,7 @@ import ir.amirroid.mafiauto.domain.usecase.game.GetAllLastCardsUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentDayUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentPhaseUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetDefenseCandidatesUseCase
+import ir.amirroid.mafiauto.domain.usecase.game.GetMessagesUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetStatusCheckCountUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GoToNextPhaseUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.HandleDefenseVoteResultUseCase
@@ -50,10 +51,13 @@ class GameRoomViewModel(
     private val applyLastCardUseCase: ApplyLastCardUseCase,
     private val handleFatePhaseUseCase: HandleFatePhaseUseCase,
     private val getCurrentDayUseCase: GetCurrentDayUseCase,
+    private val getMessagesUseCase: GetMessagesUseCase,
     private val coroutineDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _state = MutableStateFlow(GameRoomScreenState())
     val state: StateFlow<GameRoomScreenState> = _state
+
+    val messages = getMessagesUseCase()
 
     private var domainPlayers = emptyList<PlayerWithRole>()
     private var domainLastCards = emptyList<LastCardDescriptor>()

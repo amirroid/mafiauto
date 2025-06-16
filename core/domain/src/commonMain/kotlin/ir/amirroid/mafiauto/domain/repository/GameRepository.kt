@@ -6,11 +6,13 @@ import ir.amirroid.mafiauto.domain.model.NightActionDescriptor
 import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import org.jetbrains.compose.resources.StringResource
 
 
 interface GameRepository {
     val statusChecksCount: StateFlow<Int>
     val currentDay: StateFlow<Int>
+    val messages: Flow<StringResource>
     val currentPhase: Flow<GamePhase>
     val lastCards: Flow<List<LastCardDescriptor>>
 

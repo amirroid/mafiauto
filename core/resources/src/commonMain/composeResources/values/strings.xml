@@ -38,6 +38,9 @@
     <string name="revived_count">Revived count</string>
     <string name="introduction_round">Introduction Round</string>
     <string name="round">Round</string>
+    <string name="done_message">It’s done... for now.</string>
+    <string name="correct_guess">You got it right. Stay sharp.</string>
+    <string name="wrong_guess">Your guess was off. Things aren’t that simple here.</string>
 
     <string name="neutral">Neutral</string>
 

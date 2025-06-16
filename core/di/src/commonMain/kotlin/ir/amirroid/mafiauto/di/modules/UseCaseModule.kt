@@ -34,4 +34,5 @@ val useCaseModule = module {
     factoryOf(::GetCurrentDayUseCase)
     factoryOf(::HandleNightActionsUseCase)
     factoryOf(::HandleFatePhaseUseCase)
+    factoryOf(::GetMessagesUseCase)
 }

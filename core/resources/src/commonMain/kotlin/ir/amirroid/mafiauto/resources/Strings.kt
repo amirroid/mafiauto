@@ -40,6 +40,9 @@ object Strings {
     val nightActions = Res.string.night_actions
     val complete = Res.string.complete
     val deathLottery = Res.string.death_lottery
+    val doneMessage = Res.string.done_message
+    val wrongGuess = Res.string.wrong_guess
+    val correctGuess = Res.string.correct_guess
 
 
     // Roles

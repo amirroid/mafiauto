@@ -48,6 +48,7 @@ import ir.amirroid.mafiauto.design_system.components.button.MIconButton
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.list.ListItemDefaults
 import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
+import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
@@ -82,9 +83,14 @@ fun GameRoomScreen(
 
     val hazeState = rememberHazeState()
     val hazeStyle: HazeStyle = HazeMaterials.thin(AppTheme.colorScheme.surface)
+    val snakeBarController = LocalSnakeBarControllerState.current
 
     LaunchedEffect(currentPhase) {
         if (currentPhase is GamePhaseUiModel.Night) onNight.invoke()
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.messages.collect(snakeBarController::show)
     }
 
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {

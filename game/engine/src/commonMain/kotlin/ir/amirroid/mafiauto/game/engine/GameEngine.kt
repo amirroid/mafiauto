@@ -3,6 +3,7 @@ package ir.amirroid.mafiauto.game.engine
 import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
 import ir.amirroid.mafiauto.game.engine.base.PlayerTransformer
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
+import ir.amirroid.mafiauto.game.engine.last_card.LastCardHandler
 import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.NightActionsResult
 import ir.amirroid.mafiauto.game.engine.models.NightTargetOptions
@@ -10,9 +11,13 @@ import ir.amirroid.mafiauto.game.engine.models.Phase
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.provider.last_card.LastCardsProvider
 import ir.amirroid.mafiauto.game.engine.utils.PlayersHolder
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
+import org.jetbrains.compose.resources.StringResource
 
 
 class GameEngine(
@@ -26,6 +31,7 @@ class GameEngine(
     private val _scheduledActions = MutableStateFlow(emptyList<ScheduledAction>())
     private val _lastCards = MutableStateFlow(emptyList<LastCard>())
     private val _statusCheckCount = MutableStateFlow(0)
+    private val _messages = Channel<StringResource>(capacity = Channel.BUFFERED)
 
     val currentDay: StateFlow<Int> = _currentDay
     val currentPhase: StateFlow<Phase> = _currentPhase
@@ -33,8 +39,23 @@ class GameEngine(
     val scheduledActions: StateFlow<List<ScheduledAction>> = _scheduledActions
     val lastCards: StateFlow<List<LastCard>> = _lastCards
     val statusCheckCount: StateFlow<Int> = _statusCheckCount
+    val messages: Flow<StringResource> = _messages.receiveAsFlow()
 
     private val nightActionsHistory = mutableMapOf<Int, List<NightAction>>()
+
+    private val lastCardHandler by lazy {
+        object : LastCardHandler {
+            override fun invoke(newPlayers: List<Player>?) {
+                newPlayers?.let { updatePlayers(it) }
+            }
+
+            override fun newMessage(message: StringResource) {
+                sendMessage(message)
+            }
+        }
+    }
+
+    private fun sendMessage(message: StringResource) = _messages.trySend(message)
 
     private fun updatePhase(newPhase: Phase) = _currentPhase.update { newPhase }
 
@@ -166,10 +187,9 @@ class GameEngine(
         card.applyAction(
             player = targetPlayer,
             pickedPlayers = pickedPlayers,
-            allPlayers = _players.value
-        ) { newPlayers ->
-            newPlayers?.let { updatePlayers(it) }
-        }
+            allPlayers = _players.value,
+            handle = lastCardHandler
+        )
         proceedToNightPhase()
     }
 

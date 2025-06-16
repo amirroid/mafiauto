@@ -14,10 +14,11 @@ object BraceletCard : LastCard {
         player: Player,
         pickedPlayers: List<Player>,
         allPlayers: List<Player>,
-        handle: LastCardHandle
+        handle: LastCardHandler
     ) {
         val target = pickedPlayers.firstOrNull() ?: return
-        handle.invoke(updatePlayer(players = allPlayers, target.id) { copy(canUseAbility = false) })
+        handle.newMessage(Resources.strings.doneMessage)
+        handle(updatePlayer(players = allPlayers, target.id) { copy(canUseAbility = false) })
     }
 }
 
@@ -32,7 +33,7 @@ object SilenceCard : LastCard {
         player: Player,
         pickedPlayers: List<Player>,
         allPlayers: List<Player>,
-        handle: LastCardHandle
+        handle: LastCardHandler
     ) {
         if (pickedPlayers.isEmpty()) return
         var updatedPlayers = allPlayers
@@ -41,6 +42,7 @@ object SilenceCard : LastCard {
                 copy(isSilenced = true)
             }
         }
+        handle.newMessage(Resources.strings.doneMessage)
         handle(updatedPlayers)
     }
 }
@@ -54,7 +56,7 @@ object FaceUpCard : LastCard {
         player: Player,
         pickedPlayers: List<Player>,
         allPlayers: List<Player>,
-        handle: LastCardHandle
+        handle: LastCardHandler
     ) {
         val target = pickedPlayers.firstOrNull() ?: return
         val withoutCurrent = updatePlayer(allPlayers, player.id) {
@@ -63,6 +65,7 @@ object FaceUpCard : LastCard {
         val finalPlayers = updatePlayer(withoutCurrent, target.id) {
             copy(role = player.role)
         }
+        handle.newMessage(Resources.strings.doneMessage)
         handle(finalPlayers)
     }
 }
@@ -76,14 +79,17 @@ object BeautifulMindCard : LastCard {
         player: Player,
         pickedPlayers: List<Player>,
         allPlayers: List<Player>,
-        handle: LastCardHandle
+        handle: LastCardHandler
     ) {
         val target = pickedPlayers.firstOrNull() ?: return
         if (target.role.alignment == Alignment.Neutral) {
             val newPlayers = updatePlayer(allPlayers, target.id) {
                 copy(isAlive = false, canBackWithSave = false)
             }
+            handle.newMessage(Resources.strings.correctGuess)
             handle(newPlayers)
+        } else {
+            handle.newMessage(Resources.strings.wrongGuess)
         }
     }
 }
