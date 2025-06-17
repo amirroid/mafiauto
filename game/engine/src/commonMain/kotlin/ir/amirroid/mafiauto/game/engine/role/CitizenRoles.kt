@@ -1,7 +1,7 @@
 package ir.amirroid.mafiauto.game.engine.role
 
-import ir.amirroid.mafiauto.game.engine.actions.role.SaveAction
-import ir.amirroid.mafiauto.game.engine.actions.role.ShootAction
+import ir.amirroid.mafiauto.game.engine.actions.role.*
+import ir.amirroid.mafiauto.game.engine.models.InstantActionType
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.models.StringResourcesMessage
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
@@ -14,13 +14,13 @@ data object Doctor : Role {
     override val explanation = Resources.strings.doctorExplanation
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
-    override fun getNightAction() = SaveAction
+    override fun getNightAction() = DoctorSaveAction
     override val executionOrder: Int = 3
     override fun getNightActionTargetPlayers(
         previewsTarget: Player?,
         allPlayers: List<Player>
     ): List<Player> {
-        return (if (previewsTarget?.role?.key == RoleKeys.DOCTOR) {
+        return (if (previewsTarget?.role?.key == key) {
             allPlayers.filter { player -> player != previewsTarget }
         } else allPlayers).filter { it.isInGame && it.canBackWithSave }
     }
@@ -33,7 +33,9 @@ data object Detective : Role {
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
     override val executionOrder: Int = 3
-    override fun getNightAction() = null
+    override fun getNightAction(): RoleAction = InvestigateAction
+
+    override val instantActionType: InstantActionType = InstantActionType.SHOW_ALIGNMENT
 }
 
 data object Civilian : Role {

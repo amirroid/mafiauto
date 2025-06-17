@@ -31,9 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import compose.icons.EvaIcons
@@ -57,16 +55,22 @@ import ir.amirroid.mafiauto.design_system.components.button.MIconButton
 import ir.amirroid.mafiauto.design_system.components.button.MOutlinedButton
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.list.selectable.MToggleListItem
+import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarControllerState
+import ir.amirroid.mafiauto.design_system.components.snakebar.SnackBaType
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.domain.model.InstantAction
+import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.night.viewmodel.NightActionsViewModel
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.night_target_otpions.NightTargetOptionsUiModel
 import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import ir.amirroid.mafiauto.domain.model.Alignment as RoleAlignment
 
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
@@ -81,9 +85,11 @@ fun NightActionsScreen(
     val nightPhase = currentPhase as GamePhaseUiModel.Night
     val options = nightPhase.options
     val selectedPlayers by viewModel.selectedPlayers.collectAsStateWithLifecycle()
+    val disablePlayerIdSelections = viewModel.disablePlayerIdSelections
 
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState { nightPhase.options.size }
+    val snakeBarController = LocalSnakeBarControllerState.current
 
     PlatformBackHandler {}
 
@@ -103,7 +109,8 @@ fun NightActionsScreen(
                     playerOptions = playerOptions,
                     selectedPlayers = selectedPlayers,
                     onSelect = { target -> viewModel.togglePlayer(playerOptions.player, target) },
-                    contentPadding = paddingValues
+                    contentPadding = paddingValues,
+                    enabled = !disablePlayerIdSelections.contains(playerOptions.player.player.id)
                 )
             }
         }
@@ -114,7 +121,24 @@ fun NightActionsScreen(
         BottomBar(
             enabledNext = nextEnabled,
             enabledPreviews = pagerState.currentPage > 0,
-            onNext = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) } },
+            onNext = {
+                val playerOption = options[pagerState.currentPage]
+                playerOption.player.role.instantAction?.let {
+                    handleInstantAction(
+                        action = it,
+                        currentPlayerRole = playerOption.player,
+                        selectedPlayerRole = selectedPlayers[playerOption.player],
+                        onShowSnakeBar = { message ->
+                            snakeBarController.show(
+                                message,
+                                type = SnackBaType.INFO
+                            )
+                        },
+                        onDisablePlayer = viewModel.disablePlayerIdSelections::add
+                    )
+                }
+                scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
+            },
             onPreviews = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
             isLastItem = pagerState.currentPage == options.size - 1,
             onComplete = {
@@ -131,12 +155,33 @@ fun NightActionsScreen(
     }
 }
 
+private fun handleInstantAction(
+    action: InstantAction,
+    currentPlayerRole: PlayerWithRoleUiModel,
+    selectedPlayerRole: PlayerWithRoleUiModel?,
+    onShowSnakeBar: (StringResource) -> Unit,
+    onDisablePlayer: (Long) -> Unit
+) {
+    when (action) {
+        InstantAction.SHOW_ALIGNMENT -> {
+            if (selectedPlayerRole == null) return
+            if (selectedPlayerRole.role.alignment == RoleAlignment.Mafia && selectedPlayerRole.role.key != RoleKeys.GOD_FATHER) {
+                onShowSnakeBar.invoke(Resources.strings.correctGuess)
+            } else {
+                onShowSnakeBar.invoke(Resources.strings.wrongGuess)
+            }
+            onDisablePlayer.invoke(currentPlayerRole.player.id)
+        }
+    }
+}
+
 
 @Composable
 fun SelectOptionPlayersList(
     playerOptions: NightTargetOptionsUiModel,
     selectedPlayers: Map<PlayerWithRoleUiModel, PlayerWithRoleUiModel>,
     onSelect: (PlayerWithRoleUiModel) -> Unit,
+    enabled: Boolean = true,
     contentPadding: PaddingValues = PaddingValues()
 ) {
     val currentPlayerRole = playerOptions.player
@@ -219,7 +264,7 @@ fun SelectOptionPlayersList(
                     selected = selectedPlayer == targetPlayer,
                     onClick = { onSelect(targetPlayer) },
                     text = { MText(targetPlayer.player.name) },
-                    enabled = currentPlayerRole.player.canUseAbilityToNight
+                    enabled = currentPlayerRole.player.canUseAbilityToNight && (enabled || selectedPlayer == targetPlayer)
                 )
             }
         }

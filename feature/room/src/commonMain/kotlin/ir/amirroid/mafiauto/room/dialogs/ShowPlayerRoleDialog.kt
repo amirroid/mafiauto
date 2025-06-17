@@ -1,6 +1,5 @@
 package ir.amirroid.mafiauto.room.dialogs
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -44,7 +43,7 @@ fun ShowPlayerRoleDialog(
                 text = buildAnnotatedString {
                     append(stringResource(playerWithRole.role.name))
                     append(" - ")
-                    append(stringResource(playerWithRole.role.alignment))
+                    append(stringResource(playerWithRole.role.formattedAlignment))
                     if (playerWithRole.player.isAlive.not()) {
                         append(" - ")
                         withStyle(SpanStyle(color = AppTheme.colorScheme.primary)) {

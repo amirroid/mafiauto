@@ -12,6 +12,7 @@ kotlin {
             dependencies {
                 implementation(project(ProjectPaths.domain))
                 implementation(project(ProjectPaths.uiModels))
+                implementation(project(ProjectPaths.engine))
             }
         }
     }

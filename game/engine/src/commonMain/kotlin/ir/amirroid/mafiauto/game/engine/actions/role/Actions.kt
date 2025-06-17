@@ -20,29 +20,45 @@ data object KillAction : RoleAction {
     }
 }
 
-data object SaveAction : RoleAction {
+data object DoctorSaveAction : RoleAction {
     override fun apply(
         nightAction: NightAction,
         players: List<Player>,
         handler: NightActionHandler
     ) {
-        if (nightAction.target.canBackWithSave.not()) return
+        if (nightAction.target.canBackWithSave.not() || nightAction.target.role.alignment == Alignment.Mafia) return
         val newHealthPoints = nightAction.target.currentHealthPoints + 1
         handler.updatePlayers(
             updatePlayer(
                 players, nightAction.target.id
-            ) { copy(currentHealthPoints = newHealthPoints, isAlive = true) }
+            ) {
+                copy(
+                    currentHealthPoints = if (isAlive) currentHealthPoints else newHealthPoints,
+                    isAlive = true
+                )
+            }
         )
     }
 }
 
-data object InvestigateAction : RoleAction {
+data object SurgeonSaveAction : RoleAction {
     override fun apply(
         nightAction: NightAction,
         players: List<Player>,
         handler: NightActionHandler
     ) {
-
+        if (nightAction.target.canBackWithSave.not() || nightAction.target.role.alignment != Alignment.Mafia) return
+        val newHealthPoints = nightAction.target.currentHealthPoints + 1
+        handler.updatePlayers(
+            updatePlayer(
+                players, nightAction.target.id
+            ) {
+                copy(
+                    currentHealthPoints = if (isAlive) currentHealthPoints else newHealthPoints,
+                    isAlive = true
+                )
+            }
+        )
     }
 }
 
@@ -76,6 +92,16 @@ data object ShootAction : RoleAction {
         }
 
         handler.updatePlayers(finalPlayers)
+    }
+}
+
+data object InvestigateAction : RoleAction {
+    override fun apply(
+        nightAction: NightAction,
+        players: List<Player>,
+        handler: NightActionHandler
+    ) {
+
     }
 }
 

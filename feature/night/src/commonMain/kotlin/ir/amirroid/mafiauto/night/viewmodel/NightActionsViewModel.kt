@@ -1,5 +1,7 @@
 package ir.amirroid.mafiauto.night.viewmodel
 
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.amirroid.mafiauto.domain.model.NightActionDescriptor
@@ -40,6 +42,7 @@ class NightActionsViewModel(
         MutableStateFlow(emptyMap<PlayerWithRoleUiModel, PlayerWithRoleUiModel>())
     val selectedPlayers = _selectedPlayers.asStateFlow()
 
+    val disablePlayerIdSelections = mutableStateListOf<Long>()
 
     fun togglePlayer(player: PlayerWithRoleUiModel, target: PlayerWithRoleUiModel) {
         _selectedPlayers.update {

@@ -172,7 +172,8 @@ class GameEngine(
                 ),
                 message = player.role.getNightActionMessage(allPlayers)
             )
-        }.sortedBy { it.player.role.executionOrder }
+        }.filter { it.message != null || it.availableTargets.isNotEmpty() }
+            .sortedBy { it.player.role.executionOrder }
         _currentPhase.update { Phase.Night(options) }
     }
 

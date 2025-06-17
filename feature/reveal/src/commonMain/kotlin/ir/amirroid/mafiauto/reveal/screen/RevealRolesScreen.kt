@@ -188,7 +188,7 @@ fun PlayerWithRoleItem(item: PlayerWithRoleUiModel, isFocused: Boolean) {
                     text = buildString {
                         append(stringResource(item.role.name))
                         append(" - ")
-                        append(stringResource(item.role.alignment))
+                        append(stringResource(item.role.formattedAlignment))
                     }
                 )
                 MText(text = stringResource(item.role.explanation))

@@ -132,7 +132,7 @@ private fun RolesList(
     contentPadding: PaddingValues = PaddingValues()
 ) {
     val groupedRoles = remember(roles) {
-        roles.groupBy { it.alignment }
+        roles.groupBy { it.formattedAlignment }
     }
     val shape = AppTheme.shapes.large
     LazyVerticalGrid(

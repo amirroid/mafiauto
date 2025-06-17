@@ -52,5 +52,5 @@ data object Surgeon : Role {
     override val hasNightAction = true
     override val executionOrder: Int = 2
 
-    override fun getNightAction(): RoleAction? = null
+    override fun getNightAction(): RoleAction = SurgeonSaveAction
 }

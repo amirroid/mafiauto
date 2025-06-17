@@ -9,10 +9,12 @@ fun RoleDescriptor.toUiModel() = RoleUiModel(
     key = key,
     name = name,
     explanation = explanation,
-    alignment = when (alignment) {
+    formattedAlignment = when (alignment) {
         Alignment.Mafia -> Resources.strings.mafia
         Alignment.Civilian -> Resources.strings.civilian
         Alignment.Neutral -> Resources.strings.neutral
     },
-    isOptionalAbility = isOptionalAbility
+    alignment = alignment,
+    isOptionalAbility = isOptionalAbility,
+    instantAction = instantAction
 )
