@@ -44,6 +44,7 @@ object Strings {
     val wrongGuess = Res.string.wrong_guess
     val correctGuess = Res.string.correct_guess
     val optional = Res.string.optional
+    val doctorDuoAnnouncement = Res.string.doctor_duo_announcement
 
 
     // Roles
@@ -56,6 +57,7 @@ object Strings {
     val civilian = Res.string.civilian
     val sniper = Res.string.sniper
     val silencer = Res.string.silencer
+    val surgeon = Res.string.surgeon
     val bomber = Res.string.bomber
     val bulletproof = Res.string.bulletproof
     val mayor = Res.string.mayor
@@ -80,7 +82,7 @@ object Strings {
     val oracleExplanation = Res.string.oracle_explanation
     val jokerExplanation = Res.string.joker_explanation
     val cultLeaderExplanation = Res.string.cult_leader_explanation
-
+    val surgeonExplanation = Res.string.surgeon_explanation
 
     val braceletLastCardExplanation = Res.string.bracelet_last_card_explanation
     val silenceLastCardExplanation = Res.string.silence_last_card_explanation

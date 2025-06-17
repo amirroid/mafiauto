@@ -43,6 +43,7 @@
     <string name="done_message">It’s done... for now.</string>
     <string name="correct_guess">You got it right. Stay sharp.</string>
     <string name="wrong_guess">Your guess was off. Things aren’t that simple here.</string>
+    <string name="doctor_duo_announcement">%1$s and %2$s are the town&#39;s doctor duo, working together to heal and protect.</string>
 
     <string name="neutral">Neutral</string>
 
@@ -59,6 +60,8 @@
     <string name="bulletproof">Bulletproof</string>
     <string name="mayor">Mayor</string>
     <string name="oracle">Oracle</string>
+    <string name="surgeon">Surgeon</string>
+
 
     <string name="god_father_explanation">The Godfather stays in the shadows, commanding every move with cold precision while others carry out his deadly will.</string>
     <string name="mafia_explanation">As a loyal Mafia member, you gather under the veil of night to silently choose who will not survive until morning.</string>
@@ -73,6 +76,7 @@
     <string name="oracle_explanation">If death comes, you don’t leave empty-handed — your final vision uncovers one truth before you disappear forever.</string>
     <string name="joker_explanation">You thrive on madness, winning only if they vote you out, so play the fool and let them hand you your twisted victory.</string>
     <string name="cult_leader_explanation">You corrupt from within, converting one mind at a time until the town realizes — too late — that it belongs to you.</string>
+    <string name="surgeon_explanation">Each night, you can heal a player — possibly even yourself — protecting them from being killed.</string>
 
 
     <string name="card_bracelet">Bracelet</string>

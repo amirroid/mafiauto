@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.game.engine.role
 
 import ir.amirroid.mafiauto.game.engine.actions.role.RoleAction
 import ir.amirroid.mafiauto.game.engine.models.Player
+import ir.amirroid.mafiauto.game.engine.models.StringResourcesMessage
 import org.jetbrains.compose.resources.StringResource
 
 sealed interface Role {
@@ -20,6 +21,8 @@ sealed interface Role {
         previewsTarget: Player?,
         allPlayers: List<Player>
     ): List<Player> = allPlayers.filter { it.isInGame }
+
+    fun getNightActionMessage(players: List<Player>): StringResourcesMessage? = null
 }
 
 enum class Alignment { Mafia, Civilian, Neutral }

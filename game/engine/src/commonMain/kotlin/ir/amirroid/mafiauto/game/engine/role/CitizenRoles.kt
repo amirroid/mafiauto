@@ -3,6 +3,7 @@ package ir.amirroid.mafiauto.game.engine.role
 import ir.amirroid.mafiauto.game.engine.actions.role.SaveAction
 import ir.amirroid.mafiauto.game.engine.actions.role.ShootAction
 import ir.amirroid.mafiauto.game.engine.models.Player
+import ir.amirroid.mafiauto.game.engine.models.StringResourcesMessage
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.resources.Resources
 
@@ -58,16 +59,6 @@ data object Sniper : Role {
     override fun getNightAction() = ShootAction
 }
 
-data object Bomber : Role {
-    override val key = RoleKeys.BOMBER
-    override val name = Resources.strings.bomber
-    override val explanation = Resources.strings.bomberExplanation
-    override val alignment = Alignment.Neutral
-    override val hasNightAction = true
-    override val executionOrder: Int = 3
-    override fun getNightAction() = null
-}
-
 data object Bulletproof : Role {
     override val key = RoleKeys.BULLETPROOF
     override val name = Resources.strings.bulletproof
@@ -75,6 +66,7 @@ data object Bulletproof : Role {
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
     override val executionOrder: Int = 3
+    override val healthPoints: Int = Int.MAX_VALUE
     override fun getNightAction() = null
 }
 
@@ -86,6 +78,25 @@ data object Mayor : Role {
     override val hasNightAction = true
     override val executionOrder: Int = 3
     override fun getNightAction() = null
+    override val isOptionalAbility: Boolean = true
+    override fun getNightActionTargetPlayers(
+        previewsTarget: Player?,
+        allPlayers: List<Player>
+    ): List<Player> = emptyList()
+
+    override fun getNightActionMessage(players: List<Player>): StringResourcesMessage {
+        val shouldShowRoles = listOf(RoleKeys.DOCTOR, RoleKeys.SURGEON)
+        val shouldShowPlayers = players.filter {
+            it.role.key in shouldShowRoles
+        }
+        return StringResourcesMessage(
+            Resources.strings.doctorDuoAnnouncement,
+            listOf(
+                shouldShowPlayers.getOrNull(0)?.name.orEmpty(),
+                shouldShowPlayers.getOrNull(1)?.name.orEmpty()
+            )
+        )
+    }
 }
 
 data object Oracle : Role {

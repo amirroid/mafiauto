@@ -31,3 +31,14 @@ data object CultLeader : Role {
         }
     }
 }
+
+
+data object Bomber : Role {
+    override val key = RoleKeys.BOMBER
+    override val name = Resources.strings.bomber
+    override val explanation = Resources.strings.bomberExplanation
+    override val alignment = Alignment.Neutral
+    override val hasNightAction = true
+    override val executionOrder: Int = 3
+    override fun getNightAction() = null
+}

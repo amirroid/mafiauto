@@ -165,8 +165,12 @@ class GameEngine(
             val previewsTarget = nightActionsHistory[_currentDay.value - 1]
                 ?.find { it.player.id == player.id }?.target
             NightTargetOptions(
-                player,
-                player.role.getNightActionTargetPlayers(previewsTarget, allPlayers)
+                player = player,
+                availableTargets = player.role.getNightActionTargetPlayers(
+                    previewsTarget,
+                    allPlayers
+                ),
+                message = player.role.getNightActionMessage(allPlayers)
             )
         }.sortedBy { it.player.role.executionOrder }
         _currentPhase.update { Phase.Night(options) }

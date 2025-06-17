@@ -41,5 +41,16 @@ data object Silencer : Role {
     override val alignment = Alignment.Mafia
     override val executionOrder: Int = 2
     override val hasNightAction = true
-    override fun getNightAction() = null
+    override fun getNightAction(): RoleAction? = null
+}
+
+data object Surgeon : Role {
+    override val key = RoleKeys.SURGEON
+    override val name = Resources.strings.surgeon
+    override val explanation = Resources.strings.surgeonExplanation
+    override val alignment = Alignment.Mafia
+    override val hasNightAction = true
+    override val executionOrder: Int = 2
+
+    override fun getNightAction(): RoleAction? = null
 }
