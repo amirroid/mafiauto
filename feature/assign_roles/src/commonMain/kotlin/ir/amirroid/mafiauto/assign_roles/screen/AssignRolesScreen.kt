@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -145,7 +144,7 @@ private fun RolesList(
     ) {
         groupedRoles.forEach { (alignment, roles) ->
             item("alignment$alignment", contentType = "alignment", span = { GridItemSpan(2) }) {
-                Text(
+                MText(
                     text = stringResource(alignment),
                     style = AppTheme.typography.caption,
                     color = AppTheme.colorScheme.primary,
@@ -158,7 +157,7 @@ private fun RolesList(
                 contentType = { _, _ -> "role" }) { index, role ->
                 val selected = remember(selectedRoles) { selectedRoles.contains(role) }
                 val itemShape = when {
-                    index == roles.size - 1 -> shape
+                    index == roles.size - 1 && roles.size % 2 != 0 -> shape
                     index % 2 == 0 -> shape.copy(
                         bottomEnd = CornerSize(2.dp),
                         topEnd = CornerSize(2.dp)
