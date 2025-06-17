@@ -193,12 +193,13 @@ class GameEngine(
     fun handleNightActions(actions: List<NightAction>) {
         nightActionsHistory[_currentDay.value] = actions
         incrementDay()
-        val newScheduledActions = actions.map { action ->
-            ScheduledAction(
-                action,
-                executeOnDay = action.player.role.getNightAction()?.delayInDays?.let { _currentDay.value + it }
-            )
-        }
+        val newScheduledActions =
+            actions.sortedBy { it.player.role.submitExecutionOrder }.map { action ->
+                ScheduledAction(
+                    action,
+                    executeOnDay = action.player.role.getNightAction()?.delayInDays?.let { _currentDay.value + it }
+                )
+            }
         _scheduledActions.update { it + newScheduledActions }
         proceedToResultPhase()
     }
