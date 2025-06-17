@@ -4,6 +4,7 @@ import ir.amirroid.mafiauto.game.engine.actions.role.RoleAction
 import ir.amirroid.mafiauto.game.engine.models.InstantActionType
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.models.StringResourcesMessage
+import ir.amirroid.mafiauto.game.engine.utils.NightActionOrder
 import org.jetbrains.compose.resources.StringResource
 
 sealed interface Role {
@@ -11,8 +12,7 @@ sealed interface Role {
     val explanation: StringResource
     val alignment: Alignment
     val hasNightAction: Boolean
-    val executionOrder: Int
-        get() = 0
+    val executionOrder: Int get() = NightActionOrder[key] ?: 100
     val healthPoints: Int get() = 1
     val key: String
     val maxAbilityUses: Int get() = Int.MAX_VALUE

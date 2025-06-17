@@ -12,7 +12,6 @@ data object GodFather : Role {
     override val alignment = Alignment.Mafia
     override val hasNightAction = true
     override fun getNightAction() = KillAction
-    override val executionOrder: Int = 1
     override val healthPoints: Int = 2
 
     override fun getNightActionTargetPlayers(
@@ -30,7 +29,6 @@ data object Mafia : Role {
     override val alignment = Alignment.Mafia
     override val hasNightAction = false
     override fun getNightAction() = null
-    override val executionOrder: Int = 2
 }
 
 
@@ -39,7 +37,6 @@ data object Silencer : Role {
     override val name = Resources.strings.silencer
     override val explanation = Resources.strings.silencerExplanation
     override val alignment = Alignment.Mafia
-    override val executionOrder: Int = 2
     override val hasNightAction = true
     override fun getNightAction(): RoleAction? = null
 }
@@ -50,7 +47,6 @@ data object Surgeon : Role {
     override val explanation = Resources.strings.surgeonExplanation
     override val alignment = Alignment.Mafia
     override val hasNightAction = true
-    override val executionOrder: Int = 2
 
     override fun getNightAction(): RoleAction = SurgeonSaveAction
 }
