@@ -13,9 +13,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.SwipeToDismissBox
-import androidx.compose.material3.SwipeToDismissBoxValue
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -38,6 +35,8 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
 import ir.amirroid.mafiauto.common.compose.components.BackButton
+import ir.amirroid.mafiauto.common.compose.components.swipe_to_dismiss.SwipeToDismissBox
+import ir.amirroid.mafiauto.common.compose.components.swipe_to_dismiss.SwipeToDismissBoxValue
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
 import ir.amirroid.mafiauto.common.compose.operators.plus
@@ -167,17 +166,15 @@ fun PlayerItem(
     onDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val state = rememberSwipeToDismissBoxState(
+    SwipeToDismissBox(
         confirmValueChange = {
             if (SwipeToDismissBoxValue.Settled != it) {
                 onDelete.invoke()
                 true
             } else false
         },
-        positionalThreshold = { fullWidth -> fullWidth * .4f }
-    )
-    SwipeToDismissBox(
-        state, backgroundContent = {}, modifier = modifier
+        positionalThreshold = { totalDistance -> totalDistance * .4f },
+        modifier = modifier
     ) {
         MToggleListItem(
             text = { MText(player.name) },
