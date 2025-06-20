@@ -3,6 +3,7 @@ package ir.amirroid.mafiauto.design_system.components.button
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 
@@ -12,6 +13,8 @@ object ButtonDefaults {
 
     val defaultBorderWidth = 1.5.dp
     val minHeight = 40.dp
+
+    val fabSize = DpSize(56.dp, 56.dp)
 
     val primaryButtonColors: ButtonColors
         @Composable get() = AppTheme.colorScheme.let {

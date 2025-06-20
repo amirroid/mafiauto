@@ -29,6 +29,9 @@ object Strings {
     val unKick = Res.string.un_kick
     val kick = Res.string.kick
     val night = Res.string.night
+    val groups = Res.string.groups
+    val addNewGroup = Res.string.add_new_group
+    val groupName = Res.string.group_name
     val voting = Res.string.voting
     val round = Res.string.round
     val introductionRound = Res.string.introduction_round

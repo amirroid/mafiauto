@@ -7,7 +7,10 @@ sealed interface Screen {
     data object Intro : Screen
 
     @Serializable
-    data object Lobby : Screen
+    data object Groups : Screen
+
+    @Serializable
+    data class Lobby(val groupId: Long) : Screen
 
     @Serializable
     data object AssignRoles : Screen

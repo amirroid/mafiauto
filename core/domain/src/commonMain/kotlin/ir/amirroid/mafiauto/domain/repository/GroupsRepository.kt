@@ -1,0 +1,9 @@
+package ir.amirroid.mafiauto.domain.repository
+
+import ir.amirroid.mafiauto.domain.model.GroupWithPlayers
+import kotlinx.coroutines.flow.Flow
+
+interface GroupsRepository {
+    fun getAllGroups(): Flow<List<GroupWithPlayers>>
+    suspend fun addNewGroup(name: String)
+}

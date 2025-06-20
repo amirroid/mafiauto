@@ -14,6 +14,7 @@ kotlin {
 
                 listOf(
                     ProjectPaths.intro,
+                    ProjectPaths.groups,
                     ProjectPaths.lobby,
                     ProjectPaths.night,
                     ProjectPaths.assignRoles,

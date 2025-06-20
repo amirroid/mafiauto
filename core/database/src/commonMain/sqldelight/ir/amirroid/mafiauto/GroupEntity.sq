@@ -1,0 +1,16 @@
+CREATE TABLE Groups (
+  id INTEGER NOT NULL PRIMARY KEY,
+  name TEXT NOT NULL
+);
+
+selectAllGroupsWithPlayers:
+SELECT
+  g.id AS groupId,
+  g.name AS groupName,
+  p.id AS playerId,
+  p.name
+FROM Groups g
+LEFT JOIN Player p ON g.id = p.group_id;
+
+addNewGroup:
+INSERT INTO Groups(name) VALUES (?);

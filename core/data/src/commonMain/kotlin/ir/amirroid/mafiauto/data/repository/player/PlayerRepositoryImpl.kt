@@ -12,14 +12,14 @@ class PlayerRepositoryImpl(
     private val playerDao: PlayerDao,
     private val playerMemoryHolder: PlayerMemoryHolder
 ) : PlayerRepository {
-    override fun getAllPlayers(): Flow<List<Player>> {
-        return playerDao.getAll().map { playerList ->
+    override fun getAllPlayers(groupId: Long): Flow<List<Player>> {
+        return playerDao.getAllByGroupId(groupId).map { playerList ->
             playerList.map { it.toDomain() }
         }
     }
 
-    override suspend fun addPlayer(name: String) {
-        playerDao.addPlayer(name)
+    override suspend fun addPlayer(name: String, groupId: Long) {
+        playerDao.addPlayer(name, groupId)
     }
 
     override suspend fun deletePlayer(id: Long) {

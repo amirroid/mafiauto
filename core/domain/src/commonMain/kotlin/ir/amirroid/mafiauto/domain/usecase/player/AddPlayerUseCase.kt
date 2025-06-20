@@ -5,5 +5,6 @@ import ir.amirroid.mafiauto.domain.repository.PlayerRepository
 class AddPlayerUseCase(
     private val playerRepository: PlayerRepository
 ) {
-    suspend operator fun invoke(name: String) = playerRepository.addPlayer(name)
+    suspend operator fun invoke(name: String, groupId: Long) =
+        playerRepository.addPlayer(name, groupId)
 }

@@ -23,8 +23,7 @@ sealed interface Role {
 
     fun getNightAction(): RoleAction?
     fun getNightActionTargetPlayers(
-        previewsTarget: Player?,
-        allPlayers: List<Player>
+        previewsTarget: Player?, allPlayers: List<Player>
     ): List<Player> = allPlayers.filter { it.isInGame && it.role.key != key }
 
     fun getNightActionMessage(players: List<Player>): StringResourcesMessage? = null

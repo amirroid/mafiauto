@@ -5,5 +5,5 @@ import ir.amirroid.mafiauto.domain.repository.PlayerRepository
 class GetAllPlayersUseCase(
     private val playerRepository: PlayerRepository
 ) {
-    operator fun invoke() = playerRepository.getAllPlayers()
+    operator fun invoke(groupId: Long) = playerRepository.getAllPlayers(groupId)
 }

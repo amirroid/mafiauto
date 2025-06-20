@@ -1,13 +1,14 @@
 CREATE TABLE Player (
   id INTEGER NOT NULL PRIMARY KEY,
-  name TEXT NOT NULL
+  name TEXT NOT NULL,
+  group_id INTEGER NOT NULL
 );
 
-getAllPlayers:
-SELECT * FROM Player;
+getAllPlayersByGroupId:
+SELECT * FROM Player WHERE group_id = ?;
 
 addPlayer:
-INSERT INTO Player(name) VALUES (?);
+INSERT INTO Player(name, group_id) VALUES (?, ?);
 
 deletePlayer:
 DELETE FROM Player WHERE id = ?;

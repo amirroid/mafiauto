@@ -9,6 +9,7 @@ plugins {
 kotlin.sourceSets.commonMain {
     dependencies {
         listOf(
+            ProjectPaths.groups,
             ProjectPaths.lobby,
             ProjectPaths.assignRoles,
             ProjectPaths.reveal,

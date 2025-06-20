@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.intro.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.amirroid.mafiauto.domain.model.Player
@@ -23,22 +24,32 @@ class LobbyViewModel(
     private val addPlayerUseCase: AddPlayerUseCase,
     private val removePlayerUseCase: RemovePlayerUseCase,
     private val selectNewPlayersUseCase: SelectNewPlayersUseCase,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _state = MutableStateFlow(LobbyScreenState())
     val state = _state.asStateFlow()
 
     private var playerDomains = emptyList<Player>()
 
+    private val groupId = savedStateHandle.get<Long>("groupId")!!
+
     init {
         observePlayers()
     }
 
     private fun observePlayers() = viewModelScope.launch(dispatcher) {
-        getAllPlayersUseCase().distinctUntilChanged().collectLatest { players ->
-                playerDomains = players
-                _state.update { it.copy(players = players.toUiModels()) }
+        getAllPlayersUseCase(groupId).distinctUntilChanged().collectLatest { players ->
+            val playerDomainsIds = playerDomains.map { it.id }
+            val playerUiModels = players.toUiModels()
+            _state.update {
+                it.copy(
+                    players = playerUiModels,
+                    selectedPlayers = it.selectedPlayers + playerUiModels.filter { player -> player.id !in playerDomainsIds }
+                )
             }
+            playerDomains = players
+        }
     }
 
     fun togglePlayerSelection(player: PlayerUiModel) {
@@ -58,7 +69,7 @@ class LobbyViewModel(
         val name = state.value.newPlayerName.trim()
         if (name.isEmpty()) return@launch
 
-        addPlayerUseCase(name)
+        addPlayerUseCase(name, groupId)
         updateNewPlayerName("")
     }
 

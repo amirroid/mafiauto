@@ -14,6 +14,7 @@ object ProjectPaths {
 
     // Features
     const val intro = ":feature:intro"
+    const val groups = ":feature:groups"
     const val lobby = ":feature:lobby"
     const val assignRoles = ":feature:assign_roles"
     const val reveal = ":feature:reveal"
