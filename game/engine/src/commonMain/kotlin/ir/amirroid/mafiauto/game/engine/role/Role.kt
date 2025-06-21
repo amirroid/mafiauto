@@ -20,6 +20,7 @@ sealed interface Role {
     val maxAbilityUses: Int get() = Int.MAX_VALUE
     val isOptionalAbility: Boolean get() = false
     val instantActionType: InstantActionType? get() = null
+    val targetNightToWakingUp: Int? get() = null
 
     fun getNightAction(): RoleAction?
     fun getNightActionTargetPlayers(

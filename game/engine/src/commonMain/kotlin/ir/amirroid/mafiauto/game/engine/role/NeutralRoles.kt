@@ -47,5 +47,7 @@ data object Nostradamus : Role {
     override val explanation = Resources.strings.nostradamusExplanation
     override val alignment = Alignment.Neutral
     override val hasNightAction = true
+    override val targetNightToWakingUp: Int = 0
+
     override fun getNightAction() = null
 }

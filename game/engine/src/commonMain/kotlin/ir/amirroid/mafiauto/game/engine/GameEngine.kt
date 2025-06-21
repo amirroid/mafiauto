@@ -161,7 +161,12 @@ class GameEngine(
 
     private fun proceedToNightPhase() {
         val allPlayers = _players.value
-        val options = allPlayers.filter { it.role.hasNightAction }.map { player ->
+        val currentNight = currentDay.value
+        val options = allPlayers.filter {
+            it.role.hasNightAction && it.role.targetNightToWakingUp.let { nightNumber ->
+                nightNumber == null || nightNumber == currentNight
+            }
+        }.map { player ->
             val previewsTarget = nightActionsHistory[_currentDay.value - 1]
                 ?.find { it.player.id == player.id }?.target
             NightTargetOptions(
