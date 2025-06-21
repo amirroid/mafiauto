@@ -18,16 +18,19 @@ object BraceletCard : LastCard {
     ) {
         val target = pickedPlayers.firstOrNull() ?: return
         handler.sendMessage(Resources.strings.doneMessage)
+        val withoutCurrent = updatePlayer(allPlayers, player.id) {
+            copy(isAlive = false)
+        }
         handler.updatePlayers(
             updatePlayer(
-                players = allPlayers,
+                players = withoutCurrent,
                 target.id
-            ) { copy(canUseAbility = false) })
+            ) { copy(canUseAbility = false) }
+        )
     }
 }
 
 object SilenceCard : LastCard {
-
     override val name = Resources.strings.silenceCardName
     override val explanation = Resources.strings.silenceLastCardExplanation
     override val key = LastCardKeys.SILENCE
@@ -40,7 +43,9 @@ object SilenceCard : LastCard {
         handler: LastCardHandler
     ) {
         if (pickedPlayers.isEmpty()) return
-        var updatedPlayers = allPlayers
+        var updatedPlayers = updatePlayer(allPlayers, player.id) {
+            copy(isAlive = false)
+        }
         pickedPlayers.forEach { target ->
             updatedPlayers = updatePlayer(updatedPlayers, target.id) {
                 copy(isSilenced = true)
@@ -94,6 +99,11 @@ object BeautifulMindCard : LastCard {
             handler.updatePlayers(newPlayers)
         } else {
             handler.sendMessage(Resources.strings.wrongGuess)
+            handler.updatePlayers(
+                updatePlayer(allPlayers, player.id) {
+                    copy(isAlive = false)
+                }
+            )
         }
     }
 }

@@ -145,7 +145,7 @@ fun GameRoomScreen(
     if (currentPhase is GamePhaseUiModel.LastCard) {
         LastCardDialog(
             cards = state.lastCards,
-            targetPlayer = currentPhase.player,
+            targetPlayerRole = currentPhase.player,
             onApply = viewModel::applyLastCard,
             players = players
         )
@@ -306,7 +306,7 @@ fun StatusChecksSection(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         MText("${stringResource(Resources.strings.statusChecks)}:", modifier = Modifier.weight(1f))
-        MIconButton(onClick = onDecrease) {
+        MIconButton(onClick = onDecrease, enabled = count > 0) {
             MIcon(EvaIcons.Outline.Minus, contentDescription = null)
         }
         MText(count.toString(), style = AppTheme.typography.h2)

@@ -43,7 +43,7 @@ import org.jetbrains.compose.resources.stringResource
 fun LastCardDialog(
     cards: List<LastCardUiModel>,
     players: List<PlayerWithRoleUiModel>,
-    targetPlayer: PlayerWithRoleUiModel,
+    targetPlayerRole: PlayerWithRoleUiModel,
     onApply: (LastCardUiModel, List<PlayerWithRoleUiModel>) -> Unit
 ) {
     var visible by remember { mutableStateOf(true) }
@@ -85,7 +85,7 @@ fun LastCardDialog(
                             append(stringResource(Resources.strings.lastCard))
                             append(" - ")
                             withStyle(SpanStyle(color = AppTheme.colorScheme.primary)) {
-                                append(targetPlayer.player.name)
+                                append(targetPlayerRole.player.name)
                             }
                         },
                         style = AppTheme.typography.h2
@@ -96,7 +96,7 @@ fun LastCardDialog(
             if (pickingPlayers && selectedCardIndex != null) {
                 val requiredTargetCount = cards[selectedCardIndex!!].targetCount
                 PlayersList(
-                    players = players,
+                    players = remember(players) { players.filter { it.player.id != targetPlayerRole.player.id } },
                     selectedPlayers = selectedPlayers,
                     requiredTargetCount = requiredTargetCount
                 )

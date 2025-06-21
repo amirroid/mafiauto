@@ -212,7 +212,7 @@ class GameEngine(
         val initialPlayers = _players.value
         var currentPlayers = initialPlayers
 
-        val nightActionHandler = createNightActionHandler { newPlayers ->
+        val nightActionHandler = createActionHandler { newPlayers ->
             currentPlayers = newPlayers
         }
 
@@ -228,8 +228,8 @@ class GameEngine(
         return _scheduledActions.value.filter { it.executeOnDay == _currentDay.value }
     }
 
-    private fun createNightActionHandler(onPlayersUpdated: (List<Player>) -> Unit): NightActionHandler {
-        return object : NightActionHandler {
+    private fun createActionHandler(onPlayersUpdated: (List<Player>) -> Unit): ActionsHandler {
+        return object : ActionsHandler {
             override fun sendMessage(message: StringResource) {
                 sendMessage(message)
             }
@@ -272,11 +272,15 @@ class GameEngine(
     }
 
     override fun updatePlayers(newPlayers: List<Player>) {
-        _players.update { previewsPlayers ->
-            val killedPlayers =
-                newPlayers.filter { !it.isAlive && previewsPlayers.findWithId(it.id)!!.isAlive }
-            killedPlayers.forEach { it.role.onKillPlayer(previewsPlayers, this) }
-            newPlayers
+        var currentPlayers = newPlayers
+        val actionHandler = createActionHandler {
+            currentPlayers = it
         }
+        val previewsPlayers = players.value
+        val killedPlayers =
+            newPlayers.filter { !it.isAlive && previewsPlayers.findWithId(it.id)!!.isAlive }
+        killedPlayers.forEach { it.role.onKillPlayer(currentPlayers, actionHandler) }
+
+        _players.update { currentPlayers }
     }
 }
