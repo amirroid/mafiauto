@@ -2,7 +2,7 @@ package ir.amirroid.mafiauto.game.engine
 
 import ir.amirroid.mafiauto.game.engine.actions.role.NightActionHandler
 import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
-import ir.amirroid.mafiauto.game.engine.base.MessageHandler
+import ir.amirroid.mafiauto.game.engine.base.ActionsHandler
 import ir.amirroid.mafiauto.game.engine.base.PlayerTransformer
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
 import ir.amirroid.mafiauto.game.engine.last_card.LastCardHandler
@@ -11,8 +11,8 @@ import ir.amirroid.mafiauto.game.engine.models.NightActionsResult
 import ir.amirroid.mafiauto.game.engine.models.NightTargetOptions
 import ir.amirroid.mafiauto.game.engine.models.Phase
 import ir.amirroid.mafiauto.game.engine.models.Player
+import ir.amirroid.mafiauto.game.engine.models.findWithId
 import ir.amirroid.mafiauto.game.engine.provider.last_card.LastCardsProvider
-import ir.amirroid.mafiauto.game.engine.base.PlayersUpdater
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,7 +26,7 @@ class GameEngine(
     private val lastCardsProvider: LastCardsProvider,
     private val initialPhase: Phase = Phase.Day,
     private val initialDay: Int = 0,
-) : PlayersUpdater, MessageHandler, PlayerTransformer, LastCardHandler {
+) : ActionsHandler, PlayerTransformer, LastCardHandler {
     private val _currentDay = MutableStateFlow(initialDay)
     private val _currentPhase = MutableStateFlow(initialPhase)
     private val _players = MutableStateFlow(emptyList<Player>())
@@ -108,9 +108,7 @@ class GameEngine(
         targetId: Long,
         transform: Player.() -> Player
     ) {
-        _players.update {
-            updatePlayer(it, targetId, transform)
-        }
+        updatePlayers(updatePlayer(players.value, targetId, transform))
     }
 
     fun getDefenseCandidates(
@@ -274,6 +272,11 @@ class GameEngine(
     }
 
     override fun updatePlayers(newPlayers: List<Player>) {
-        _players.update { newPlayers }
+        _players.update { previewsPlayers ->
+            val killedPlayers =
+                newPlayers.filter { !it.isAlive && previewsPlayers.findWithId(it.id)!!.isAlive }
+            killedPlayers.forEach { it.role.onKillPlayer(previewsPlayers, this) }
+            newPlayers
+        }
     }
 }

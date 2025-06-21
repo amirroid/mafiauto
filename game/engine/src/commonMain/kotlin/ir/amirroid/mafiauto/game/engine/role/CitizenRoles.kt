@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.game.engine.role
 
 import ir.amirroid.mafiauto.game.engine.actions.role.*
+import ir.amirroid.mafiauto.game.engine.base.ActionsHandler
 import ir.amirroid.mafiauto.game.engine.models.InstantActionType
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.models.StringResourcesMessage
@@ -105,4 +106,32 @@ data object Silencer : Role {
     override val maxAbilityUses: Int = 2
 
     override fun getNightAction(): RoleAction = SilentAction
+}
+
+
+data object Bomber : Role {
+    override val key = RoleKeys.BOMBER
+    override val name = Resources.strings.bomber
+    override val explanation = Resources.strings.bomberExplanation
+    override val alignment = Alignment.Civilian
+    override val hasNightAction = false
+    override fun getNightAction() = null
+    override fun onKillPlayer(players: List<Player>, handler: ActionsHandler) {
+        val bomberIndex = players.indexOfFirst { it.role.key == key }
+        val beforePlayers = players.take(bomberIndex)
+        var currentPlayers = players
+        beforePlayers.findLast { it.isAlive }?.let {
+            currentPlayers = updatePlayer(currentPlayers, it.id) {
+                copy(isAlive = false)
+            }
+        }
+        val nextSize = if (beforePlayers.any { it.isInGame }) 1 else 2
+        val nextPlayers = players.filterIndexed { index, _ -> index > bomberIndex }
+        nextPlayers.filter { it.isInGame }.take(nextSize).forEach {
+            currentPlayers = updatePlayer(currentPlayers, it.id) {
+                copy(isAlive = false)
+            }
+        }
+        handler.updatePlayers(currentPlayers)
+    }
 }

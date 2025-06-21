@@ -30,17 +30,6 @@ data object CultLeader : Role {
     }
 }
 
-
-data object Bomber : Role {
-    override val key = RoleKeys.BOMBER
-    override val name = Resources.strings.bomber
-    override val explanation = Resources.strings.bomberExplanation
-    override val alignment = Alignment.Neutral
-    override val hasNightAction = true
-    override fun getNightAction() = null
-}
-
-
 data object Nostradamus : Role {
     override val key = RoleKeys.NOSTRADAMUS
     override val name = Resources.strings.nostradamus

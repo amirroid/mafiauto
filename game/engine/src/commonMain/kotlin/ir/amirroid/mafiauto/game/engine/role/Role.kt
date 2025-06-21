@@ -1,6 +1,8 @@
 package ir.amirroid.mafiauto.game.engine.role
 
 import ir.amirroid.mafiauto.game.engine.actions.role.RoleAction
+import ir.amirroid.mafiauto.game.engine.base.ActionsHandler
+import ir.amirroid.mafiauto.game.engine.base.PlayerTransformer
 import ir.amirroid.mafiauto.game.engine.models.InstantActionType
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.models.StringResourcesMessage
@@ -8,7 +10,7 @@ import ir.amirroid.mafiauto.game.engine.utils.NightActionOrder
 import ir.amirroid.mafiauto.game.engine.utils.SubmitNightActionOrder
 import org.jetbrains.compose.resources.StringResource
 
-sealed interface Role {
+sealed interface Role : PlayerTransformer {
     val name: StringResource
     val explanation: StringResource
     val alignment: Alignment
@@ -28,6 +30,7 @@ sealed interface Role {
     ): List<Player> = allPlayers.filter { it.isInGame && it.role.key != key }
 
     fun getNightActionMessage(players: List<Player>): StringResourcesMessage? = null
+    fun onKillPlayer(players: List<Player>, handler: ActionsHandler) = Unit
 }
 
 enum class Alignment { Mafia, Civilian, Neutral }

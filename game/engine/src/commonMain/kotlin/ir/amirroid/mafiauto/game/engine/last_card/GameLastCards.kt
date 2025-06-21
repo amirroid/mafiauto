@@ -64,7 +64,7 @@ object FaceUpCard : LastCard {
     ) {
         val target = pickedPlayers.firstOrNull() ?: return
         val withoutCurrent = updatePlayer(allPlayers, player.id) {
-            copy(isAlive = false, canBackWithSave = false)
+            copy(isAlive = false, canBackWithSave = false, role = target.role)
         }
         val finalPlayers = updatePlayer(withoutCurrent, target.id) {
             copy(role = player.role)

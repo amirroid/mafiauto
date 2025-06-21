@@ -1,12 +1,11 @@
 package ir.amirroid.mafiauto.game.engine.last_card
 
-import ir.amirroid.mafiauto.game.engine.base.MessageHandler
+import ir.amirroid.mafiauto.game.engine.base.ActionsHandler
 import ir.amirroid.mafiauto.game.engine.base.PlayerTransformer
-import ir.amirroid.mafiauto.game.engine.base.PlayersUpdater
 import ir.amirroid.mafiauto.game.engine.models.Player
 import org.jetbrains.compose.resources.StringResource
 
-interface LastCardHandler : PlayersUpdater, MessageHandler
+interface LastCardHandler : ActionsHandler
 
 interface LastCard : PlayerTransformer {
     val name: StringResource
