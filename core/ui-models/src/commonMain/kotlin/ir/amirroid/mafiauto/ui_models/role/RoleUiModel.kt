@@ -13,5 +13,6 @@ data class RoleUiModel(
     val formattedAlignment: StringResource,
     val alignment: Alignment,
     val isOptionalAbility: Boolean,
+    val nightActionRequiredPicks: Int,
     val instantAction: InstantAction?
 )

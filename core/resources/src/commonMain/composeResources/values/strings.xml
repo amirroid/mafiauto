@@ -53,7 +53,6 @@
     <string name="god_father">Godfather</string>
     <string name="mafia">Mafia</string>
     <string name="joker">Joker</string>
-    <string name="cult_leader">Cult Leader</string>
     <string name="doctor">Doctor</string>
     <string name="detective">Detective</string>
     <string name="civilian">Civilian</string>
@@ -78,7 +77,6 @@
     <string name="mayor_explanation">Your vote hides in plain sight, ready to be revealed when the stakes are high enough to change the town’s destiny.</string>
     <string name="nostradamus_explanation">If death comes, you don’t leave empty-handed — your final vision uncovers one truth before you disappear forever.</string>
     <string name="joker_explanation">You thrive on madness, winning only if they vote you out, so play the fool and let them hand you your twisted victory.</string>
-    <string name="cult_leader_explanation">You corrupt from within, converting one mind at a time until the town realizes — too late — that it belongs to you.</string>
     <string name="surgeon_explanation">Each night, you can heal a player — possibly even yourself — protecting them from being killed.</string>
 
 

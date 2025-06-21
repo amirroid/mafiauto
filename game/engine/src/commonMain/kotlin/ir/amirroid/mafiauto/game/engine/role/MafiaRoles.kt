@@ -15,7 +15,7 @@ data object GodFather : Role {
     override val healthPoints: Int = 2
 
     override fun getNightActionTargetPlayers(
-        previewsTarget: Player?,
+        previewsTargets: List<Player>?,
         allPlayers: List<Player>
     ): List<Player> {
         return allPlayers.filter { it.role.key != RoleKeys.GOD_FATHER && it.isInGame }
@@ -40,7 +40,7 @@ data object Surgeon : Role {
 
     override fun getNightAction(): RoleAction = SurgeonSaveAction
     override fun getNightActionTargetPlayers(
-        previewsTarget: Player?,
+        previewsTargets: List<Player>?,
         allPlayers: List<Player>
     ): List<Player> {
         return allPlayers.filter { it.canBackWithSave && it.isInGame && it.role.alignment == Alignment.Mafia && it.role.key != RoleKeys.GOD_FATHER }

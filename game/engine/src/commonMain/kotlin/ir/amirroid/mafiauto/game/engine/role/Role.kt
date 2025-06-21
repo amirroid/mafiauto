@@ -23,14 +23,16 @@ sealed interface Role : PlayerTransformer {
     val isOptionalAbility: Boolean get() = false
     val instantActionType: InstantActionType? get() = null
     val targetNightToWakingUp: Int? get() = null
+    val nightActionRequiredPicks: Int get() = 1
 
     fun getNightAction(): RoleAction?
     fun getNightActionTargetPlayers(
-        previewsTarget: Player?, allPlayers: List<Player>
+        previewsTargets: List<Player>?, allPlayers: List<Player>
     ): List<Player> = allPlayers.filter { it.isInGame && it.role.key != key }
 
     fun getNightActionMessage(players: List<Player>): StringResourcesMessage? = null
     fun onKillPlayer(players: List<Player>, handler: ActionsHandler) = Unit
+    fun onGoOutWithVotes(players: List<Player>, handler: ActionsHandler) = Unit
 }
 
 enum class Alignment { Mafia, Civilian, Neutral }

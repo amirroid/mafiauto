@@ -24,6 +24,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -105,19 +106,23 @@ fun NightActionsScreen(
                 userScrollEnabled = false
             ) { index ->
                 val playerOptions = options[index]
+                val currentPlayerSelectedTargets =
+                    selectedPlayers[playerOptions.player] ?: emptyList()
                 SelectOptionPlayersList(
                     playerOptions = playerOptions,
-                    selectedPlayers = selectedPlayers,
+                    selectedPlayers = currentPlayerSelectedTargets,
                     onSelect = { target -> viewModel.togglePlayer(playerOptions.player, target) },
                     contentPadding = paddingValues,
-                    enabled = !disablePlayerIdSelections.contains(playerOptions.player.player.id)
+                    enabled = !disablePlayerIdSelections.contains(playerOptions.player.player.id) && playerOptions.player.role.nightActionRequiredPicks != currentPlayerSelectedTargets.size
                 )
             }
         }
-        val nextEnabled = selectedPlayers[options[pagerState.currentPage].player] != null ||
-                options[pagerState.currentPage].player.let {
-                    it.player.canUseAbilityToNight.not() || it.role.isOptionalAbility
-                }
+        val currentPlayerRole = options[pagerState.currentPage].player
+        val nextEnabled =
+            selectedPlayers[currentPlayerRole]?.size == currentPlayerRole.role.nightActionRequiredPicks ||
+                    currentPlayerRole.let {
+                        it.player.canUseAbilityToNight.not() || it.role.isOptionalAbility
+                    }
         BottomBar(
             enabledNext = nextEnabled,
             enabledPreviews = pagerState.currentPage > 0,
@@ -127,7 +132,7 @@ fun NightActionsScreen(
                     handleInstantAction(
                         action = it,
                         currentPlayerRole = playerOption.player,
-                        selectedPlayerRole = selectedPlayers[playerOption.player],
+                        selectedPlayerRoles = selectedPlayers[playerOption.player],
                         onShowSnakeBar = { message ->
                             snakeBarController.show(
                                 message,
@@ -158,13 +163,13 @@ fun NightActionsScreen(
 private fun handleInstantAction(
     action: InstantAction,
     currentPlayerRole: PlayerWithRoleUiModel,
-    selectedPlayerRole: PlayerWithRoleUiModel?,
+    selectedPlayerRoles: List<PlayerWithRoleUiModel>?,
     onShowSnakeBar: (StringResource) -> Unit,
     onDisablePlayer: (Long) -> Unit
 ) {
     when (action) {
         InstantAction.SHOW_ALIGNMENT -> {
-            if (selectedPlayerRole == null) return
+            val selectedPlayerRole = selectedPlayerRoles?.firstOrNull() ?: return
             if (selectedPlayerRole.role.alignment == RoleAlignment.Mafia && selectedPlayerRole.role.key != RoleKeys.GOD_FATHER) {
                 onShowSnakeBar.invoke(Resources.strings.correctGuess)
             } else {
@@ -179,13 +184,12 @@ private fun handleInstantAction(
 @Composable
 fun SelectOptionPlayersList(
     playerOptions: NightTargetOptionsUiModel,
-    selectedPlayers: Map<PlayerWithRoleUiModel, PlayerWithRoleUiModel>,
+    selectedPlayers: List<PlayerWithRoleUiModel>,
     onSelect: (PlayerWithRoleUiModel) -> Unit,
     enabled: Boolean = true,
     contentPadding: PaddingValues = PaddingValues()
 ) {
     val currentPlayerRole = playerOptions.player
-    val selectedPlayer = selectedPlayers[currentPlayerRole]
     var isExpanded by rememberSaveable { mutableStateOf(false) }
 
     Column(
@@ -260,11 +264,12 @@ fun SelectOptionPlayersList(
                 items = playerOptions.availableTargets,
                 key = { it.player.id }
             ) { targetPlayer ->
+                val selected = remember(selectedPlayers) { selectedPlayers.contains(targetPlayer) }
                 MToggleListItem(
-                    selected = selectedPlayer == targetPlayer,
+                    selected = selected,
                     onClick = { onSelect(targetPlayer) },
                     text = { MText(targetPlayer.player.name) },
-                    enabled = currentPlayerRole.player.canUseAbilityToNight && (enabled || selectedPlayer == targetPlayer)
+                    enabled = currentPlayerRole.player.canUseAbilityToNight && (enabled || selected)
                 )
             }
         }

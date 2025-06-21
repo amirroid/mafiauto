@@ -165,12 +165,12 @@ class GameEngine(
                 nightNumber == null || nightNumber == currentNight
             }
         }.map { player ->
-            val previewsTarget = nightActionsHistory[_currentDay.value - 1]
-                ?.find { it.player.id == player.id }?.target
+            val previewsTargets = nightActionsHistory[_currentDay.value - 1]
+                ?.find { it.player.id == player.id }?.targets
             NightTargetOptions(
                 player = player,
                 availableTargets = player.role.getNightActionTargetPlayers(
-                    previewsTarget,
+                    previewsTargets,
                     allPlayers
                 ),
                 message = player.role.getNightActionMessage(allPlayers)
@@ -190,6 +190,7 @@ class GameEngine(
             allPlayers = _players.value,
             handler = this
         )
+        targetPlayer.role.onGoOutWithVotes(players.value, this)
         proceedToNightPhase()
     }
 

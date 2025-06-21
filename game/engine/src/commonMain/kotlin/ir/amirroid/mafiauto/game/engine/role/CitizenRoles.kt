@@ -17,11 +17,12 @@ data object Doctor : Role {
     override val hasNightAction = true
     override fun getNightAction() = DoctorSaveAction
     override fun getNightActionTargetPlayers(
-        previewsTarget: Player?,
+        previewsTargets: List<Player>?,
         allPlayers: List<Player>
     ): List<Player> {
+        val previewsTarget = previewsTargets?.firstOrNull()
         return (if (previewsTarget?.role?.key == key) {
-            allPlayers.filter { player -> player != previewsTarget }
+            allPlayers.filter { player -> player.id != previewsTarget.id }
         } else allPlayers).filter { it.isInGame && it.canBackWithSave }
     }
 }
@@ -77,7 +78,7 @@ data object Mayor : Role {
     override fun getNightAction() = null
     override val isOptionalAbility: Boolean = true
     override fun getNightActionTargetPlayers(
-        previewsTarget: Player?,
+        previewsTargets: List<Player>?,
         allPlayers: List<Player>
     ): List<Player> = emptyList()
 

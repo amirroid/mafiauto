@@ -16,5 +16,6 @@ fun RoleDescriptor.toUiModel() = RoleUiModel(
     },
     alignment = alignment,
     isOptionalAbility = isOptionalAbility,
+    nightActionRequiredPicks = nightActionRequiredPicks,
     instantAction = instantAction
 )

@@ -11,7 +11,6 @@ object RoleKeys {
     const val SILENCER = "silencer"
     const val BOMBER = "bomber"
     const val JOKER = "joker"
-    const val CULT_LEADER = "cult_leader"
     const val BULLETPROOF = "bulletproof"
     const val MAYOR = "mayor"
     const val NOSTRADAMUS = "nostradamus"

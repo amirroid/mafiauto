@@ -8,7 +8,6 @@ class RolesProviderImpl : RolesProvider {
             GodFather,
             Mafia,
             Joker,
-            CultLeader,
             Detective,
             Doctor,
             Civilian,

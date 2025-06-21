@@ -54,7 +54,6 @@ object Strings {
     val godFather = Res.string.god_father
     val mafia = Res.string.mafia
     val joker = Res.string.joker
-    val cultLeader = Res.string.cult_leader
     val doctor = Res.string.doctor
     val detective = Res.string.detective
     val civilian = Res.string.civilian
@@ -84,7 +83,6 @@ object Strings {
     val mayorExplanation = Res.string.mayor_explanation
     val nostradamusExplanation = Res.string.nostradamus_explanation
     val jokerExplanation = Res.string.joker_explanation
-    val cultLeaderExplanation = Res.string.cult_leader_explanation
     val surgeonExplanation = Res.string.surgeon_explanation
 
     val braceletLastCardExplanation = Res.string.bracelet_last_card_explanation

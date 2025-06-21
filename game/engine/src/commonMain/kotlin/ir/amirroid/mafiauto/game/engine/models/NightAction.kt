@@ -2,5 +2,9 @@ package ir.amirroid.mafiauto.game.engine.models
 
 data class NightAction(
     val player: Player,
-    val target: Player
+    val targets: List<Player>
 )
+
+
+val NightAction.target: Player
+    get() = targets.first()

@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.game.engine.actions.role
 
 import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.Player
+import ir.amirroid.mafiauto.game.engine.models.target
 import ir.amirroid.mafiauto.game.engine.role.Alignment
 
 data object KillAction : RoleAction {

@@ -94,7 +94,7 @@ class GameRepositoryImpl(
     private fun NightActionDescriptor.toEngine(): NightAction {
         return NightAction(
             player = player.toEngine(),
-            target = target.toEngine(),
+            targets = targets.map { it.toEngine() },
         )
     }
 }

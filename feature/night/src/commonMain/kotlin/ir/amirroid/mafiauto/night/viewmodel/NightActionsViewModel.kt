@@ -39,21 +39,28 @@ class NightActionsViewModel(
     private var domainPlayers: List<PlayerWithRole>? = null
 
     private val _selectedPlayers =
-        MutableStateFlow(emptyMap<PlayerWithRoleUiModel, PlayerWithRoleUiModel>())
+        MutableStateFlow(emptyMap<PlayerWithRoleUiModel, List<PlayerWithRoleUiModel>>())
     val selectedPlayers = _selectedPlayers.asStateFlow()
 
     val disablePlayerIdSelections = mutableStateListOf<Long>()
 
     fun togglePlayer(player: PlayerWithRoleUiModel, target: PlayerWithRoleUiModel) {
         _selectedPlayers.update {
-            it.toMutableMap().apply { put(player, target) }.toMap()
+            it.toMutableMap().apply {
+                val playerTargets = get(player)
+                if (playerTargets?.contains(target) == true) {
+                    put(player, playerTargets.filter { p -> p.player.id != target.player.id })
+                } else {
+                    put(player, (playerTargets ?: emptyList()) + target)
+                }
+            }
         }
     }
 
     fun applyActions() = viewModelScope.launch(coroutineDispatcher) {
         handleNightActionsUseCase.invoke(
             _selectedPlayers.value.map { (player, target) ->
-                NightActionDescriptor(player = player.toDomain(), target = target.toDomain())
+                NightActionDescriptor(player = player.toDomain(), targets = target.toDomains())
             })
     }
 
@@ -61,4 +68,6 @@ class NightActionsViewModel(
         if (domainPlayers == null) domainPlayers = getAllInRoomPlayersUseCase().first()
         return domainPlayers!!.first { it.player.id == player.id }
     }
+
+    private suspend fun List<PlayerWithRoleUiModel>.toDomains() = map { it.toDomain() }
 }
