@@ -20,8 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeEffect
 import ir.amirroid.mafiauto.design_system.locales.LocalHazeState
@@ -47,7 +45,7 @@ fun BaseBlurredPopup(
                 onDismissRequest?.invoke()
             }
         }
-        Dialog(
+        PlatformPopup(
             onDismissRequest = onDismissRequest?.let {
                 {
                     if (dismissOnBackPress) {
@@ -55,11 +53,8 @@ fun BaseBlurredPopup(
                     }
                 }
             } ?: {},
-            properties = DialogProperties(
-                usePlatformDefaultWidth = false,
-                dismissOnBackPress = dismissOnBackPress,
-                dismissOnClickOutside = dismissOnBackPress,
-            )
+            dismissOnClickOutside = dismissOnBackPress,
+            dismissOnBackPress = dismissOnBackPress,
         ) {
             Box(
                 contentAlignment = Alignment.Center,

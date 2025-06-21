@@ -35,7 +35,7 @@ fun MainNavigation() {
         ) {
             NavHost(
                 navController = navController,
-                startDestination = Screen.Intro,
+                startDestination = Screen.Groups,
                 enterTransition = {
                     slideIntoContainer(SlideDirection.Left)
                 },
