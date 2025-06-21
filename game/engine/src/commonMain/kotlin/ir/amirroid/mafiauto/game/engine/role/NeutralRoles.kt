@@ -39,3 +39,13 @@ data object Bomber : Role {
     override val hasNightAction = true
     override fun getNightAction() = null
 }
+
+
+data object Nostradamus : Role {
+    override val key = RoleKeys.NOSTRADAMUS
+    override val name = Resources.strings.nostradamus
+    override val explanation = Resources.strings.nostradamusExplanation
+    override val alignment = Alignment.Neutral
+    override val hasNightAction = true
+    override fun getNightAction() = null
+}

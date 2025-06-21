@@ -111,7 +111,16 @@ data object SilentAction : RoleAction {
         players: List<Player>,
         handler: NightActionHandler
     ) {
-
+        if (nightAction.player.remainingAbilityUses == 0) return
+        val updatedPlayers = updatePlayer(players, nightAction.player.id) {
+            copy(remainingAbilityUses = remainingAbilityUses - 1)
+        }
+        handler.updatePlayers(
+            updatePlayer(
+                updatedPlayers,
+                nightAction.target.id
+            ) { copy(isSilenced = true) }
+        )
     }
 }
 

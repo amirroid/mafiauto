@@ -18,7 +18,7 @@ class RolesProviderImpl : RolesProvider {
             Bomber,
             Bulletproof,
             Mayor,
-            Oracle
+            Nostradamus
         )
     }
 

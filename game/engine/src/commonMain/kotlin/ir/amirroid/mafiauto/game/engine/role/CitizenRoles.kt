@@ -95,11 +95,14 @@ data object Mayor : Role {
     }
 }
 
-data object Oracle : Role {
-    override val key = RoleKeys.ORACLE
-    override val name = Resources.strings.oracle
-    override val explanation = Resources.strings.oracleExplanation
+
+data object Silencer : Role {
+    override val key = RoleKeys.SILENCER
+    override val name = Resources.strings.silencer
+    override val explanation = Resources.strings.silencerExplanation
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
-    override fun getNightAction() = null
+    override val maxAbilityUses: Int = 2
+
+    override fun getNightAction(): RoleAction = SilentAction
 }

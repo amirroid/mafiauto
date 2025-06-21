@@ -31,16 +31,6 @@ data object Mafia : Role {
     override fun getNightAction() = null
 }
 
-
-data object Silencer : Role {
-    override val key = RoleKeys.SILENCER
-    override val name = Resources.strings.silencer
-    override val explanation = Resources.strings.silencerExplanation
-    override val alignment = Alignment.Mafia
-    override val hasNightAction = true
-    override fun getNightAction(): RoleAction? = null
-}
-
 data object Surgeon : Role {
     override val key = RoleKeys.SURGEON
     override val name = Resources.strings.surgeon
@@ -49,4 +39,10 @@ data object Surgeon : Role {
     override val hasNightAction = true
 
     override fun getNightAction(): RoleAction = SurgeonSaveAction
+    override fun getNightActionTargetPlayers(
+        previewsTarget: Player?,
+        allPlayers: List<Player>
+    ): List<Player> {
+        return allPlayers.filter { it.canBackWithSave && it.isInGame && it.role.alignment == Alignment.Mafia && it.role.key != RoleKeys.GOD_FATHER }
+    }
 }

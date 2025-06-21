@@ -64,7 +64,7 @@ object Strings {
     val bomber = Res.string.bomber
     val bulletproof = Res.string.bulletproof
     val mayor = Res.string.mayor
-    val oracle = Res.string.oracle
+    val nostradamus = Res.string.nostradamus
     val warning = Res.string.warning
     val info = Res.string.info
     val nightActionsResult = Res.string.night_actions_result
@@ -82,7 +82,7 @@ object Strings {
     val bomberExplanation = Res.string.bomber_explanation
     val bulletproofExplanation = Res.string.bulletproof_explanation
     val mayorExplanation = Res.string.mayor_explanation
-    val oracleExplanation = Res.string.oracle_explanation
+    val nostradamusExplanation = Res.string.nostradamus_explanation
     val jokerExplanation = Res.string.joker_explanation
     val cultLeaderExplanation = Res.string.cult_leader_explanation
     val surgeonExplanation = Res.string.surgeon_explanation

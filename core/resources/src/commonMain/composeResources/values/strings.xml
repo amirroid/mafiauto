@@ -62,7 +62,7 @@
     <string name="bomber">Bomber</string>
     <string name="bulletproof">Bulletproof</string>
     <string name="mayor">Mayor</string>
-    <string name="oracle">Oracle</string>
+    <string name="nostradamus">Nostradamus</string>
     <string name="surgeon">Surgeon</string>
 
 
@@ -76,7 +76,7 @@
     <string name="bomber_explanation">You walk among them with a smile, hiding the chaos inside until the moment comes to take them all down in flames.</string>
     <string name="bulletproof_explanation">Wearing unseen armor, you withstand a deadly blow once, but after that you’re just another name on the list.</string>
     <string name="mayor_explanation">Your vote hides in plain sight, ready to be revealed when the stakes are high enough to change the town’s destiny.</string>
-    <string name="oracle_explanation">If death comes, you don’t leave empty-handed — your final vision uncovers one truth before you disappear forever.</string>
+    <string name="nostradamus_explanation">If death comes, you don’t leave empty-handed — your final vision uncovers one truth before you disappear forever.</string>
     <string name="joker_explanation">You thrive on madness, winning only if they vote you out, so play the fool and let them hand you your twisted victory.</string>
     <string name="cult_leader_explanation">You corrupt from within, converting one mind at a time until the town realizes — too late — that it belongs to you.</string>
     <string name="surgeon_explanation">Each night, you can heal a player — possibly even yourself — protecting them from being killed.</string>
