@@ -129,7 +129,7 @@ fun NightActionsScreen(
             onNext = {
                 val playerOption = options[pagerState.currentPage]
                 playerOption.player.role.instantAction?.let {
-                    handleInstantAction(
+                    viewModel.handleInstantAction(
                         action = it,
                         currentPlayerRole = playerOption.player,
                         selectedPlayerRoles = selectedPlayers[playerOption.player],
@@ -159,27 +159,6 @@ fun NightActionsScreen(
         )
     }
 }
-
-private fun handleInstantAction(
-    action: InstantAction,
-    currentPlayerRole: PlayerWithRoleUiModel,
-    selectedPlayerRoles: List<PlayerWithRoleUiModel>?,
-    onShowSnakeBar: (StringResource) -> Unit,
-    onDisablePlayer: (Long) -> Unit
-) {
-    when (action) {
-        InstantAction.SHOW_ALIGNMENT -> {
-            val selectedPlayerRole = selectedPlayerRoles?.firstOrNull() ?: return
-            if (selectedPlayerRole.role.alignment == RoleAlignment.Mafia && selectedPlayerRole.role.key != RoleKeys.GOD_FATHER) {
-                onShowSnakeBar.invoke(Resources.strings.correctGuess)
-            } else {
-                onShowSnakeBar.invoke(Resources.strings.wrongGuess)
-            }
-            onDisablePlayer.invoke(currentPlayerRole.player.id)
-        }
-    }
-}
-
 
 @Composable
 fun SelectOptionPlayersList(

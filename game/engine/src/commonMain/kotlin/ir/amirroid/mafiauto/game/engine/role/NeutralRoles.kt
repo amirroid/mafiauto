@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.game.engine.role
 
+import ir.amirroid.mafiauto.game.engine.models.InstantActionType
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.resources.Resources
 
@@ -20,6 +21,7 @@ data object Nostradamus : Role {
     override val hasNightAction = true
     override val targetNightToWakingUp: Int = 0
     override val nightActionRequiredPicks: Int = 3
+    override val instantActionType: InstantActionType = InstantActionType.SHOW_ALIGNMENTS_COUNT
 
     override fun getNightAction() = null
 }

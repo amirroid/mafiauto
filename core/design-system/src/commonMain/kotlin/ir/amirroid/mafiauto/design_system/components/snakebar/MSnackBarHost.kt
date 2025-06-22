@@ -43,7 +43,11 @@ fun MSnackBarHost(
                         enter = slideInVertically { -it } + scaleIn(initialScale = 1.1f),
                         exit = slideOutVertically { -it } + scaleOut(targetScale = 1.1f)
                     ) {
-                        MSnakeBar(text = snackBar.text, type = snackBar.type, hazeState = hazeState)
+                        MSnakeBar(
+                            text = snackBar.rememberText(),
+                            type = snackBar.type,
+                            hazeState = hazeState
+                        )
                     }
                 }
             }

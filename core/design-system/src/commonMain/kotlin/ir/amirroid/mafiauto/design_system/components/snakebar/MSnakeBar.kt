@@ -28,7 +28,7 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 fun MSnakeBar(
-    text: StringResource,
+    text: String,
     type: SnackBaType,
     hazeState: HazeState,
     shape: Shape = AppTheme.shapes.large,
@@ -51,7 +51,7 @@ fun MSnakeBar(
                 style = AppTheme.typography.caption,
                 modifier = Modifier.alpha(.7f)
             )
-            MText(stringResource(text), style = AppTheme.typography.h4)
+            MText(text, style = AppTheme.typography.h4)
         }
     }
 }

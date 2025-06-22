@@ -4,11 +4,15 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ir.amirroid.mafiauto.domain.model.Alignment
+import ir.amirroid.mafiauto.domain.model.InstantAction
 import ir.amirroid.mafiauto.domain.model.NightActionDescriptor
 import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentPhaseUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.HandleNightActionsUseCase
+import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
+import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
 import ir.amirroid.mafiauto.ui_models.phase.toUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
@@ -21,6 +25,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.StringResource
 
 class NightActionsViewModel(
     getCurrentPhaseUseCase: GetCurrentPhaseUseCase,
@@ -70,4 +75,30 @@ class NightActionsViewModel(
     }
 
     private suspend fun List<PlayerWithRoleUiModel>.toDomains() = map { it.toDomain() }
+
+
+    fun handleInstantAction(
+        action: InstantAction,
+        currentPlayerRole: PlayerWithRoleUiModel,
+        selectedPlayerRoles: List<PlayerWithRoleUiModel>?,
+        onShowSnakeBar: (StringResource) -> Unit,
+        onDisablePlayer: (Long) -> Unit
+    ) {
+        when (action) {
+            InstantAction.SHOW_ALIGNMENT -> {
+                val selectedPlayerRole = selectedPlayerRoles?.firstOrNull() ?: return
+                if (selectedPlayerRole.role.alignment == Alignment.Mafia && selectedPlayerRole.role.key != RoleKeys.GOD_FATHER) {
+                    onShowSnakeBar.invoke(Resources.strings.correctGuess)
+                } else {
+                    onShowSnakeBar.invoke(Resources.strings.wrongGuess)
+                }
+                onDisablePlayer.invoke(currentPlayerRole.player.id)
+            }
+
+            InstantAction.SHOW_ALIGNMENTS_COUNT -> {
+                // show role counts
+                onDisablePlayer.invoke(currentPlayerRole.player.id)
+            }
+        }
+    }
 }
