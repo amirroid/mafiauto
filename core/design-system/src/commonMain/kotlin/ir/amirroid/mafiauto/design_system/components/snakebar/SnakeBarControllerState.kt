@@ -32,6 +32,7 @@ class SnakeBarControllerState(
     fun show(
         text: StringResource,
         type: SnackBaType = SnackBaType.WARNING,
+        formatArgs: List<Any> = emptyList(),
         time: Long = 4000
     ) {
         lastJob?.cancel()
@@ -42,7 +43,13 @@ class SnakeBarControllerState(
             if (isAnySnakeBarVisible) {
                 delay(200)
             }
-            _snacks.update { oldData -> oldData + SnackBarData.Resource(text, type) }
+            _snacks.update { oldData ->
+                oldData + SnackBarData.Resource(
+                    text,
+                    type,
+                    formatArgs = formatArgs
+                )
+            }
             delay(time)
             _snacks.value.forEach { it.visible = false }
         }

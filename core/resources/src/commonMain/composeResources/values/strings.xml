@@ -47,6 +47,7 @@
     <string name="correct_guess">You got it right. Stay sharp.</string>
     <string name="wrong_guess">Your guess was off. Things aren’t that simple here.</string>
     <string name="doctor_duo_announcement">%1$s and %2$s are the town&#39;s doctor duo, working together to heal and protect.</string>
+    <string name="alignment_count">Mafia: %1$d, Non-Mafia: %2$d</string>
 
     <string name="neutral">Neutral</string>
 

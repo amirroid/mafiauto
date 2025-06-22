@@ -133,13 +133,14 @@ fun NightActionsScreen(
                         action = it,
                         currentPlayerRole = playerOption.player,
                         selectedPlayerRoles = selectedPlayers[playerOption.player],
-                        onShowSnakeBar = { message ->
+                        onShowSnakeBar = { message, args ->
                             snakeBarController.show(
-                                message,
-                                type = SnackBaType.INFO
+                                text = message,
+                                type = SnackBaType.INFO,
+                                formatArgs = args
                             )
                         },
-                        onDisablePlayer = viewModel.disablePlayerIdSelections::add
+                        onDisablePlayer = viewModel.disablePlayerIdSelections::add,
                     )
                 }
                 scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }

@@ -69,6 +69,7 @@ object Strings {
     val nightActionsResult = Res.string.night_actions_result
     val revivedCount = Res.string.revived_count
     val deathCount = Res.string.death_count
+    val alignmentCount = Res.string.alignment_count
 
     // Explanations
     val godFatherExplanation = Res.string.god_father_explanation

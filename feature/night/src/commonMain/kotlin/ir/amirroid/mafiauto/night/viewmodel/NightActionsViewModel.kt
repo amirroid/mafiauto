@@ -16,6 +16,7 @@ import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
 import ir.amirroid.mafiauto.ui_models.phase.toUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
+import ir.amirroid.mafiauto.ui_models.role.RoleUiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -50,6 +51,7 @@ class NightActionsViewModel(
     val disablePlayerIdSelections = mutableStateListOf<Long>()
 
     fun togglePlayer(player: PlayerWithRoleUiModel, target: PlayerWithRoleUiModel) {
+        if (disablePlayerIdSelections.contains(player.player.id)) return
         _selectedPlayers.update {
             it.toMutableMap().apply {
                 val playerTargets = get(player)
@@ -81,24 +83,37 @@ class NightActionsViewModel(
         action: InstantAction,
         currentPlayerRole: PlayerWithRoleUiModel,
         selectedPlayerRoles: List<PlayerWithRoleUiModel>?,
-        onShowSnakeBar: (StringResource) -> Unit,
+        onShowSnakeBar: (StringResource, List<Any>) -> Unit,
         onDisablePlayer: (Long) -> Unit
     ) {
         when (action) {
             InstantAction.SHOW_ALIGNMENT -> {
-                val selectedPlayerRole = selectedPlayerRoles?.firstOrNull() ?: return
-                if (selectedPlayerRole.role.alignment == Alignment.Mafia && selectedPlayerRole.role.key != RoleKeys.GOD_FATHER) {
-                    onShowSnakeBar.invoke(Resources.strings.correctGuess)
+                val selected = selectedPlayerRoles?.firstOrNull() ?: return
+                val message = if (isRegularMafia(selected.role)) {
+                    Resources.strings.correctGuess
                 } else {
-                    onShowSnakeBar.invoke(Resources.strings.wrongGuess)
+                    Resources.strings.wrongGuess
                 }
-                onDisablePlayer.invoke(currentPlayerRole.player.id)
+                onShowSnakeBar(message, emptyList())
             }
 
             InstantAction.SHOW_ALIGNMENTS_COUNT -> {
-                // show role counts
-                onDisablePlayer.invoke(currentPlayerRole.player.id)
+                selectedPlayerRoles ?: return
+                val (mafiaCount, nonMafiaCount) = countMafiaAndNonMafia(selectedPlayerRoles)
+                onShowSnakeBar(Resources.strings.alignmentCount, listOf(mafiaCount, nonMafiaCount))
             }
         }
+        onDisablePlayer(currentPlayerRole.player.id)
+    }
+
+
+    private fun isRegularMafia(role: RoleUiModel): Boolean {
+        return role.alignment == Alignment.Mafia && role.key != RoleKeys.GOD_FATHER
+    }
+
+    private fun countMafiaAndNonMafia(players: List<PlayerWithRoleUiModel>): Pair<Int, Int> {
+        val mafiaCount = players.count { isRegularMafia(it.role) }
+        val nonMafiaCount = players.size - mafiaCount
+        return mafiaCount to nonMafiaCount
     }
 }

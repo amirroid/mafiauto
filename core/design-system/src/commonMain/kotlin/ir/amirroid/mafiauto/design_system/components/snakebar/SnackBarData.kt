@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.design_system.components.snakebar
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -17,19 +18,22 @@ sealed interface SnackBarData {
     @Composable
     fun rememberText(): String
 
+    @Immutable
     data class Resource(
         val text: StringResource,
-        override val type: SnackBaType
+        override val type: SnackBaType,
+        val formatArgs: List<Any>
     ) : SnackBarData {
         override val key: String = text.key + Random.nextInt()
         override var visible by mutableStateOf(true)
 
         @Composable
         override fun rememberText(): String {
-            return stringResource(text)
+            return stringResource(text, *formatArgs.toTypedArray())
         }
     }
 
+    @Immutable
     data class Text(
         val text: String,
         override val type: SnackBaType
