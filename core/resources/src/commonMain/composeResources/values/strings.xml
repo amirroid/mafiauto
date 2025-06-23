@@ -50,6 +50,7 @@
     <string name="alignment_count">Mafia: %1$d, Non-Mafia: %2$d</string>
     <string name="end_result">End Result</string>
     <string name="game_winner_announcement">The winner is %1$d</string>
+    <string name="play_again">Play Again</string>
 
     <string name="neutral">Neutral</string>
 

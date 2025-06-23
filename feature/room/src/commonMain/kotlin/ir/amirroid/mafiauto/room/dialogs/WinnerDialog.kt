@@ -47,6 +47,7 @@ fun WinnerDialog(alignment: Alignment, onDismissRequest: () -> Unit) {
                         damping = 0.9f,
                         angle = Angle.BOTTOM,
                         spread = Spread.ROUND,
+                        timeToLive = 4000,
                         emitter = Emitter(duration = 3.5.seconds).perSecond(100),
                         position = Position.Relative(0.0, 0.0).between(Position.Relative(1.0, 0.0))
                     )
@@ -72,7 +73,7 @@ fun WinnerDialog(alignment: Alignment, onDismissRequest: () -> Unit) {
                     onClick = { visible = false },
                     modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
                 ) {
-                    MText(stringResource(Resources.strings.ok))
+                    MText(stringResource(Resources.strings.playAgain))
                 }
             }
         }

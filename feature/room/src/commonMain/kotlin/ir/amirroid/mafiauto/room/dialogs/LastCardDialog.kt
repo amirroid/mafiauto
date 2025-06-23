@@ -96,7 +96,7 @@ fun LastCardDialog(
             if (pickingPlayers && selectedCardIndex != null) {
                 val requiredTargetCount = cards[selectedCardIndex!!].targetCount
                 PlayersList(
-                    players = remember(players) { players.filter { it.player.id != targetPlayerRole.player.id } },
+                    players = remember(players) { players.filter { it.player.id != targetPlayerRole.player.id && it.player.isInGame } },
                     selectedPlayers = selectedPlayers,
                     requiredTargetCount = requiredTargetCount
                 )

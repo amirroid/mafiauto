@@ -35,7 +35,7 @@ fun MainNavigation() {
         ) {
             NavHost(
                 navController = navController,
-                startDestination = Screen.Groups,
+                startDestination = Screen.Intro,
                 enterTransition = {
                     slideIntoContainer(SlideDirection.Left)
                 },
@@ -89,7 +89,13 @@ fun MainNavigation() {
                 composable<Screen.RevealRoles> {
                     RevealRolesScreen(
                         onBack = navController::navigateUp,
-                        onStartGame = { navController.navigate(Screen.GameRoom) }
+                        onStartGame = {
+                            navController.navigate(Screen.GameRoom) {
+                                popUpTo(Screen.Groups::class) {
+                                    inclusive = false
+                                }
+                            }
+                        }
                     )
                 }
                 composable<Screen.GameRoom> {
