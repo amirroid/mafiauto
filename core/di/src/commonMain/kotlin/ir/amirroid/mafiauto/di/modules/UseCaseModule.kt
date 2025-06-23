@@ -9,6 +9,7 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val useCaseModule = module {
+    factoryOf(::GetSingleRoleDescriptorUseCase)
     factoryOf(::GetAllRoleDescriptorsUseCase)
     factoryOf(::GetAllPlayersUseCase)
     factoryOf(::RemovePlayerUseCase)

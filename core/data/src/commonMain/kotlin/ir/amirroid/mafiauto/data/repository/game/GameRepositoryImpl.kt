@@ -7,12 +7,14 @@ import ir.amirroid.mafiauto.data.mappers.player_role.toPlayerRoleDomain
 import ir.amirroid.mafiauto.domain.model.LastCardDescriptor
 import ir.amirroid.mafiauto.domain.model.NightActionDescriptor
 import ir.amirroid.mafiauto.domain.model.PlayerWithRole
+import ir.amirroid.mafiauto.domain.model.RoleDescriptor
 import ir.amirroid.mafiauto.domain.repository.GameRepository
 import ir.amirroid.mafiauto.game.engine.GameEngine
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
 import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.provider.roles.RolesProvider
+import ir.amirroid.mafiauto.game.engine.role.Role
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -22,7 +24,6 @@ class GameRepositoryImpl(
     private val engine: GameEngine,
     private val rolesProvider: RolesProvider
 ) : GameRepository {
-
     override val statusChecksCount = engine.statusCheckCount
     override val currentDay = engine.currentDay
     override val messages = engine.messages
@@ -95,6 +96,7 @@ class GameRepositoryImpl(
         return NightAction(
             player = player.toEngine(),
             targets = targets.map { it.toEngine() },
+            replacementRole = replacementRole?.let { rolesProvider.findRole(it.key) }
         )
     }
 }

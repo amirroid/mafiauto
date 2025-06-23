@@ -51,6 +51,7 @@ object Strings {
     val optional = Res.string.optional
     val doctorDuoAnnouncement = Res.string.doctor_duo_announcement
     val playAgain = Res.string.play_again
+    val replacementRole = Res.string.replacement_role
 
 
     // Roles

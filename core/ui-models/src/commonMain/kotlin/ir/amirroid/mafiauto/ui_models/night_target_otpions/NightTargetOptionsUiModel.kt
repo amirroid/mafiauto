@@ -8,5 +8,8 @@ import ir.amirroid.mafiauto.ui_models.resource.MessageStringResourceUiModel
 data class NightTargetOptionsUiModel(
     val player: PlayerWithRoleUiModel,
     val availableTargets: List<PlayerWithRoleUiModel>,
-    val message: MessageStringResourceUiModel?
-)
+    val message: MessageStringResourceUiModel?,
+    val isReplacement: Boolean
+) {
+    val key = "${player.player.id}${player.role.key}"
+}

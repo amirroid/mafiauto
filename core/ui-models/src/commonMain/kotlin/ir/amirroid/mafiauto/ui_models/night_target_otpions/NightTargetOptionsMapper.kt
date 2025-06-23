@@ -7,5 +7,6 @@ import ir.amirroid.mafiauto.ui_models.resource.toUiModel
 fun NightTargetOptions.toUiModel() = NightTargetOptionsUiModel(
     player = player.toUiModel(),
     availableTargets = availableTargets.map { it.toUiModel() },
-    message = message?.toUiModel()
+    message = message?.toUiModel(),
+    isReplacement = isReplacement
 )

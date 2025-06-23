@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -48,7 +51,6 @@ import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
 import ir.amirroid.mafiauto.common.compose.components.InfoText
 import ir.amirroid.mafiauto.common.compose.components.PlatformBackHandler
-import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.horizontalPadding
 import ir.amirroid.mafiauto.common.compose.operators.plus
@@ -62,18 +64,14 @@ import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarContr
 import ir.amirroid.mafiauto.design_system.components.snakebar.SnackBaType
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
-import ir.amirroid.mafiauto.domain.model.InstantAction
-import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.night.viewmodel.NightActionsViewModel
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.night_target_otpions.NightTargetOptionsUiModel
 import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import ir.amirroid.mafiauto.domain.model.Alignment as RoleAlignment
 
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
@@ -105,7 +103,8 @@ fun NightActionsScreen(
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize().padding(top = 12.dp),
-                userScrollEnabled = false
+                userScrollEnabled = false,
+                key = { index -> options[index].key }
             ) { index ->
                 val playerOptions = options[index]
                 val currentPlayerSelectedTargets =
@@ -114,7 +113,7 @@ fun NightActionsScreen(
                     playerOptions = playerOptions,
                     selectedPlayers = currentPlayerSelectedTargets,
                     onSelect = { target -> viewModel.togglePlayer(playerOptions.player, target) },
-                    contentPadding = paddingValues + PaddingValues(bottom = 80.dp) + defaultContentPadding(),
+                    contentPadding = paddingValues,
                     enabled = !disablePlayerIdSelections.contains(playerOptions.player.player.id) && playerOptions.player.role.nightActionRequiredPicks != currentPlayerSelectedTargets.size
                 )
             }
@@ -192,10 +191,15 @@ fun SelectOptionPlayersList(
                     append(" - ")
                     append(stringResource(currentPlayerRole.role.name))
                     if (currentPlayerRole.role.isOptionalAbility) {
-                        append(" - ${stringResource(Resources.strings.optional)}")
+                        append(" - ")
+                        append(stringResource(Resources.strings.optional))
                     }
                     if (currentPlayerRole.player.hasLimitToUseAbilities) {
                         append(" - ${currentPlayerRole.player.remainingAbilityUses}X")
+                    }
+                    if (playerOptions.isReplacement) {
+                        append(" - ")
+                        append(stringResource(Resources.strings.replacementRole))
                     }
                 }
             )
@@ -240,7 +244,10 @@ fun SelectOptionPlayersList(
 
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(top = 16.dp)
+            contentPadding = PaddingValues(
+                top = 16.dp,
+                bottom = 80.dp
+            ) + WindowInsets.navigationBars.asPaddingValues()
         ) {
             items(
                 items = playerOptions.availableTargets,

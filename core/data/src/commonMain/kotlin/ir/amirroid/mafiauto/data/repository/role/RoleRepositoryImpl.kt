@@ -21,4 +21,8 @@ class RoleRepositoryImpl(
     override fun selectRoles(newRoles: List<RoleDescriptor>) {
         roleMemoryHolder.setValue(newRoles)
     }
+
+    override fun getRole(key: String): RoleDescriptor {
+        return rolesProvider.findRole(key).toDescriptor()
+    }
 }

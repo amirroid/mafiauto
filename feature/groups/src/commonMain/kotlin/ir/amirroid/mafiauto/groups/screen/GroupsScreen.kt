@@ -20,10 +20,8 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import compose.icons.EvaIcons
@@ -118,7 +116,7 @@ fun GroupsList(
         items(groupsWithPlayers, key = { it.groupId }) { item ->
             MSurface(
                 onClick = { onSelect.invoke(item) },
-                color = Color.Transparent,
+                color = AppTheme.colorScheme.background,
                 border = BorderStroke(1.dp, AppTheme.colorScheme.primary),
                 shape = AppTheme.shapes.large,
                 modifier = Modifier.animateItem().then(
@@ -136,9 +134,7 @@ fun GroupsList(
                     modifier = Modifier.padding(12.dp).fillMaxWidth()
                 ) {
                     MText(item.groupName, style = AppTheme.typography.h3)
-                    MText(
-                        remember(item) { item.players.joinToString("\n") { it.name } }
-                    )
+                    MText(text = item.formatedPlayersList)
                 }
             }
         }

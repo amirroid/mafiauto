@@ -10,6 +10,7 @@ import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentPhaseUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.HandleNightActionsUseCase
+import ir.amirroid.mafiauto.domain.usecase.role.GetSingleRoleDescriptorUseCase
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
@@ -31,6 +32,7 @@ class NightActionsViewModel(
     getCurrentPhaseUseCase: GetCurrentPhaseUseCase,
     private val getAllInRoomPlayersUseCase: GetAllInRoomPlayersUseCase,
     private val handleNightActionsUseCase: HandleNightActionsUseCase,
+    private val getSingleRoleDescriptorUseCase: GetSingleRoleDescriptorUseCase,
     private val coroutineDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     val currentPhase = getCurrentPhaseUseCase.invoke()
@@ -66,7 +68,14 @@ class NightActionsViewModel(
     fun applyActions() = viewModelScope.launch(coroutineDispatcher) {
         handleNightActionsUseCase.invoke(
             _selectedPlayers.value.map { (player, target) ->
-                NightActionDescriptor(player = player.toDomain(), targets = target.toDomains())
+                val domainPlayer = player.toDomain()
+                NightActionDescriptor(
+                    player = domainPlayer,
+                    targets = target.toDomains(),
+                    replacementRole = if (domainPlayer.role.key != player.role.key) {
+                        getSingleRoleDescriptorUseCase(player.role.key)
+                    } else null
+                )
             })
     }
 

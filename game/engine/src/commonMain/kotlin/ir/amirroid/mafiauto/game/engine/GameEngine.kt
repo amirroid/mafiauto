@@ -15,6 +15,8 @@ import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.models.findWithId
 import ir.amirroid.mafiauto.game.engine.provider.last_card.LastCardsProvider
 import ir.amirroid.mafiauto.game.engine.role.Alignment
+import ir.amirroid.mafiauto.game.engine.role.GodFather
+import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -195,23 +197,36 @@ class GameEngine(
     private fun proceedToNightPhase() {
         val allPlayers = _players.value
         val currentNight = currentDay.value
-        val options = allPlayers.filter {
-            it.role.hasNightAction && it.role.targetNightToWakingUp.let { nightNumber ->
-                nightNumber == null || nightNumber == currentNight
-            } && it.isInGame
-        }.map { player ->
-            val previewsTargets = nightActionsHistory[_currentDay.value - 1]
-                ?.find { it.player.id == player.id }?.targets
-            NightTargetOptions(
-                player = player,
-                availableTargets = player.role.getNightActionTargetPlayers(
-                    previewsTargets,
-                    allPlayers
-                ),
-                message = player.role.getNightActionMessage(allPlayers)
-            )
-        }.filter { it.message != null || it.availableTargets.isNotEmpty() }
+
+        val godfatherReplacement = allPlayers
+            .filter { it.role.alignment == Alignment.Mafia && it.isInGame }
+            .minByOrNull { it.role.executionOrder }
+            ?.takeIf {
+                allPlayers.none { p -> p.role.key == RoleKeys.GOD_FATHER && p.isInGame }
+            }?.copy(role = GodFather)
+
+        val playersForNight = if (godfatherReplacement != null)
+            allPlayers + godfatherReplacement else allPlayers
+
+        val options = playersForNight
+            .filter { it.role.hasNightAction && it.role.targetNightToWakingUp?.let { night -> night == currentNight } != false && it.isInGame }
+            .map { player ->
+                val previewsTargets = nightActionsHistory[currentNight - 1]
+                    ?.find { it.player.id == player.id }?.targets
+
+                NightTargetOptions(
+                    player = player,
+                    availableTargets = player.role.getNightActionTargetPlayers(
+                        previewsTargets,
+                        allPlayers
+                    ),
+                    message = player.role.getNightActionMessage(allPlayers),
+                    isReplacement = player.id == godfatherReplacement?.id
+                )
+            }
+            .filter { it.message != null || it.availableTargets.isNotEmpty() }
             .sortedBy { it.player.role.executionOrder }
+
         updatePhase(Phase.Night(options))
     }
 
@@ -286,7 +301,9 @@ class GameEngine(
     ) {
         actions.forEach { scheduledAction ->
             val playerRoleAction =
-                scheduledAction.action.player.role.getNightAction() ?: return@forEach
+                scheduledAction.action.let {
+                    it.replacementRole?.getNightAction() ?: it.player.role.getNightAction()
+                } ?: return@forEach
 
             playerRoleAction.apply(
                 nightAction = scheduledAction.action,

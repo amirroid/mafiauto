@@ -8,5 +8,6 @@ import ir.amirroid.mafiauto.game.engine.models.NightTargetOptions as EngineNight
 fun EngineNightTargetOptions.toDomain() = NightTargetOptions(
     player = player.toPlayerRoleDomain(),
     availableTargets = availableTargets.map { it.toPlayerRoleDomain() },
-    message = message?.toDomain()
+    message = message?.toDomain(),
+    isReplacement = isReplacement
 )
