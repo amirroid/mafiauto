@@ -1,6 +1,9 @@
 package ir.amirroid.mafiauto.game.engine.role
 
+import ir.amirroid.mafiauto.game.engine.base.ActionsHandler
 import ir.amirroid.mafiauto.game.engine.models.InstantActionType
+import ir.amirroid.mafiauto.game.engine.models.Phase
+import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.resources.Resources
 
@@ -11,6 +14,10 @@ data object Joker : Role {
     override val alignment = Alignment.Neutral
     override val hasNightAction = false
     override fun getNightAction() = null
+
+    override fun onEliminatedByVotes(players: List<Player>, handler: ActionsHandler) {
+        handler.updatePhase(Phase.End(winnerAlignment = Alignment.Neutral))
+    }
 }
 
 data object Nostradamus : Role {

@@ -1,3 +1,3 @@
 package ir.amirroid.mafiauto.game.engine.base
 
-interface ActionsHandler : MessageHandler, PlayersUpdater
+interface ActionsHandler : MessageHandler, PlayersUpdater, PhaseUpdater

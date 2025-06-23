@@ -3,6 +3,7 @@ package ir.amirroid.mafiauto.game.engine
 import ir.amirroid.mafiauto.game.engine.actions.role.NightActionHandler
 import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
 import ir.amirroid.mafiauto.game.engine.base.ActionsHandler
+import ir.amirroid.mafiauto.game.engine.base.PhaseUpdater
 import ir.amirroid.mafiauto.game.engine.base.PlayerTransformer
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
 import ir.amirroid.mafiauto.game.engine.last_card.LastCardHandler
@@ -27,7 +28,7 @@ class GameEngine(
     private val lastCardsProvider: LastCardsProvider,
     private val initialPhase: Phase = Phase.Day,
     private val initialDay: Int = 0,
-) : ActionsHandler, PlayerTransformer, LastCardHandler {
+) : ActionsHandler, PlayerTransformer, LastCardHandler, PhaseUpdater {
     private val _currentDay = MutableStateFlow(initialDay)
     private val _currentPhase = MutableStateFlow(initialPhase)
     private val _players = MutableStateFlow(emptyList<Player>())
@@ -50,7 +51,10 @@ class GameEngine(
         _messages.trySend(message)
     }
 
-    private fun updatePhase(newPhase: Phase) = _currentPhase.update { newPhase }
+    override fun updatePhase(newPhase: Phase) {
+        if (currentPhase.value is Phase.End) return
+        _currentPhase.update { newPhase }
+    }
 
     fun proceedToNextPhase() {
         when (_currentPhase.value) {
@@ -202,7 +206,7 @@ class GameEngine(
             )
         }.filter { it.message != null || it.availableTargets.isNotEmpty() }
             .sortedBy { it.player.role.executionOrder }
-        _currentPhase.update { Phase.Night(options) }
+        updatePhase(Phase.Night(options))
     }
 
     fun applyLastCard(card: LastCard, pickedPlayers: List<Player>) {
@@ -261,6 +265,10 @@ class GameEngine(
 
             override fun updatePlayers(newPlayers: List<Player>) {
                 onPlayersUpdated(newPlayers)
+            }
+
+            override fun updatePhase(newPhase: Phase) {
+                updatePhase(newPhase)
             }
         }
     }
