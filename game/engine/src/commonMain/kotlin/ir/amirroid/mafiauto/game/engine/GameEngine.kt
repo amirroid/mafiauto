@@ -70,12 +70,18 @@ class GameEngine(
             is Phase.Result -> {
                 val winnerAlignment = getWinnerAlignment()
                 if (winnerAlignment == null) {
-                    updatePhase(Phase.Day)
+                    proceedToDayPhase()
                 } else updatePhase(Phase.End(winnerAlignment))
             }
 
             else -> Unit
         }
+    }
+
+
+    private fun proceedToDayPhase() {
+        incrementDay()
+        updatePhase(Phase.Day)
     }
 
 
@@ -192,7 +198,7 @@ class GameEngine(
         val options = allPlayers.filter {
             it.role.hasNightAction && it.role.targetNightToWakingUp.let { nightNumber ->
                 nightNumber == null || nightNumber == currentNight
-            }
+            } && it.isInGame
         }.map { player ->
             val previewsTargets = nightActionsHistory[_currentDay.value - 1]
                 ?.find { it.player.id == player.id }?.targets
@@ -210,6 +216,7 @@ class GameEngine(
     }
 
     fun applyLastCard(card: LastCard, pickedPlayers: List<Player>) {
+        _lastCards.update { previewsList -> previewsList.filter { it.key != card.key } }
         val phase = currentPhase.value
         if (phase !is Phase.LastCard) return
         val targetPlayer = phase.player
@@ -224,7 +231,6 @@ class GameEngine(
 
     fun handleNightActions(actions: List<NightAction>) {
         nightActionsHistory[_currentDay.value] = actions
-        incrementDay()
         val newScheduledActions =
             actions.sortedBy { it.player.role.submitExecutionOrder }.map { action ->
                 ScheduledAction(

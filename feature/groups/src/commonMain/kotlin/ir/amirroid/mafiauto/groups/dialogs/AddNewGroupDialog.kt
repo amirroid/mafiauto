@@ -48,7 +48,8 @@ fun AddNewGroupDialog(
                     onAdd.invoke(groupName)
                     visible = false
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                enabled = groupName.isNotEmpty()
             ) {
                 MText(stringResource(Resources.strings.add))
             }

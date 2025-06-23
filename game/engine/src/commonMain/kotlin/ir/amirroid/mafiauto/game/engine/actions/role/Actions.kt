@@ -70,7 +70,6 @@ data object ShootAction : RoleAction {
         players: List<Player>,
         handler: NightActionHandler
     ) {
-        println("SDASDAda ${nightAction.target.name}")
         if (nightAction.player.remainingAbilityUses == 0) return
 
         val shooter = nightAction.player
@@ -124,25 +123,5 @@ data object SilentAction : RoleAction {
                 nightAction.target.id
             ) { copy(isSilenced = true) }
         )
-    }
-}
-
-data object ConvertAction : RoleAction {
-    override fun apply(
-        nightAction: NightAction,
-        players: List<Player>,
-        handler: NightActionHandler
-    ) {
-
-    }
-}
-
-data object RevealRoleAction : RoleAction {
-    override fun apply(
-        nightAction: NightAction,
-        players: List<Player>,
-        handler: NightActionHandler
-    ) {
-
     }
 }

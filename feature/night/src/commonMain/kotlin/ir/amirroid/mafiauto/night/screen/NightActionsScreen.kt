@@ -48,8 +48,10 @@ import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
 import ir.amirroid.mafiauto.common.compose.components.InfoText
 import ir.amirroid.mafiauto.common.compose.components.PlatformBackHandler
+import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.horizontalPadding
+import ir.amirroid.mafiauto.common.compose.operators.plus
 import ir.amirroid.mafiauto.design_system.components.appbar.SmallTopAppBarScaffold
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.button.MIconButton
@@ -112,7 +114,7 @@ fun NightActionsScreen(
                     playerOptions = playerOptions,
                     selectedPlayers = currentPlayerSelectedTargets,
                     onSelect = { target -> viewModel.togglePlayer(playerOptions.player, target) },
-                    contentPadding = paddingValues,
+                    contentPadding = paddingValues + PaddingValues(bottom = 80.dp) + defaultContentPadding(),
                     enabled = !disablePlayerIdSelections.contains(playerOptions.player.player.id) && playerOptions.player.role.nightActionRequiredPicks != currentPlayerSelectedTargets.size
                 )
             }
