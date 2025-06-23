@@ -13,6 +13,7 @@ import ir.amirroid.mafiauto.game.engine.models.Phase
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.models.findWithId
 import ir.amirroid.mafiauto.game.engine.provider.last_card.LastCardsProvider
+import ir.amirroid.mafiauto.game.engine.role.Alignment
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -62,10 +63,34 @@ class GameEngine(
                 proceedToNightPhase()
             }
 
-            is Phase.Result -> updatePhase(Phase.Day)
+            is Phase.Result -> {
+                val winnerAlignment = getWinnerAlignment()
+                if (winnerAlignment == null) {
+                    updatePhase(Phase.Day)
+                } else updatePhase(Phase.End(winnerAlignment))
+            }
+
             else -> Unit
         }
     }
+
+
+    private fun getWinnerAlignment(): Alignment? {
+        val allPlayers = players.value
+
+        allPlayers.firstOrNull { it.role.hasWon(allPlayers) == true }
+            ?.let { return it.role.alignment }
+
+        val mafiaCount = allPlayers.count { it.role.alignment == Alignment.Mafia && it.isAlive }
+        val nonMafiaCount = allPlayers.count { it.role.alignment != Alignment.Mafia && it.isAlive }
+
+        return when {
+            mafiaCount == 0 -> Alignment.Civilian
+            mafiaCount >= nonMafiaCount -> Alignment.Mafia
+            else -> null
+        }
+    }
+
 
     private fun unSilentPlayers() {
         updatePlayers(_players.value.map { it.copy(isSilenced = false) })
@@ -190,7 +215,6 @@ class GameEngine(
             allPlayers = _players.value,
             handler = this
         )
-        targetPlayer.role.onGoOutWithVotes(players.value, this)
         proceedToNightPhase()
     }
 

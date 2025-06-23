@@ -10,6 +10,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(libs.confettikit)
+
                 implementation(project(ProjectPaths.domain))
                 implementation(project(ProjectPaths.uiModels))
             }

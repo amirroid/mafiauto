@@ -60,6 +60,7 @@ import ir.amirroid.mafiauto.room.dialogs.NightActionsResultDialog
 import ir.amirroid.mafiauto.room.dialogs.ShowPlayerRoleDialog
 import ir.amirroid.mafiauto.room.dialogs.ShowStatusDialog
 import ir.amirroid.mafiauto.room.dialogs.VotingDialog
+import ir.amirroid.mafiauto.room.dialogs.WinnerDialog
 import ir.amirroid.mafiauto.room.viewmodel.GameRoomViewModel
 import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
@@ -161,6 +162,12 @@ fun GameRoomScreen(
         NightActionsResultDialog(
             result = currentPhase.result,
             onDismissRequest = viewModel::nextPhase
+        )
+    }
+    if (currentPhase is GamePhaseUiModel.End) {
+        WinnerDialog(
+            alignment = currentPhase.winnerAlignment,
+            onDismissRequest = onBack
         )
     }
 }

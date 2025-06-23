@@ -27,6 +27,7 @@ object BraceletCard : LastCard {
                 target.id
             ) { copy(canUseAbility = false) }
         )
+        player.role.onEliminatedByVotes(allPlayers, handler)
     }
 }
 
@@ -53,6 +54,7 @@ object SilenceCard : LastCard {
         }
         handler.sendMessage(Resources.strings.doneMessage)
         handler.updatePlayers(updatedPlayers)
+        player.role.onEliminatedByVotes(allPlayers, handler)
     }
 }
 
@@ -104,6 +106,7 @@ object BeautifulMindCard : LastCard {
                     copy(isAlive = false)
                 }
             )
+            player.role.onEliminatedByVotes(allPlayers, handler)
         }
     }
 }

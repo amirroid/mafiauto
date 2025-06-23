@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.game.engine.actions.role
 
+import co.touchlab.kermit.Logger
 import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.models.target
@@ -69,6 +70,7 @@ data object ShootAction : RoleAction {
         players: List<Player>,
         handler: NightActionHandler
     ) {
+        println("SDASDAda ${nightAction.target.name}")
         if (nightAction.player.remainingAbilityUses == 0) return
 
         val shooter = nightAction.player
@@ -80,7 +82,7 @@ data object ShootAction : RoleAction {
         val finalPlayers = when (target.role.alignment) {
             Alignment.Mafia -> updatePlayer(updatedPlayers, target.id) {
                 copy(
-                    isAlive = currentHealthPoints.minus(1) == 0,
+                    isAlive = currentHealthPoints.minus(1) != 0,
                     currentHealthPoints = currentHealthPoints - 1
                 )
             }

@@ -5,6 +5,7 @@ androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.2.1"
 androidx-core = "1.16.0"
 androidx-espresso = "3.6.1"
+confettikit = "0.4.0"
 kermit = "2.0.4"
 androidx-lifecycle = "2.9.0"
 androidx-testExt = "1.2.1"
@@ -19,6 +20,7 @@ composeIcons = "1.1.1"
 sqldelight = "2.1.0"
 
 [libraries]
+confettikit = { module = "io.github.vinceglb:confettikit", version.ref = "confettikit" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }

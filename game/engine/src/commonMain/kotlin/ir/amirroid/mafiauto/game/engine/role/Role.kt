@@ -32,7 +32,8 @@ sealed interface Role : PlayerTransformer {
 
     fun getNightActionMessage(players: List<Player>): StringResourcesMessage? = null
     fun onKillPlayer(players: List<Player>, handler: ActionsHandler) = Unit
-    fun onGoOutWithVotes(players: List<Player>, handler: ActionsHandler) = Unit
+    fun onEliminatedByVotes(players: List<Player>, handler: ActionsHandler) = Unit
+    fun hasWon(players: List<Player>): Boolean? = null
 }
 
 enum class Alignment { Mafia, Civilian, Neutral }

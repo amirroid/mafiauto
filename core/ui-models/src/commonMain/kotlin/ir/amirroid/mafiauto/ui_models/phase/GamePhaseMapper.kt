@@ -19,4 +19,8 @@ fun GamePhase.toUiModel() = when (this) {
     is GamePhase.Defending -> GamePhaseUiModel.Defending(
         defenders = defenders.map { it.toUiModel() }
     )
+
+    is GamePhase.End -> GamePhaseUiModel.End(
+        winnerAlignment = winnerAlignment,
+    )
 }

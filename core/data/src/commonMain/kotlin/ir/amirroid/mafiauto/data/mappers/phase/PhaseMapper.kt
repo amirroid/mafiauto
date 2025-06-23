@@ -3,6 +3,7 @@ package ir.amirroid.mafiauto.data.mappers.phase
 import ir.amirroid.mafiauto.data.mappers.night_target_options.toDomain
 import ir.amirroid.mafiauto.data.mappers.player_role.toPlayerRoleDomain
 import ir.amirroid.mafiauto.data.mappers.result.toDomain
+import ir.amirroid.mafiauto.domain.model.Alignment
 import ir.amirroid.mafiauto.domain.model.GamePhase
 import ir.amirroid.mafiauto.game.engine.models.Phase
 
@@ -18,5 +19,9 @@ fun Phase.toDomain() = when (this) {
     is Phase.Result -> GamePhase.Result(result = result.toDomain())
     is Phase.Defending -> GamePhase.Defending(
         defenders = defenders.map { it.toPlayerRoleDomain() }
+    )
+
+    is Phase.End -> GamePhase.End(
+        winnerAlignment = Alignment.valueOf(winnerAlignment.name),
     )
 }

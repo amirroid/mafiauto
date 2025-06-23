@@ -45,7 +45,15 @@ fun FateDialog(
 
     LaunchedEffect(Unit) {
         repeat(4) {
-            shuffledDefenders.shuffle()
+            val previous = shuffledDefenders.toList()
+            var newList: List<PlayerWithRoleUiModel>
+            do {
+                newList = previous.shuffled()
+            } while (newList == previous && shuffledDefenders.size > 1)
+
+            shuffledDefenders.clear()
+            shuffledDefenders.addAll(newList)
+
             delay(1250)
         }
         shuffledDefenders.removeAll { it.player.id != targetPlayer.player.id }

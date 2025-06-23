@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.ui_models.phase
 
+import ir.amirroid.mafiauto.domain.model.Alignment
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.night_target_otpions.NightTargetOptionsUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
@@ -25,4 +26,8 @@ sealed class GamePhaseUiModel(val displayName: StringResource) {
 
     data class Result(val result: NightActionsResultUiModel) :
         GamePhaseUiModel(Resources.strings.nightActionsResult)
+
+    data class End(
+        val winnerAlignment: Alignment
+    ) : GamePhaseUiModel(Resources.strings.day)
 }

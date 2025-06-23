@@ -12,4 +12,5 @@ sealed interface GamePhase {
 
     data class Night(val options: List<NightTargetOptions>) : GamePhase
     data class Result(val result: NightActionsResult) : GamePhase
+    data class End(val winnerAlignment: Alignment) : GamePhase
 }

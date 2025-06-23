@@ -1,5 +1,7 @@
 package ir.amirroid.mafiauto.game.engine.models
 
+import ir.amirroid.mafiauto.game.engine.role.Alignment
+
 sealed interface Phase {
 
     /**
@@ -53,4 +55,12 @@ sealed interface Phase {
      * @property result The result of all night actions, including deaths and revivals.
      */
     data class Result(val result: NightActionsResult) : Phase
+
+
+    /**
+     * Final phase of the game that indicates it has ended.
+     *
+     * @property winnerAlignment The alignment (e.g., Mafia, Civilian) that has won the game.
+     */
+    data class End(val winnerAlignment: Alignment) : Phase
 }
