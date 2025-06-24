@@ -53,9 +53,7 @@ fun MainNavigation() {
             ) {
                 composable<Screen.Intro> {
                     IntroScreen(
-                        onStartGame = {
-                            navController.navigate(Screen.Groups)
-                        }
+                        onStartGame = { navController.navigate(Screen.Groups) },
                     )
                 }
                 composable<Screen.Groups> {

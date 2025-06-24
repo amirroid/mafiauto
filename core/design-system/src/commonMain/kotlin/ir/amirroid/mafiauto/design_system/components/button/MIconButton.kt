@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 fun MIconButton(
     onClick: () -> Unit,
     enabled: Boolean = true,
+    modifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit
 ) {
     val alpha by animateFloatAsState(
@@ -23,7 +24,7 @@ fun MIconButton(
     )
     val minSize = 36.dp
     Box(
-        Modifier
+        modifier
             .sizeIn(minHeight = minSize, minWidth = minSize)
             .clickable(onClick = onClick, enabled = enabled)
             .alpha(alpha),
