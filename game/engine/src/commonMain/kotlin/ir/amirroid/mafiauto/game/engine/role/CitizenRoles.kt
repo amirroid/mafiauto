@@ -38,8 +38,8 @@ data object Detective : Role {
     override val instantActionType: InstantActionType = InstantActionType.SHOW_ALIGNMENT
 }
 
-data object Civilian : Role {
-    override val key = RoleKeys.CIVILIAN
+data class Civilian(val index: Int) : Role {
+    override val key = "${RoleKeys.CIVILIAN}$index"
     override val name = Resources.strings.civilian
     override val explanation = Resources.strings.civilianExplanation
     override val alignment = Alignment.Civilian

@@ -10,13 +10,17 @@ class RolesProviderImpl : RolesProvider {
             Joker,
             Detective,
             Doctor,
-            Civilian,
             Sniper,
             Silencer,
             Surgeon,
             Bomber,
             Bulletproof,
             Mayor,
+            Civilian(1),
+            Civilian(2),
+            Civilian(3),
+            Civilian(4),
+            Civilian(5),
             Nostradamus
         )
     }
