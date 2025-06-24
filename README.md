@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="Mafiauto Logo" width="500"/>
+  <img src="assets/logo.png" alt="Mafiauto Logo" width="200"/>
 </p>
 
 # Mafiauto 🕵️‍♂️
@@ -8,8 +8,6 @@
 It fully automates the entire Mafia gameplay — handling night actions, voting, and win conditions —
 so players can focus on the game itself.
 
----
-
 ## 🚀 Features
 
 - Full automation of Mafia game logic
@@ -17,20 +15,16 @@ so players can focus on the game itself.
 - Win detection and smooth transitions
 - Friendly and clean UI
 
----
+![Screenshots](assets/screenshots.png)
 
 ## 🧠 Roles Included
 
 Mafiauto supports a variety of roles, and new ones are being added and updated regularly.
 
----
-
 ## 🧩 Built With
 
 - Jetpack Compose
 - Clean Architecture with MVVM
-
----
 
 ## 🤝 How to Contribute
 
@@ -42,8 +36,6 @@ To contribute:
 3. Commit your changes (`git commit -am 'Add new feature'`)
 4. Push to your branch (`git push origin feature/my-feature`)
 5. Open a pull request
-
----
 
 ## 📄 License
 
