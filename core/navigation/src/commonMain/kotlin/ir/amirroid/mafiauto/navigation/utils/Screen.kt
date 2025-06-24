@@ -23,4 +23,7 @@ sealed interface Screen {
 
     @Serializable
     data object NightActions : Screen
+
+    @Serializable
+    data object FinalDebate : Screen
 }

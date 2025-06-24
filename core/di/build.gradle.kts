@@ -15,6 +15,7 @@ kotlin.sourceSets.commonMain {
             ProjectPaths.reveal,
             ProjectPaths.room,
             ProjectPaths.night,
+            ProjectPaths.finalDebate,
             ProjectPaths.engine,
             ProjectPaths.domain,
             ProjectPaths.data,

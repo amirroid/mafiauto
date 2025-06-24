@@ -9,6 +9,7 @@ import ir.amirroid.mafiauto.game.engine.models.Phase
 
 fun Phase.toDomain() = when (this) {
     is Phase.Day -> GamePhase.Day
+    is Phase.FinalDebate -> GamePhase.FinalDebate
     is Phase.Night -> GamePhase.Night(options = options.map { it.toDomain() })
     is Phase.Voting -> GamePhase.Voting
     is Phase.Fate -> GamePhase.Fate(

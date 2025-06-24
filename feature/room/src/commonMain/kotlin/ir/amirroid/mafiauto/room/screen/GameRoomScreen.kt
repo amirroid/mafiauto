@@ -1,5 +1,8 @@
 package ir.amirroid.mafiauto.room.screen
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -83,6 +86,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun GameRoomScreen(
     onBack: () -> Unit,
     onNight: () -> Unit,
+    onFinalDebate: () -> Unit,
     viewModel: GameRoomViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -101,6 +105,7 @@ fun GameRoomScreen(
 
     LaunchedEffect(currentPhase) {
         if (currentPhase is GamePhaseUiModel.Night) onNight.invoke()
+        if (currentPhase is GamePhaseUiModel.FinalDebate) onFinalDebate.invoke()
     }
 
     LaunchedEffect(Unit) {
@@ -270,7 +275,11 @@ fun PlayerItem(playerWithRole: PlayerWithRoleUiModel, isCurrentTurn: Boolean, on
                         }
                         .weight(1f)
                 )
-                if (playerWithRole.player.isSilenced) {
+                AnimatedVisibility(
+                    playerWithRole.player.isSilenced,
+                    enter = scaleIn(),
+                    exit = scaleOut()
+                ) {
                     MIcon(
                         imageVector = EvaIcons.Outline.VolumeMute,
                         contentDescription = null

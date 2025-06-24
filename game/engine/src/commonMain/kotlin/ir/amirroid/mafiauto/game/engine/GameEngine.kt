@@ -43,7 +43,6 @@ class GameEngine(
     val currentDay: StateFlow<Int> = _currentDay
     val currentPhase: StateFlow<Phase> = _currentPhase
     val players: StateFlow<List<Player>> = _players
-    val scheduledActions: StateFlow<List<ScheduledAction>> = _scheduledActions
     val lastCards: StateFlow<List<LastCard>> = _lastCards
     val statusCheckCount: StateFlow<Int> = _statusCheckCount
     val playerTurn: StateFlow<Int> = _playerTurn
@@ -95,10 +94,10 @@ class GameEngine(
 
     private fun proceedToDayPhase() {
         incrementDay()
-        if (players.value.size > 3) {
+        if (players.value.count { it.isInGame } > 3) {
             updatePhase(Phase.Day)
         } else {
-
+            updatePhase(Phase.FinalDebate)
         }
     }
 
@@ -262,7 +261,7 @@ class GameEngine(
         card.applyAction(
             player = targetPlayer,
             pickedPlayers = pickedPlayers,
-            allPlayers = _players.value,
+            allPlayers = players.value,
             handler = this
         )
         proceedToNightPhase()
@@ -351,6 +350,25 @@ class GameEngine(
             )
         )
     }
+
+
+    fun handleFinalTrustVotes(
+        trustVotes: Map<Player, Player>
+    ) {
+        val trustCountByPlayer = trustVotes.values.groupingBy { it }.eachCount()
+        val playerWithMajorityTrust = trustCountByPlayer.entries.find { it.value >= 2 }?.key
+
+        if (playerWithMajorityTrust != null) {
+            if (playerWithMajorityTrust.role.alignment == Alignment.Mafia) {
+                updatePhase(Phase.End(winnerAlignment = Alignment.Mafia))
+            } else {
+                updatePhase(Phase.End(winnerAlignment = Alignment.Civilian))
+            }
+        } else {
+            updatePhase(Phase.Voting)
+        }
+    }
+
 
     override fun updatePlayers(newPlayers: List<Player>) {
         var currentPlayers = newPlayers

@@ -38,5 +38,7 @@ interface GameRepository {
     fun handleNightActions(actions: List<NightActionDescriptor>)
     fun handleFate()
 
+    fun handleFinalTrustVotes(trustVotes: Map<PlayerWithRole, PlayerWithRole>)
+
     fun applyLastCard(card: LastCardDescriptor, pickedPlayers: List<PlayerWithRole>)
 }

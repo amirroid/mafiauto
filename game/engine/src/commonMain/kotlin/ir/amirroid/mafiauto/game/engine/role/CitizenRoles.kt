@@ -22,7 +22,7 @@ data object Doctor : Role {
     ): List<Player> {
         val previewsTarget = previewsTargets?.firstOrNull()
         return (if (previewsTarget?.role?.key == key) {
-            allPlayers.filter { player -> player.id != previewsTarget.id }
+            allPlayers.filter { player -> player.role.key != key && player.isInGame && player.canBackWithSave }
         } else allPlayers).filter { it.isInGame && it.canBackWithSave }
     }
 }

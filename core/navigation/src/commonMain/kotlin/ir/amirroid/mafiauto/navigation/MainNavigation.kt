@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import ir.amirroid.mafiauto.assign_roles.screen.AssignRolesScreen
 import ir.amirroid.mafiauto.common.compose.locales.LocalSharedTransitionScope
+import ir.amirroid.mafiauto.final_debate.screen.FinalDebateScreen
 import ir.amirroid.mafiauto.groups.screen.GroupsScreen
 import ir.amirroid.mafiauto.intro.screen.IntroScreen
 import ir.amirroid.mafiauto.intro.screen.LobbyScreen
@@ -101,11 +102,17 @@ fun MainNavigation() {
                 composable<Screen.GameRoom> {
                     GameRoomScreen(
                         onBack = navController::navigateUp,
-                        onNight = { navController.navigate(Screen.NightActions) }
+                        onNight = { navController.navigate(Screen.NightActions) },
+                        onFinalDebate = { navController.navigate(Screen.FinalDebate) }
                     )
                 }
                 composable<Screen.NightActions> {
                     NightActionsScreen(
+                        onBack = navController::navigateUp
+                    )
+                }
+                composable<Screen.FinalDebate> {
+                    FinalDebateScreen(
                         onBack = navController::navigateUp
                     )
                 }

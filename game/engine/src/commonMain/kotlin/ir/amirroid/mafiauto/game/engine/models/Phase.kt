@@ -63,4 +63,10 @@ sealed interface Phase {
      * @property winnerAlignment The alignment (e.g., Mafia, Civilian) that has won the game.
      */
     data class End(val winnerAlignment: Alignment) : Phase
+
+    /**
+     * Phase when only 3 players remain and open discussion is allowed.
+     * Known as "KS" phase, players freely speak to persuade each other before the final decision.
+     */
+    data object FinalDebate : Phase
 }

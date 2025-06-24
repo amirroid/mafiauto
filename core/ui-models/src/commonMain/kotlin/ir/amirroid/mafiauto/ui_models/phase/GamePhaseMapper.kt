@@ -7,6 +7,7 @@ import ir.amirroid.mafiauto.ui_models.result.toUiModel
 
 fun GamePhase.toUiModel() = when (this) {
     is GamePhase.Day -> GamePhaseUiModel.Day
+    is GamePhase.FinalDebate -> GamePhaseUiModel.FinalDebate
     is GamePhase.Night -> GamePhaseUiModel.Night(options = options.map { it.toUiModel() })
     is GamePhase.Voting -> GamePhaseUiModel.Voting
     is GamePhase.Result -> GamePhaseUiModel.Result(result = result.toUiModel())

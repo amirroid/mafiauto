@@ -18,6 +18,7 @@ kotlin {
                     ProjectPaths.lobby,
                     ProjectPaths.night,
                     ProjectPaths.assignRoles,
+                    ProjectPaths.finalDebate,
                     ProjectPaths.room,
                     ProjectPaths.reveal,
                 ).forEach {

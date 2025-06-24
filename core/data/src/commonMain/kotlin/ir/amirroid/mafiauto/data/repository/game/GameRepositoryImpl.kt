@@ -66,6 +66,14 @@ class GameRepositoryImpl(
 
     override fun handleFate() = engine.handleFatePhase()
 
+    override fun handleFinalTrustVotes(trustVotes: Map<PlayerWithRole, PlayerWithRole>) {
+        val convertedVotes = trustVotes.map { (voter, voted) ->
+            voter.toEngine() to voted.toEngine()
+        }.toMap()
+
+        engine.handleFinalTrustVotes(convertedVotes)
+    }
+
     override fun applyLastCard(card: LastCardDescriptor, pickedPlayers: List<PlayerWithRole>) {
         engine.applyLastCard(card.toEngine(), getEnginePlayersFromDomain(pickedPlayers))
     }

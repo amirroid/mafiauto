@@ -40,4 +40,5 @@ val useCaseModule = module {
     factoryOf(::GetAllGroupsUseCase)
     factoryOf(::AddNewGroupUseCase)
     factoryOf(::GetCurrentPlayerTurnIndexUseCase)
+    factoryOf(::HandleFinalTrustVotesUseCase)
 }
