@@ -37,6 +37,7 @@ class GameEngine(
     private val _scheduledActions = MutableStateFlow(emptyList<ScheduledAction>())
     private val _lastCards = MutableStateFlow(emptyList<LastCard>())
     private val _statusCheckCount = MutableStateFlow(0)
+    private val _playerTurn = MutableStateFlow(0)
     private val _messages = Channel<StringResource>(capacity = Channel.BUFFERED)
 
     val currentDay: StateFlow<Int> = _currentDay
@@ -45,6 +46,7 @@ class GameEngine(
     val scheduledActions: StateFlow<List<ScheduledAction>> = _scheduledActions
     val lastCards: StateFlow<List<LastCard>> = _lastCards
     val statusCheckCount: StateFlow<Int> = _statusCheckCount
+    val playerTurn: StateFlow<Int> = _playerTurn
     val messages: Flow<StringResource> = _messages.receiveAsFlow()
 
     private val nightActionsHistory = mutableMapOf<Int, List<NightAction>>()
@@ -56,6 +58,16 @@ class GameEngine(
     override fun updatePhase(newPhase: Phase) {
         if (currentPhase.value is Phase.End) return
         _currentPhase.update { newPhase }
+    }
+
+    fun reset() {
+        _currentDay.value = initialDay
+        _currentPhase.value = initialPhase
+        _scheduledActions.value = emptyList()
+        _statusCheckCount.value = 0
+        _playerTurn.value = 0
+        _lastCards.value = lastCardsProvider.getAllLastCards().shuffled()
+        nightActionsHistory.clear()
     }
 
     fun proceedToNextPhase() {
@@ -83,9 +95,30 @@ class GameEngine(
 
     private fun proceedToDayPhase() {
         incrementDay()
-        updatePhase(Phase.Day)
+        if (players.value.size > 3) {
+            updatePhase(Phase.Day)
+        } else {
+
+        }
     }
 
+    private fun updateCurrentTurn() {
+        val allPlayers = players.value
+        val currentTurnIndex = playerTurn.value
+        val currentPlayerTurn = allPlayers.getOrNull(currentTurnIndex) ?: return
+
+        val filteredPlayers = allPlayers.filter { it.isInGame || it.id == currentPlayerTurn.id }
+        if (filteredPlayers.isEmpty()) return
+
+        val currentIndexInFiltered = filteredPlayers.indexOfFirst { it.id == currentPlayerTurn.id }
+        val nextPlayer =
+            filteredPlayers[(currentIndexInFiltered + GameInfo.SPEAKERS_PER_TURN) % filteredPlayers.size]
+
+        val newPlayerTurnIndex = allPlayers.indexOfFirst { it.id == nextPlayer.id }
+        if (newPlayerTurnIndex != -1) {
+            _playerTurn.update { newPlayerTurnIndex }
+        }
+    }
 
     private fun getWinnerAlignment(): Alignment? {
         val allPlayers = players.value
@@ -114,15 +147,6 @@ class GameEngine(
 
     private fun incrementDay() {
         _currentDay.update { it + 1 }
-    }
-
-    fun reset() {
-        _currentDay.value = initialDay
-        _currentPhase.value = initialPhase
-        _scheduledActions.value = emptyList()
-        _statusCheckCount.value = 0
-        _lastCards.value = lastCardsProvider.getAllLastCards().shuffled()
-        nightActionsHistory.clear()
     }
 
     fun incrementStatusCheckCount() {
@@ -271,6 +295,7 @@ class GameEngine(
         updatePlayers(currentPlayers)
 
         val result = getNightActionsResult(initialPlayers, currentPlayers)
+        updateCurrentTurn()
         _currentPhase.update { Phase.Result(result) }
     }
 

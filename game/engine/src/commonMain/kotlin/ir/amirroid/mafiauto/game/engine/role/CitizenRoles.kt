@@ -64,7 +64,7 @@ data object Bulletproof : Role {
     override val name = Resources.strings.bulletproof
     override val explanation = Resources.strings.bulletproofExplanation
     override val alignment = Alignment.Civilian
-    override val hasNightAction = true
+    override val hasNightAction = false
     override val healthPoints: Int = Int.MAX_VALUE
     override fun getNightAction() = null
 }

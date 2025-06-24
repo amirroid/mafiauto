@@ -39,4 +39,5 @@ val useCaseModule = module {
     factoryOf(::GetMessagesUseCase)
     factoryOf(::GetAllGroupsUseCase)
     factoryOf(::AddNewGroupUseCase)
+    factoryOf(::GetCurrentPlayerTurnIndexUseCase)
 }

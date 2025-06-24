@@ -13,5 +13,6 @@ data class GameRoomScreenState(
     val showStatus: Boolean = false,
     val currentPhase: GamePhaseUiModel = GamePhaseUiModel.Day,
     val lastCards: List<LastCardUiModel> = emptyList(),
-    val currentDay: Int = 0
+    val currentDay: Int = 0,
+    val currentTurn: Int = 0
 )

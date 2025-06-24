@@ -26,5 +26,9 @@ internal fun Project.configureAndroidLibraryPlugins(
             sourceCompatibility = JavaVersion.VERSION_11
             targetCompatibility = JavaVersion.VERSION_11
         }
+
+        lint {
+            disable.add("NullSafeMutableLiveData")
+        }
     }
 }

@@ -12,6 +12,7 @@ import org.jetbrains.compose.resources.StringResource
 interface GameRepository {
     val statusChecksCount: StateFlow<Int>
     val currentDay: StateFlow<Int>
+    val playerTurnIndex: StateFlow<Int>
     val messages: Flow<StringResource>
     val currentPhase: Flow<GamePhase>
     val lastCards: Flow<List<LastCardDescriptor>>

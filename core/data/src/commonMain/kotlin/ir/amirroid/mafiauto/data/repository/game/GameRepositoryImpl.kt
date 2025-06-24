@@ -7,18 +7,14 @@ import ir.amirroid.mafiauto.data.mappers.player_role.toPlayerRoleDomain
 import ir.amirroid.mafiauto.domain.model.LastCardDescriptor
 import ir.amirroid.mafiauto.domain.model.NightActionDescriptor
 import ir.amirroid.mafiauto.domain.model.PlayerWithRole
-import ir.amirroid.mafiauto.domain.model.RoleDescriptor
 import ir.amirroid.mafiauto.domain.repository.GameRepository
 import ir.amirroid.mafiauto.game.engine.GameEngine
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
 import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.provider.roles.RolesProvider
-import ir.amirroid.mafiauto.game.engine.role.Role
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
-import org.jetbrains.compose.resources.StringResource
 
 class GameRepositoryImpl(
     private val engine: GameEngine,
@@ -28,6 +24,7 @@ class GameRepositoryImpl(
     override val currentDay = engine.currentDay
     override val messages = engine.messages
     override val currentPhase = engine.currentPhase.map { it.toDomain() }
+    override val playerTurnIndex = engine.playerTurn
     override val lastCards = engine.lastCards.map { cards -> cards.map { it.toDomain() } }
 
     override fun startNewGame(players: List<PlayerWithRole>) {

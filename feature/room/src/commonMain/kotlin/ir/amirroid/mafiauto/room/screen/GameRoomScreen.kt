@@ -14,13 +14,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -39,7 +48,9 @@ import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
 import ir.amirroid.mafiauto.common.compose.components.BackButton
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
+import ir.amirroid.mafiauto.common.compose.extra.defaultVerticalContentPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
+import ir.amirroid.mafiauto.common.compose.modifiers.horizontalPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.thenIf
 import ir.amirroid.mafiauto.common.compose.operators.plus
 import ir.amirroid.mafiauto.design_system.components.appbar.SmallTopAppBarScaffold
@@ -81,6 +92,7 @@ fun GameRoomScreen(
     val showStatus = state.showStatus
     val currentPhase = state.currentPhase
     val currentDay = state.currentDay
+    val currentTurn = state.currentTurn
     val canCheckStatus = remember(players) { players.count { it.player.isInGame.not() } > 0 }
 
     val hazeState = rememberHazeState()
@@ -107,9 +119,12 @@ fun GameRoomScreen(
             Column {
                 RoomPlayersList(
                     players = players,
-                    contentPadding = defaultContentPadding() + paddingValues + PaddingValues(bottom = 300.dp),
+                    contentPadding = defaultVerticalContentPadding() + paddingValues + PaddingValues(
+                        bottom = 300.dp
+                    ),
                     modifier = Modifier.weight(1f),
-                    onPickPlayer = viewModel::pickPlayerToShowRole
+                    onPickPlayer = viewModel::pickPlayerToShowRole,
+                    currentTurn = currentTurn
                 )
             }
         }
@@ -211,22 +226,26 @@ fun RoomPlayersList(
     players: List<PlayerWithRoleUiModel>,
     modifier: Modifier = Modifier,
     onPickPlayer: (PlayerWithRoleUiModel) -> Unit,
-    contentPadding: PaddingValues = PaddingValues()
+    contentPadding: PaddingValues = PaddingValues(),
+    currentTurn: Int
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = contentPadding,
         modifier = modifier
     ) {
-        items(players, key = { it.player.id }) { item ->
+        itemsIndexed(players, key = { _, item -> item.player.id }) { index, item ->
             PlayerItem(
-                playerWithRole = item, onClick = { onPickPlayer.invoke(item) })
+                playerWithRole = item,
+                onClick = { onPickPlayer.invoke(item) },
+                isCurrentTurn = currentTurn == index
+            )
         }
     }
 }
 
 @Composable
-fun PlayerItem(playerWithRole: PlayerWithRoleUiModel, onClick: () -> Unit) {
+fun PlayerItem(playerWithRole: PlayerWithRoleUiModel, isCurrentTurn: Boolean, onClick: () -> Unit) {
     val colors = when {
         playerWithRole.player.isAlive -> ListItemDefaults.defaultColors
         else -> ListItemDefaults.filledColors
@@ -260,7 +279,23 @@ fun PlayerItem(playerWithRole: PlayerWithRoleUiModel, onClick: () -> Unit) {
             }
         },
         onClick = onClick,
-        modifier = Modifier.height(48.dp),
+        modifier = Modifier.drawBehind {
+            if (isCurrentTurn) {
+                val path = Path().apply {
+                    addRoundRect(
+                        roundRect = RoundRect(
+                            rect = Rect(
+                                offset = Offset.Zero,
+                                size = Size(4.dp.toPx(), size.height)
+                            ),
+                            bottomRight = CornerRadius(50f),
+                            topRight = CornerRadius(50f),
+                        )
+                    )
+                }
+                drawPath(path, primaryColor)
+            }
+        }.height(48.dp).horizontalPadding(),
         shape = AppTheme.shapes.medium,
         colors = colors
     )
@@ -312,7 +347,10 @@ fun StatusChecksSection(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        MText("${stringResource(Resources.strings.statusChecks)}:", modifier = Modifier.weight(1f))
+        MText(
+            "${stringResource(Resources.strings.statusChecks)}:",
+            modifier = Modifier.weight(1f)
+        )
         MIconButton(onClick = onDecrease, enabled = count > 0) {
             MIcon(EvaIcons.Outline.Minus, contentDescription = null)
         }

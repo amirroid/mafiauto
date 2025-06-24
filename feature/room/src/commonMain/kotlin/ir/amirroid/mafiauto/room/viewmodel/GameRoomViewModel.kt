@@ -9,6 +9,7 @@ import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllLastCardsUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentDayUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentPhaseUseCase
+import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentPlayerTurnIndexUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetDefenseCandidatesUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetMessagesUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetStatusCheckCountUseCase
@@ -36,6 +37,7 @@ import kotlinx.coroutines.launch
 
 class GameRoomViewModel(
     startGameUseCase: StartGameUseCase,
+    getMessagesUseCase: GetMessagesUseCase,
     private val getAllInRoomPlayersUseCase: GetAllInRoomPlayersUseCase,
     private val getStatusCheckCountUseCase: GetStatusCheckCountUseCase,
     private val onStatusCheckedUseCase: OnStatusCheckedUseCase,
@@ -51,7 +53,7 @@ class GameRoomViewModel(
     private val applyLastCardUseCase: ApplyLastCardUseCase,
     private val handleFatePhaseUseCase: HandleFatePhaseUseCase,
     private val getCurrentDayUseCase: GetCurrentDayUseCase,
-    private val getMessagesUseCase: GetMessagesUseCase,
+    private val getCurrentPlayerTurnIndexUseCase: GetCurrentPlayerTurnIndexUseCase,
     private val coroutineDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _state = MutableStateFlow(GameRoomScreenState())
@@ -69,7 +71,17 @@ class GameRoomViewModel(
         observeCurrentPhase()
         observeLastCards()
         observeCurrentDay()
+        observeCurrentTurn()
     }
+
+    private fun observeCurrentTurn() = viewModelScope.launch(coroutineDispatcher) {
+        getCurrentPlayerTurnIndexUseCase().collect { turn ->
+            _state.update {
+                it.copy(currentTurn = turn)
+            }
+        }
+    }
+
 
     private fun observeCurrentDay() = viewModelScope.launch(coroutineDispatcher) {
         getCurrentDayUseCase().collect { day ->
