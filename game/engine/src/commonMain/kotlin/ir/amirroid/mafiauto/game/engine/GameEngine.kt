@@ -97,7 +97,16 @@ class GameEngine(
         if (players.value.count { it.isInGame } > 3) {
             updatePhase(Phase.Day)
         } else {
+            processedToFinalDebatePhase()
+        }
+    }
+
+    private fun processedToFinalDebatePhase() {
+        val winner = players.value.firstOrNull { it.role.winsIfFinalDebate }
+        if (winner == null) {
             updatePhase(Phase.FinalDebate)
+        } else {
+            updatePhase(Phase.End(winnerAlignment = winner.role.alignment))
         }
     }
 

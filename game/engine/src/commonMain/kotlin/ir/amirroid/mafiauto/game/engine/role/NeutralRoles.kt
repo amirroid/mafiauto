@@ -14,6 +14,7 @@ data object Joker : Role {
     override val alignment = Alignment.Neutral
     override val hasNightAction = false
     override fun getNightAction() = null
+    override val winsIfFinalDebate: Boolean = true
 
     override fun onEliminatedByVotes(players: List<Player>, handler: ActionsHandler) {
         handler.updatePhase(Phase.End(winnerAlignment = Alignment.Neutral))

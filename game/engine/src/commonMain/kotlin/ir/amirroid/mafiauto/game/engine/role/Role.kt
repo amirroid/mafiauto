@@ -24,6 +24,7 @@ sealed interface Role : PlayerTransformer {
     val instantActionType: InstantActionType? get() = null
     val targetNightToWakingUp: Int? get() = null
     val nightActionRequiredPicks: Int get() = 1
+    val winsIfFinalDebate: Boolean get() = false
 
     fun getNightAction(): RoleAction?
     fun getNightActionTargetPlayers(
