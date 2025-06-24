@@ -46,7 +46,7 @@
     <string name="done_message">It’s done... for now.</string>
     <string name="correct_guess">You got it right. Stay sharp.</string>
     <string name="wrong_guess">Your guess was off. Things aren’t that simple here.</string>
-    <string name="doctor_duo_announcement">%1$s and %2$s are the town&#39;s doctor duo, working together to heal and protect.</string>
+    <string name="doctor_duo_announcement">%1$s and %2$s are the Doctor and the Surgeon. The game moderator should reveal which is which to the Mayor.</string>
     <string name="alignment_count">Mafia: %1$d, Non-Mafia: %2$d</string>
     <string name="end_result">End Result</string>
     <string name="game_winner_announcement">The winner is %1$d</string>
@@ -72,19 +72,19 @@
     <string name="surgeon">Surgeon</string>
 
 
-    <string name="god_father_explanation">The Godfather stays in the shadows, commanding every move with cold precision while others carry out his deadly will.</string>
-    <string name="mafia_explanation">As a loyal Mafia member, you gather under the veil of night to silently choose who will not survive until morning.</string>
-    <string name="doctor_explanation">Each night you quietly defy death, selecting one person to protect and hoping your instincts are faster than a killer’s blade.</string>
-    <string name="detective_explanation">Under cover of darkness, you investigate one soul each night, hunting for truth before the enemy hunts you down first.</string>
-    <string name="civilian_explanation">You hold no special power but your voice, standing against the unknown with courage, suspicion, and sheer will to survive.</string>
-    <string name="sniper_explanation">With one bullet and no forgiveness, you wait for the perfect moment to take a life and pray you chose the right target.</string>
-    <string name="silencer_explanation">You strike without blood, silencing a voice each night and watching the town crumble under confusion and fear.</string>
-    <string name="bomber_explanation">You walk among them with a smile, hiding the chaos inside until the moment comes to take them all down in flames.</string>
-    <string name="bulletproof_explanation">Wearing unseen armor, you withstand a deadly blow once, but after that you’re just another name on the list.</string>
-    <string name="mayor_explanation">Your vote hides in plain sight, ready to be revealed when the stakes are high enough to change the town’s destiny.</string>
-    <string name="nostradamus_explanation">If death comes, you don’t leave empty-handed — your final vision uncovers one truth before you disappear forever.</string>
-    <string name="joker_explanation">You thrive on madness, winning only if they vote you out, so play the fool and let them hand you your twisted victory.</string>
-    <string name="surgeon_explanation">Each night, you can heal a player — possibly even yourself — protecting them from being killed.</string>
+    <string name="god_father_explanation">Each night, you choose a player to kill. Your decision overrides other Mafia members if there's a conflict.</string>
+    <string name="mafia_explanation">Each night, you vote with other Mafia members to choose one player to kill.</string>
+    <string name="doctor_explanation">Each night, you select one player to protect from death. You cannot protect the same player on consecutive nights.</string>
+    <string name="detective_explanation">Each night, you investigate one player to learn whether they belong to the Mafia or not.</string>
+    <string name="civilian_explanation">You have no special actions at night. Your role is to observe during the day and vote wisely.</string>
+    <string name="sniper_explanation">You can choose one night to shoot a player. If the target is Mafia, they die; if not, you die instead. You can act only once.</string>
+    <string name="silencer_explanation">Each night, you choose one player to silence. The silenced player cannot speak the next day.</string>
+    <string name="bomber_explanation">You choose one night to activate your bomb. If you are killed, all players who voted against you will die.</string>
+    <string name="bulletproof_explanation">You are immune to the first night-time kill attempt against you. After that, you can be killed like others.</string>
+    <string name="mayor_explanation">You have no night action. During the day, you can reveal your role to make your vote count as double.</string>
+    <string name="nostradamus_explanation">If you die at night, one random Mafia member will be revealed to the town at the start of the next day.</string>
+    <string name="joker_explanation">You have no night action. Your goal is to get yourself voted out during the day to win the game.</string>
+    <string name="surgeon_explanation">Each night, you can heal one player to protect them from death. You may choose yourself.</string>
 
 
     <string name="card_bracelet">Bracelet</string>
