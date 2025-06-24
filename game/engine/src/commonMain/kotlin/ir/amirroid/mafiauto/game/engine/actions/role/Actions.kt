@@ -97,16 +97,6 @@ data object ShootAction : RoleAction {
     }
 }
 
-data object InvestigateAction : RoleAction {
-    override fun apply(
-        nightAction: NightAction,
-        players: List<Player>,
-        handler: NightActionHandler
-    ) {
-
-    }
-}
-
 data object SilentAction : RoleAction {
     override fun apply(
         nightAction: NightAction,

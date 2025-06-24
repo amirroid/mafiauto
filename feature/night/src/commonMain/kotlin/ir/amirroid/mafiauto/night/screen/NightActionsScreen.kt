@@ -62,14 +62,17 @@ import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.list.selectable.MToggleListItem
 import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.snakebar.SnackBaType
+import ir.amirroid.mafiauto.design_system.components.snakebar.SnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.domain.model.InstantAction
 import ir.amirroid.mafiauto.night.viewmodel.NightActionsViewModel
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.night_target_otpions.NightTargetOptionsUiModel
 import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -128,29 +131,31 @@ fun NightActionsScreen(
             enabledNext = nextEnabled,
             enabledPreviews = pagerState.currentPage > 0,
             onNext = {
-                val playerOption = options[pagerState.currentPage]
-                playerOption.player.role.instantAction?.let {
-                    viewModel.handleInstantAction(
-                        action = it,
-                        currentPlayerRole = playerOption.player,
-                        selectedPlayerRoles = selectedPlayers[playerOption.player],
-                        onShowSnakeBar = { message, args ->
-                            snakeBarController.show(
-                                text = message,
-                                type = SnackBaType.INFO,
-                                formatArgs = args
-                            )
-                        },
-                        onDisablePlayer = viewModel.disablePlayerIdSelections::add,
+                scope.launch {
+                    performInstantActionForCurrentPage(
+                        pagerState.currentPage,
+                        options,
+                        selectedPlayers,
+                        snakeBarController,
+                        viewModel
                     )
+                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
                 }
-                scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
             },
             onPreviews = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
             isLastItem = pagerState.currentPage == options.size - 1,
             onComplete = {
-                viewModel.applyActions()
-                onBack.invoke()
+                scope.launch {
+                    performInstantActionForCurrentPage(
+                        pagerState.currentPage,
+                        options,
+                        selectedPlayers,
+                        snakeBarController,
+                        viewModel
+                    )
+                    viewModel.applyActions()
+                    onBack.invoke()
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -158,6 +163,31 @@ fun NightActionsScreen(
                 .allPadding()
                 .imePadding()
                 .navigationBarsPadding()
+        )
+    }
+}
+
+suspend fun performInstantActionForCurrentPage(
+    page: Int,
+    options: List<NightTargetOptionsUiModel>,
+    selectedPlayers: Map<PlayerWithRoleUiModel, List<PlayerWithRoleUiModel>>?,
+    snakeBarController: SnakeBarControllerState,
+    viewModel: NightActionsViewModel
+) {
+    val playerOption = options.getOrNull(page) ?: return
+    playerOption.player.role.instantAction?.let { action ->
+        viewModel.handleInstantAction(
+            action = action,
+            currentPlayerRole = playerOption.player,
+            selectedPlayerRoles = selectedPlayers?.get(playerOption.player),
+            onShowSnakeBar = { message, args ->
+                snakeBarController.showAndWait(
+                    text = message,
+                    type = SnackBaType.INFO,
+                    formatArgs = args
+                )
+            },
+            onDisablePlayer = viewModel.disablePlayerIdSelections::add
         )
     }
 }

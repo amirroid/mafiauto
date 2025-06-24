@@ -87,11 +87,11 @@ class NightActionsViewModel(
     private suspend fun List<PlayerWithRoleUiModel>.toDomains() = map { it.toDomain() }
 
 
-    fun handleInstantAction(
+    suspend fun handleInstantAction(
         action: InstantAction,
         currentPlayerRole: PlayerWithRoleUiModel,
         selectedPlayerRoles: List<PlayerWithRoleUiModel>?,
-        onShowSnakeBar: (StringResource, List<Any>) -> Unit,
+        onShowSnakeBar: suspend (StringResource, List<Any>) -> Unit,
         onDisablePlayer: (Long) -> Unit
     ) {
         when (action) {

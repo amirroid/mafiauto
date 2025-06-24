@@ -37,22 +37,35 @@ class SnakeBarControllerState(
     ) {
         lastJob?.cancel()
         lastJob = scope.launch {
-            hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-            val isAnySnakeBarVisible = _snacks.value.any { it.visible }
-            _snacks.value.forEach { it.visible = false }
-            if (isAnySnakeBarVisible) {
-                delay(200)
-            }
-            _snacks.update { oldData ->
-                oldData + SnackBarData.Resource(
-                    text,
-                    type,
-                    formatArgs = formatArgs
-                )
-            }
-            delay(time)
-            _snacks.value.forEach { it.visible = false }
+            showAndWait(text, type, formatArgs, time, withCancelLastJob = false)
         }
+    }
+
+    suspend fun showAndWait(
+        text: StringResource,
+        type: SnackBaType = SnackBaType.WARNING,
+        formatArgs: List<Any> = emptyList(),
+        time: Long = 4000,
+        withCancelLastJob: Boolean = true
+    ) {
+        if (withCancelLastJob) {
+            lastJob?.cancel()
+        }
+        hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+        val isAnySnakeBarVisible = _snacks.value.any { it.visible }
+        _snacks.value.forEach { it.visible = false }
+        if (isAnySnakeBarVisible) {
+            delay(200)
+        }
+        _snacks.update { oldData ->
+            oldData + SnackBarData.Resource(
+                text,
+                type,
+                formatArgs = formatArgs
+            )
+        }
+        delay(time)
+        _snacks.value.forEach { it.visible = false }
     }
 
     fun show(

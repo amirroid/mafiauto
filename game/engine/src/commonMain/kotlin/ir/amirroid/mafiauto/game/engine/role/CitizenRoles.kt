@@ -33,7 +33,7 @@ data object Detective : Role {
     override val explanation = Resources.strings.detectiveExplanation
     override val alignment = Alignment.Civilian
     override val hasNightAction = true
-    override fun getNightAction(): RoleAction = InvestigateAction
+    override fun getNightAction(): RoleAction? = null
 
     override val instantActionType: InstantActionType = InstantActionType.SHOW_ALIGNMENT
 }
