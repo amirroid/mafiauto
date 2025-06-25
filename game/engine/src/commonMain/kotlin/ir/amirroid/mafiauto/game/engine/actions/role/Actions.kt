@@ -1,14 +1,11 @@
 package ir.amirroid.mafiauto.game.engine.actions.role
 
-import co.touchlab.kermit.Logger
 import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.models.target
 import ir.amirroid.mafiauto.game.engine.role.Alignment
 import ir.amirroid.mafiauto.game.engine.role.Mafia
 import ir.amirroid.mafiauto.game.engine.utils.RegexUtils
-import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
-import ir.amirroid.mafiauto.resources.Resources
 
 data object KillAction : RoleAction {
     override fun apply(
