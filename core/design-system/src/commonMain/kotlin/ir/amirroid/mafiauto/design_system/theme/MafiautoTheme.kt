@@ -7,6 +7,7 @@ import ir.amirroid.mafiauto.design_system.core.PressScaleIndication
 import ir.amirroid.mafiauto.design_system.core.LocalColorScheme
 import ir.amirroid.mafiauto.design_system.core.LocalShapes
 import ir.amirroid.mafiauto.design_system.core.LocalTypography
+import ir.amirroid.mafiauto.design_system.core.copyFontFamily
 import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
 import ir.amirroid.mafiauto.design_system.locales.LocalTextStyle
 import ir.amirroid.mafiauto.design_system.locales.WithHazeContent
@@ -15,7 +16,7 @@ import ir.amirroid.mafiauto.design_system.locales.WithHazeContent
 fun MafiautoTheme(
     content: @Composable () -> Unit
 ) {
-    val typography = AppTypography
+    val typography = AppTypography.copyFontFamily(AppFontFamily)
     val colorScheme = NeonRedColorScheme
     WithHazeContent {
         CompositionLocalProvider(
