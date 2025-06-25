@@ -12,7 +12,6 @@ fun Role.toDescriptor(): RoleDescriptor {
         explanation = explanation,
         alignment = alignment.toDomain(),
         key = key,
-        hasNightAction = hasNightAction,
         isOptionalAbility = isOptionalAbility,
         nightActionRequiredPicks = nightActionRequiredPicks,
         instantAction = instantActionType?.let { InstantAction.valueOf(it.name) }

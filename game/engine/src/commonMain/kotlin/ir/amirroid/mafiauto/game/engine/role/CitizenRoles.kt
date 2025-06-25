@@ -14,7 +14,6 @@ data object Doctor : Role {
     override val name = Resources.strings.doctor
     override val explanation = Resources.strings.doctorExplanation
     override val alignment = Alignment.Civilian
-    override val hasNightAction = true
     override fun getNightAction() = DoctorSaveAction
     override fun getNightActionTargetPlayers(
         previewsTargets: List<Player>?,
@@ -32,7 +31,6 @@ data object Detective : Role {
     override val name = Resources.strings.detective
     override val explanation = Resources.strings.detectiveExplanation
     override val alignment = Alignment.Civilian
-    override val hasNightAction = true
     override fun getNightAction(): RoleAction? = null
 
     override val instantActionType: InstantActionType = InstantActionType.SHOW_ALIGNMENT
@@ -43,7 +41,7 @@ data class Civilian(val index: Int) : Role {
     override val name = Resources.strings.civilian
     override val explanation = Resources.strings.civilianExplanation
     override val alignment = Alignment.Civilian
-    override val hasNightAction = false
+    override fun hasNightAction(players: List<Player>): Boolean = false
     override fun getNightAction() = null
 }
 
@@ -52,7 +50,6 @@ data object Sniper : Role {
     override val name = Resources.strings.sniper
     override val explanation = Resources.strings.sniperExplanation
     override val alignment = Alignment.Civilian
-    override val hasNightAction = true
     override val isOptionalAbility: Boolean = true
     override val maxAbilityUses: Int = 2
     override val healthPoints: Int = 2
@@ -64,7 +61,7 @@ data object Bulletproof : Role {
     override val name = Resources.strings.bulletproof
     override val explanation = Resources.strings.bulletproofExplanation
     override val alignment = Alignment.Civilian
-    override val hasNightAction = false
+    override fun hasNightAction(players: List<Player>): Boolean = false
     override val healthPoints: Int = Int.MAX_VALUE
     override fun getNightAction() = null
 }
@@ -74,7 +71,6 @@ data object Mayor : Role {
     override val name = Resources.strings.mayor
     override val explanation = Resources.strings.mayorExplanation
     override val alignment = Alignment.Civilian
-    override val hasNightAction = true
     override fun getNightAction() = null
     override val isOptionalAbility: Boolean = true
     override fun getNightActionTargetPlayers(
@@ -103,8 +99,8 @@ data object Silencer : Role {
     override val name = Resources.strings.silencer
     override val explanation = Resources.strings.silencerExplanation
     override val alignment = Alignment.Civilian
-    override val hasNightAction = true
     override val maxAbilityUses: Int = 2
+    override val isOptionalAbility: Boolean = true
 
     override fun getNightAction(): RoleAction = SilentAction
 }
@@ -115,7 +111,7 @@ data object Bomber : Role {
     override val name = Resources.strings.bomber
     override val explanation = Resources.strings.bomberExplanation
     override val alignment = Alignment.Civilian
-    override val hasNightAction = false
+    override fun hasNightAction(players: List<Player>): Boolean = false
     override fun getNightAction() = null
     override fun onKillPlayer(players: List<Player>, handler: ActionsHandler) {
         val bomberIndex = players.indexOfFirst { it.role.key == key }

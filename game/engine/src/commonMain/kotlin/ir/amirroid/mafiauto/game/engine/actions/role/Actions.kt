@@ -5,6 +5,10 @@ import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.models.target
 import ir.amirroid.mafiauto.game.engine.role.Alignment
+import ir.amirroid.mafiauto.game.engine.role.Mafia
+import ir.amirroid.mafiauto.game.engine.utils.RegexUtils
+import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
+import ir.amirroid.mafiauto.resources.Resources
 
 data object KillAction : RoleAction {
     override fun apply(
@@ -113,5 +117,24 @@ data object SilentAction : RoleAction {
                 nightAction.target.id
             ) { copy(isSilenced = true) }
         )
+    }
+}
+
+
+data object BuyMafiaAction : RoleAction {
+    override fun apply(
+        nightAction: NightAction,
+        players: List<Player>,
+        handler: NightActionHandler
+    ) {
+        val target = nightAction.target
+
+        if (Regex(RegexUtils.CIVILIAN_REGEX).matches(target.role.key)) {
+            handler.updatePlayers(
+                updatePlayer(players, target.id) {
+                    copy(role = Mafia)
+                }
+            )
+        }
     }
 }

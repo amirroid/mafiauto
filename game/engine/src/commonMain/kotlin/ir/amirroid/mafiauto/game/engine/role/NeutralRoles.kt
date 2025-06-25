@@ -12,7 +12,7 @@ data object Joker : Role {
     override val name = Resources.strings.joker
     override val explanation = Resources.strings.jokerExplanation
     override val alignment = Alignment.Neutral
-    override val hasNightAction = false
+    override fun hasNightAction(players: List<Player>): Boolean = false
     override fun getNightAction() = null
     override val winsIfFinalDebate: Boolean = true
 
@@ -26,7 +26,6 @@ data object Nostradamus : Role {
     override val name = Resources.strings.nostradamus
     override val explanation = Resources.strings.nostradamusExplanation
     override val alignment = Alignment.Neutral
-    override val hasNightAction = true
     override val targetNightToWakingUp: Int = 0
     override val nightActionRequiredPicks: Int = 3
     override val instantActionType: InstantActionType = InstantActionType.SHOW_ALIGNMENTS_COUNT

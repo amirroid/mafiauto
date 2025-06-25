@@ -8,9 +8,10 @@ SELECT
   g.id AS groupId,
   g.name AS groupName,
   p.id AS playerId,
-  p.name
+  p.name AS playerName
 FROM Groups g
-LEFT JOIN Player p ON g.id = p.group_id;
+LEFT JOIN Player p ON g.id = p.group_id
+ORDER BY g.id;
 
 addNewGroup:
 INSERT INTO Groups(name) VALUES (?);

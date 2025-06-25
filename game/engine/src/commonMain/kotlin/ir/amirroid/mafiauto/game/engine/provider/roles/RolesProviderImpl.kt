@@ -7,6 +7,7 @@ class RolesProviderImpl : RolesProvider {
         return listOf(
             GodFather,
             Mafia,
+            SaulGoodman,
             Joker,
             Detective,
             Doctor,

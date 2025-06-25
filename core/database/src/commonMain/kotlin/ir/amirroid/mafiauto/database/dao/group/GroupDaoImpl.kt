@@ -16,15 +16,18 @@ class GroupDaoImpl(
 ) : GroupDao {
     override fun getAllGroups(): Flow<List<GroupWithPlayers>> {
         return queries.selectAllGroupsWithPlayers()
-            .asFlow().mapToList(dispatcher)
-            .map { groupWithPlayer ->
-                groupWithPlayer.groupBy { GroupEntity(it.groupId, it.groupName) }
+            .asFlow()
+            .mapToList(dispatcher)
+            .map { rows ->
+                rows
+                    .groupBy { GroupEntity(it.groupId, it.groupName) }
                     .map { (group, players) ->
                         GroupWithPlayers(
                             group = group,
                             players = players.mapNotNull {
-                                if (it.playerId == null) return@mapNotNull null
-                                PlayerEntity(it.playerId, it.name!!)
+                                it.playerId?.let { id ->
+                                    PlayerEntity(id, it.playerName!!)
+                                }
                             }
                         )
                     }

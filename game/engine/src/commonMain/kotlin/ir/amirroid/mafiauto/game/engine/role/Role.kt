@@ -14,7 +14,6 @@ sealed interface Role : PlayerTransformer {
     val name: StringResource
     val explanation: StringResource
     val alignment: Alignment
-    val hasNightAction: Boolean
     val executionOrder: Int get() = NightActionOrder[key] ?: 100
     val submitExecutionOrder: Int get() = SubmitNightActionOrder[key] ?: 100
     val healthPoints: Int get() = 1
@@ -26,6 +25,7 @@ sealed interface Role : PlayerTransformer {
     val nightActionRequiredPicks: Int get() = 1
     val winsIfFinalDebate: Boolean get() = false
 
+    fun hasNightAction(players: List<Player>): Boolean = true
     fun getNightAction(): RoleAction?
     fun getNightActionTargetPlayers(
         previewsTargets: List<Player>?, allPlayers: List<Player>

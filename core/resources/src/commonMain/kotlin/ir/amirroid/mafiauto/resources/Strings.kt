@@ -54,10 +54,13 @@ object Strings {
     val replacementRole = Res.string.replacement_role
     val finalDebate = Res.string.final_debate
     val selectDesiredCivilian = Res.string.select_desired_civilian
+    val purchaseMafiaSuccess = Res.string.purchase_mafia_success
+    val purchaseMafiaFailed = Res.string.purchase_mafia_failed
 
 
     // Roles
     val godFather = Res.string.god_father
+    val saulGoodman = Res.string.saul_goodman
     val mafia = Res.string.mafia
     val joker = Res.string.joker
     val doctor = Res.string.doctor
@@ -79,6 +82,7 @@ object Strings {
 
     // Explanations
     val godFatherExplanation = Res.string.god_father_explanation
+    val saulGoodmanExplanation = Res.string.saul_goodman_explanation
     val mafiaExplanation = Res.string.mafia_explanation
     val doctorExplanation = Res.string.doctor_explanation
     val detectiveExplanation = Res.string.detective_explanation

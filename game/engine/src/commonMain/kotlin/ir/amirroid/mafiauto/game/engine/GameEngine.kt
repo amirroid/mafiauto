@@ -241,7 +241,7 @@ class GameEngine(
             allPlayers + godfatherReplacement else allPlayers
 
         val options = playersForNight
-            .filter { it.role.hasNightAction && it.role.targetNightToWakingUp?.let { night -> night == currentNight } != false && it.isInGame }
+            .filter { it.role.hasNightAction(allPlayers) && it.role.targetNightToWakingUp?.let { night -> night == currentNight } != false && it.isInGame }
             .map { player ->
                 val previewsTargets = nightActionsHistory[currentNight - 1]
                     ?.find { it.player.id == player.id }?.targets
@@ -314,7 +314,7 @@ class GameEngine(
     private fun createActionHandler(onPlayersUpdated: (List<Player>) -> Unit): ActionsHandler {
         return object : ActionsHandler {
             override fun sendMessage(message: StringResource) {
-                sendMessage(message)
+                this@GameEngine.sendMessage(message)
             }
 
             override fun updatePlayers(newPlayers: List<Player>) {

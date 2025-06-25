@@ -3,6 +3,7 @@ package ir.amirroid.mafiauto.game.engine.utils
 object RoleKeys {
     const val GOD_FATHER = "god_father"
     const val SURGEON = "surgeon"
+    const val SAUL_GOODMAN = "saul_goodman"
     const val MAFIA = "mafia"
     const val DOCTOR = "doctor"
     const val DETECTIVE = "detective"

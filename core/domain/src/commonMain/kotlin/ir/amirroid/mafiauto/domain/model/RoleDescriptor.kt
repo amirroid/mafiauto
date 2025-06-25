@@ -7,7 +7,6 @@ data class RoleDescriptor(
     val explanation: StringResource,
     val alignment: Alignment,
     val key: String,
-    val hasNightAction: Boolean,
     val isOptionalAbility: Boolean,
     val nightActionRequiredPicks: Int,
     val instantAction: InstantAction?,

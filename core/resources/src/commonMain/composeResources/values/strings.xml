@@ -54,11 +54,14 @@
     <string name="replacement_role">Replacement Role</string>
     <string name="final_debate">Final Debate</string>
     <string name="select_desired_civilian">Select your desired civilian</string>
+    <string name="purchase_mafia_success">Your purchase was successful. The target is now a simple mafia.</string>
+    <string name="purchase_mafia_failed">Your purchase failed. The target was not who you thought.</string>
 
     <string name="neutral">Neutral</string>
 
     <string name="god_father">Godfather</string>
     <string name="mafia">Mafia</string>
+    <string name="saul_goodman">Saul Goodman</string>
     <string name="joker">Joker</string>
     <string name="doctor">Doctor</string>
     <string name="detective">Detective</string>
@@ -73,6 +76,7 @@
 
 
     <string name="god_father_explanation">Each night, you choose a player to kill. Your decision overrides other Mafia members if there's a conflict.</string>
+    <string name="saul_goodman_explanation">If a Mafia member dies, Saul Goodman can act instead. Once per game, he may convert a simple citizen into a simple Mafia. If successful, the host silently wakes the new Mafia that night. If he targets a special citizen or Nostradamus, the action fails and both his ability and the Mafia kill are lost.</string>
     <string name="mafia_explanation">Each night, you vote with other Mafia members to choose one player to kill.</string>
     <string name="doctor_explanation">Each night, you select one player to protect from death. You cannot protect the same player on consecutive nights.</string>
     <string name="detective_explanation">Each night, you investigate one player to learn whether they belong to the Mafia or not.</string>
