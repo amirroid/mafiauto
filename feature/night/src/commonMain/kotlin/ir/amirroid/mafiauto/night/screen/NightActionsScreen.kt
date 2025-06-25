@@ -89,7 +89,7 @@ fun NightActionsScreen(
     val nightPhase = currentPhase as GamePhaseUiModel.Night
     val options = nightPhase.options
     val selectedPlayers by viewModel.selectedPlayers.collectAsStateWithLifecycle()
-    val disablePlayerIdSelections = viewModel.disablePlayerIdSelections
+    val disablePlayerIdSelections = viewModel.disableActionKeysSelections
 
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState { nightPhase.options.size }
@@ -115,9 +115,9 @@ fun NightActionsScreen(
                 SelectOptionPlayersList(
                     playerOptions = playerOptions,
                     selectedPlayers = currentPlayerSelectedTargets,
-                    onSelect = { target -> viewModel.togglePlayer(playerOptions.player, target) },
+                    onSelect = { target -> viewModel.togglePlayer(playerOptions, target) },
                     contentPadding = paddingValues,
-                    enabled = !disablePlayerIdSelections.contains(playerOptions.player.player.id) && playerOptions.player.role.nightActionRequiredPicks != currentPlayerSelectedTargets.size
+                    enabled = !disablePlayerIdSelections.contains(playerOptions.key) && playerOptions.player.role.nightActionRequiredPicks != currentPlayerSelectedTargets.size
                 )
             }
         }
@@ -177,7 +177,7 @@ suspend fun performInstantActionForCurrentPage(
     playerOption.player.role.instantAction?.let { action ->
         viewModel.handleInstantAction(
             action = action,
-            currentPlayerRole = playerOption.player,
+            playerOptions = playerOption,
             selectedPlayerRoles = selectedPlayers?.get(playerOption.player),
             onShowSnakeBar = { message, args ->
                 snakeBarController.showAndWait(
@@ -186,7 +186,6 @@ suspend fun performInstantActionForCurrentPage(
                     formatArgs = args
                 )
             },
-            onDisablePlayer = viewModel.disablePlayerIdSelections::add
         )
     }
 }

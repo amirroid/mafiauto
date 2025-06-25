@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.game.engine.role
 
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.game.engine.actions.role.*
+import ir.amirroid.mafiauto.game.engine.models.InstantActionType
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.resources.Resources
 
@@ -53,6 +54,8 @@ data object SaulGoodman : Role {
     override val alignment = Alignment.Mafia
     override val maxAbilityUses: Int = 1
     override val isOptionalAbility: Boolean = true
+    override val instantActionType: InstantActionType =
+        InstantActionType.REVEAL_IF_CIVILIAN_FOR_MAFIA
 
     override fun hasNightAction(players: List<Player>): Boolean {
         return players.count { it.role.alignment == Alignment.Mafia && !it.isInGame } > 0

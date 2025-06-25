@@ -11,8 +11,10 @@ import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentPhaseUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.HandleNightActionsUseCase
 import ir.amirroid.mafiauto.domain.usecase.role.GetSingleRoleDescriptorUseCase
+import ir.amirroid.mafiauto.game.engine.utils.RegexUtils
 import ir.amirroid.mafiauto.game.engine.utils.RoleKeys
 import ir.amirroid.mafiauto.resources.Resources
+import ir.amirroid.mafiauto.ui_models.night_target_otpions.NightTargetOptionsUiModel
 import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
 import ir.amirroid.mafiauto.ui_models.phase.toUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
@@ -49,10 +51,13 @@ class NightActionsViewModel(
         MutableStateFlow(emptyMap<PlayerWithRoleUiModel, List<PlayerWithRoleUiModel>>())
     val selectedPlayers = _selectedPlayers.asStateFlow()
 
-    val disablePlayerIdSelections = mutableStateListOf<Long>()
+    val disableActionKeysSelections = mutableStateListOf<String>()
 
-    fun togglePlayer(player: PlayerWithRoleUiModel, target: PlayerWithRoleUiModel) {
-        if (disablePlayerIdSelections.contains(player.player.id)) return
+    fun togglePlayer(
+        playerOptions: NightTargetOptionsUiModel, target: PlayerWithRoleUiModel
+    ) {
+        val player = playerOptions.player
+        if (disableActionKeysSelections.contains(playerOptions.key)) return
         _selectedPlayers.update {
             it.toMutableMap().apply {
                 val playerTargets = get(player)
@@ -89,10 +94,9 @@ class NightActionsViewModel(
 
     suspend fun handleInstantAction(
         action: InstantAction,
-        currentPlayerRole: PlayerWithRoleUiModel,
+        playerOptions: NightTargetOptionsUiModel,
         selectedPlayerRoles: List<PlayerWithRoleUiModel>?,
         onShowSnakeBar: suspend (StringResource, List<Any>) -> Unit,
-        onDisablePlayer: (Long) -> Unit
     ) {
         when (action) {
             InstantAction.SHOW_ALIGNMENT -> {
@@ -110,13 +114,33 @@ class NightActionsViewModel(
                 val (mafiaCount, nonMafiaCount) = countMafiaAndNonMafia(selectedPlayerRoles)
                 onShowSnakeBar(Resources.strings.alignmentCount, listOf(mafiaCount, nonMafiaCount))
             }
+
+            InstantAction.REVEAL_IF_CIVILIAN_FOR_MAFIA -> {
+                val selected = selectedPlayerRoles?.firstOrNull() ?: return
+                if (isRegularCivilian(selected.role)) {
+                    onShowSnakeBar(
+                        Resources.strings.purchaseMafiaSuccess,
+                        emptyList()
+                    )
+                } else {
+                    onShowSnakeBar(
+                        Resources.strings.purchaseMafiaFailed,
+                        emptyList()
+                    )
+                }
+            }
         }
-        onDisablePlayer(currentPlayerRole.player.id)
+        disableActionKeysSelections.add(playerOptions.key)
     }
 
 
     private fun isRegularMafia(role: RoleUiModel): Boolean {
         return role.alignment == Alignment.Mafia && role.key != RoleKeys.GOD_FATHER
+    }
+
+
+    private fun isRegularCivilian(role: RoleUiModel): Boolean {
+        return Regex(RegexUtils.CIVILIAN_REGEX).matches(role.key)
     }
 
     private fun countMafiaAndNonMafia(players: List<PlayerWithRoleUiModel>): Pair<Int, Int> {
