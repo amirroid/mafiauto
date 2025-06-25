@@ -14,5 +14,4 @@ data class PlayerUiModel(
 ) {
     val isInGame = isAlive && !isKick
     val hasLimitToUseAbilities = remainingAbilityUses != Int.MAX_VALUE
-    val canUseAbilityToNight = canUseAbility && remainingAbilityUses != 0
 }

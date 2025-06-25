@@ -128,13 +128,17 @@ data object BuyMafiaAction : RoleAction {
         handler: NightActionHandler
     ) {
         val target = nightAction.target
-
+        val updatedPlayers = updatePlayer(players, nightAction.player.id) {
+            copy(remainingAbilityUses = remainingAbilityUses - 1)
+        }
         if (Regex(RegexUtils.CIVILIAN_REGEX).matches(target.role.key)) {
             handler.updatePlayers(
-                updatePlayer(players, target.id) {
+                updatePlayer(updatedPlayers, target.id) {
                     copy(role = Mafia)
                 }
             )
+        } else {
+            handler.updatePlayers(updatedPlayers)
         }
     }
 }

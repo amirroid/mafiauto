@@ -121,12 +121,11 @@ fun NightActionsScreen(
                 )
             }
         }
-        val currentPlayerRole = options[pagerState.currentPage].player
+        val currentPlayerOptions = options[pagerState.currentPage]
+        val currentPlayerRole = currentPlayerOptions.player
         val nextEnabled =
             selectedPlayers[currentPlayerRole]?.size == currentPlayerRole.role.nightActionRequiredPicks ||
-                    currentPlayerRole.let {
-                        it.player.canUseAbilityToNight.not() || it.role.isOptionalAbility
-                    }
+                    currentPlayerOptions.canUseAbilityToNight.not() || currentPlayerRole.role.isOptionalAbility
         BottomBar(
             enabledNext = nextEnabled,
             enabledPreviews = pagerState.currentPage > 0,
@@ -224,7 +223,7 @@ fun SelectOptionPlayersList(
                         append(" - ")
                         append(stringResource(Resources.strings.optional))
                     }
-                    if (currentPlayerRole.player.hasLimitToUseAbilities) {
+                    if (currentPlayerRole.player.hasLimitToUseAbilities && !playerOptions.isReplacement) {
                         append(" - ${currentPlayerRole.player.remainingAbilityUses}X")
                     }
                     if (playerOptions.isReplacement) {
@@ -284,11 +283,12 @@ fun SelectOptionPlayersList(
                 key = { it.player.id }
             ) { targetPlayer ->
                 val selected = remember(selectedPlayers) { selectedPlayers.contains(targetPlayer) }
+                playerOptions.player
                 MToggleListItem(
                     selected = selected,
                     onClick = { onSelect(targetPlayer) },
                     text = { MText(targetPlayer.player.name) },
-                    enabled = currentPlayerRole.player.canUseAbilityToNight && (enabled || selected)
+                    enabled = playerOptions.canUseAbilityToNight && (enabled || selected)
                 )
             }
         }

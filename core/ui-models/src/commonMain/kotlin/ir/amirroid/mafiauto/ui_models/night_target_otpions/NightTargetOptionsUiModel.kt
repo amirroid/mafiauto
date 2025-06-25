@@ -12,4 +12,6 @@ data class NightTargetOptionsUiModel(
     val isReplacement: Boolean
 ) {
     val key = "${player.player.id}${player.role.key}"
+    val canUseAbilityToNight =
+        player.player.canUseAbility && (player.player.remainingAbilityUses != 0 || isReplacement)
 }

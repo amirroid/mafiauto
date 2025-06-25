@@ -253,7 +253,7 @@ class GameEngine(
                         allPlayers
                     ),
                     message = player.role.getNightActionMessage(allPlayers),
-                    isReplacement = player.id == godfatherReplacement?.id
+                    isReplacement = player.id == godfatherReplacement?.id && player.role.key == RoleKeys.GOD_FATHER
                 )
             }
             .filter { it.message != null || it.availableTargets.isNotEmpty() }
