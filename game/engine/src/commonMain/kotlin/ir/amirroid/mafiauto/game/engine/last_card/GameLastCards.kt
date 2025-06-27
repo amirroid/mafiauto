@@ -70,11 +70,13 @@ object FaceUpCard : LastCard {
         handler: LastCardHandler
     ) {
         val target = pickedPlayers.firstOrNull() ?: return
-        val withoutCurrent = updatePlayer(allPlayers, player.id) {
-            copy(isAlive = false, canBackWithSave = false, role = target.role)
-        }
-        val finalPlayers = updatePlayer(withoutCurrent, target.id) {
-            copy(role = player.role)
+        val replacedPlayers = replacePlayerRoles(
+            players = allPlayers,
+            from = player,
+            to = target
+        )
+        val finalPlayers = updatePlayer(replacedPlayers, player.id) {
+            copy(isAlive = false, canBackWithSave = false)
         }
         handler.sendMessage(Resources.strings.doneMessage)
         handler.updatePlayers(finalPlayers)

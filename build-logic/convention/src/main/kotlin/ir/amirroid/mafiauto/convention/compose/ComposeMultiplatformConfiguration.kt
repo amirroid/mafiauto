@@ -16,6 +16,7 @@ internal fun Project.configureComposeMultiplatformPlugins(
     extensions.apply {
         configureCommonMain(sourceSets)
         configureAndroidMain(sourceSets)
+
     }
 }
 
