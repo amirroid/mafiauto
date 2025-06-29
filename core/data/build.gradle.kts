@@ -12,6 +12,7 @@ kotlin {
                 implementation(project(ProjectPaths.engine))
                 implementation(project(ProjectPaths.database))
                 implementation(project(ProjectPaths.domain))
+                implementation(project(ProjectPaths.preferences))
             }
         }
     }

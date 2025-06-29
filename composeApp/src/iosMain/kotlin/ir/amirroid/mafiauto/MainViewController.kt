@@ -5,6 +5,8 @@ import ir.amirroid.mafiauto.di.DependencyInjectionConfiguration
 
 fun MainViewController() = ComposeUIViewController(
     configure = {
-        DependencyInjectionConfiguration.configure()
+        DependencyInjectionConfiguration.configure {
+            modules(projectModule)
+        }
     }
 ) { App() }

@@ -56,6 +56,10 @@
     <string name="select_desired_civilian">Select your desired civilian</string>
     <string name="purchase_mafia_success">Your purchase was successful. The target is now a simple mafia.</string>
     <string name="purchase_mafia_failed">Your purchase failed. The target was not who you thought.</string>
+    <string name="settings">Settings</string>
+    <string name="language">Language</string>
+    <string name="persian">Persian</string>
+    <string name="english">English</string>
 
     <string name="neutral">Neutral</string>
 

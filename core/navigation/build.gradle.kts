@@ -17,6 +17,7 @@ kotlin {
                     ProjectPaths.groups,
                     ProjectPaths.lobby,
                     ProjectPaths.night,
+                    ProjectPaths.settings,
                     ProjectPaths.assignRoles,
                     ProjectPaths.finalDebate,
                     ProjectPaths.room,

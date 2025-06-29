@@ -49,6 +49,8 @@ import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
 import ir.amirroid.mafiauto.common.compose.operators.plus
 import ir.amirroid.mafiauto.common.compose.utils.PlatformCapabilities
+import ir.amirroid.mafiauto.common.compose.utils.autoMirrorIosBackwardIcon
+import ir.amirroid.mafiauto.common.compose.utils.autoMirrorIosForwardIcon
 import ir.amirroid.mafiauto.design_system.components.appbar.CollapsingTopAppBarScaffold
 import ir.amirroid.mafiauto.design_system.components.appbar.rememberCollapsingAppBarState
 import ir.amirroid.mafiauto.design_system.components.button.MButton
@@ -234,7 +236,7 @@ private fun BottomBar(
                 modifier = Modifier.height(48.dp),
             ) {
                 MIcon(
-                    imageVector = EvaIcons.Outline.ArrowIosBack,
+                    imageVector = autoMirrorIosBackwardIcon(),
                     contentDescription = null,
                     modifier = Modifier.padding(start = 4.dp).size(20.dp)
                 )
@@ -254,7 +256,7 @@ private fun BottomBar(
                 }
             }
             MIcon(
-                imageVector = EvaIcons.Outline.ArrowIosForward,
+                imageVector = autoMirrorIosForwardIcon(),
                 contentDescription = null,
                 modifier = Modifier.padding(start = 4.dp).size(20.dp)
             )

@@ -13,6 +13,7 @@ kotlin.sourceSets.commonMain {
             ProjectPaths.lobby,
             ProjectPaths.assignRoles,
             ProjectPaths.reveal,
+            ProjectPaths.settings,
             ProjectPaths.room,
             ProjectPaths.night,
             ProjectPaths.finalDebate,
@@ -20,6 +21,7 @@ kotlin.sourceSets.commonMain {
             ProjectPaths.domain,
             ProjectPaths.data,
             ProjectPaths.database,
+            ProjectPaths.preferences,
         ).forEach {
             implementation(project(it))
         }

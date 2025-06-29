@@ -7,6 +7,9 @@ sealed interface Screen {
     data object Intro : Screen
 
     @Serializable
+    data object Settings : Screen
+
+    @Serializable
     data object Groups : Screen
 
     @Serializable

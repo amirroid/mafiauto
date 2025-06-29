@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.di
 
+import ir.amirroid.mafiauot.preferences.di.preferencesModule
 import ir.amirroid.mafiauto.database.di.databaseModule
 import ir.amirroid.mafiauto.di.modules.dispatcherModule
 import ir.amirroid.mafiauto.di.modules.otherModules
@@ -21,7 +22,8 @@ object DependencyInjectionConfiguration {
                 repositoryModule,
                 dispatcherModule,
                 databaseModule,
-                gameEngineModule
+                gameEngineModule,
+                preferencesModule
             )
         }
     }

@@ -24,6 +24,7 @@ import ir.amirroid.mafiauto.navigation.utils.Screen
 import ir.amirroid.mafiauto.night.screen.NightActionsScreen
 import ir.amirroid.mafiauto.reveal.screen.RevealRolesScreen
 import ir.amirroid.mafiauto.room.screen.GameRoomScreen
+import ir.amirroid.mafiauto.settings.screen.SettingsScreen
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -54,6 +55,7 @@ fun MainNavigation() {
                 composable<Screen.Intro> {
                     IntroScreen(
                         onStartGame = { navController.navigate(Screen.Groups) },
+                        onSettingsClick = { navController.navigate(Screen.Settings) }
                     )
                 }
                 composable<Screen.Groups> {
@@ -111,6 +113,11 @@ fun MainNavigation() {
                 }
                 composable<Screen.FinalDebate> {
                     FinalDebateScreen(
+                        onBack = navController::navigateUp
+                    )
+                }
+                composable<Screen.Settings> {
+                    SettingsScreen(
                         onBack = navController::navigateUp
                     )
                 }

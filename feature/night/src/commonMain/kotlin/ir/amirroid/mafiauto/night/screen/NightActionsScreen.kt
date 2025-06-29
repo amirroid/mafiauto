@@ -54,6 +54,8 @@ import ir.amirroid.mafiauto.common.compose.components.PlatformBackHandler
 import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.horizontalPadding
 import ir.amirroid.mafiauto.common.compose.operators.plus
+import ir.amirroid.mafiauto.common.compose.utils.autoMirrorIosBackwardIcon
+import ir.amirroid.mafiauto.common.compose.utils.autoMirrorIosForwardIcon
 import ir.amirroid.mafiauto.design_system.components.appbar.SmallTopAppBarScaffold
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.button.MIconButton
@@ -321,7 +323,7 @@ fun BottomBar(
             enabled = enabledPreviews
         ) {
             MIcon(
-                imageVector = EvaIcons.Outline.ArrowIosBack,
+                imageVector = autoMirrorIosBackwardIcon(),
                 contentDescription = null,
                 modifier = Modifier.size(20.dp)
             )
@@ -344,7 +346,7 @@ fun BottomBar(
                 }
             }
             MIcon(
-                imageVector = EvaIcons.Outline.ArrowIosForward,
+                imageVector = autoMirrorIosForwardIcon(),
                 contentDescription = null,
                 modifier = Modifier.padding(start = 4.dp).size(20.dp)
             )

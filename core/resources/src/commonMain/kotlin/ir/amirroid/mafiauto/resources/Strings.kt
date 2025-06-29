@@ -56,6 +56,10 @@ object Strings {
     val selectDesiredCivilian = Res.string.select_desired_civilian
     val purchaseMafiaSuccess = Res.string.purchase_mafia_success
     val purchaseMafiaFailed = Res.string.purchase_mafia_failed
+    val settings = Res.string.settings
+    val language = Res.string.language
+    val persian = Res.string.persian
+    val english = Res.string.english
 
 
     // Roles

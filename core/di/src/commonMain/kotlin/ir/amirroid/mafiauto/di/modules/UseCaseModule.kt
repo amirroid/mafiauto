@@ -5,6 +5,7 @@ import ir.amirroid.mafiauto.domain.usecase.player_role.*
 import ir.amirroid.mafiauto.domain.usecase.role.*
 import ir.amirroid.mafiauto.domain.usecase.player.*
 import ir.amirroid.mafiauto.domain.usecase.groups.*
+import ir.amirroid.mafiauto.domain.usecase.settings.*
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -41,4 +42,6 @@ val useCaseModule = module {
     factoryOf(::AddNewGroupUseCase)
     factoryOf(::GetCurrentPlayerTurnIndexUseCase)
     factoryOf(::HandleFinalTrustVotesUseCase)
+    factoryOf(::SetSettingsConfigurationUseCase)
+    factoryOf(::GetSettingsConfigurationUseCase)
 }

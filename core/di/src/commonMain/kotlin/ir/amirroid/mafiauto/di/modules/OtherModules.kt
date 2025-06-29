@@ -5,6 +5,7 @@ import ir.amirroid.mafiauto.data.memory.PlayersWithRoleMemoryHelper
 import ir.amirroid.mafiauto.data.memory.RoleMemoryHolder
 import ir.amirroid.mafiauto.game.engine.provider.last_card.*
 import ir.amirroid.mafiauto.game.engine.provider.roles.*
+import kotlinx.serialization.json.Json
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -16,4 +17,8 @@ val otherModules = module {
     singleOf(::PlayerMemoryHolder)
     singleOf(::RoleMemoryHolder)
     singleOf(::PlayersWithRoleMemoryHelper)
+
+
+    // Json
+    single { Json { ignoreUnknownKeys = true } }
 }

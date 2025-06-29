@@ -11,6 +11,7 @@ object ProjectPaths {
     const val database = ":core:database"
     const val domain = ":core:domain"
     const val uiModels = ":core:ui-models"
+    const val preferences = ":core:preferences"
 
     // Features
     const val intro = ":feature:intro"
@@ -19,6 +20,7 @@ object ProjectPaths {
     const val assignRoles = ":feature:assign-roles"
     const val finalDebate = ":feature:final-debate"
     const val reveal = ":feature:reveal"
+    const val settings = ":feature:settings"
     const val room = ":feature:room"
     const val night = ":feature:night"
 

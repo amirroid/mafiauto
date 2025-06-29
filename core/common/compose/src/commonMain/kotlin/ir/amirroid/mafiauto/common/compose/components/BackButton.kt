@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline
 import compose.icons.evaicons.outline.ArrowIosBack
+import ir.amirroid.mafiauto.common.compose.utils.autoMirrorIosBackwardIcon
 import ir.amirroid.mafiauto.design_system.components.button.MIconButton
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 
@@ -11,7 +12,7 @@ import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 fun BackButton(onBack: () -> Unit) {
     MIconButton(onClick = onBack) {
         MIcon(
-            imageVector = EvaIcons.Outline.ArrowIosBack,
+            imageVector = autoMirrorIosBackwardIcon(),
             contentDescription = null
         )
     }

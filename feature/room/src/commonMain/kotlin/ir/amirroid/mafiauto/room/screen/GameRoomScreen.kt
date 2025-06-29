@@ -56,6 +56,7 @@ import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.horizontalPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.thenIf
 import ir.amirroid.mafiauto.common.compose.operators.plus
+import ir.amirroid.mafiauto.common.compose.utils.autoMirrorIosForwardIcon
 import ir.amirroid.mafiauto.design_system.components.appbar.SmallTopAppBarScaffold
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.button.MIconButton
@@ -403,7 +404,7 @@ fun CurrentPhaseSection(
         ) {
             MText(stringResource(Resources.strings.voting))
             MIcon(
-                imageVector = EvaIcons.Fill.ArrowIosForward,
+                imageVector = autoMirrorIosForwardIcon(),
                 contentDescription = null,
                 modifier = Modifier.padding(start = 8.dp).size(20.dp)
             )
