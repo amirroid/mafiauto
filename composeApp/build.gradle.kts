@@ -12,5 +12,6 @@ kotlin.sourceSets.commonMain {
         implementation(project(ProjectPaths.navigation))
         implementation(project(ProjectPaths.di))
         implementation(project(ProjectPaths.domain))
+        implementation(project(ProjectPaths.uiModels))
     }
 }

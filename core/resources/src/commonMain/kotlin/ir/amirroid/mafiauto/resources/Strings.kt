@@ -60,6 +60,7 @@ object Strings {
     val language = Res.string.language
     val persian = Res.string.persian
     val english = Res.string.english
+    val viewSource = Res.string.view_source
 
 
     // Roles

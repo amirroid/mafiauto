@@ -60,6 +60,7 @@
     <string name="language">Language</string>
     <string name="persian">Persian</string>
     <string name="english">English</string>
+    <string name="view_source">View source on GitHub</string>
 
     <string name="neutral">Neutral</string>
 

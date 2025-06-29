@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -17,6 +18,7 @@ import ir.amirroid.mafiauto.common.compose.components.BackButton
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.operators.plus
 import ir.amirroid.mafiauto.design_system.components.appbar.CollapsingTopAppBarScaffold
+import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 import ir.amirroid.mafiauto.design_system.components.list.selectable.MToggleListItem
 import ir.amirroid.mafiauto.design_system.components.segmented_button.MSegmentedButton
 import ir.amirroid.mafiauto.design_system.components.text.MText
@@ -53,7 +55,8 @@ fun SettingsConfiguration(
     onSelectLanguage: (Language) -> Unit,
     contentPadding: PaddingValues = PaddingValues()
 ) {
-    LazyColumn(contentPadding = contentPadding) {
+    val uriHandler = LocalUriHandler.current
+    LazyColumn(contentPadding = contentPadding, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item("language") {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 MText(stringResource(Resources.strings.language))
@@ -68,6 +71,16 @@ fun SettingsConfiguration(
                     )
                 }
             }
+        }
+        item {
+            MListItem(
+                text = {
+                    MText(stringResource(Resources.strings.viewSource))
+                },
+                onClick = {
+                    uriHandler.openUri("https://github.com/Amirroid/mafiauto")
+                }
+            )
         }
     }
 }
