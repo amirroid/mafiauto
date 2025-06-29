@@ -10,13 +10,22 @@ import ir.amirroid.mafiauto.design_system.core.Typography
 import ir.amirroid.mafiauto.resources.Resources
 import org.jetbrains.compose.resources.Font
 
-val AppFontFamily: FontFamily
+val SFFontFamily: FontFamily
     @Composable
     get() = FontFamily(
         Font(Resources.fonts.sfBold, weight = FontWeight.Bold),
         Font(Resources.fonts.sfMedium, weight = FontWeight.Medium),
         Font(Resources.fonts.sfBlack, weight = FontWeight.Black),
         Font(Resources.fonts.sfNormal)
+    )
+
+val VazirFontFamily: FontFamily
+    @Composable
+    get() = FontFamily(
+        Font(Resources.fonts.vazirBold, weight = FontWeight.Bold),
+        Font(Resources.fonts.vazirMedium, weight = FontWeight.Medium),
+        Font(Resources.fonts.vazirBold, weight = FontWeight.Black),
+        Font(Resources.fonts.vazir)
     )
 
 val AppTypography = Typography(

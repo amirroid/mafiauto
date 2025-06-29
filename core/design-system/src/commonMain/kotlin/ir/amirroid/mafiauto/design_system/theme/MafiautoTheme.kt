@@ -3,6 +3,8 @@ package ir.amirroid.mafiauto.design_system.theme
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import ir.amirroid.mafiauto.design_system.core.PressScaleIndication
 import ir.amirroid.mafiauto.design_system.core.LocalColorScheme
 import ir.amirroid.mafiauto.design_system.core.LocalShapes
@@ -16,7 +18,9 @@ import ir.amirroid.mafiauto.design_system.locales.WithHazeContent
 fun MafiautoTheme(
     content: @Composable () -> Unit
 ) {
-    val typography = AppTypography.copyFontFamily(AppFontFamily)
+    val direction = LocalLayoutDirection.current
+    val fonts = if (direction == LayoutDirection.Rtl) VazirFontFamily else SFFontFamily
+    val typography = AppTypography.copyFontFamily(fonts)
     val colorScheme = NeonRedColorScheme
     WithHazeContent {
         CompositionLocalProvider(

@@ -28,8 +28,10 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
@@ -49,20 +51,27 @@ fun calculateTargetOffset(
     easedProgress: Float,
     navigationIconRect: Rect?,
     textRect: Rect?,
-    density: Density
+    density: Density,
+    direction: LayoutDirection,
 ): IntOffset {
     if (navigationIconRect == null || textRect == null) return IntOffset.Zero
 
-    val iconRight = navigationIconRect.right
-    val textLeft = textRect.left
+    val spacing = with(density) { 8.dp.toPx() }.roundToInt()
+    val collapsedOffsetX = when (direction) {
+        LayoutDirection.Ltr -> {
+            (navigationIconRect.right - textRect.left + spacing)
+        }
 
-    val collapsedOffsetX =
-        (iconRight - textLeft).toInt() + with(density) { 8.dp.toPx() }.roundToInt()
+        LayoutDirection.Rtl -> {
+            (textRect.right - navigationIconRect.left + spacing)
+        }
 
-    val expandedOffsetX = 0
+        else -> 0f
+    }
 
+    val calculatedX = lerp(collapsedOffsetX, 0f, easedProgress)
     return IntOffset(
-        x = lerp(collapsedOffsetX, expandedOffsetX, easedProgress),
+        x = calculatedX.roundToInt(),
         y = 0
     )
 }
@@ -78,6 +87,7 @@ fun CollapsingTopAppBarScaffold(
     content: @Composable (PaddingValues) -> Unit
 ) {
     val density = LocalDensity.current
+    val direction = LocalLayoutDirection.current
 
     var navigationIconRect by remember { mutableStateOf<Rect?>(null) }
     var textRect by remember { mutableStateOf<Rect?>(null) }
@@ -106,7 +116,13 @@ fun CollapsingTopAppBarScaffold(
     }
 
     val targetOffsetPx = remember(easedProgress, navigationIconRect, textRect) {
-        calculateTargetOffset(easedProgress, navigationIconRect, textRect, density)
+        calculateTargetOffset(
+            easedProgress,
+            navigationIconRect,
+            textRect,
+            density,
+            direction,
+        )
     }
 
     val animatedOffset by animateIntOffsetAsState(targetOffsetPx)
