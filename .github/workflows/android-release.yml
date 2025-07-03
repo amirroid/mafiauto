@@ -5,10 +5,14 @@ on:
     tags:
       - 'v*.*.*'
 
+permissions:
+  contents: write
+  releases: write
+
 jobs:
   build:
     name: Build & Upload Release APK
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     env:
       SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
