@@ -27,12 +27,6 @@ internal fun Project.configureAndroidApplicationPlugins(
         packaging.resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
 
         buildTypes.named("release") {
-            runCatching {
-                signingConfigs.getByName("release")
-            }.onSuccess {
-                signingConfig = it
-            }
-
             isMinifyEnabled = RELEASE_IS_MINIFY_ENABLED
         }
 
@@ -67,7 +61,7 @@ private fun Project.configureSigningIfAvailable(android: ApplicationExtension) {
             }
         }
 
-        android.buildTypes.named("release").configure {
+        android.buildTypes.named("release") {
             signingConfig = android.signingConfigs.getByName("release")
         }
     }

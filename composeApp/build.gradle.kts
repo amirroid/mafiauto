@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.local.koin)
 }
 
-
 kotlin.sourceSets.commonMain {
     dependencies {
         implementation(project(ProjectPaths.navigation))
