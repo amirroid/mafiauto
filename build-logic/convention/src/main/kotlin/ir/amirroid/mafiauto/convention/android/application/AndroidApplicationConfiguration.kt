@@ -22,9 +22,17 @@ internal fun Project.configureAndroidApplicationPlugins(
             targetSdk = "targetSdk".versionInt()
         }
 
+        configureSigningIfAvailable(this)
+
         packaging.resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
 
         buildTypes.named("release") {
+            runCatching {
+                signingConfigs.getByName("release")
+            }.onSuccess {
+                signingConfig = it
+            }
+
             isMinifyEnabled = RELEASE_IS_MINIFY_ENABLED
         }
 
@@ -35,6 +43,32 @@ internal fun Project.configureAndroidApplicationPlugins(
 
         lint {
             disable.add("NullSafeMutableLiveData")
+        }
+    }
+}
+
+private fun Project.configureSigningIfAvailable(android: ApplicationExtension) {
+    val signingProps = listOf(
+        "signing.store.file",
+        "signing.store.password",
+        "signing.key.alias",
+        "signing.key.password"
+    )
+
+    val hasSigningConfig = signingProps.all { hasProperty(it) }
+
+    if (hasSigningConfig) {
+        android.signingConfigs {
+            create("release") {
+                storeFile = file(property("signing.store.file") as String)
+                storePassword = property("signing.store.password") as String
+                keyAlias = property("signing.key.alias") as String
+                keyPassword = property("signing.key.password") as String
+            }
+        }
+
+        android.buildTypes.named("release").configure {
+            signingConfig = android.signingConfigs.getByName("release")
         }
     }
 }

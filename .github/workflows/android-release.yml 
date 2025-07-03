@@ -1,0 +1,57 @@
+name: Android Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    name: Build & Upload Release APK
+    runs-on: ubuntu-latest
+
+    env:
+      SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+      SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+      SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'temurin'
+
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.SIGNING_KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
+
+      - name: Create local.properties
+        run: |
+          echo "signing.store.file=keystore.jks" >> local.properties
+          echo "signing.store.password=$SIGNING_STORE_PASSWORD" >> local.properties
+          echo "signing.key.alias=$SIGNING_KEY_ALIAS" >> local.properties
+          echo "signing.key.password=$SIGNING_KEY_PASSWORD" >> local.properties
+
+      - name: Grant execute permission to Gradle
+        run: chmod +x ./gradlew
+
+      - name: Build Release APK
+        run: ./gradlew assembleRelease
+
+      - name: Get APK Path
+        id: apk_path
+        run: |
+          APK_PATH=$(find . -name "*release*.apk" | head -n 1)
+          echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
+
+      - name: Upload APK to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: ${{ steps.apk_path.outputs.apk_path }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
