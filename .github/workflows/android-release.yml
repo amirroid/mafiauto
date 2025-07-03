@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Build & Upload Release APK
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     env:
       SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
