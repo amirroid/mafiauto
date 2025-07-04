@@ -62,7 +62,7 @@ private fun Project.configureSigningIfAvailable(android: ApplicationExtension) {
     if (hasSigningConfig) {
         android.signingConfigs {
             create("release") {
-                storeFile = file(localProperties.getProperty("signing.store.file"))
+                storeFile = rootProject.file(localProperties.getProperty("signing.store.file"))
                 storePassword = localProperties.getProperty("signing.store.password")
                 keyAlias = localProperties.getProperty("signing.key.alias")
                 keyPassword = localProperties.getProperty("signing.key.password")
