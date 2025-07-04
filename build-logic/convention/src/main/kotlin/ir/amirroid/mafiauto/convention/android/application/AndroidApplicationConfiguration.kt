@@ -49,15 +49,15 @@ private fun Project.configureSigningIfAvailable(android: ApplicationExtension) {
         "signing.key.password"
     )
 
-    val hasSigningConfig = signingProps.all { hasProperty(it) }
+    val hasSigningConfig = signingProps.all { rootProject.hasProperty(it) }
 
     if (hasSigningConfig) {
         android.signingConfigs {
             create("release") {
-                storeFile = file(property("signing.store.file") as String)
-                storePassword = property("signing.store.password") as String
-                keyAlias = property("signing.key.alias") as String
-                keyPassword = property("signing.key.password") as String
+                storeFile = file(rootProject.property("signing.store.file") as String)
+                storePassword = rootProject.property("signing.store.password") as String
+                keyAlias = rootProject.property("signing.key.alias") as String
+                keyPassword = rootProject.property("signing.key.password") as String
             }
         }
 
