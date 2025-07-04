@@ -78,7 +78,7 @@ fun SettingsConfiguration(
                     MText(stringResource(Resources.strings.viewSource))
                 },
                 onClick = {
-                    uriHandler.openUri("https://github.com/Amirroid/mafiauto")
+                    uriHandler.openUri("https://github.com/amirroid/mafiauto")
                 }
             )
         }
