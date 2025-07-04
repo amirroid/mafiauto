@@ -51,6 +51,12 @@ jobs:
           APK_PATH=$(find . -name "*release*.apk" | head -n 1)
           echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
 
+      - name: Verify APK Signature
+        run: |
+          ANDROID_SDK_ROOT=$ANDROID_HOME
+          APK_PATH="${{ steps.apk_path.outputs.apk_path }}"
+          "$ANDROID_SDK_ROOT/build-tools/34.0.0/apksigner" verify "$APK_PATH"
+
       - name: Upload APK to GitHub Release
         uses: softprops/action-gh-release@v2
         with:

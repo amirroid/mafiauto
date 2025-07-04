@@ -6,6 +6,7 @@ import ir.amirroid.mafiauto.convention.RELEASE_IS_MINIFY_ENABLED
 import ir.amirroid.mafiauto.convention.androidLibs
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import java.util.Properties
 
 internal fun Project.configureAndroidApplicationPlugins(
     extensions: ApplicationExtension
@@ -42,6 +43,13 @@ internal fun Project.configureAndroidApplicationPlugins(
 }
 
 private fun Project.configureSigningIfAvailable(android: ApplicationExtension) {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (!localPropertiesFile.exists()) return
+
+    val localProperties = Properties().apply {
+        load(localPropertiesFile.inputStream())
+    }
+
     val signingProps = listOf(
         "signing.store.file",
         "signing.store.password",
@@ -49,15 +57,15 @@ private fun Project.configureSigningIfAvailable(android: ApplicationExtension) {
         "signing.key.password"
     )
 
-    val hasSigningConfig = signingProps.all { rootProject.hasProperty(it) }
+    val hasSigningConfig = signingProps.all { localProperties.getProperty(it) != null }
 
     if (hasSigningConfig) {
         android.signingConfigs {
             create("release") {
-                storeFile = file(rootProject.property("signing.store.file") as String)
-                storePassword = rootProject.property("signing.store.password") as String
-                keyAlias = rootProject.property("signing.key.alias") as String
-                keyPassword = rootProject.property("signing.key.password") as String
+                storeFile = file(localProperties.getProperty("signing.store.file"))
+                storePassword = localProperties.getProperty("signing.store.password")
+                keyAlias = localProperties.getProperty("signing.key.alias")
+                keyPassword = localProperties.getProperty("signing.key.password")
             }
         }
 
