@@ -52,6 +52,7 @@ include(":feature:lobby")
 include(":feature:assign-roles")
 include(":feature:reveal")
 include(":feature:room")
+include(":feature:libraries")
 include(":feature:night")
 include(":feature:final-debate")
 

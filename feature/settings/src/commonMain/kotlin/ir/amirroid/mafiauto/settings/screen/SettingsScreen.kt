@@ -32,6 +32,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun SettingsScreen(
     onBack: () -> Unit,
+    onOpenLibraries: () -> Unit,
     viewModel: SettingsViewModel = koinViewModel()
 ) {
     val configuration by viewModel.settingsConfiguration.collectAsStateWithLifecycle()
@@ -43,6 +44,7 @@ fun SettingsScreen(
         SettingsConfiguration(
             configuration = configuration,
             onSelectLanguage = { viewModel.updateConfigurations(configuration.copy(language = it)) },
+            onOpenLibraries = onOpenLibraries,
             contentPadding = paddingValues + defaultContentPadding()
         )
     }
@@ -53,6 +55,7 @@ fun SettingsScreen(
 fun SettingsConfiguration(
     configuration: SettingsUiModel,
     onSelectLanguage: (Language) -> Unit,
+    onOpenLibraries: () -> Unit,
     contentPadding: PaddingValues = PaddingValues()
 ) {
     val uriHandler = LocalUriHandler.current
@@ -61,7 +64,7 @@ fun SettingsConfiguration(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 MText(stringResource(Resources.strings.language))
                 MSegmentedButton(
-                    items = Language.entries,
+                    items = Language.entries.sortedBy { it == configuration.language },
                     onClick = onSelectLanguage,
                     selectedItem = configuration.language,
                     modifier = Modifier.fillMaxWidth()
@@ -72,7 +75,7 @@ fun SettingsConfiguration(
                 }
             }
         }
-        item {
+        item("code") {
             MListItem(
                 text = {
                     MText(stringResource(Resources.strings.viewSource))
@@ -80,6 +83,14 @@ fun SettingsConfiguration(
                 onClick = {
                     uriHandler.openUri("https://github.com/amirroid/mafiauto")
                 }
+            )
+        }
+        item("libs") {
+            MListItem(
+                text = {
+                    MText(stringResource(Resources.strings.openSourceLibraries))
+                },
+                onClick = onOpenLibraries
             )
         }
     }

@@ -23,6 +23,7 @@ object ProjectPaths {
     const val settings = ":feature:settings"
     const val room = ":feature:room"
     const val night = ":feature:night"
+    const val libraries = ":feature:libraries"
 
     // Engine
     const val engine = ":game:engine"

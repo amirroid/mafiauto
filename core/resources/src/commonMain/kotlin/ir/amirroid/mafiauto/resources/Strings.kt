@@ -61,6 +61,7 @@ object Strings {
     val persian = Res.string.persian
     val english = Res.string.english
     val viewSource = Res.string.view_source
+    val openSourceLibraries = Res.string.open_source_libraries
 
 
     // Roles

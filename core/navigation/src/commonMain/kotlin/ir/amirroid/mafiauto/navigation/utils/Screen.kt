@@ -29,4 +29,7 @@ sealed interface Screen {
 
     @Serializable
     data object FinalDebate : Screen
+
+    @Serializable
+    data object Libraries : Screen
 }

@@ -20,6 +20,7 @@ import ir.amirroid.mafiauto.final_debate.screen.FinalDebateScreen
 import ir.amirroid.mafiauto.groups.screen.GroupsScreen
 import ir.amirroid.mafiauto.intro.screen.IntroScreen
 import ir.amirroid.mafiauto.intro.screen.LobbyScreen
+import ir.amirroid.mafiauto.libraries.screen.LibrariesScreen
 import ir.amirroid.mafiauto.navigation.utils.Screen
 import ir.amirroid.mafiauto.night.screen.NightActionsScreen
 import ir.amirroid.mafiauto.reveal.screen.RevealRolesScreen
@@ -118,7 +119,13 @@ fun MainNavigation() {
                 }
                 composable<Screen.Settings> {
                     SettingsScreen(
-                        onBack = navController::navigateUp
+                        onBack = navController::navigateUp,
+                        onOpenLibraries = { navController.navigate(Screen.Libraries) }
+                    )
+                }
+                composable<Screen.Libraries> {
+                    LibrariesScreen(
+                        onBack = navController::navigateUp,
                     )
                 }
             }
