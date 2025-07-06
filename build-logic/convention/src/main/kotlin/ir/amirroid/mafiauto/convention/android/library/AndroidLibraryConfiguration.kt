@@ -23,8 +23,8 @@ internal fun Project.configureAndroidLibraryPlugins(
         packaging.resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
 
         compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_11
-            targetCompatibility = JavaVersion.VERSION_11
+            sourceCompatibility = JavaVersion.VERSION_21
+            targetCompatibility = JavaVersion.VERSION_21
         }
 
         lint {

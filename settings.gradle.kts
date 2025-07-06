@@ -42,6 +42,7 @@ include(":core:database")
 include(":core:preferences")
 include(":core:ui-models")
 include(":core:common:compose")
+include(":core:common:app")
 
 include(":game:engine")
 

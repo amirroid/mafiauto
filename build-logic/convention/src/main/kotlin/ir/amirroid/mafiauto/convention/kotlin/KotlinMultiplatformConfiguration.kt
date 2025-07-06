@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.convention.kotlin
 
 import ir.amirroid.mafiauto.convention.androidMain
 import ir.amirroid.mafiauto.convention.commonMain
+import ir.amirroid.mafiauto.convention.implementIfNotSelf
 import ir.amirroid.mafiauto.convention.libs
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
@@ -31,6 +32,7 @@ private fun Project.configureCommonMain(sourceSets: NamedDomainObjectContainer<K
     sourceSets.commonMain.dependencies {
         implementation(libs.findLibrary("kotlinx-serialization").get())
         implementation(libs.findLibrary("kermit").get())
+        implementIfNotSelf(":core:common:app")
     }
 }
 
