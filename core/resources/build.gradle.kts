@@ -10,3 +10,7 @@ aboutLibraries {
         outputFile = file("src/commonMain/composeResources/files/aboutlibraries.json")
     }
 }
+
+tasks.named("copyNonXmlValueResourcesForCommonMain") {
+    dependsOn("exportLibraryDefinitions")
+}
