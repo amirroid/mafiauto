@@ -76,6 +76,7 @@ fun RevealRolesScreen(
 ) {
     val playerWithRoles = viewModel.playerWithRoles
     val currentPlayerIndex = viewModel.currentPlayerIndex
+    val showPlayersRole = viewModel.showPlayersRole
     val hazeState = rememberHazeState()
     val hazeStyle = HazeMaterials.thin(AppTheme.colorScheme.surface)
     val collapsingAppBarState = rememberCollapsingAppBarState()
@@ -104,18 +105,15 @@ fun RevealRolesScreen(
             PlayersList(
                 playersWithRoles = playerWithRoles,
                 currentPlayerIndex = currentPlayerIndex,
+                showPlayersRole = showPlayersRole,
                 contentPadding = paddingValues + PaddingValues(bottom = bottomPadding) + defaultContentPadding()
             )
         }
 
         BottomBar(
-            onNext = {
-                viewModel.currentPlayerIndex =
-                    currentPlayerIndex.plus(1).coerceAtMost(playerWithRoles.size.minus(1))
-            },
-            onPreviews = {
-                viewModel.currentPlayerIndex = currentPlayerIndex.minus(1).coerceAtLeast(0)
-            },
+            showPlayersRole = showPlayersRole,
+            onNext = viewModel::nextPlayer,
+            onPreviews = viewModel::previewsPlayer,
             onStart = onStartGame,
             currentPlayer = currentPlayerIndex + 1,
             isLastItem = currentPlayerIndex == playerWithRoles.size.minus(1),
@@ -133,6 +131,7 @@ fun RevealRolesScreen(
 fun PlayersList(
     playersWithRoles: List<PlayerWithRoleUiModel>,
     currentPlayerIndex: Int,
+    showPlayersRole: Boolean,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues()
 ) {
@@ -153,12 +152,16 @@ fun PlayersList(
     ) { index ->
         val item = playersWithRoles[index]
         val isFocused = index == currentPlayerIndex
-        PlayerWithRoleItem(item, isFocused)
+        PlayerWithRoleItem(
+            item = item,
+            isFocused = isFocused,
+            isFocusedTexts = isFocused && showPlayersRole
+        )
     }
 }
 
 @Composable
-fun PlayerWithRoleItem(item: PlayerWithRoleUiModel, isFocused: Boolean) {
+fun PlayerWithRoleItem(item: PlayerWithRoleUiModel, isFocused: Boolean, isFocusedTexts: Boolean) {
     val contentColor by animateColorAsState(
         if (isFocused) AppTheme.colorScheme.onPrimary else AppTheme.colorScheme.onDisabled
     )
@@ -166,7 +169,7 @@ fun PlayerWithRoleItem(item: PlayerWithRoleUiModel, isFocused: Boolean) {
         if (isFocused) AppTheme.colorScheme.primary else AppTheme.colorScheme.disabled
     )
     val lockPercent by animateFloatAsState(
-        if (isFocused) 0f else 1f
+        if (isFocusedTexts) 0f else 1f
     )
 
     MSurface(
@@ -210,6 +213,7 @@ private fun RevealTopBar() {
 @Composable
 private fun BottomBar(
     isLastItem: Boolean,
+    showPlayersRole: Boolean,
     currentPlayer: Int,
     onPreviews: () -> Unit,
     onNext: () -> Unit,
@@ -248,12 +252,18 @@ private fun BottomBar(
             },
             modifier = Modifier.height(48.dp),
         ) {
-            AnimatedContent(isLastItem) {
-                if (it) {
-                    MText(stringResource(Resources.strings.start))
-                } else {
-                    MText(stringResource(Resources.strings.next))
+            val currentState = when {
+                showPlayersRole -> 0
+                isLastItem -> 1
+                else -> 2
+            }
+            AnimatedContent(currentState) { state ->
+                val text = when (state) {
+                    0 -> stringResource(Resources.strings.hideRole)
+                    1 -> stringResource(Resources.strings.start)
+                    else -> stringResource(Resources.strings.next)
                 }
+                MText(text)
             }
             MIcon(
                 imageVector = autoMirrorIosForwardIcon(),

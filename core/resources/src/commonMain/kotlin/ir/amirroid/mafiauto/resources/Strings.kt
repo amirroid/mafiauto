@@ -10,6 +10,7 @@ object Strings {
     val startGame = Res.string.start_game
     val startNewGame = Res.string.start_new_game
     val start = Res.string.start
+    val hideRole = Res.string.hide_role
     val selected = Res.string.selected
     val player = Res.string.player
     val kills = Res.string.kills
