@@ -81,20 +81,20 @@
     <string name="surgeon">Surgeon</string>
 
 
-    <string name="god_father_explanation">Each night, you choose a player to kill. Your decision overrides other Mafia members if there's a conflict.</string>
-    <string name="saul_goodman_explanation">If a Mafia member dies, Saul Goodman can act instead. Once per game, he may convert a simple citizen into a simple Mafia. If successful, the host silently wakes the new Mafia that night. If he targets a special citizen or Nostradamus, the action fails and both his ability and the Mafia kill are lost.</string>
-    <string name="mafia_explanation">Each night, you vote with other Mafia members to choose one player to kill.</string>
-    <string name="doctor_explanation">Each night, you select one player to protect from death. You cannot protect the same player on consecutive nights.</string>
-    <string name="detective_explanation">Each night, you investigate one player to learn whether they belong to the Mafia or not.</string>
-    <string name="civilian_explanation">You have no special actions at night. Your role is to observe during the day and vote wisely.</string>
-    <string name="sniper_explanation">You can choose one night to shoot a player. If the target is Mafia, they die; if not, you die instead. You can act only once.</string>
-    <string name="silencer_explanation">Each night, you choose one player to silence. The silenced player cannot speak the next day.</string>
-    <string name="bomber_explanation">You choose one night to activate your bomb. If you are killed, all players who voted against you will die.</string>
-    <string name="bulletproof_explanation">You are immune to the first night-time kill attempt against you. After that, you can be killed like others.</string>
-    <string name="mayor_explanation">You have no night action. During the day, you can reveal your role to make your vote count as double.</string>
-    <string name="nostradamus_explanation">If you die at night, one random Mafia member will be revealed to the town at the start of the next day.</string>
-    <string name="joker_explanation">You have no night action. Your goal is to get yourself voted out during the day to win the game.</string>
-    <string name="surgeon_explanation">Each night, you can heal one player to protect them from death. You may choose yourself.</string>
+    <string name="god_father_explanation">Each night, you select a player to eliminate. Your decision has higher priority than other Mafia members.</string>
+    <string name="saul_goodman_explanation">If a Mafia dies, you can take their place. Once, you may convert a simple citizen into a Mafia member.</string>
+    <string name="mafia_explanation">Each night, you vote with fellow Mafia members to select one player to eliminate.</string>
+    <string name="doctor_explanation">Each night, you can protect one player from death. You cannot choose the same player two nights in a row.</string>
+    <string name="surgeon_explanation">You are part of the Mafia. Each night, you can save one player from death. You may choose yourself.</string>
+    <string name="detective_explanation">Each night, you investigate one player to determine whether they are a member of the Mafia.</string>
+    <string name="civilian_explanation">You have no night action. During the day, you must observe carefully and vote wisely.</string>
+    <string name="sniper_explanation">On one night of your choice, you can shoot a player. If the target is Mafia, they die. Otherwise, you die instead. You can act only once.</string>
+    <string name="silencer_explanation">You can silence a player on two separate nights during the game. The silenced player cannot speak the next day.</string>
+    <string name="bomber_explanation">If you die, two players next to you also die.</string>
+    <string name="bulletproof_explanation">You are immune to the first night-time attack. After that, you become vulnerable like others.</string>
+    <string name="mayor_explanation">You have no night action, but you know the Doctor and Surgeon roles. The game master informs you about them.</string>
+    <string name="nostradamus_explanation">At the introduction night, you choose three players, and the game master tells you how many of them are Mafia. The Godfather is not counted as Mafia.</string>
+    <string name="joker_explanation">You have no night action. Your goal is to get voted out during the day in order to win the game.</string>
 
 
     <string name="card_bracelet">Bracelet</string>
@@ -102,10 +102,11 @@
     <string name="card_face_up">Face Up</string>
     <string name="card_beautiful_mind">Beautiful Mind</string>
 
-    <string name="bracelet_last_card_explanation">Puts a magical bracelet on you that blocks the next elimination attempt. Only works once.</string>
-    <string name="silence_last_card_explanation">Silences all accusations against you in the next phase. No one can vote or defend against you.</string>
-    <string name="face_up_last_card_explanation">Swap your identity with another player, redirecting all current votes to them.</string>
-    <string name="beautiful_mind_last_card_explanation">Grants you one secret vote at the end of the round, possibly changing the outcome.</string>
+
+    <string name="bracelet_last_card_explanation">If you put this card in front of a player, they cannot use their ability tonight.</string>
+    <string name="silence_last_card_explanation">Put this card in front of two players; they cannot speak the next day.</string>
+    <string name="face_up_last_card_explanation">Put this card in front of a player; your role swaps with theirs.</string>
+    <string name="beautiful_mind_last_card_explanation">If you identify the Independent role, you take its place and it is removed from the game.</string>
 
 
     <string name="assign_roles_hint">Number of roles must match player count, and Mafia must be fewer than non-Mafia</string>

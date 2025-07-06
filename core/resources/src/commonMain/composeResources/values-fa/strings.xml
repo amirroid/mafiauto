@@ -80,30 +80,31 @@
     <string name="nostradamus">نوستراداموس</string>
     <string name="surgeon">جراح</string>
 
-    <string name="god_father_explanation">هر شب یک نفر را برای کشتن انتخاب می‌کنی. تصمیم تو در اولویت بالاتری از دیگر اعضای مافیاست.</string>
-    <string name="saul_goodman_explanation">اگر یکی از مافیا بمیرد، سائول گودمن می‌تواند جای او عمل کند. یک‌بار در بازی می‌تواند یک شهروند ساده را به مافیای ساده تبدیل کند. اگر موفق باشد، مجری بازی شبانه مافیای جدید را بیدار می‌کند. اگر هدف اشتباه باشد (نقش خاص یا نوستراداموس)، عمل و کشتن مافیا هر دو از بین می‌روند.</string>
-    <string name="mafia_explanation">هر شب با دیگر اعضای مافیا رأی‌گیری می‌کنی تا یک نفر را برای کشتن انتخاب کنید.</string>
+    <string name="god_father_explanation">هر شب می‌توانی یک نفر را برای حذف انتخاب کنی. تصمیم تو نسبت به دیگر اعضای مافیا اولویت دارد.</string>
+    <string name="saul_goodman_explanation">اگر یکی از مافیا حذف شود، می‌توانی جای او را بگیری. یک‌بار در بازی می‌توانی یک شهروند ساده را به مافیا تبدیل کنی.</string>
+    <string name="mafia_explanation">هر شب همراه دیگر اعضای مافیا رأی می‌دهی تا یک نفر برای حذف انتخاب شود.</string>
     <string name="doctor_explanation">هر شب می‌توانی یک نفر را از مرگ نجات دهی. نمی‌توانی دو شب پیاپی یک نفر را انتخاب کنی.</string>
+    <string name="surgeon_explanation">تو عضو مافیا هستی. هر شب می‌توانی یک نفر را از مرگ نجات دهی. می‌توانی خودت را هم انتخاب کنی.</string>
     <string name="detective_explanation">هر شب می‌توانی بررسی کنی که آیا یک بازیکن عضو مافیاست یا نه.</string>
-    <string name="civilian_explanation">هیچ عملکردی در شب نداری. در روز باید با دقت مشاهده کنی و رأی بدهی.</string>
-    <string name="sniper_explanation">در یکی از شب‌ها می‌توانی شلیک کنی. اگر هدف مافیا باشد، کشته می‌شود. در غیر این صورت، خودت می‌میری. فقط یک‌بار می‌توانی عمل کنی.</string>
-    <string name="silencer_explanation">هر شب می‌توانی یک نفر را ساکت کنی. بازیکن ساکت‌شده نمی‌تواند در روز بعد صحبت کند.</string>
-    <string name="bomber_explanation">در یکی از شب‌ها می‌توانی بمب را فعال کنی. اگر کشته شوی، تمام کسانی که به تو رأی داده‌اند، می‌میرند.</string>
-    <string name="bulletproof_explanation">در برابر اولین حمله شبانه مقاوم هستی. پس از آن مانند دیگران آسیب‌پذیر می‌شوی.</string>
-    <string name="mayor_explanation">در شب عملکردی نداری. در روز می‌توانی نقش خود را فاش کنی تا رأی‌ات دو برابر شود.</string>
-    <string name="nostradamus_explanation">اگر در شب کشته شوی، یکی از اعضای مافیا به‌صورت تصادفی در ابتدای روز بعد افشا می‌شود.</string>
-    <string name="joker_explanation">عملکرد شبانه نداری. هدف تو این است که در روز با رأی بقیه حذف شوی تا برنده شوی.</string>
-    <string name="surgeon_explanation">هر شب می‌توانی یک نفر را درمان کنی تا از مرگ نجات پیدا کند. می‌توانی خودت را هم انتخاب کنی.</string>
+    <string name="civilian_explanation">در شب هیچ نقشی نداری. در روز باید با دقت گوش بدهی و رأی بدهی.</string>
+    <string name="sniper_explanation">در یکی از شب‌ها می‌توانی یک بار شلیک کنی. اگر هدف مافیا باشد، کشته می‌شود. در غیر این صورت، خودت کشته می‌شوی.</string>
+    <string name="silencer_explanation">در طول بازی، دو شب می‌توانی یک نفر را ساکت کنی. فرد ساکت‌شده نمی‌تواند در روز بعد صحبت کند.</string>
+    <string name="bomber_explanation">اگر بمیری، دو نفر کنارت نیز می‌میرند.</string>
+    <string name="bulletproof_explanation">در برابر اولین حمله شبانه مقاوم هستی. پس از آن مثل دیگران آسیب‌پذیر می‌شوی.</string>
+    <string name="mayor_explanation">در شب نقشی نداری، اما نقش‌های دکتر و جراح را می‌شناسی که توسط گرداننده بازی به تو اعلام می‌شود.</string>
+    <string name="nostradamus_explanation">در شب معارفه، سه نفر را انتخاب می‌کنی تا گرداننده به تو بگوید چند نفر از آن‌ها مافیا هستند. پدرخوانده در شمارش مافیا حساب نمی‌شود.</string>
+    <string name="joker_explanation">در شب نقشی نداری. اگر در روز با رأی بقیه حذف شوی، برنده بازی می‌شوی.</string>
+
 
     <string name="card_bracelet">دستبند</string>
     <string name="card_silence">سکوت بره‌ها</string>
     <string name="card_face_up">تغییر چهره</string>
     <string name="card_beautiful_mind">ذهن زیبا</string>
 
-    <string name="bracelet_last_card_explanation">یک دستبند جادویی روی تو قرار می‌گیرد که دفعه بعد از کشته شدنت جلوگیری می‌کند. فقط یک‌بار مؤثر است.</string>
-    <string name="silence_last_card_explanation">در مرحله بعد، تمام اتهامات علیه تو را ساکت می‌کند. هیچ‌کس نمی‌تواند به تو رأی بدهد یا از خودت دفاع کنی.</string>
-    <string name="face_up_last_card_explanation">هویت خود را با یک بازیکن دیگر عوض می‌کنی و همه رأی‌های فعلی به او منتقل می‌شود.</string>
-    <string name="beautiful_mind_last_card_explanation">در پایان دور، یک رأی مخفی اضافی به تو می‌دهد که می‌تواند نتیجه را تغییر دهد.</string>
+    <string name="bracelet_last_card_explanation">اگر این کارت را جلوی بازیکنی بگذاری، او نمی‌تواند امشب از توانایی‌اش استفاده کند.</string>
+    <string name="silence_last_card_explanation">این کارت را جلوی دو بازیکن می‌گذاری؛ آن‌ها در روز بعد نمی‌توانند صحبت کنند.</string>
+    <string name="face_up_last_card_explanation">این کارت را جلوی یک بازیکن می‌گذاری؛ نقش تو با نقش او جابجا می‌شود.</string>
+    <string name="beautiful_mind_last_card_explanation">اگر نقش مستقل را تشخیص دهی، جای او را می‌گیری و آن نقش از بازی حذف می‌شود.</string>
 
     <string name="assign_roles_hint">تعداد نقش‌ها باید با تعداد بازیکنان برابر باشد و تعداد مافیا باید کمتر از غیرمافیا باشد</string>
     <string name="select_players_hint">برای شروع بازی حداقل ۵ بازیکن لازم است</string>
