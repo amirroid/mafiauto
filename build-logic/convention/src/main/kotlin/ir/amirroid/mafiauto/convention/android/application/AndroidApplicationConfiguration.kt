@@ -20,6 +20,8 @@ internal fun Project.configureAndroidApplicationPlugins(
 
         defaultConfig {
             minSdk = "minSdk".versionInt()
+            versionName = rootProject.version.toString()
+            versionCode = 2
             targetSdk = "targetSdk".versionInt()
         }
 
