@@ -5,4 +5,5 @@ object LastCardKeys {
     const val SILENCE = "silence"
     const val FACE_UP = "face_up"
     const val BEAUTIFUL_MIND = "beautiful_mind"
+    const val AUTHENTICATION = "authentication"
 }

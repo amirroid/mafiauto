@@ -116,7 +116,14 @@ fun LastCardDialog(
                 )
                 AnimatedVisibility(selectedCardIndex != null) {
                     MButton(
-                        onClick = { pickingPlayers = true },
+                        onClick = {
+                            val selectedCard = cards[selectedCardIndex ?: return@MButton]
+                            if (selectedCard.targetCount == 0) {
+                                onApply.invoke(selectedCard, emptyList())
+                            } else {
+                                pickingPlayers = true
+                            }
+                        },
                         modifier = Modifier.padding(top = 16.dp).fillMaxWidth(),
                     ) {
                         MText(stringResource(Resources.strings.ok))

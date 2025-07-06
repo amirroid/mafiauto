@@ -97,12 +97,14 @@
     <string name="joker_explanation">You have no night action. Your goal is to get voted out during the day in order to win the game.</string>
 
 
+    <string name="authentication">Authentication</string>
     <string name="card_bracelet">Bracelet</string>
     <string name="card_silence">Silence of the Lambs</string>
     <string name="card_face_up">Face Up</string>
     <string name="card_beautiful_mind">Beautiful Mind</string>
 
 
+    <string name="authentication_last_card_explanation">Your role is announced by the game master.</string>
     <string name="bracelet_last_card_explanation">If you put this card in front of a player, they cannot use their ability tonight.</string>
     <string name="silence_last_card_explanation">Put this card in front of two players; they cannot speak the next day.</string>
     <string name="face_up_last_card_explanation">Put this card in front of a player; your role swaps with theirs.</string>

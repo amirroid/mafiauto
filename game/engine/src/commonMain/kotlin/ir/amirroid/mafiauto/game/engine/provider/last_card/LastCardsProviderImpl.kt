@@ -9,6 +9,7 @@ class LastCardsProviderImpl : LastCardsProvider {
             SilenceCard,
             FaceUpCard,
             BeautifulMindCard,
+            AuthenticationCard
         )
     }
 }

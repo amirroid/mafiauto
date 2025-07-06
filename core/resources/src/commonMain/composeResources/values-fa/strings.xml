@@ -100,11 +100,13 @@
     <string name="card_silence">سکوت بره‌ها</string>
     <string name="card_face_up">تغییر چهره</string>
     <string name="card_beautiful_mind">ذهن زیبا</string>
+    <string name="authentication">احراز هویت</string>
 
     <string name="bracelet_last_card_explanation">اگر این کارت را جلوی بازیکنی بگذاری، او نمی‌تواند امشب از توانایی‌اش استفاده کند.</string>
     <string name="silence_last_card_explanation">این کارت را جلوی دو بازیکن می‌گذاری؛ آن‌ها در روز بعد نمی‌توانند صحبت کنند.</string>
     <string name="face_up_last_card_explanation">این کارت را جلوی یک بازیکن می‌گذاری؛ نقش تو با نقش او جابجا می‌شود.</string>
     <string name="beautiful_mind_last_card_explanation">اگر نقش مستقل را تشخیص دهی، جای او را می‌گیری و آن نقش از بازی حذف می‌شود.</string>
+    <string name="authentication_last_card_explanation">نقشت توسط گرداننده اعلام می‌شود.</string>
 
     <string name="assign_roles_hint">تعداد نقش‌ها باید با تعداد بازیکنان برابر باشد و تعداد مافیا باید کمتر از غیرمافیا باشد</string>
     <string name="select_players_hint">برای شروع بازی حداقل ۵ بازیکن لازم است</string>

@@ -112,3 +112,18 @@ object BeautifulMindCard : LastCard {
         }
     }
 }
+
+object AuthenticationCard : LastCard {
+    override val name = Resources.strings.authenticationCardName
+    override val explanation = Resources.strings.authenticationLastCardExplanation
+    override val key = LastCardKeys.AUTHENTICATION
+    override val targetCount = 0
+    override fun applyAction(
+        player: Player,
+        pickedPlayers: List<Player>,
+        allPlayers: List<Player>,
+        handler: LastCardHandler
+    ) {
+        handler.sendMessage(player.role.name)
+    }
+}

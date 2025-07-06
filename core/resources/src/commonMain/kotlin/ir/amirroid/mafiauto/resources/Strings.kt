@@ -102,11 +102,13 @@ object Strings {
     val jokerExplanation = Res.string.joker_explanation
     val surgeonExplanation = Res.string.surgeon_explanation
 
+    val authenticationLastCardExplanation = Res.string.authentication_last_card_explanation
     val braceletLastCardExplanation = Res.string.bracelet_last_card_explanation
     val silenceLastCardExplanation = Res.string.silence_last_card_explanation
     val faceUpLastCardExplanation = Res.string.face_up_last_card_explanation
     val beautifulMindLastCardExplanation = Res.string.beautiful_mind_last_card_explanation
 
+    val authenticationCardName = Res.string.authentication
     val braceletCardName = Res.string.card_bracelet
     val silenceCardName = Res.string.card_silence
     val faceUpCardName = Res.string.card_face_up
