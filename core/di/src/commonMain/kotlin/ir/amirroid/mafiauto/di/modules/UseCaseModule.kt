@@ -44,4 +44,6 @@ val useCaseModule = module {
     factoryOf(::HandleFinalTrustVotesUseCase)
     factoryOf(::SetSettingsConfigurationUseCase)
     factoryOf(::GetSettingsConfigurationUseCase)
+    factoryOf(::EditGroupNameUseCase)
+    factoryOf(::DeleteGroupUseCase)
 }

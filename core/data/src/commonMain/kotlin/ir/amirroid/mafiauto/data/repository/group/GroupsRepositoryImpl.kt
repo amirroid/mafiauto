@@ -17,6 +17,14 @@ class GroupsRepositoryImpl(
     }
 
     override suspend fun addNewGroup(name: String) {
-        groupDao.addNewGroup(name)
+        return groupDao.addNewGroup(name)
+    }
+
+    override suspend fun editGroupName(groupId: Long, newName: String) {
+        return groupDao.editGroupName(groupId, newName)
+    }
+
+    override suspend fun deleteGroup(groupId: Long) {
+        return groupDao.deleteGroup(groupId)
     }
 }

@@ -3,8 +3,11 @@ package ir.amirroid.mafiauto.design_system.components.appbar
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateIntOffsetAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -82,6 +85,7 @@ fun CollapsingTopAppBarScaffold(
     title: @Composable () -> Unit,
     state: CollapsingAppBarState = rememberCollapsingAppBarState(),
     navigationIcon: (@Composable () -> Unit)? = null,
+    actions: (@Composable RowScope.() -> Unit)? = null,
     hazeState: HazeState = rememberHazeState(),
     hazeStyle: HazeStyle = HazeMaterials.thin(AppTheme.colorScheme.surface),
     content: @Composable (PaddingValues) -> Unit
@@ -171,6 +175,14 @@ fun CollapsingTopAppBarScaffold(
                 ) {
                     title()
                 }
+            }
+            actions?.let {
+                Row(
+                    modifier = Modifier.align(Alignment.TopEnd).padding(top = statusBarHeight),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    content = it
+                )
             }
         }
     }

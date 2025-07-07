@@ -7,5 +7,9 @@ import ir.amirroid.mafiauto.database.DB_NAME
 import org.koin.core.module.Module
 
 actual fun Module.configureDriver() {
-    single<SqlDriver> { NativeSqliteDriver(schema = AppDatabase.Schema, name = DB_NAME) }
+    single<SqlDriver> {
+        NativeSqliteDriver(AppDatabase.Schema, DB_NAME).apply {
+            execute(null, "PRAGMA foreign_keys=ON;", 0)
+        }
+    }
 }

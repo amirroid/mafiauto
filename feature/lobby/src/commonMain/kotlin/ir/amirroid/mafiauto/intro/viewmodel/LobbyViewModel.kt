@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.amirroid.mafiauto.domain.model.Player
+import ir.amirroid.mafiauto.domain.usecase.groups.EditGroupNameUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.AddPlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.GetAllPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.RemovePlayerUseCase
@@ -24,6 +25,7 @@ class LobbyViewModel(
     private val addPlayerUseCase: AddPlayerUseCase,
     private val removePlayerUseCase: RemovePlayerUseCase,
     private val selectNewPlayersUseCase: SelectNewPlayersUseCase,
+    private val editGroupNameUseCase: EditGroupNameUseCase,
     private val dispatcher: CoroutineDispatcher,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -85,6 +87,18 @@ class LobbyViewModel(
 
     fun selectPlayers() {
         selectNewPlayersUseCase.invoke(state.value.selectedPlayers.toDomains())
+    }
+
+    fun openEditing() {
+        _state.update { it.copy(isEditing = true) }
+    }
+
+    fun closeEditing() {
+        _state.update { it.copy(isEditing = false) }
+    }
+
+    fun updateGroupName(newName: String) = viewModelScope.launch(dispatcher) {
+        editGroupNameUseCase.invoke(groupId, newName)
     }
 
     private fun List<Player>.toUiModels() = map { it.toUiModel() }

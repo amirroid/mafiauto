@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline
-import compose.icons.evaicons.outline.ArrowIosForward
+import compose.icons.evaicons.outline.Edit
 import compose.icons.evaicons.outline.Plus
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
@@ -44,6 +44,7 @@ import ir.amirroid.mafiauto.common.compose.utils.autoMirrorIosForwardIcon
 import ir.amirroid.mafiauto.design_system.components.appbar.CollapsingTopAppBarScaffold
 import ir.amirroid.mafiauto.design_system.components.appbar.rememberCollapsingAppBarState
 import ir.amirroid.mafiauto.design_system.components.button.MButton
+import ir.amirroid.mafiauto.design_system.components.button.MIconButton
 import ir.amirroid.mafiauto.design_system.components.field.MTextField
 import ir.amirroid.mafiauto.design_system.components.field.TextFieldsDefaults
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
@@ -53,6 +54,7 @@ import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
 import ir.amirroid.mafiauto.game.engine.GameInfo
+import ir.amirroid.mafiauto.intro.dialogs.EditGroupNameDialog
 import ir.amirroid.mafiauto.intro.viewmodel.LobbyViewModel
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.player.PlayerUiModel
@@ -63,6 +65,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 fun LobbyScreen(
+    groupName: String,
     onBack: () -> Unit,
     onPickPlayers: () -> Unit,
     viewModel: LobbyViewModel = koinViewModel()
@@ -81,7 +84,15 @@ fun LobbyScreen(
             navigationIcon = { BackButton(onBack) },
             hazeState = hazeState,
             state = collapsingAppBarState,
-            hazeStyle = hazeStyle
+            hazeStyle = hazeStyle,
+            actions = {
+                MIconButton(onClick = viewModel::openEditing) {
+                    MIcon(
+                        imageVector = EvaIcons.Outline.Edit,
+                        contentDescription = null
+                    )
+                }
+            }
         ) { paddingValues ->
             PlayerList(
                 players = state.players,
@@ -115,6 +126,13 @@ fun LobbyScreen(
                 .hazeEffect(hazeState, hazeStyle)
                 .allPadding()
                 .navigationBarsPadding()
+        )
+    }
+    if (state.isEditing) {
+        EditGroupNameDialog(
+            initialName = groupName,
+            onEdit = viewModel::updateGroupName,
+            onDismissRequest = viewModel::closeEditing
         )
     }
 }

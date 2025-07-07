@@ -6,7 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.amirroid.mafiauto.domain.usecase.groups.AddNewGroupUseCase
+import ir.amirroid.mafiauto.domain.usecase.groups.DeleteGroupUseCase
 import ir.amirroid.mafiauto.domain.usecase.groups.GetAllGroupsUseCase
+import ir.amirroid.mafiauto.ui_models.group.GroupWithPlayersUiModel
 import ir.amirroid.mafiauto.ui_models.group.toUiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,6 +19,7 @@ import kotlinx.coroutines.launch
 class GroupsViewModel(
     getAllGroupsUseCase: GetAllGroupsUseCase,
     private val addNewGroupUseCase: AddNewGroupUseCase,
+    private val deleteGroupUseCase: DeleteGroupUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     val groups = getAllGroupsUseCase()
@@ -39,5 +42,9 @@ class GroupsViewModel(
 
     fun addGroup(name: String) = viewModelScope.launch(dispatcher) {
         addNewGroupUseCase(name)
+    }
+
+    fun deleteGroup(group: GroupWithPlayersUiModel) = viewModelScope.launch(dispatcher) {
+        deleteGroupUseCase.invoke(group.groupId)
     }
 }

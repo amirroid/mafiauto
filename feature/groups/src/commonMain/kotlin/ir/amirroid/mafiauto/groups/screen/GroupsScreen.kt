@@ -31,6 +31,8 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
 import ir.amirroid.mafiauto.common.compose.components.BackButton
+import ir.amirroid.mafiauto.common.compose.components.swipe_to_dismiss.SwipeToDismissBox
+import ir.amirroid.mafiauto.common.compose.components.swipe_to_dismiss.SwipeToDismissBoxValue
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.locales.LocalSharedTransitionScope
 import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
@@ -51,7 +53,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 fun GroupsScreen(
-    onSelectGroup: (groupId: Long) -> Unit,
+    onSelectGroup: (groupId: Long, groupName: String) -> Unit,
     onBack: () -> Unit,
     animatedContentScope: AnimatedContentScope,
     viewModel: GroupsViewModel = koinViewModel()
@@ -70,9 +72,10 @@ fun GroupsScreen(
         ) { paddingValues ->
             GroupsList(
                 groupsWithPlayers = groups,
-                onSelect = { onSelectGroup.invoke(it.groupId) },
+                onSelect = { onSelectGroup.invoke(it.groupId, it.groupName) },
                 modifier = Modifier.fillMaxSize(),
-                animatedContentScope,
+                animatedContentScope = animatedContentScope,
+                onDelete = viewModel::deleteGroup,
                 contentPadding = paddingValues + PaddingValues(bottom = 80.dp) + defaultContentPadding() + WindowInsets.navigationBars.asPaddingValues()
             )
         }
@@ -100,6 +103,7 @@ fun GroupsScreen(
 fun GroupsList(
     groupsWithPlayers: List<GroupWithPlayersUiModel>,
     onSelect: (GroupWithPlayersUiModel) -> Unit,
+    onDelete: (GroupWithPlayersUiModel) -> Unit,
     modifier: Modifier = Modifier,
     animatedContentScope: AnimatedContentScope,
     contentPadding: PaddingValues = PaddingValues(0.dp)
@@ -114,27 +118,39 @@ fun GroupsList(
         verticalItemSpacing = 12.dp,
     ) {
         items(groupsWithPlayers, key = { it.groupId }) { item ->
-            MSurface(
-                onClick = { onSelect.invoke(item) },
-                color = AppTheme.colorScheme.background,
-                border = BorderStroke(1.dp, AppTheme.colorScheme.primary),
-                shape = AppTheme.shapes.large,
-                modifier = Modifier.animateItem().then(
-                    with(sharedTransitionScope) {
-                        Modifier.sharedBounds(
-                            rememberSharedContentState(item.groupId),
-                            animatedContentScope,
-                            resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds
-                        )
-                    }
-                )
+            SwipeToDismissBox(
+                confirmValueChange = {
+                    if (SwipeToDismissBoxValue.Settled != it) {
+                        onDelete.invoke(item)
+                        true
+                    } else false
+                },
+                positionalThreshold = { it * .4f },
+                modifier = Modifier
+                    .animateItem()
+                    .then(
+                        with(sharedTransitionScope) {
+                            Modifier.sharedBounds(
+                                rememberSharedContentState(item.groupId),
+                                animatedContentScope,
+                                resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds
+                            )
+                        }
+                    )
             ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.padding(12.dp).fillMaxWidth()
+                MSurface(
+                    onClick = { onSelect.invoke(item) },
+                    color = AppTheme.colorScheme.background,
+                    border = BorderStroke(1.dp, AppTheme.colorScheme.primary),
+                    shape = AppTheme.shapes.large,
                 ) {
-                    MText(item.groupName, style = AppTheme.typography.h3)
-                    MText(text = item.formatedPlayersList)
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.padding(12.dp).fillMaxWidth()
+                    ) {
+                        MText(item.groupName, style = AppTheme.typography.h3)
+                        MText(text = item.formatedPlayersList)
+                    }
                 }
             }
         }

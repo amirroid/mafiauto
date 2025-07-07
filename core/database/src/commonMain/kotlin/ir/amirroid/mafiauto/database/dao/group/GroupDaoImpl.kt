@@ -37,4 +37,12 @@ class GroupDaoImpl(
     override suspend fun addNewGroup(name: String) {
         queries.addNewGroup(name).await()
     }
+
+    override suspend fun editGroupName(groupId: Long, newName: String) {
+        queries.updateGroupName(newName, groupId).await()
+    }
+
+    override suspend fun deleteGroup(groupId: Long) {
+        queries.deleteGroupById(groupId).await()
+    }
 }

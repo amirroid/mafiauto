@@ -1,7 +1,8 @@
 CREATE TABLE Player (
   id INTEGER NOT NULL PRIMARY KEY,
   name TEXT NOT NULL,
-  group_id INTEGER NOT NULL
+  group_id INTEGER NOT NULL,
+  FOREIGN KEY (group_id) REFERENCES Groups(id) ON DELETE CASCADE
 );
 
 getAllPlayersByGroupId:

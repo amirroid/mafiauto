@@ -15,3 +15,9 @@ ORDER BY g.id;
 
 addNewGroup:
 INSERT INTO Groups(name) VALUES (?);
+
+deleteGroupById:
+DELETE FROM Groups WHERE id = ?;
+
+updateGroupName:
+UPDATE Groups SET name = ? WHERE id = ?;

@@ -18,6 +18,8 @@
     <string name="reveal_roles">نمایش نقش‌ها</string>
     <string name="groups">گروه‌ها</string>
     <string name="add_new_group">افزودن گروه جدید</string>
+    <string name="edit_group_name">ویرایش نام گروه</string>
+    <string name="edit">ویرایش</string>
     <string name="group_name">نام گروه...</string>
     <string name="game_room">اتاق بازی</string>
     <string name="ok">باشه</string>

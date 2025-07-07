@@ -20,6 +20,7 @@ object Strings {
     val next = Res.string.next
     val back = Res.string.back
     val add = Res.string.add
+    val edit = Res.string.edit
     val selectRoles = Res.string.select_roles
     val selectPlayers = Res.string.select_players
     val revealRoles = Res.string.reveal_roles
@@ -32,6 +33,7 @@ object Strings {
     val night = Res.string.night
     val groups = Res.string.groups
     val addNewGroup = Res.string.add_new_group
+    val editGroupName = Res.string.edit_group_name
     val groupName = Res.string.group_name
     val voting = Res.string.voting
     val round = Res.string.round

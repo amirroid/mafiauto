@@ -18,6 +18,8 @@
     <string name="reveal_roles">Reveal Roles</string>
     <string name="groups">Groups</string>
     <string name="add_new_group">Add a new group</string>
+    <string name="edit_group_name">Edit group name</string>
+    <string name="edit">Edit</string>
     <string name="group_name">Group name...</string>
     <string name="game_room">Game Room</string>
     <string name="ok">Ok</string>

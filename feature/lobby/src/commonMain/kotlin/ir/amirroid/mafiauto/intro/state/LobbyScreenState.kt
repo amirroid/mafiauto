@@ -7,5 +7,6 @@ import ir.amirroid.mafiauto.ui_models.player.PlayerUiModel
 data class LobbyScreenState(
     val players: List<PlayerUiModel> = emptyList(),
     val selectedPlayers: List<PlayerUiModel> = emptyList(),
-    val newPlayerName: String = ""
+    val newPlayerName: String = "",
+    val isEditing: Boolean = false
 )
