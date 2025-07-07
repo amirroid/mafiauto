@@ -8,9 +8,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ir.amirroid.mafiauto.common.app.utils.AppInfo
 import ir.amirroid.mafiauto.common.compose.components.BackButton
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.operators.plus
@@ -18,6 +20,7 @@ import ir.amirroid.mafiauto.design_system.components.appbar.CollapsingTopAppBarS
 import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 import ir.amirroid.mafiauto.design_system.components.segmented_button.MSegmentedButton
 import ir.amirroid.mafiauto.design_system.components.text.MText
+import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.settings.viewmodel.SettingsViewModel
 import ir.amirroid.mafiauto.ui_models.settings.Language
@@ -87,6 +90,13 @@ fun SettingsConfiguration(
                     MText(stringResource(Resources.strings.openSourceLibraries))
                 },
                 onClick = onOpenLibraries
+            )
+        }
+        item("version") {
+            MText(
+                text = stringResource(Resources.strings.version, AppInfo.version),
+                style = AppTheme.typography.caption,
+                modifier = Modifier.alpha(.7f)
             )
         }
     }

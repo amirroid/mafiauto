@@ -63,6 +63,7 @@ object Strings {
     val english = Res.string.english
     val viewSource = Res.string.view_source
     val openSourceLibraries = Res.string.open_source_libraries
+    val version = Res.string.version
 
 
     // Roles
