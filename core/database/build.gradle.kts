@@ -21,13 +21,13 @@ kotlin {
         implementation(libs.sqldelight.driver.native)
     }
 
-    targets.configureEach {
-        compilations.configureEach {
-            compilerOptions.configure {
-                freeCompilerArgs.add("-Xexpect-actual-classes")
-            }
-        }
-    }
+//    targets.configureEach {
+//        compilations.configureEach {
+//            kotlinOptions {
+//                freeCompilerArgs += "-Xexpect-actual-classes"
+//            }
+//        }
+//    }
 }
 
 sqldelight {

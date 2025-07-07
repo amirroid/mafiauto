@@ -16,6 +16,7 @@ koin-bom = "4.1.0"
 navigationCompose = "2.9.0-beta02"
 haze = "1.6.4"
 composeIcons = "1.1.1"
+jgit = "6.9.0.202403050737-r"
 sqldelight = "2.1.0"
 kstore = "1.0.0"
 aboutLibraries = "12.2.4"
@@ -35,6 +36,7 @@ androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "jgit" }
 plugin-android-compiler = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 plugin-compose-compiler = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose" }
 plugin-kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -74,3 +76,4 @@ local-compose-multiplatform = { id = "ir.amirroid.mafiauto.convention.multiplatf
 local-android-application = { id = "ir.amirroid.mafiauto.convention.android-application-plugin" }
 local-android-library = { id = "ir.amirroid.mafiauto.convention.android-library-plugin" }
 local-koin = { id = "ir.amirroid.mafiauto.convention.koin-plugin" }
+local-git-versioning = { id = "ir.amirroid.mafiauto.git.git-versioning" }

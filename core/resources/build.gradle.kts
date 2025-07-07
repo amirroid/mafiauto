@@ -4,13 +4,16 @@ plugins {
     alias(libs.plugins.aboutLibraries)
 }
 
+val aboutLibsOutput = file("src/commonMain/composeResources/files/aboutlibraries.json")
 
 aboutLibraries {
     export {
-        outputFile = file("src/commonMain/composeResources/files/aboutlibraries.json")
+        outputFile = aboutLibsOutput
     }
 }
 
 tasks.named("copyNonXmlValueResourcesForCommonMain") {
-    dependsOn("exportLibraryDefinitions")
+    if (!aboutLibsOutput.exists()) {
+        dependsOn("exportLibraryDefinitions")
+    }
 }
