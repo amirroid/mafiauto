@@ -17,6 +17,14 @@ so players can focus on the game itself.
 
 ![Screenshots](assets/screenshots.png)
 
+## 📥 Download
+
+
+<a href='https://github.com/amirroid/mafiauto/releases/latest'>
+  <img height="70" alt='Get it on GitHub' src='https://raw.githubusercontent.com/persian-calendar/persian-calendar/main/assets/GitHub.svg'/>
+</a>
+
+
 ## 🧠 Roles Included
 
 Mafiauto supports a variety of roles, and new ones are being added and updated regularly.
