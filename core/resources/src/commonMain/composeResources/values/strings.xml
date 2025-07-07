@@ -90,7 +90,7 @@
     <string name="surgeon_explanation">You are part of the Mafia. Each night, you can save one player from death. You may choose yourself.</string>
     <string name="detective_explanation">Each night, you investigate one player to determine whether they are a member of the Mafia.</string>
     <string name="civilian_explanation">You have no night action. During the day, you must observe carefully and vote wisely.</string>
-    <string name="sniper_explanation">On one night of your choice, you can shoot a player. If the target is Mafia, they die. Otherwise, you die instead. You can act only once.</string>
+    <string name="sniper_explanation">During the game nights, you can shoot two times. If the target is Mafia, they die. Otherwise, you die instead.</string>
     <string name="silencer_explanation">You can silence a player on two separate nights during the game. The silenced player cannot speak the next day.</string>
     <string name="bomber_explanation">If you die, two players next to you also die.</string>
     <string name="bulletproof_explanation">You are immune to the first night-time attack. After that, you become vulnerable like others.</string>

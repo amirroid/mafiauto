@@ -89,7 +89,7 @@
     <string name="surgeon_explanation">تو عضو مافیا هستی. هر شب می‌توانی یک نفر را از مرگ نجات دهی. می‌توانی خودت را هم انتخاب کنی.</string>
     <string name="detective_explanation">هر شب می‌توانی بررسی کنی که آیا یک بازیکن عضو مافیاست یا نه.</string>
     <string name="civilian_explanation">در شب هیچ نقشی نداری. در روز باید با دقت گوش بدهی و رأی بدهی.</string>
-    <string name="sniper_explanation">در یکی از شب‌ها می‌توانی یک بار شلیک کنی. اگر هدف مافیا باشد، کشته می‌شود. در غیر این صورت، خودت کشته می‌شوی.</string>
+    <string name="sniper_explanation">در طول بازی، در شب می‌توانی دو بار شلیک کنی. اگر هدف عضو مافیا باشد، کشته می‌شود. در غیر این صورت، خودت کشته می‌شوی.</string>
     <string name="silencer_explanation">در طول بازی، دو شب می‌توانی یک نفر را ساکت کنی. فرد ساکت‌شده نمی‌تواند در روز بعد صحبت کند.</string>
     <string name="bomber_explanation">اگر بمیری، دو نفر کنارت نیز می‌میرند.</string>
     <string name="bulletproof_explanation">در برابر اولین حمله شبانه مقاوم هستی. پس از آن مثل دیگران آسیب‌پذیر می‌شوی.</string>
