@@ -253,8 +253,8 @@ private fun BottomBar(
             modifier = Modifier.height(48.dp),
         ) {
             val currentState = when {
-                showPlayersRole -> 0
                 isLastItem -> 1
+                showPlayersRole -> 0
                 else -> 2
             }
             AnimatedContent(currentState) { state ->
