@@ -9,6 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.dialog.MDialog
@@ -33,8 +35,16 @@ fun RoleExplanationDialog(
             modifier = Modifier.fillMaxWidth(),
         ) {
             MText(
-                text = stringResource(role.name),
-                style = AppTheme.typography.h3
+                text = buildAnnotatedString {
+                    withStyle(AppTheme.typography.h3.toSpanStyle()) {
+                        append(stringResource(role.name))
+                    }
+                    append(" - ")
+                    append(stringResource(role.formattedAlignment))
+                    if (role.maxAbilityUses != Int.MAX_VALUE) {
+                        append(" - ${role.maxAbilityUses}X")
+                    }
+                },
             )
             MText(
                 text = stringResource(role.explanation),
