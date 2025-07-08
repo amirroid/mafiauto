@@ -32,6 +32,8 @@ private fun Project.configureCommonMain(sourceSets: NamedDomainObjectContainer<K
     sourceSets.commonMain.dependencies {
         implementation(libs.findLibrary("kotlinx-serialization").get())
         implementation(libs.findLibrary("kermit").get())
+        implementation(libs.findLibrary("kotlinx-collections").get())
+        implementation(libs.findLibrary("coroutines-core").get())
         implementIfNotSelf(":core:common:app")
     }
 }

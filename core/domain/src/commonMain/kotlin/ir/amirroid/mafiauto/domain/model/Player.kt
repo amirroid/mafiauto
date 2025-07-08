@@ -8,4 +8,6 @@ data class Player(
     val isSilenced: Boolean = false,
     val canUseAbility: Boolean = true,
     val remainingAbilityUses: Int = Int.MAX_VALUE,
-)
+) {
+    val isInGame = isAlive && !isKick
+}

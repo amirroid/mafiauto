@@ -58,6 +58,7 @@ import ir.amirroid.mafiauto.intro.dialogs.EditGroupNameDialog
 import ir.amirroid.mafiauto.intro.viewmodel.LobbyViewModel
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.player.PlayerUiModel
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -152,8 +153,8 @@ private fun LobbyTopBar(selectedCount: Int) {
 
 @Composable
 private fun PlayerList(
-    players: List<PlayerUiModel>,
-    selectedPlayers: List<PlayerUiModel>,
+    players: ImmutableList<PlayerUiModel>,
+    selectedPlayers: ImmutableList<PlayerUiModel>,
     onToggle: (PlayerUiModel) -> Unit,
     onDelete: (PlayerUiModel) -> Unit,
     modifier: Modifier = Modifier,

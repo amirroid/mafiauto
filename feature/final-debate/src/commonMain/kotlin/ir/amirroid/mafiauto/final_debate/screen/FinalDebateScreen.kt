@@ -51,6 +51,8 @@ import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.final_debate.viewmodel.FinalDebateViewModel
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -63,10 +65,7 @@ fun FinalDebateScreen(
 ) {
     val hazeState = rememberHazeState()
     val hazeStyle: HazeStyle = HazeMaterials.thin(AppTheme.colorScheme.surface)
-    val players by viewModel.players.collectAsStateWithLifecycle()
-    val inFinalDebatePlayerWithRoles = remember(players) {
-        players.filter { it.player.isInGame }
-    }
+    val inFinalDebatePlayerWithRoles by viewModel.inFinalDebatePlayerWithRoles.collectAsStateWithLifecycle()
     val selectedPlayers by viewModel.selectedPlayers.collectAsStateWithLifecycle()
 
     val scope = rememberCoroutineScope()
@@ -91,6 +90,7 @@ fun FinalDebateScreen(
                     selectedPlayer = selectedPlayers[playerWithRole],
                     availableTargets = remember(inFinalDebatePlayerWithRoles) {
                         inFinalDebatePlayerWithRoles.filter { it.player.id != playerWithRole.player.id }
+                            .toImmutableList()
                     },
                     onSelect = { target -> viewModel.togglePlayer(playerWithRole, target) },
                     contentPadding = paddingValues,
@@ -118,7 +118,7 @@ fun FinalDebateScreen(
 fun SelectOptionPlayersList(
     player: PlayerWithRoleUiModel,
     selectedPlayer: PlayerWithRoleUiModel?,
-    availableTargets: List<PlayerWithRoleUiModel>,
+    availableTargets: ImmutableList<PlayerWithRoleUiModel>,
     onSelect: (PlayerWithRoleUiModel) -> Unit,
     contentPadding: PaddingValues = PaddingValues()
 ) {

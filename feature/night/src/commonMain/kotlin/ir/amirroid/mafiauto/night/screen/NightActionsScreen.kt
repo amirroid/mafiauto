@@ -40,15 +40,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline
-import compose.icons.evaicons.outline.ArrowIosBack
 import compose.icons.evaicons.outline.ArrowIosDownward
-import compose.icons.evaicons.outline.ArrowIosForward
 import compose.icons.evaicons.outline.Lock
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
+import ir.amirroid.mafiauto.common.app.utils.emptyImmutableList
 import ir.amirroid.mafiauto.common.compose.components.InfoText
 import ir.amirroid.mafiauto.common.compose.components.PlatformBackHandler
 import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
@@ -67,14 +66,13 @@ import ir.amirroid.mafiauto.design_system.components.snakebar.SnackBaType
 import ir.amirroid.mafiauto.design_system.components.snakebar.SnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
-import ir.amirroid.mafiauto.domain.model.InstantAction
 import ir.amirroid.mafiauto.night.viewmodel.NightActionsViewModel
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.night_target_otpions.NightTargetOptionsUiModel
 import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -113,7 +111,7 @@ fun NightActionsScreen(
             ) { index ->
                 val playerOptions = options[index]
                 val currentPlayerSelectedTargets =
-                    selectedPlayers[playerOptions.player] ?: emptyList()
+                    selectedPlayers[playerOptions.player] ?: emptyImmutableList()
                 SelectOptionPlayersList(
                     playerOptions = playerOptions,
                     selectedPlayers = currentPlayerSelectedTargets,
@@ -195,7 +193,7 @@ suspend fun performInstantActionForCurrentPage(
 @Composable
 fun SelectOptionPlayersList(
     playerOptions: NightTargetOptionsUiModel,
-    selectedPlayers: List<PlayerWithRoleUiModel>,
+    selectedPlayers: ImmutableList<PlayerWithRoleUiModel>,
     onSelect: (PlayerWithRoleUiModel) -> Unit,
     enabled: Boolean = true,
     contentPadding: PaddingValues = PaddingValues()

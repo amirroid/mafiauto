@@ -36,10 +36,6 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
-import compose.icons.EvaIcons
-import compose.icons.evaicons.Outline
-import compose.icons.evaicons.outline.ArrowIosBack
-import compose.icons.evaicons.outline.ArrowIosForward
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
@@ -62,6 +58,7 @@ import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.reveal.viewmodel.RevealRolesViewModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
+import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -129,7 +126,7 @@ fun RevealRolesScreen(
 
 @Composable
 fun PlayersList(
-    playersWithRoles: List<PlayerWithRoleUiModel>,
+    playersWithRoles: ImmutableList<PlayerWithRoleUiModel>,
     currentPlayerIndex: Int,
     showPlayersRole: Boolean,
     modifier: Modifier = Modifier,

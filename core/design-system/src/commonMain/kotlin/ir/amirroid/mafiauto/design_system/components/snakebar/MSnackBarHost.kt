@@ -32,9 +32,7 @@ fun MSnackBarHost(
             Box(modifier = Modifier.hazeSource(hazeState)) { content.invoke() }
             snacks.forEach { snackBar ->
                 key(snackBar.key) {
-                    var visible by remember {
-                        mutableStateOf(false)
-                    }
+                    var visible by remember { mutableStateOf(false) }
                     LaunchedEffect(snackBar.visible) {
                         visible = snackBar.visible
                     }

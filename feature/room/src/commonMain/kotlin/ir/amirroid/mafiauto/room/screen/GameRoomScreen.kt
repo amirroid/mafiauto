@@ -16,9 +16,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -38,9 +36,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import compose.icons.EvaIcons
-import compose.icons.evaicons.Fill
 import compose.icons.evaicons.Outline
-import compose.icons.evaicons.fill.ArrowIosForward
 import compose.icons.evaicons.outline.Minus
 import compose.icons.evaicons.outline.Plus
 import compose.icons.evaicons.outline.VolumeMute
@@ -50,7 +46,6 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
 import ir.amirroid.mafiauto.common.compose.components.BackButton
-import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.extra.defaultVerticalContentPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.horizontalPadding
@@ -79,6 +74,7 @@ import ir.amirroid.mafiauto.room.dialogs.WinnerDialog
 import ir.amirroid.mafiauto.room.viewmodel.GameRoomViewModel
 import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
+import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -196,7 +192,7 @@ fun GameRoomScreen(
 @Composable
 fun VotingPhaseDialog(
     currentPhase: GamePhaseUiModel,
-    players: List<PlayerWithRoleUiModel>,
+    players: ImmutableList<PlayerWithRoleUiModel>,
     onStartDefending: (Map<PlayerWithRoleUiModel, Int>) -> Boolean,
     onSubmitDefense: (Map<PlayerWithRoleUiModel, Int>) -> Unit,
     onNextPhase: () -> Unit
@@ -229,7 +225,7 @@ fun VotingPhaseDialog(
 
 @Composable
 fun RoomPlayersList(
-    players: List<PlayerWithRoleUiModel>,
+    players: ImmutableList<PlayerWithRoleUiModel>,
     modifier: Modifier = Modifier,
     onPickPlayer: (PlayerWithRoleUiModel) -> Unit,
     contentPadding: PaddingValues = PaddingValues(),

@@ -1,13 +1,14 @@
 package ir.amirroid.mafiauto.final_debate.viewmodel
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ir.amirroid.mafiauto.common.app.utils.emptyImmutableList
 import ir.amirroid.mafiauto.domain.model.PlayerWithRole
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.HandleFinalTrustVotesUseCase
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.toUiModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,13 +23,14 @@ class FinalDebateViewModel(
 ) : ViewModel() {
     private var domainPlayers: List<PlayerWithRole>? = null
 
-    val players = getAllInRoomPlayersUseCase()
+    val inFinalDebatePlayerWithRoles = getAllInRoomPlayersUseCase()
+        .map { players -> players.filter { it.player.isInGame } }
         .onEach { domainPlayers = it }
-        .map { players -> players.map { it.toUiModel() } }
+        .map { players -> players.map { it.toUiModel() }.toImmutableList() }
         .stateIn(
             viewModelScope,
             SharingStarted.Eagerly,
-            emptyList()
+            emptyImmutableList()
         )
 
     private val _selectedPlayers =

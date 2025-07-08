@@ -7,11 +7,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import ir.amirroid.mafiauto.domain.usecase.player_role.GetPlayerWithRolesAndSaveUseCase
 import ir.amirroid.mafiauto.ui_models.player_with_role.toUiModel
+import kotlinx.collections.immutable.toImmutableList
 
 class RevealRolesViewModel(
     getPlayerWithRolesAndSaveUseCase: GetPlayerWithRolesAndSaveUseCase
 ) : ViewModel() {
-    val playerWithRoles = getPlayerWithRolesAndSaveUseCase().map { it.toUiModel() }
+    val playerWithRoles =
+        getPlayerWithRolesAndSaveUseCase().map { it.toUiModel() }.toImmutableList()
 
     var currentPlayerIndex by mutableIntStateOf(0)
     var showPlayersRole by mutableStateOf(true)

@@ -26,15 +26,13 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import compose.icons.EvaIcons
-import compose.icons.evaicons.Outline
-import compose.icons.evaicons.outline.ArrowIosForward
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
 import ir.amirroid.mafiauto.assign_roles.dialogs.RoleExplanationDialog
 import ir.amirroid.mafiauto.assign_roles.viewmodel.AssignRolesViewModel
+import ir.amirroid.mafiauto.common.app.utils.emptyImmutableList
 import ir.amirroid.mafiauto.common.compose.components.BackButton
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
@@ -51,6 +49,7 @@ import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.role.RoleUiModel
+import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -65,7 +64,7 @@ fun AssignRolesScreen(
     val hazeStyle = HazeMaterials.thin(AppTheme.colorScheme.surface)
     val collapsingAppBarState = rememberCollapsingAppBarState()
 
-    val selectedRoles by viewModel.selectedRoles.collectAsStateWithLifecycle(emptyList())
+    val selectedRoles by viewModel.selectedRoles.collectAsStateWithLifecycle(emptyImmutableList())
     val previewRole = viewModel.selectedRoleToPreviewExplanation
     val enabledNextPage = remember(selectedRoles) { viewModel.checkConditions() }
 
@@ -125,8 +124,8 @@ private fun AssignRolesTopBar(selectedCount: Int) {
 
 @Composable
 private fun RolesList(
-    roles: List<RoleUiModel>,
-    selectedRoles: List<RoleUiModel>,
+    roles: ImmutableList<RoleUiModel>,
+    selectedRoles: ImmutableList<RoleUiModel>,
     onToggle: (RoleUiModel) -> Unit,
     onShowPreview: (RoleUiModel) -> Unit,
     modifier: Modifier = Modifier,

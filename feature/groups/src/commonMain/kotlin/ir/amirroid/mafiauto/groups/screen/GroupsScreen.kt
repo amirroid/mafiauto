@@ -47,6 +47,7 @@ import ir.amirroid.mafiauto.groups.dialogs.AddNewGroupDialog
 import ir.amirroid.mafiauto.groups.viewmodel.GroupsViewModel
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.group.GroupWithPlayersUiModel
+import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -101,7 +102,7 @@ fun GroupsScreen(
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun GroupsList(
-    groupsWithPlayers: List<GroupWithPlayersUiModel>,
+    groupsWithPlayers: ImmutableList<GroupWithPlayersUiModel>,
     onSelect: (GroupWithPlayersUiModel) -> Unit,
     onDelete: (GroupWithPlayersUiModel) -> Unit,
     modifier: Modifier = Modifier,

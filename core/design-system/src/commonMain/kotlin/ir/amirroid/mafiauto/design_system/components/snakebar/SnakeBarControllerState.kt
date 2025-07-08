@@ -9,6 +9,8 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import ir.amirroid.mafiauto.common.app.utils.emptyImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
@@ -24,7 +26,7 @@ class SnakeBarControllerState(
     private val hapticFeedback: HapticFeedback,
     private val scope: CoroutineScope
 ) {
-    private val _snacks = MutableStateFlow(emptyList<SnackBarData>())
+    private val _snacks = MutableStateFlow(emptyImmutableList<SnackBarData>())
     internal val snacks = _snacks.asStateFlow()
 
     private var lastJob: Job? = null
@@ -58,15 +60,16 @@ class SnakeBarControllerState(
             delay(200)
         }
         _snacks.update { oldData ->
-            oldData + SnackBarData.Resource(
+            (oldData + SnackBarData.Resource(
                 text,
                 type,
                 formatArgs = formatArgs
-            )
+            )).toImmutableList()
         }
         delay(time)
         _snacks.value.forEach { it.visible = false }
     }
+
 
     fun show(
         text: String,
@@ -81,7 +84,12 @@ class SnakeBarControllerState(
             if (isAnySnakeBarVisible) {
                 delay(200)
             }
-            _snacks.update { oldData -> oldData + SnackBarData.Text(text, type) }
+            _snacks.update { oldData ->
+                (oldData + SnackBarData.Text(
+                    text,
+                    type
+                )).toImmutableList()
+            }
             delay(time)
             _snacks.value.forEach { it.visible = false }
         }
