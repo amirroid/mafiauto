@@ -37,12 +37,13 @@ import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.last_card.LastCardUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
+import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LastCardDialog(
-    cards: List<LastCardUiModel>,
-    players: List<PlayerWithRoleUiModel>,
+    cards: ImmutableList<LastCardUiModel>,
+    players: ImmutableList<PlayerWithRoleUiModel>,
     targetPlayerRole: PlayerWithRoleUiModel,
     onApply: (LastCardUiModel, List<PlayerWithRoleUiModel>) -> Unit
 ) {

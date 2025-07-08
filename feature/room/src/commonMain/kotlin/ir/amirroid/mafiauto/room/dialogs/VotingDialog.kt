@@ -32,12 +32,13 @@ import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.design_system.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
+import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun VotingDialog(
-    players: List<PlayerWithRoleUiModel>,
-    allPlayers: List<PlayerWithRoleUiModel>,
+    players: ImmutableList<PlayerWithRoleUiModel>,
+    allPlayers: ImmutableList<PlayerWithRoleUiModel>,
     totalVotes: Int,
     onSelectedPlayers: (Map<PlayerWithRoleUiModel, Int>) -> Boolean,
     onDismissRequest: () -> Unit

@@ -3,6 +3,7 @@ package ir.amirroid.mafiauto.night.viewmodel
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ir.amirroid.mafiauto.common.app.utils.emptyImmutableList
 import ir.amirroid.mafiauto.domain.model.Alignment
 import ir.amirroid.mafiauto.domain.model.InstantAction
 import ir.amirroid.mafiauto.domain.model.NightActionDescriptor
@@ -19,6 +20,8 @@ import ir.amirroid.mafiauto.ui_models.phase.GamePhaseUiModel
 import ir.amirroid.mafiauto.ui_models.phase.toUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import ir.amirroid.mafiauto.ui_models.role.RoleUiModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -42,13 +45,13 @@ class NightActionsViewModel(
         .stateIn(
             viewModelScope,
             SharingStarted.Eagerly,
-            GamePhaseUiModel.Night(options = emptyList())
+            GamePhaseUiModel.Night(options = emptyImmutableList())
         )
 
     private var domainPlayers: List<PlayerWithRole>? = null
 
     private val _selectedPlayers =
-        MutableStateFlow(emptyMap<PlayerWithRoleUiModel, List<PlayerWithRoleUiModel>>())
+        MutableStateFlow(emptyMap<PlayerWithRoleUiModel, ImmutableList<PlayerWithRoleUiModel>>())
     val selectedPlayers = _selectedPlayers.asStateFlow()
 
     val disableActionKeysSelections = mutableStateListOf<String>()
@@ -62,9 +65,13 @@ class NightActionsViewModel(
             it.toMutableMap().apply {
                 val playerTargets = get(player)
                 if (playerTargets?.contains(target) == true) {
-                    put(player, playerTargets.filter { p -> p.player.id != target.player.id })
+                    put(
+                        player,
+                        playerTargets.filter { p -> p.player.id != target.player.id }
+                            .toImmutableList()
+                    )
                 } else {
-                    put(player, (playerTargets ?: emptyList()) + target)
+                    put(player, ((playerTargets ?: emptyList()) + target).toImmutableList())
                 }
             }
         }

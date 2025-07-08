@@ -5,11 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ir.amirroid.mafiauto.common.app.utils.emptyImmutableList
 import ir.amirroid.mafiauto.domain.usecase.groups.AddNewGroupUseCase
 import ir.amirroid.mafiauto.domain.usecase.groups.DeleteGroupUseCase
 import ir.amirroid.mafiauto.domain.usecase.groups.GetAllGroupsUseCase
 import ir.amirroid.mafiauto.ui_models.group.GroupWithPlayersUiModel
 import ir.amirroid.mafiauto.ui_models.group.toUiModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -23,11 +25,11 @@ class GroupsViewModel(
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     val groups = getAllGroupsUseCase()
-        .map { groupWithPlayers -> groupWithPlayers.map { it.toUiModel() } }
+        .map { groupWithPlayers -> groupWithPlayers.map { it.toUiModel() }.toImmutableList() }
         .stateIn(
             viewModelScope,
             SharingStarted.Eagerly,
-            emptyList()
+            emptyImmutableList()
         )
 
     var visibleAddNewGroup by mutableStateOf(false)

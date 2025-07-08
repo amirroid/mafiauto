@@ -12,6 +12,7 @@ import ir.amirroid.mafiauto.domain.usecase.player.SelectNewPlayersUseCase
 import ir.amirroid.mafiauto.intro.state.LobbyScreenState
 import ir.amirroid.mafiauto.ui_models.player.PlayerUiModel
 import ir.amirroid.mafiauto.ui_models.player.toUiModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,9 +46,11 @@ class LobbyViewModel(
             val playerDomainsIds = playerDomains.map { it.id }
             val playerUiModels = players.toUiModels()
             _state.update {
+                val newSelectedPlayers =
+                    it.selectedPlayers + playerUiModels.filter { player -> player.id !in playerDomainsIds }
                 it.copy(
-                    players = playerUiModels,
-                    selectedPlayers = it.selectedPlayers + playerUiModels.filter { player -> player.id !in playerDomainsIds }
+                    players = playerUiModels.toImmutableList(),
+                    selectedPlayers = newSelectedPlayers.toImmutableList()
                 )
             }
             playerDomains = players
@@ -59,7 +62,7 @@ class LobbyViewModel(
             val updatedSelection = current.selectedPlayers.toMutableSet().apply {
                 if (!add(player)) remove(player)
             }.toList()
-            current.copy(selectedPlayers = updatedSelection)
+            current.copy(selectedPlayers = updatedSelection.toImmutableList())
         }
     }
 
@@ -81,7 +84,7 @@ class LobbyViewModel(
             val updatedSelection = current.selectedPlayers.toMutableSet().apply {
                 if (contains(player)) remove(player)
             }.toList()
-            current.copy(selectedPlayers = updatedSelection)
+            current.copy(selectedPlayers = updatedSelection.toImmutableList())
         }
     }
 

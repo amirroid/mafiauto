@@ -28,6 +28,7 @@ import ir.amirroid.mafiauto.ui_models.last_card.toUiModel
 import ir.amirroid.mafiauto.ui_models.phase.toUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.toUiModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -95,7 +96,7 @@ class GameRoomViewModel(
         getAllLastCardsUseCase().collect { cards ->
             domainLastCards = cards
             _state.update {
-                it.copy(lastCards = cards.map { card -> card.toUiModel() })
+                it.copy(lastCards = cards.map { card -> card.toUiModel() }.toImmutableList())
             }
         }
     }
@@ -104,7 +105,7 @@ class GameRoomViewModel(
         getAllInRoomPlayersUseCase().collect { players ->
             domainPlayers = players
             _state.update {
-                it.copy(players = players.map { player -> player.toUiModel() })
+                it.copy(players = players.map { player -> player.toUiModel() }.toImmutableList())
             }
         }
     }
