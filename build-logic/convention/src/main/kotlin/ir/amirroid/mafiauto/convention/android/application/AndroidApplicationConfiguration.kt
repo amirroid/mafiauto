@@ -23,6 +23,7 @@ internal fun Project.configureAndroidApplicationPlugins(
             versionName = rootProject.version.toString()
             versionCode = 2
             targetSdk = "targetSdk".versionInt()
+            setProperty("archivesBaseName", "${rootProject.name}-v$versionName")
         }
 
         configureSigningIfAvailable(this)
