@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.AppTheme
 
 object TextFieldsDefaults {
     val minHeight = 48.dp

@@ -1,27 +1,29 @@
-package ir.amirroid.mafiauto.design_system.theme
+package ir.amirroid.mafiauto.theme.theme
 
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
-import ir.amirroid.mafiauto.design_system.core.PressScaleIndication
-import ir.amirroid.mafiauto.design_system.core.LocalColorScheme
-import ir.amirroid.mafiauto.design_system.core.LocalShapes
-import ir.amirroid.mafiauto.design_system.core.LocalTypography
-import ir.amirroid.mafiauto.design_system.core.copyFontFamily
-import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
-import ir.amirroid.mafiauto.design_system.locales.LocalTextStyle
-import ir.amirroid.mafiauto.design_system.locales.WithHazeContent
+import ir.amirroid.mafiauto.theme.core.PressScaleIndication
+import ir.amirroid.mafiauto.theme.core.LocalColorScheme
+import ir.amirroid.mafiauto.theme.core.LocalShapes
+import ir.amirroid.mafiauto.theme.core.LocalTypography
+import ir.amirroid.mafiauto.theme.core.copyFontFamily
+import ir.amirroid.mafiauto.theme.locales.LocalContentColor
+import ir.amirroid.mafiauto.theme.locales.LocalTextStyle
+import ir.amirroid.mafiauto.theme.utils.WithHazeContent
 
 @Composable
 fun MafiautoTheme(
+    theme: AppThemeUiModel?,
     content: @Composable () -> Unit
 ) {
     val direction = LocalLayoutDirection.current
     val fonts = if (direction == LayoutDirection.Rtl) VazirFontFamily else SFFontFamily
     val typography = AppTypography.copyFontFamily(fonts)
-    val colorScheme = NeonRedColorScheme
+    val colorScheme = theme?.scheme ?: NeonRedColorScheme
     WithHazeContent {
         CompositionLocalProvider(
             LocalColorScheme provides colorScheme,

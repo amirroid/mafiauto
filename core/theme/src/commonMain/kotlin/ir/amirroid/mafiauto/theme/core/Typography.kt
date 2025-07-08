@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.design_system.core
+package ir.amirroid.mafiauto.theme.core
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf

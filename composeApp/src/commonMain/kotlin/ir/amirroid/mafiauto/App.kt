@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.amirroid.mafiauto.common.compose.utils.LocaleUtils
 import ir.amirroid.mafiauto.design_system.components.snakebar.MSnackBarHost
-import ir.amirroid.mafiauto.design_system.theme.MafiautoTheme
+import ir.amirroid.mafiauto.theme.theme.MafiautoTheme
 import ir.amirroid.mafiauto.navigation.MainNavigation
 import ir.amirroid.mafiauto.ui_models.settings.SettingsUiModel
 import org.koin.compose.viewmodel.koinViewModel
@@ -22,7 +22,7 @@ fun App() {
     val configuration by viewModel.settingsConfiguration.collectAsStateWithLifecycle()
 
     HandleAppLanguage(configuration) {
-        MafiautoTheme {
+        MafiautoTheme(theme = configuration?.theme) {
             MSnackBarHost {
                 MainNavigation()
             }

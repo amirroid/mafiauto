@@ -47,7 +47,7 @@ import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.list.selectable.MToggleListItem
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.final_debate.viewmodel.FinalDebateViewModel
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel

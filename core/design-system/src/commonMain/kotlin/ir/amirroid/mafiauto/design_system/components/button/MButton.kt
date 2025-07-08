@@ -20,8 +20,8 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import ir.amirroid.mafiauto.design_system.components.surface.MSurface
-import ir.amirroid.mafiauto.design_system.core.AppTheme
-import ir.amirroid.mafiauto.design_system.locales.LocalTextStyle
+import ir.amirroid.mafiauto.theme.core.AppTheme
+import ir.amirroid.mafiauto.theme.locales.LocalTextStyle
 
 @Composable
 fun MButton(

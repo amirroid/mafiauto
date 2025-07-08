@@ -22,7 +22,7 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeEffect
-import ir.amirroid.mafiauto.design_system.locales.LocalHazeState
+import ir.amirroid.mafiauto.theme.core.LocalHazeState
 
 @Composable
 fun BaseBlurredPopup(

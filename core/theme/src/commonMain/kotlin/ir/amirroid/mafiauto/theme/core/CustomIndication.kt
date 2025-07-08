@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.design_system.core
+package ir.amirroid.mafiauto.theme.core
 
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animate

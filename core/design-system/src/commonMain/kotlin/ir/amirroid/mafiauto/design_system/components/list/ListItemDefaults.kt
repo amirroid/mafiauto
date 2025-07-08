@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import ir.amirroid.mafiauto.design_system.components.list.base.ListItemColors
 import ir.amirroid.mafiauto.design_system.components.list.selectable.ToggleListItemColors
-import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.AppTheme
 
 object ListItemDefaults {
     val defaultBorderWidth = 1.5.dp

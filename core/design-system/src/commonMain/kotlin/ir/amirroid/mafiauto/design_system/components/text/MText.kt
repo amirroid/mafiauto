@@ -15,8 +15,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
-import ir.amirroid.mafiauto.design_system.locales.LocalTextStyle
+import ir.amirroid.mafiauto.theme.locales.LocalContentColor
+import ir.amirroid.mafiauto.theme.locales.LocalTextStyle
 
 @Composable
 fun MText(

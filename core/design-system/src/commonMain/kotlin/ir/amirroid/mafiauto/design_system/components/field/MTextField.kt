@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.Dp
 import ir.amirroid.mafiauto.design_system.components.surface.MSurface
-import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
-import ir.amirroid.mafiauto.design_system.locales.LocalTextStyle
+import ir.amirroid.mafiauto.theme.locales.LocalContentColor
+import ir.amirroid.mafiauto.theme.locales.LocalTextStyle
 
 @Composable
 fun MTextField(

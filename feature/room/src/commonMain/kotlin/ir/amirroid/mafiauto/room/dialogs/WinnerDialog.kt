@@ -1,6 +1,5 @@
 package ir.amirroid.mafiauto.room.dialogs
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +22,7 @@ import io.github.vinceglb.confettikit.core.emitter.Emitter
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.popup.BaseBlurredPopup
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.domain.model.Alignment
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.getRelatedStringResource

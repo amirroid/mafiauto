@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocal
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -19,14 +18,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.mikepenz.aboutlibraries.ui.compose.rememberLibraries
-import com.mikepenz.aboutlibraries.ui.compose.util.strippedLicenseContent
 import ir.amirroid.mafiauto.common.compose.components.BackButton
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.operators.plus
 import ir.amirroid.mafiauto.design_system.components.appbar.CollapsingTopAppBarScaffold
 import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
 import org.jetbrains.compose.resources.stringResource
 

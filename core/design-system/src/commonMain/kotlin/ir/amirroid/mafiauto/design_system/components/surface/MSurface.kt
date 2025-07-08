@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import ir.amirroid.mafiauto.design_system.core.AppTheme
-import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
+import ir.amirroid.mafiauto.theme.core.AppTheme
+import ir.amirroid.mafiauto.theme.locales.LocalContentColor
 
 @Composable
 fun MSurface(

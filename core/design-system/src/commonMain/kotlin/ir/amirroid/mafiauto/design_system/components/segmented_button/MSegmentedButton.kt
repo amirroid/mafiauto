@@ -18,8 +18,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import ir.amirroid.mafiauto.design_system.components.button.ButtonDefaults
 import ir.amirroid.mafiauto.design_system.components.surface.MSurface
-import ir.amirroid.mafiauto.design_system.core.AppTheme
-import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
+import ir.amirroid.mafiauto.theme.core.AppTheme
+import ir.amirroid.mafiauto.theme.locales.LocalContentColor
 
 @Composable
 fun <T> MSegmentedButton(

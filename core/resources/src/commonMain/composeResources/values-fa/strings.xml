@@ -66,8 +66,15 @@
     <string name="view_source">مشاهدهٔ سورس در گیت‌هاب</string>
     <string name="open_source_libraries">کتابخانه‌های متن‌باز</string>
     <string name="version">نسخه: %1$s</string>
+    <string name="theme">تم</string>
 
     <string name="neutral">مستقل</string>
+
+
+    // Themes
+    <string name="green">سبز</string>
+    <string name="red">قرمز</string>
+    <string name="blue">آبی</string>
 
     <string name="god_father">پدرخوانده</string>
     <string name="mafia">مافیا</string>

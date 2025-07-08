@@ -54,7 +54,7 @@ import ir.amirroid.mafiauto.design_system.components.button.MOutlinedButton
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.surface.MSurface
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.reveal.viewmodel.RevealRolesViewModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel

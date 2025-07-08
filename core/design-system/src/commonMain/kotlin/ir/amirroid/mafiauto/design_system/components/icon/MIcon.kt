@@ -19,7 +19,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
+import ir.amirroid.mafiauto.theme.locales.LocalContentColor
 
 @Composable
 fun MIcon(
