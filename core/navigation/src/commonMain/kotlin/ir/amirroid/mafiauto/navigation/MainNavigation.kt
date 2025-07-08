@@ -22,6 +22,7 @@ import ir.amirroid.mafiauto.intro.screen.IntroScreen
 import ir.amirroid.mafiauto.intro.screen.LobbyScreen
 import ir.amirroid.mafiauto.libraries.screen.LibrariesScreen
 import ir.amirroid.mafiauto.navigation.utils.Screen
+import ir.amirroid.mafiauto.navigation.utils.navigateIfNotCurrent
 import ir.amirroid.mafiauto.night.screen.NightActionsScreen
 import ir.amirroid.mafiauto.reveal.screen.RevealRolesScreen
 import ir.amirroid.mafiauto.room.screen.GameRoomScreen
@@ -55,8 +56,8 @@ fun MainNavigation() {
             ) {
                 composable<Screen.Intro> {
                     IntroScreen(
-                        onStartGame = { navController.navigate(Screen.Groups) },
-                        onSettingsClick = { navController.navigate(Screen.Settings) }
+                        onStartGame = { navController.navigateIfNotCurrent(Screen.Groups) },
+                        onSettingsClick = { navController.navigateIfNotCurrent(Screen.Settings) }
                     )
                 }
                 composable<Screen.Groups> {
@@ -64,7 +65,12 @@ fun MainNavigation() {
                         onBack = navController::navigateUp,
                         animatedContentScope = this,
                         onSelectGroup = { id, name ->
-                            navController.navigate(Screen.Lobby(groupId = id, groupName = name))
+                            navController.navigateIfNotCurrent(
+                                Screen.Lobby(
+                                    groupId = id,
+                                    groupName = name
+                                )
+                            )
                         }
                     )
                 }
@@ -79,21 +85,21 @@ fun MainNavigation() {
                         LobbyScreen(
                             groupName = it.toRoute<Screen.Lobby>().groupName,
                             onBack = navController::navigateUp,
-                            onPickPlayers = { navController.navigate(Screen.AssignRoles) }
+                            onPickPlayers = { navController.navigateIfNotCurrent(Screen.AssignRoles) }
                         )
                     }
                 }
                 composable<Screen.AssignRoles> {
                     AssignRolesScreen(
                         onBack = navController::navigateUp,
-                        onPickRoles = { navController.navigate(Screen.RevealRoles) }
+                        onPickRoles = { navController.navigateIfNotCurrent(Screen.RevealRoles) }
                     )
                 }
                 composable<Screen.RevealRoles> {
                     RevealRolesScreen(
                         onBack = navController::navigateUp,
                         onStartGame = {
-                            navController.navigate(Screen.GameRoom) {
+                            navController.navigateIfNotCurrent(Screen.GameRoom) {
                                 popUpTo(Screen.Groups::class) {
                                     inclusive = false
                                 }
@@ -104,8 +110,8 @@ fun MainNavigation() {
                 composable<Screen.GameRoom> {
                     GameRoomScreen(
                         onBack = navController::navigateUp,
-                        onNight = { navController.navigate(Screen.NightActions) },
-                        onFinalDebate = { navController.navigate(Screen.FinalDebate) }
+                        onNight = { navController.navigateIfNotCurrent(Screen.NightActions) },
+                        onFinalDebate = { navController.navigateIfNotCurrent(Screen.FinalDebate) }
                     )
                 }
                 composable<Screen.NightActions> {
@@ -121,7 +127,7 @@ fun MainNavigation() {
                 composable<Screen.Settings> {
                     SettingsScreen(
                         onBack = navController::navigateUp,
-                        onOpenLibraries = { navController.navigate(Screen.Libraries) }
+                        onOpenLibraries = { navController.navigateIfNotCurrent(Screen.Libraries) }
                     )
                 }
                 composable<Screen.Libraries> {
