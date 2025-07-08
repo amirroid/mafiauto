@@ -90,6 +90,7 @@ fun NightActionsScreen(
     val options = nightPhase.options
     val selectedPlayers by viewModel.selectedPlayers.collectAsStateWithLifecycle()
     val disablePlayerIdSelections = viewModel.disableActionKeysSelections
+    val enabledNextButton = viewModel.enabledNextButton
 
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState { nightPhase.options.size }
@@ -127,7 +128,7 @@ fun NightActionsScreen(
             selectedPlayers[currentPlayerRole]?.size == currentPlayerRole.role.nightActionRequiredPicks ||
                     currentPlayerOptions.canUseAbilityToNight.not() || currentPlayerRole.role.isOptionalAbility
         BottomBar(
-            enabledNext = nextEnabled,
+            enabledNext = nextEnabled && enabledNextButton,
             enabledPreviews = pagerState.currentPage > 0,
             onNext = {
                 scope.launch {
@@ -175,18 +176,22 @@ suspend fun performInstantActionForCurrentPage(
 ) {
     val playerOption = options.getOrNull(page) ?: return
     playerOption.player.role.instantAction?.let { action ->
-        viewModel.handleInstantAction(
-            action = action,
-            playerOptions = playerOption,
-            selectedPlayerRoles = selectedPlayers?.get(playerOption.player),
-            onShowSnakeBar = { message, args ->
-                snakeBarController.showAndWait(
-                    text = message,
-                    type = SnackBaType.INFO,
-                    formatArgs = args
-                )
-            },
-        )
+        viewModel.apply {
+            enabledNextButton = false
+            handleInstantAction(
+                action = action,
+                playerOptions = playerOption,
+                selectedPlayerRoles = selectedPlayers?.get(playerOption.player),
+                onShowSnakeBar = { message, args ->
+                    snakeBarController.showAndWait(
+                        text = message,
+                        type = SnackBaType.INFO,
+                        formatArgs = args
+                    )
+                },
+            )
+            enabledNextButton = true
+        }
     }
 }
 
