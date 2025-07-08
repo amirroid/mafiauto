@@ -52,7 +52,6 @@ fun MainNavigation() {
                 popExitTransition = {
                     slideOutOfContainer(SlideDirection.Right)
                 }
-
             ) {
                 composable<Screen.Intro> {
                     IntroScreen(

@@ -15,7 +15,28 @@ so players can focus on the game itself.
 - Win detection and smooth transitions
 - Friendly and clean UI
 
-![Screenshots](assets/screenshots.png)
+<p align="center">
+  <img src="assets/ss_01.png" width="22%" style="margin: 1%;" />
+  <img src="assets/ss_02.png" width="22%" style="margin: 1%;" />
+  <img src="assets/ss_03.png" width="22%" style="margin: 1%;" />
+  <img src="assets/ss_04.png" width="22%" style="margin: 1%;" />
+</p>
+<p align="center">
+  <img src="assets/ss_05.png" width="22%" style="margin: 1%;" />
+  <img src="assets/ss_06.png" width="22%" style="margin: 1%;" />
+  <img src="assets/ss_07.png" width="22%" style="margin: 1%;" />
+  <img src="assets/ss_08.png" width="22%" style="margin: 1%;" />
+</p>
+<p align="center">
+  <img src="assets/ss_09.png" width="22%" style="margin: 1%;" />
+  <img src="assets/ss_10.png" width="22%" style="margin: 1%;" />
+  <img src="assets/ss_11.png" width="22%" style="margin: 1%;" />
+  <img src="assets/ss_12.png" width="22%" style="margin: 1%;" />
+</p>
+<p align="center">
+  <img src="assets/ss_13.png" width="22%" style="margin: 1%;" />
+  <img src="assets/ss_14.png" width="22%" style="margin: 1%;" />
+</p>
 
 ## 📥 Download
 
