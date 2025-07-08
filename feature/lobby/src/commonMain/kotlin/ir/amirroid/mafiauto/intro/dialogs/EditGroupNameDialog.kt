@@ -15,7 +15,7 @@ import ir.amirroid.mafiauto.design_system.components.dialog.MDialog
 import ir.amirroid.mafiauto.design_system.components.field.MTextField
 import ir.amirroid.mafiauto.design_system.components.field.TextFieldsDefaults
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
 import org.jetbrains.compose.resources.stringResource
 

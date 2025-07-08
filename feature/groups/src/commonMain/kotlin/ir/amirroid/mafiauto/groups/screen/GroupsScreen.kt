@@ -42,7 +42,7 @@ import ir.amirroid.mafiauto.design_system.components.button.MFloatingActionButto
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.surface.MSurface
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.groups.dialogs.AddNewGroupDialog
 import ir.amirroid.mafiauto.groups.viewmodel.GroupsViewModel
 import ir.amirroid.mafiauto.resources.Resources

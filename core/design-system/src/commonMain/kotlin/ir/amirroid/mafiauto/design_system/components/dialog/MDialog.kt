@@ -12,7 +12,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import ir.amirroid.mafiauto.design_system.components.popup.BaseBlurredPopup
 import ir.amirroid.mafiauto.design_system.components.surface.MSurface
-import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.AppTheme
 
 @Composable
 fun MDialog(

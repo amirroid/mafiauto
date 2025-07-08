@@ -1,14 +1,22 @@
 package ir.amirroid.mafiauto.settings.screen
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -20,9 +28,10 @@ import ir.amirroid.mafiauto.design_system.components.appbar.CollapsingTopAppBarS
 import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 import ir.amirroid.mafiauto.design_system.components.segmented_button.MSegmentedButton
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.settings.viewmodel.SettingsViewModel
+import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
 import ir.amirroid.mafiauto.ui_models.settings.Language
 import ir.amirroid.mafiauto.ui_models.settings.SettingsUiModel
 import org.jetbrains.compose.resources.stringResource
@@ -43,6 +52,7 @@ fun SettingsScreen(
         SettingsConfiguration(
             configuration = configuration,
             onSelectLanguage = { viewModel.updateConfigurations(configuration.copy(language = it)) },
+            onSelectTheme = { viewModel.updateConfigurations(configuration.copy(theme = it)) },
             onOpenLibraries = onOpenLibraries,
             contentPadding = paddingValues + defaultContentPadding()
         )
@@ -54,6 +64,7 @@ fun SettingsScreen(
 fun SettingsConfiguration(
     configuration: SettingsUiModel,
     onSelectLanguage: (Language) -> Unit,
+    onSelectTheme: (AppThemeUiModel) -> Unit,
     onOpenLibraries: () -> Unit,
     contentPadding: PaddingValues = PaddingValues()
 ) {
@@ -71,6 +82,31 @@ fun SettingsConfiguration(
                     MText(
                         stringResource(language.displayName),
                     )
+                }
+            }
+        }
+        item("theme") {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                MText(stringResource(Resources.strings.theme))
+                MSegmentedButton(
+                    items = AppThemeUiModel.entries,
+                    onClick = onSelectTheme,
+                    selectedItem = configuration.theme,
+                    modifier = Modifier.fillMaxWidth()
+                ) { theme ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Box(
+                            Modifier.border(
+                                1.dp,
+                                AppTheme.colorScheme.background,
+                                shape = CircleShape
+                            ).clip(CircleShape).size(16.dp).background(theme.scheme.primary)
+                        )
+                        MText(stringResource(theme.displayName))
+                    }
                 }
             }
         }

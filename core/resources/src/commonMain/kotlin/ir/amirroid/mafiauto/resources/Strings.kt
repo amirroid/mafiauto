@@ -66,6 +66,12 @@ object Strings {
     val viewSource = Res.string.view_source
     val openSourceLibraries = Res.string.open_source_libraries
     val version = Res.string.version
+    val theme = Res.string.theme
+
+    // Themes
+    val green = Res.string.green
+    val red = Res.string.red
+    val blue = Res.string.blue
 
 
     // Roles

@@ -6,7 +6,12 @@ enum class Language {
     ENGLISH, PERSIAN
 }
 
+enum class Theme {
+    RED, GREEN, BLUE
+}
+
 @Serializable
 data class SettingsConfig(
-    val language: Language
+    val language: Language,
+    val theme: Theme
 )

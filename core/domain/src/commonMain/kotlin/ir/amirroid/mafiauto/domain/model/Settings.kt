@@ -9,15 +9,21 @@ enum class Language(
     ENGLISH("en"), PERSIAN("fa")
 }
 
+enum class Theme {
+    RED, GREEN, BLUE
+}
+
 data class Settings(
-    val language: Language
+    val language: Language,
+    val theme: Theme
 ) {
     companion object {
         val defaultSettings by lazy {
             val currentLanguage = LocaleUtils.getDefaultLanguage()
             Settings(
                 language = Language.entries.find { it.languageCode == currentLanguage }
-                    ?: Language.ENGLISH
+                    ?: Language.ENGLISH,
+                theme = Theme.RED
             )
         }
     }

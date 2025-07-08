@@ -32,6 +32,7 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
+include(":core:theme")
 include(":core:design-system")
 include(":core:resources")
 include(":core:navigation")

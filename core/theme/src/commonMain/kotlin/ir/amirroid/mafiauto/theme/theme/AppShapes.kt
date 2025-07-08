@@ -1,10 +1,10 @@
-package ir.amirroid.mafiauto.design_system.theme
+package ir.amirroid.mafiauto.theme.theme
 
 import androidx.compose.ui.unit.dp
-import ir.amirroid.mafiauto.design_system.core.Shapes
-import ir.amirroid.mafiauto.design_system.utils.CutRoundedCornerShape
+import ir.amirroid.mafiauto.theme.core.Shapes
+import ir.amirroid.mafiauto.theme.utils.CutRoundedCornerShape
 
-val AppShapes = Shapes(
+internal val AppShapes = Shapes(
     small = CutRoundedCornerShape(
         topStart = 4.dp,
         bottomEnd = 4.dp,

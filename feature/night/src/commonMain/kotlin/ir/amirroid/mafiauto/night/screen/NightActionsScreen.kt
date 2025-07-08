@@ -65,7 +65,7 @@ import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarContr
 import ir.amirroid.mafiauto.design_system.components.snakebar.SnackBaType
 import ir.amirroid.mafiauto.design_system.components.snakebar.SnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.night.viewmodel.NightActionsViewModel
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.night_target_otpions.NightTargetOptionsUiModel

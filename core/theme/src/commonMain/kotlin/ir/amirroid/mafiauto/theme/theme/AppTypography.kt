@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.design_system.theme
+package ir.amirroid.mafiauto.theme.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
@@ -6,11 +6,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import ir.amirroid.mafiauto.design_system.core.Typography
+import ir.amirroid.mafiauto.theme.core.Typography
 import ir.amirroid.mafiauto.resources.Resources
 import org.jetbrains.compose.resources.Font
 
-val SFFontFamily: FontFamily
+internal val SFFontFamily: FontFamily
     @Composable
     get() = FontFamily(
         Font(Resources.fonts.sfBold, weight = FontWeight.Bold),
@@ -19,7 +19,7 @@ val SFFontFamily: FontFamily
         Font(Resources.fonts.sfNormal)
     )
 
-val VazirFontFamily: FontFamily
+internal val VazirFontFamily: FontFamily
     @Composable
     get() = FontFamily(
         Font(Resources.fonts.vazirBold, weight = FontWeight.Bold),
@@ -28,7 +28,7 @@ val VazirFontFamily: FontFamily
         Font(Resources.fonts.vazir)
     )
 
-val AppTypography = Typography(
+internal val AppTypography = Typography(
     h1 = TextStyle(
         fontSize = 28.sp,
         fontWeight = FontWeight.Bold,

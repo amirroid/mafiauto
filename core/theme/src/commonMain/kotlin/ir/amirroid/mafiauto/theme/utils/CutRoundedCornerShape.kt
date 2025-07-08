@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.design_system.utils
+package ir.amirroid.mafiauto.theme.utils
 
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.CornerSize

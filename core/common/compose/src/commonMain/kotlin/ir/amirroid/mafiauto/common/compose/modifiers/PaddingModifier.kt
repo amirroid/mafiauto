@@ -2,8 +2,7 @@ package ir.amirroid.mafiauto.common.compose.modifiers
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import ir.amirroid.mafiauto.design_system.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.AppTheme
 
 private val horizontalPadding = AppTheme.horizontalPadding
 private val verticalPadding = AppTheme.verticalPadding

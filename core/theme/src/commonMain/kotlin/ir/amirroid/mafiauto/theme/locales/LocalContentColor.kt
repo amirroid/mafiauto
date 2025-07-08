@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.design_system.locales
+package ir.amirroid.mafiauto.theme.locales
 
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color

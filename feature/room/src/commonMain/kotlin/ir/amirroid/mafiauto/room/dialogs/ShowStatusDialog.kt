@@ -17,9 +17,9 @@ import androidx.compose.ui.unit.dp
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.dialog.MDialog
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.design_system.core.AppTheme
-import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
-import ir.amirroid.mafiauto.design_system.locales.LocalTextStyle
+import ir.amirroid.mafiauto.theme.core.AppTheme
+import ir.amirroid.mafiauto.theme.locales.LocalContentColor
+import ir.amirroid.mafiauto.theme.locales.LocalTextStyle
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import org.jetbrains.compose.resources.stringResource

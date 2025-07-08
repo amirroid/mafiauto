@@ -1,9 +1,8 @@
-package ir.amirroid.mafiauto.design_system.core
+package ir.amirroid.mafiauto.theme.core
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.graphics.Shape
-import ir.amirroid.mafiauto.design_system.utils.CutRoundedCornerShape
+import ir.amirroid.mafiauto.theme.utils.CutRoundedCornerShape
 
 @Immutable
 data class Shapes(

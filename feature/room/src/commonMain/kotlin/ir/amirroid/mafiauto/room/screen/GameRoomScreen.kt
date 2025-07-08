@@ -61,8 +61,8 @@ import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.snakebar.SnackBaType
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.design_system.core.AppTheme
-import ir.amirroid.mafiauto.design_system.locales.LocalContentColor
+import ir.amirroid.mafiauto.theme.core.AppTheme
+import ir.amirroid.mafiauto.theme.locales.LocalContentColor
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.room.dialogs.FateDialog
 import ir.amirroid.mafiauto.room.dialogs.LastCardDialog
