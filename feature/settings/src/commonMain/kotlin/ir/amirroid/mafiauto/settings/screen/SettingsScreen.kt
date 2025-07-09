@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.settings.screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,17 +22,25 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ir.amirroid.mafiauto.common.app.response.Response
+import ir.amirroid.mafiauto.common.app.response.onError
+import ir.amirroid.mafiauto.common.app.response.onSuccess
 import ir.amirroid.mafiauto.common.app.utils.AppInfo
 import ir.amirroid.mafiauto.common.compose.components.BackButton
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.operators.plus
 import ir.amirroid.mafiauto.design_system.components.appbar.CollapsingTopAppBarScaffold
+import ir.amirroid.mafiauto.design_system.components.dialog.MDialog
 import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
+import ir.amirroid.mafiauto.design_system.components.loading.MLoading
 import ir.amirroid.mafiauto.design_system.components.segmented_button.MSegmentedButton
+import ir.amirroid.mafiauto.design_system.components.sheet.MBottomSheet
+import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.theme.core.AppTheme
+import ir.amirroid.mafiauto.markdown.MarkdownText
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.settings.viewmodel.SettingsViewModel
+import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
 import ir.amirroid.mafiauto.ui_models.settings.Language
 import ir.amirroid.mafiauto.ui_models.settings.SettingsUiModel
@@ -44,6 +54,14 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = koinViewModel()
 ) {
     val configuration by viewModel.settingsConfiguration.collectAsStateWithLifecycle()
+    val updateInfoResponse by viewModel.updateInfo.collectAsStateWithLifecycle()
+    val snakeBarController = LocalSnakeBarControllerState.current
+    LaunchedEffect(updateInfoResponse) {
+        updateInfoResponse.onError {
+            snakeBarController.show(it.message)
+            viewModel.clearUpdateInfoResponse()
+        }
+    }
 
     CollapsingTopAppBarScaffold(
         title = { MText(stringResource(Resources.strings.settings)) },
@@ -54,8 +72,16 @@ fun SettingsScreen(
             onSelectLanguage = { viewModel.updateConfigurations(configuration.copy(language = it)) },
             onSelectTheme = { viewModel.updateConfigurations(configuration.copy(theme = it)) },
             onOpenLibraries = onOpenLibraries,
-            contentPadding = paddingValues + defaultContentPadding()
+            onCheckUpdate = viewModel::fetchUpdateInfo,
+            contentPadding = paddingValues + defaultContentPadding(),
+            fetchingUpdateInfo = updateInfoResponse is Response.Loading
         )
+    }
+
+    updateInfoResponse.onSuccess {
+        MBottomSheet(true, onDismissRequest = {}) {
+            MarkdownText(markdown = it.info.body)
+        }
     }
 }
 
@@ -65,7 +91,9 @@ fun SettingsConfiguration(
     configuration: SettingsUiModel,
     onSelectLanguage: (Language) -> Unit,
     onSelectTheme: (AppThemeUiModel) -> Unit,
+    onCheckUpdate: () -> Unit,
     onOpenLibraries: () -> Unit,
+    fetchingUpdateInfo: Boolean,
     contentPadding: PaddingValues = PaddingValues()
 ) {
     val uriHandler = LocalUriHandler.current
@@ -110,13 +138,31 @@ fun SettingsConfiguration(
                 }
             }
         }
+        item("updater") {
+            MListItem(
+                text = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        MText(stringResource(Resources.strings.checkForNewUpdate))
+                        AnimatedVisibility(fetchingUpdateInfo) {
+                            MLoading(size = 24.dp)
+                        }
+                    }
+                },
+                onClick = onCheckUpdate,
+                enabled = !fetchingUpdateInfo
+            )
+        }
         item("code") {
             MListItem(
                 text = {
                     MText(stringResource(Resources.strings.viewSource))
                 },
                 onClick = {
-                    uriHandler.openUri(AppInfo.githubPage)
+                    uriHandler.openUri(AppInfo.githubLink)
                 }
             )
         }

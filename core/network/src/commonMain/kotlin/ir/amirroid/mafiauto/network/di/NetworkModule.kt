@@ -5,9 +5,11 @@ import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
+import ir.amirroid.mafiauto.common.app.utils.AppInfo
 import ir.amirroid.mafiauto.network.*
 import ir.amirroid.mafiauto.network.client.createHttpClientProvider
 import kotlinx.serialization.json.Json
@@ -39,6 +41,7 @@ private fun HttpClientConfig<*>.configureTimeout() {
 private fun HttpClientConfig<*>.configureDefaultRequest() {
     defaultRequest {
         contentType(ContentType.Application.Json)
+        header("User-Agent", "${AppInfo.appName}/${AppInfo.version}")
     }
 }
 

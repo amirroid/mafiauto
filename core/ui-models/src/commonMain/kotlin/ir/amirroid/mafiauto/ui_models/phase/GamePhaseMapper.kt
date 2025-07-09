@@ -3,7 +3,7 @@ package ir.amirroid.mafiauto.ui_models.phase
 import ir.amirroid.mafiauto.domain.model.GamePhase
 import ir.amirroid.mafiauto.ui_models.night_target_otpions.toUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.toUiModel
-import ir.amirroid.mafiauto.ui_models.result.toUiModel
+import ir.amirroid.mafiauto.ui_models.night_action_result.toUiModel
 import kotlinx.collections.immutable.toImmutableList
 
 fun GamePhase.toUiModel() = when (this) {

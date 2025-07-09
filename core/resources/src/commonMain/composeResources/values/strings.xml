@@ -67,12 +67,17 @@
     <string name="open_source_libraries">Open source libraries</string>
     <string name="version">Version: %1$s</string>
     <string name="theme">Theme</string>
+    <string name="check_for_new_update">Check for new update</string>
 
     <string name="green">Green</string>
     <string name="red">Red</string>
     <string name="blue">Blue</string>
 
     <string name="neutral">Neutral</string>
+
+    <string name="network_error_default">A network error occurred. Please try again later.</string>
+    <string name="network_timeout">The request timed out. Check your connection and try again.</string>
+    <string name="error_unknown">An unknown error occurred.</string>
 
     <string name="god_father">Godfather</string>
     <string name="mafia">Mafia</string>
@@ -88,7 +93,6 @@
     <string name="mayor">Mayor</string>
     <string name="nostradamus">Nostradamus</string>
     <string name="surgeon">Surgeon</string>
-
 
     <string name="god_father_explanation">Each night, you select a player to eliminate. Your decision has higher priority than other Mafia members.</string>
     <string name="saul_goodman_explanation">If a Mafia dies, you can take their place. Once, you may convert a simple citizen into a Mafia member.</string>

@@ -4,6 +4,7 @@ import ir.amirroid.mafiauto.BuildKonfig
 
 @Suppress("ConstPropertyName")
 object AppInfo {
+    const val appName = "mafiauto"
     val version = BuildKonfig.APP_VERSION
-    const val githubPage = "https://github.com/amirroid/mafiauto"
+    const val githubLink = "https://github.com/amirroid/mafiauto"
 }

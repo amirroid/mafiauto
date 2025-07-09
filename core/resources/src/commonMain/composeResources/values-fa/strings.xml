@@ -70,11 +70,16 @@
 
     <string name="neutral">مستقل</string>
 
+    <string name="check_for_new_update">بررسی برای بروزرسانی جدید</string>
 
-    // Themes
     <string name="green">سبز</string>
     <string name="red">قرمز</string>
     <string name="blue">آبی</string>
+
+
+    <string name="network_error_default">خطایی در ارتباط با شبکه رخ داد. لطفاً بعداً دوباره تلاش کنید.</string>
+    <string name="network_timeout">درخواست شما به‌دلیل کندی یا قطعی اینترنت زمان‌بر شد. دوباره تلاش کنید.</string>
+    <string name="error_unknown">خطای ناشناخته‌ای رخ داده است.</string>
 
     <string name="god_father">پدرخوانده</string>
     <string name="mafia">مافیا</string>

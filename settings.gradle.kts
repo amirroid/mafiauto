@@ -47,6 +47,9 @@ include(":core:network")
 include(":core:common:compose")
 include(":core:common:app")
 
+
+include(":shared:markdown")
+
 include(":game:engine")
 
 include(":feature:intro")

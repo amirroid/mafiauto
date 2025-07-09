@@ -6,6 +6,7 @@ import ir.amirroid.mafiauto.domain.usecase.role.*
 import ir.amirroid.mafiauto.domain.usecase.player.*
 import ir.amirroid.mafiauto.domain.usecase.groups.*
 import ir.amirroid.mafiauto.domain.usecase.settings.*
+import ir.amirroid.mafiauto.domain.usecase.update.GetLatestUpdateInfoUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -46,4 +47,5 @@ val useCaseModule = module {
     factoryOf(::GetSettingsConfigurationUseCase)
     factoryOf(::EditGroupNameUseCase)
     factoryOf(::DeleteGroupUseCase)
+    factoryOf(::GetLatestUpdateInfoUseCase)
 }

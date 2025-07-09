@@ -29,6 +29,7 @@ fun BaseBlurredPopup(
     isVisible: Boolean,
     onDismissRequest: (() -> Unit)? = null,
     dismissOnBackPress: Boolean = true,
+    withScaleAnimation: Boolean = false,
     content: @Composable BoxScope.() -> Unit
 ) {
     if (LocalInspectionMode.current) {
@@ -82,7 +83,11 @@ fun BaseBlurredPopup(
                     Modifier
                         .fillMaxSize()
                         .alpha(percent.value)
-                        .scale(.6f + .4f * percent.value),
+                        .then(
+                            if (withScaleAnimation) Modifier
+                                .scale(.6f + .4f * percent.value)
+                            else Modifier
+                        ),
                     contentAlignment = Alignment.Center,
                     content = content
                 )

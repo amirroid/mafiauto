@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.ui_models.result
+package ir.amirroid.mafiauto.ui_models.night_action_result
 
 import androidx.compose.runtime.Immutable
 

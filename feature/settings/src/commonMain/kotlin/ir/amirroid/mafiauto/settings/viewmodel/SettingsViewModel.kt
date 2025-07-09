@@ -2,23 +2,38 @@ package ir.amirroid.mafiauto.settings.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ir.amirroid.mafiauto.common.app.response.Response
+import ir.amirroid.mafiauto.common.app.response.map
 import ir.amirroid.mafiauto.domain.model.Settings
 import ir.amirroid.mafiauto.domain.usecase.settings.GetSettingsConfigurationUseCase
 import ir.amirroid.mafiauto.domain.usecase.settings.SetSettingsConfigurationUseCase
+import ir.amirroid.mafiauto.domain.usecase.update.GetLatestUpdateInfoUseCase
+import ir.amirroid.mafiauto.ui_models.error.ErrorUiModel
+import ir.amirroid.mafiauto.ui_models.error.mapErrors
 import ir.amirroid.mafiauto.ui_models.settings.SettingsUiModel
 import ir.amirroid.mafiauto.ui_models.settings.toDomain
 import ir.amirroid.mafiauto.ui_models.settings.toUiModel
+import ir.amirroid.mafiauto.ui_models.update.UpdateInfoUiModel
+import ir.amirroid.mafiauto.ui_models.update.toUiModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
     getSettingsConfigurationUseCase: GetSettingsConfigurationUseCase,
     private val setSettingsConfigurationUseCase: SetSettingsConfigurationUseCase,
+    private val getLatestUpdateInfoUseCase: GetLatestUpdateInfoUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
+    private val _updateInfo =
+        MutableStateFlow<Response<UpdateInfoUiModel, ErrorUiModel>>(Response.Idle)
+    val updateInfo = _updateInfo.asStateFlow()
+
     val settingsConfiguration = getSettingsConfigurationUseCase()
         .map { it ?: Settings.defaultSettings }
         .map { it.toUiModel() }
@@ -28,4 +43,14 @@ class SettingsViewModel(
     fun updateConfigurations(newConfig: SettingsUiModel) = viewModelScope.launch(dispatcher) {
         setSettingsConfigurationUseCase(newConfig.toDomain())
     }
+
+    fun fetchUpdateInfo() = viewModelScope.launch(dispatcher) {
+        _updateInfo.update { Response.Loading }
+        val newResponse = getLatestUpdateInfoUseCase()
+            .map { it.toUiModel() }
+            .mapErrors()
+        _updateInfo.update { newResponse }
+    }
+
+    fun clearUpdateInfoResponse() = _updateInfo.update { Response.Idle }
 }

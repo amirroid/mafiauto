@@ -13,6 +13,7 @@ kotlin {
                 implementation(project(ProjectPaths.database))
                 implementation(project(ProjectPaths.domain))
                 implementation(project(ProjectPaths.preferences))
+                implementation(project(ProjectPaths.updateChcker))
             }
         }
     }

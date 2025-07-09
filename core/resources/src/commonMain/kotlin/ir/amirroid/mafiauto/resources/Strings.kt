@@ -67,6 +67,7 @@ object Strings {
     val openSourceLibraries = Res.string.open_source_libraries
     val version = Res.string.version
     val theme = Res.string.theme
+    val checkForNewUpdate = Res.string.check_for_new_update
 
     // Themes
     val green = Res.string.green
@@ -95,6 +96,11 @@ object Strings {
     val revivedCount = Res.string.revived_count
     val deathCount = Res.string.death_count
     val alignmentCount = Res.string.alignment_count
+
+    // Errors
+    val defaultNetworkError = Res.string.network_error_default
+    val timeoutNetworkError = Res.string.network_timeout
+    val unknownError = Res.string.error_unknown
 
     // Explanations
     val godFatherExplanation = Res.string.god_father_explanation
