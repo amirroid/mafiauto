@@ -6,5 +6,5 @@ import ir.amirroid.mafiauto.update_checker.models.ReleaseInfo
 
 interface UpdateChecker {
     suspend fun fetchLatestRelease(): Response<ReleaseInfo, NetworkErrors>
-    fun isUpdateRequired(current: ReleaseInfo): Boolean
+    fun isUpdateRequired(target: ReleaseInfo): Boolean
 }

@@ -13,7 +13,8 @@ class UpdateCheckerImpl(private val httpClient: HttpClient) : UpdateChecker {
         return SafeApiCall.launch { httpClient.get("https://api.github.com/repos/amirroid/mafiauto/releases/latest") }
     }
 
-    override fun isUpdateRequired(current: ReleaseInfo): Boolean {
-        return current.tag != AppInfo.version
+    override fun isUpdateRequired(target: ReleaseInfo): Boolean {
+        val targetVersion = Regex("""\d+(\.\d+)*""").find(target.tag)?.value ?: target.tag
+        return targetVersion != AppInfo.version
     }
 }
