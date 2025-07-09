@@ -30,7 +30,7 @@ fun BaseBlurredPopup(
     onDismissRequest: (() -> Unit)? = null,
     onExitAnimationStarted: (() -> Unit)? = null,
     dismissOnBackPress: Boolean = true,
-    withContentAnimation: Boolean = false,
+    withContentAnimation: Boolean = true,
     content: @Composable BoxScope.() -> Unit
 ) {
     if (LocalInspectionMode.current) {
