@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
@@ -29,6 +30,8 @@ import ir.amirroid.mafiauto.design_system.components.button.MIconButton
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
+import ir.amirroid.mafiauto.theme.locales.LocalAppTheme
+import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -39,6 +42,8 @@ fun IntroScreen(
 ) {
     val colorScheme = AppTheme.colorScheme
     val blackPartFraction = .7f
+    val theme = LocalAppTheme.current
+    val backgroundImage = remember(theme) { getBackgroundImageForTheme(theme) }
 
     ScreenContent {
         Box(
@@ -46,7 +51,7 @@ fun IntroScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .paint(
-                    painter = painterResource(Resources.drawable.background),
+                    painter = painterResource(backgroundImage),
                     contentScale = ContentScale.Crop
                 )
                 .drawWithCache {
@@ -104,4 +109,10 @@ fun IntroScreen(
             }
         }
     }
+}
+
+private fun getBackgroundImageForTheme(theme: AppThemeUiModel?) = when (theme) {
+    AppThemeUiModel.BLUE -> Resources.drawable.backgroundBlue
+    AppThemeUiModel.GREEN -> Resources.drawable.backgroundGreen
+    else -> Resources.drawable.backgroundRed
 }

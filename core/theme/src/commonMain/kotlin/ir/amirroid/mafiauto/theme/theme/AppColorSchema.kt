@@ -45,6 +45,8 @@ internal val NeonGreenColorScheme = ColorScheme(
 )
 
 
+val DefaultColorScheme = NeonRedColorScheme
+
 enum class AppThemeUiModel(
     val displayName: StringResource,
     val scheme: ColorScheme

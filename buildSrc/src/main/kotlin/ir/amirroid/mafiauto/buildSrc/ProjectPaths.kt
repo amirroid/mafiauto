@@ -9,6 +9,8 @@ object ProjectPaths {
     const val resources = ":core:resources"
     const val data = ":core:data"
     const val database = ":core:database"
+    const val network = ":core:network"
+    const val updateChcker = ":core:update-checker"
     const val domain = ":core:domain"
     const val uiModels = ":core:ui-models"
     const val preferences = ":core:preferences"

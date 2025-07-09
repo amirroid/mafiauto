@@ -34,6 +34,7 @@ private fun Project.configureCommonMain(sourceSets: NamedDomainObjectContainer<K
         implementation(libs.findLibrary("kermit").get())
         implementation(libs.findLibrary("kotlinx-collections").get())
         implementation(libs.findLibrary("coroutines-core").get())
+
         implementIfNotSelf(":core:common:app")
     }
 }

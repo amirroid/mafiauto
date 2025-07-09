@@ -21,6 +21,7 @@ kotlin.sourceSets.commonMain {
             ProjectPaths.domain,
             ProjectPaths.data,
             ProjectPaths.database,
+            ProjectPaths.network,
             ProjectPaths.preferences,
         ).forEach {
             implementation(project(it))

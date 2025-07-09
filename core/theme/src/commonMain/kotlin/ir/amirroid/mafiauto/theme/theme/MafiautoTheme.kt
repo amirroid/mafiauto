@@ -11,6 +11,7 @@ import ir.amirroid.mafiauto.theme.core.LocalColorScheme
 import ir.amirroid.mafiauto.theme.core.LocalShapes
 import ir.amirroid.mafiauto.theme.core.LocalTypography
 import ir.amirroid.mafiauto.theme.core.copyFontFamily
+import ir.amirroid.mafiauto.theme.locales.LocalAppTheme
 import ir.amirroid.mafiauto.theme.locales.LocalContentColor
 import ir.amirroid.mafiauto.theme.locales.LocalTextStyle
 import ir.amirroid.mafiauto.theme.utils.WithHazeContent
@@ -23,7 +24,7 @@ fun MafiautoTheme(
     val direction = LocalLayoutDirection.current
     val fonts = if (direction == LayoutDirection.Rtl) VazirFontFamily else SFFontFamily
     val typography = AppTypography.copyFontFamily(fonts)
-    val colorScheme = theme?.scheme ?: NeonRedColorScheme
+    val colorScheme = theme?.scheme ?: DefaultColorScheme
     WithHazeContent {
         CompositionLocalProvider(
             LocalColorScheme provides colorScheme,
@@ -32,6 +33,7 @@ fun MafiautoTheme(
             LocalTypography provides typography,
             LocalTextStyle provides typography.body,
             LocalContentColor provides colorScheme.onBackground,
+            LocalAppTheme provides (theme ?: AppThemeUiModel.RED),
             content = content
         )
     }

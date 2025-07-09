@@ -1,0 +1,7 @@
+package ir.amirroid.mafiauto.network
+
+const val API_REQUEST_TIMEOUT_MILLIS = 30_000L
+const val API_CONNECT_TIMEOUT_SECONDS = 30_000L
+const val API_SOCKET_TIMEOUT_SECONDS = 30_000L
+
+const val API_RETRY_ON_CONNECTION_FAILURE = true

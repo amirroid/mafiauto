@@ -34,7 +34,7 @@ private fun Project.configureCommonMain(sourceSets: NamedDomainObjectContainer<K
         implementation(libs.findLibrary("androidx-lifecycle-runtimeCompose").get())
         implementation(libs.findLibrary("composeIcons-evaIcons").get())
 
-        if (project.path == ":core:common:app") return@dependencies
+        if (project.path in ":core:common:app") return@dependencies
 
         val resources = ":core:resources"
         val designSystem = ":core:design-system"
