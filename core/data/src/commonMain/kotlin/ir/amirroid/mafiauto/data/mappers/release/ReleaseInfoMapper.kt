@@ -7,5 +7,6 @@ fun ReleaseInfo.toDomain() = UpdateInfo.ReleaseInfo(
     name = name,
     body = body,
     createdAt = createdAt,
-    tag = tag
+    tag = tag,
+    url = url
 )

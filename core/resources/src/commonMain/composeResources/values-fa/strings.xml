@@ -67,6 +67,8 @@
     <string name="open_source_libraries">کتابخانه‌های متن‌باز</string>
     <string name="version">نسخه: %1$s</string>
     <string name="theme">تم</string>
+    <string name="app_up_to_date">اپلیکیشن شما آخرین نسخه است و نیازی به به‌روزرسانی ندارد.</string>
+    <string name="view">نمایش</string>
 
     <string name="neutral">مستقل</string>
 

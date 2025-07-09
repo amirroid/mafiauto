@@ -20,8 +20,4 @@ val otherModules = module {
     singleOf(::RoleMemoryHolder)
     singleOf(::PlayersWithRoleMemoryHelper)
     factoryOf(::UpdateCheckerImpl).bind<UpdateChecker>()
-
-
-    // Json
-    single { Json { ignoreUnknownKeys = true } }
 }

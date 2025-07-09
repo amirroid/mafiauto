@@ -68,6 +68,8 @@ object Strings {
     val version = Res.string.version
     val theme = Res.string.theme
     val checkForNewUpdate = Res.string.check_for_new_update
+    val view = Res.string.view
+    val appUpToDate = Res.string.app_up_to_date
 
     // Themes
     val green = Res.string.green

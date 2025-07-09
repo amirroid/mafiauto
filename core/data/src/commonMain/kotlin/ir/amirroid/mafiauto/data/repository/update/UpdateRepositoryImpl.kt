@@ -15,7 +15,7 @@ class UpdateRepositoryImpl(
         return updateChecker.fetchLatestRelease().map {
             UpdateInfo(
                 needToUpdate = updateChecker.isUpdateRequired(it),
-                info = it.toDomain()
+                release = it.toDomain()
             )
         }
     }

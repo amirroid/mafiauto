@@ -30,15 +30,13 @@ import ir.amirroid.mafiauto.common.compose.components.BackButton
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.operators.plus
 import ir.amirroid.mafiauto.design_system.components.appbar.CollapsingTopAppBarScaffold
-import ir.amirroid.mafiauto.design_system.components.dialog.MDialog
 import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 import ir.amirroid.mafiauto.design_system.components.loading.MLoading
 import ir.amirroid.mafiauto.design_system.components.segmented_button.MSegmentedButton
-import ir.amirroid.mafiauto.design_system.components.sheet.MBottomSheet
 import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.markdown.MarkdownText
 import ir.amirroid.mafiauto.resources.Resources
+import ir.amirroid.mafiauto.settings.dialog.NewUpdateBottomSheet
 import ir.amirroid.mafiauto.settings.viewmodel.SettingsViewModel
 import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
@@ -79,9 +77,10 @@ fun SettingsScreen(
     }
 
     updateInfoResponse.onSuccess {
-        MBottomSheet(true, onDismissRequest = {}) {
-            MarkdownText(markdown = it.info.body)
-        }
+        NewUpdateBottomSheet(
+            updateInfo = it,
+            onDismissRequest = viewModel::clearUpdateInfoResponse
+        )
     }
 }
 

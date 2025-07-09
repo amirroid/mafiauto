@@ -9,8 +9,6 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(project(ProjectPaths.network))
-
-            implementation(libs.ktor.client.core)
         }
     }
 }

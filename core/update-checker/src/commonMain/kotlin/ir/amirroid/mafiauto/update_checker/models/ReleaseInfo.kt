@@ -12,5 +12,6 @@ data class ReleaseInfo(
     val tag: String,
     @SerialName("created_at")
     val createdAt: String,
+    @SerialName("html_url")
     val url: String
 )

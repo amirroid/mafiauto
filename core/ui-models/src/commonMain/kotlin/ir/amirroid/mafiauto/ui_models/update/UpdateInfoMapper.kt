@@ -4,10 +4,11 @@ import ir.amirroid.mafiauto.domain.model.UpdateInfo
 
 fun UpdateInfo.toUiModel() = UpdateInfoUiModel(
     needToUpdate = needToUpdate,
-    info = UpdateInfoUiModel.ReleaseInfo(
-        name = info.name,
-        body = info.body,
-        createdAt = info.createdAt,
-        tag = info.tag,
+    release = UpdateInfoUiModel.ReleaseInfo(
+        name = release.name,
+        body = release.body,
+        createdAt = release.createdAt,
+        tag = release.tag,
+        url = release.url
     )
 )

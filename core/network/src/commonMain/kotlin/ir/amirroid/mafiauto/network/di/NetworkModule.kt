@@ -10,17 +10,15 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import ir.amirroid.mafiauto.common.app.utils.AppInfo
-import ir.amirroid.mafiauto.network.*
+import ir.amirroid.mafiauto.network.API_CONNECT_TIMEOUT_SECONDS
+import ir.amirroid.mafiauto.network.API_REQUEST_TIMEOUT_MILLIS
+import ir.amirroid.mafiauto.network.API_SOCKET_TIMEOUT_SECONDS
 import ir.amirroid.mafiauto.network.client.createHttpClientProvider
 import kotlinx.serialization.json.Json
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val networkModule = module {
-    singleOf(::createJson)
-    single {
-        createConfiguredClient(get())
-    }
+    single<HttpClient> { createConfiguredClient(get()) }
 }
 
 private fun HttpClientConfig<*>.configureContentNegotiation(json: Json) {
@@ -53,13 +51,4 @@ private fun createConfiguredClient(
         configureTimeout()
         configureDefaultRequest()
     }
-}
-
-private fun createJson() = Json {
-    isLenient = true
-    explicitNulls = true
-    prettyPrint = true
-    ignoreUnknownKeys = true
-    coerceInputValues = true
-    encodeDefaults = true
 }
