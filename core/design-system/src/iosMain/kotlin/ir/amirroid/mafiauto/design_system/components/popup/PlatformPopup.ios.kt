@@ -28,7 +28,8 @@ internal actual fun PlatformPopup(
             usePlatformDefaultWidth = false,
             dismissOnBackPress = dismissOnBackPress,
             dismissOnClickOutside = dismissOnClickOutside,
-            scrimColor = Color.Transparent
+            scrimColor = Color.Transparent,
+            usePlatformInsets = false
         ),
         content = content
     )
