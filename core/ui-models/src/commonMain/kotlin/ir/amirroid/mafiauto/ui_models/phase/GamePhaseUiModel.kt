@@ -4,7 +4,7 @@ import ir.amirroid.mafiauto.domain.model.Alignment
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.night_target_otpions.NightTargetOptionsUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
-import ir.amirroid.mafiauto.ui_models.result.NightActionsResultUiModel
+import ir.amirroid.mafiauto.ui_models.night_action_result.NightActionsResultUiModel
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.StringResource
 

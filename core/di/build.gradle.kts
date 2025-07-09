@@ -22,6 +22,7 @@ kotlin.sourceSets.commonMain {
             ProjectPaths.data,
             ProjectPaths.database,
             ProjectPaths.network,
+            ProjectPaths.updateChcker,
             ProjectPaths.preferences,
         ).forEach {
             implementation(project(it))

@@ -15,7 +15,7 @@ import ir.amirroid.mafiauto.design_system.components.dialog.MDialog
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
-import ir.amirroid.mafiauto.ui_models.result.NightActionsResultUiModel
+import ir.amirroid.mafiauto.ui_models.night_action_result.NightActionsResultUiModel
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

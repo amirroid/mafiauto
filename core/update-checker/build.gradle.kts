@@ -1,3 +1,5 @@
+import ir.amirroid.mafiauto.buildSrc.ProjectPaths
+
 plugins {
     alias(libs.plugins.local.android.library)
     alias(libs.plugins.local.kotlin)
@@ -6,7 +8,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.ktor.client.core)
+            implementation(project(ProjectPaths.network))
         }
     }
 }

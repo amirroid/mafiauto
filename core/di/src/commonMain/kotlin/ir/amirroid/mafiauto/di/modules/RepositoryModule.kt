@@ -12,6 +12,8 @@ import ir.amirroid.mafiauto.domain.repository.PlayerRoleRepository
 import ir.amirroid.mafiauto.domain.repository.PlayerRepository
 import ir.amirroid.mafiauto.domain.repository.SettingsRepository
 import ir.amirroid.mafiauto.data.repository.settings.SettingsRepositoryImpl
+import ir.amirroid.mafiauto.data.repository.update.UpdateRepositoryImpl
+import ir.amirroid.mafiauto.domain.repository.UpdateRepository
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -23,4 +25,5 @@ val repositoryModule = module {
     factoryOf(::GameRepositoryImpl).bind<GameRepository>()
     factoryOf(::GroupsRepositoryImpl).bind<GroupsRepository>()
     factoryOf(::SettingsRepositoryImpl).bind<SettingsRepository>()
+    factoryOf(::UpdateRepositoryImpl).bind<UpdateRepository>()
 }

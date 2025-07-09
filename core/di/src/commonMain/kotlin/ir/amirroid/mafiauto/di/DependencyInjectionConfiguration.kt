@@ -3,6 +3,7 @@ package ir.amirroid.mafiauto.di
 import ir.amirroid.mafiauot.preferences.di.preferencesModule
 import ir.amirroid.mafiauto.database.di.databaseModule
 import ir.amirroid.mafiauto.di.modules.dispatcherModule
+import ir.amirroid.mafiauto.di.modules.jsonModule
 import ir.amirroid.mafiauto.di.modules.otherModules
 import ir.amirroid.mafiauto.di.modules.repositoryModule
 import ir.amirroid.mafiauto.di.modules.useCaseModule
@@ -18,6 +19,8 @@ object DependencyInjectionConfiguration {
             config?.invoke(this)
             modules(
                 otherModules,
+                networkModule,
+                jsonModule,
                 viewModelModule,
                 useCaseModule,
                 repositoryModule,
@@ -25,7 +28,6 @@ object DependencyInjectionConfiguration {
                 databaseModule,
                 gameEngineModule,
                 preferencesModule,
-                networkModule
             )
         }
     }

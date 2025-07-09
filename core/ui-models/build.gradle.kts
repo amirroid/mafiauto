@@ -10,6 +10,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(ProjectPaths.domain))
+                implementation(project(ProjectPaths.network))
             }
         }
     }

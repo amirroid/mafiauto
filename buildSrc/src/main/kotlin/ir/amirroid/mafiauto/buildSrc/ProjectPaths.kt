@@ -27,6 +27,9 @@ object ProjectPaths {
     const val night = ":feature:night"
     const val libraries = ":feature:libraries"
 
+    // Shared
+    const val markdown = ":shared:markdown"
+
     // Engine
     const val engine = ":game:engine"
 }

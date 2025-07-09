@@ -28,7 +28,9 @@ import ir.amirroid.mafiauto.theme.core.LocalHazeState
 fun BaseBlurredPopup(
     isVisible: Boolean,
     onDismissRequest: (() -> Unit)? = null,
+    onExitAnimationStarted: (() -> Unit)? = null,
     dismissOnBackPress: Boolean = true,
+    withContentAnimation: Boolean = false,
     content: @Composable BoxScope.() -> Unit
 ) {
     if (LocalInspectionMode.current) {
@@ -41,6 +43,7 @@ fun BaseBlurredPopup(
             if (visibleAnim) {
                 percent.animateTo(1f, animationSpec = tween(300))
             } else {
+                onExitAnimationStarted?.invoke()
                 percent.animateTo(0f, animationSpec = tween(200))
                 onDismissRequest?.invoke()
             }
@@ -81,8 +84,12 @@ fun BaseBlurredPopup(
                 Box(
                     Modifier
                         .fillMaxSize()
-                        .alpha(percent.value)
-                        .scale(.6f + .4f * percent.value),
+                        .then(
+                            if (withContentAnimation) Modifier
+                                .alpha(percent.value)
+                                .scale(.6f + .4f * percent.value)
+                            else Modifier
+                        ),
                     contentAlignment = Alignment.Center,
                     content = content
                 )
