@@ -48,15 +48,20 @@ jobs:
       - name: Get all APK paths
         id: apk_paths
         run: |
-          APK_FILES=$(find . -name "*release*.apk" | tr '\n' ' ')
+          APK_FILES=$(find . -name "*release*.apk" | paste -sd "," -)
+          echo "Found APK files: $APK_FILES"
           echo "apk_paths=$APK_FILES" >> $GITHUB_OUTPUT
 
       - name: Verify APK Signatures
         run: |
-          ANDROID_SDK_ROOT=$ANDROID_HOME
-          for apk in ${{ steps.apk_paths.outputs.apk_paths }}; do
+          if [ -z "$ANDROID_HOME" ]; then
+            echo "ANDROID_HOME not set!"
+            exit 1
+          fi
+          IFS=',' read -ra APK_ARRAY <<< "${{ steps.apk_paths.outputs.apk_paths }}"
+          for apk in "${APK_ARRAY[@]}"; do
             echo "Verifying $apk"
-            "$ANDROID_SDK_ROOT/build-tools/34.0.0/apksigner" verify "$apk"
+            "$ANDROID_HOME/build-tools/34.0.0/apksigner" verify "$apk"
           done
 
       - name: Upload APKs to GitHub Release
