@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build:
-    name: Build & Upload Release AAB
+    name: Build & Upload Release APKs
     runs-on: ubuntu-latest
 
     env:
@@ -42,19 +42,27 @@ jobs:
       - name: Grant execute permission to Gradle
         run: chmod +x ./gradlew
 
-      - name: Build Release AAB
-        run: ./gradlew bundleRelease
+      - name: Build Release APKs
+        run: ./gradlew assembleRelease
 
-      - name: Get AAB Path
-        id: aab_path
+      - name: Get all APK paths
+        id: apk_paths
         run: |
-          AAB_PATH=$(find . -name "*release*.aab" | head -n 1)
-          echo "aab_path=$AAB_PATH" >> $GITHUB_OUTPUT
+          APK_FILES=$(find . -name "*release*.apk" | tr '\n' ' ')
+          echo "apk_paths=$APK_FILES" >> $GITHUB_OUTPUT
 
-      - name: Upload AAB to GitHub Release
+      - name: Verify APK Signatures
+        run: |
+          ANDROID_SDK_ROOT=$ANDROID_HOME
+          for apk in ${{ steps.apk_paths.outputs.apk_paths }}; do
+            echo "Verifying $apk"
+            "$ANDROID_SDK_ROOT/build-tools/34.0.0/apksigner" verify "$apk"
+          done
+
+      - name: Upload APKs to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          files: ${{ steps.aab_path.outputs.aab_path }}
+          files: ${{ steps.apk_paths.outputs.apk_paths }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
