@@ -164,3 +164,30 @@ data object GiveGunAction : RoleAction {
         )
     }
 }
+
+
+data object RangerReactiveAction : RoleAction {
+    override fun apply(
+        nightAction: NightAction,
+        players: List<Player>,
+        handler: NightActionHandler
+    ) {
+        val target = nightAction.target
+        if (target.role.alignment == Alignment.Mafia) {
+            val updatedPlayers = updatePlayer(
+                players, target.id
+            ) { copy(isAlive = false) }
+            handler.updatePlayers(
+                updatePlayer(updatedPlayers, nightAction.player.id) {
+                    copy(isAlive = true, currentHealthPoints = 1)
+                }
+            )
+        } else {
+            handler.updatePlayers(
+                updatePlayer(players, nightAction.player.id) {
+                    copy(isAlive = false)
+                }
+            )
+        }
+    }
+}

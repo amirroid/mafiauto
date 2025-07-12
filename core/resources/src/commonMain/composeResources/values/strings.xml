@@ -100,6 +100,7 @@
     <string name="nostradamus">Nostradamus</string>
     <string name="surgeon">Surgeon</string>
     <string name="gunsmith">Gunsmith</string>
+    <string name="ranger">Ranger</string>
 
     <string name="god_father_explanation">Each night, you select a player to eliminate. Your decision has higher priority than other Mafia members.</string>
     <string name="saul_goodman_explanation">If a Mafia dies, you can take their place. Once, you may convert a simple citizen into a Mafia member.</string>
@@ -116,6 +117,7 @@
     <string name="nostradamus_explanation">At the introduction night, you choose three players, and the game master tells you how many of them are Mafia. The Godfather is not counted as Mafia.</string>
     <string name="joker_explanation">You have no night action. Your goal is to get voted out during the day in order to win the game.</string>
     <string name="gunsmith_explanation">Each night gives two players a gun. Guns may be blanks or real and can be fired once during the day.</string>
+    <string name="ranger_explanation">If targeted by Mafia, can shoot. Stays alive if hitting Mafia, dies if hitting Civilian.</string>
 
 
     <string name="authentication">Authentication</string>
