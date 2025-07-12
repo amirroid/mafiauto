@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.domain.model
+package ir.amirroid.mafiauto.domain.model.game
 
 enum class InstantAction {
     SHOW_ALIGNMENT,

@@ -1,6 +1,6 @@
 package ir.amirroid.mafiauto.ui_models.phase
 
-import ir.amirroid.mafiauto.domain.model.Alignment
+import ir.amirroid.mafiauto.domain.model.role.Alignment
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.night_target_otpions.NightTargetOptionsUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel

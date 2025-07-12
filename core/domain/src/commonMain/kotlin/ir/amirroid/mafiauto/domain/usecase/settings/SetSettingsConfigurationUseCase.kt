@@ -1,6 +1,6 @@
 package ir.amirroid.mafiauto.domain.usecase.settings
 
-import ir.amirroid.mafiauto.domain.model.Settings
+import ir.amirroid.mafiauto.domain.model.settings.Settings
 import ir.amirroid.mafiauto.domain.repository.SettingsRepository
 
 class SetSettingsConfigurationUseCase(

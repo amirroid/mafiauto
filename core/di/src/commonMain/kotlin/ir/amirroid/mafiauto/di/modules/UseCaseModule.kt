@@ -48,4 +48,5 @@ val useCaseModule = module {
     factoryOf(::EditGroupNameUseCase)
     factoryOf(::DeleteGroupUseCase)
     factoryOf(::GetLatestUpdateInfoUseCase)
+    factoryOf(::ApplyPlayerEffectUseCase)
 }

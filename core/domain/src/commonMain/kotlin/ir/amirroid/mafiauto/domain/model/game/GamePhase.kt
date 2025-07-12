@@ -1,4 +1,7 @@
-package ir.amirroid.mafiauto.domain.model
+package ir.amirroid.mafiauto.domain.model.game
+
+import ir.amirroid.mafiauto.domain.model.player.PlayerWithRole
+import ir.amirroid.mafiauto.domain.model.role.Alignment
 
 sealed interface GamePhase {
     data object Day : GamePhase

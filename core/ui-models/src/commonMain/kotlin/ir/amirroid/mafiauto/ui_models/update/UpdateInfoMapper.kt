@@ -1,6 +1,6 @@
 package ir.amirroid.mafiauto.ui_models.update
 
-import ir.amirroid.mafiauto.domain.model.UpdateInfo
+import ir.amirroid.mafiauto.domain.model.settings.UpdateInfo
 
 fun UpdateInfo.toUiModel() = UpdateInfoUiModel(
     needToUpdate = needToUpdate,

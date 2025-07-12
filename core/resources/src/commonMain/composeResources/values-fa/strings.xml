@@ -69,6 +69,8 @@
     <string name="theme">تم</string>
     <string name="app_up_to_date">اپلیکیشن شما آخرین نسخه است و نیازی به به‌روزرسانی ندارد.</string>
     <string name="view">نمایش</string>
+    <string name="bullet_blank">تیر مشقی بود</string>
+    <string name="gun_shot">شلیک تفنگ</string>
 
     <string name="neutral">مستقل</string>
 
@@ -82,6 +84,8 @@
     <string name="network_error_default">خطایی در ارتباط با شبکه رخ داد. لطفاً بعداً دوباره تلاش کنید.</string>
     <string name="network_timeout">درخواست شما به‌دلیل کندی یا قطعی اینترنت زمان‌بر شد. دوباره تلاش کنید.</string>
     <string name="error_unknown">خطای ناشناخته‌ای رخ داده است.</string>
+
+    <string name="gunsmith_info">اولین بازیکن تفنگ جنگی می‌گیرد و دومی تفنگ مشقی.</string>
 
     <string name="god_father">پدرخوانده</string>
     <string name="mafia">مافیا</string>
@@ -97,6 +101,8 @@
     <string name="mayor">شهردار</string>
     <string name="nostradamus">نوستراداموس</string>
     <string name="surgeon">جراح</string>
+    <string name="gunsmith">تفنگدار</string>
+
 
     <string name="god_father_explanation">هر شب می‌توانی یک نفر را برای حذف انتخاب کنی. تصمیم تو نسبت به دیگر اعضای مافیا اولویت دارد.</string>
     <string name="saul_goodman_explanation">اگر یکی از مافیا حذف شود، می‌توانی جای او را بگیری. یک‌بار در بازی می‌توانی یک شهروند ساده را به مافیا تبدیل کنی.</string>
@@ -112,6 +118,7 @@
     <string name="mayor_explanation">در شب نقشی نداری، اما نقش‌های دکتر و جراح را می‌شناسی که توسط گرداننده بازی به تو اعلام می‌شود.</string>
     <string name="nostradamus_explanation">در شب معارفه، سه نفر را انتخاب می‌کنی تا گرداننده به تو بگوید چند نفر از آن‌ها مافیا هستند. پدرخوانده در شمارش مافیا حساب نمی‌شود.</string>
     <string name="joker_explanation">در شب نقشی نداری. اگر در روز با رأی بقیه حذف شوی، برنده بازی می‌شوی.</string>
+    <string name="gunsmith_explanation">هر شب به دو نفر تفنگ می‌دهد. تفنگ‌ها ممکن است مشقی یا واقعی باشند و فقط یک‌بار در روز قابل شلیک‌اند.</string>
 
 
     <string name="card_bracelet">دستبند</string>

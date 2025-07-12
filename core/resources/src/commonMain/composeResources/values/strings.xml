@@ -70,6 +70,8 @@
     <string name="check_for_new_update">Check for new update</string>
     <string name="view">View</string>
     <string name="app_up_to_date">Your app is the latest version and does not require an update.</string>
+    <string name="bullet_blank">The bullet was a blank</string>
+    <string name="gun_shot">Gunshot</string>
 
     <string name="green">Green</string>
     <string name="red">Red</string>
@@ -80,6 +82,8 @@
     <string name="network_error_default">A network error occurred. Please try again later.</string>
     <string name="network_timeout">The request timed out. Check your connection and try again.</string>
     <string name="error_unknown">An unknown error occurred.</string>
+
+    <string name="gunsmith_info">The first player receives a real gun, and the second receives a blank.</string>
 
     <string name="god_father">Godfather</string>
     <string name="mafia">Mafia</string>
@@ -95,6 +99,7 @@
     <string name="mayor">Mayor</string>
     <string name="nostradamus">Nostradamus</string>
     <string name="surgeon">Surgeon</string>
+    <string name="gunsmith">Gunsmith</string>
 
     <string name="god_father_explanation">Each night, you select a player to eliminate. Your decision has higher priority than other Mafia members.</string>
     <string name="saul_goodman_explanation">If a Mafia dies, you can take their place. Once, you may convert a simple citizen into a Mafia member.</string>
@@ -110,6 +115,7 @@
     <string name="mayor_explanation">You have no night action, but you know the Doctor and Surgeon roles. The game master informs you about them.</string>
     <string name="nostradamus_explanation">At the introduction night, you choose three players, and the game master tells you how many of them are Mafia. The Godfather is not counted as Mafia.</string>
     <string name="joker_explanation">You have no night action. Your goal is to get voted out during the day in order to win the game.</string>
+    <string name="gunsmith_explanation">Each night gives two players a gun. Guns may be blanks or real and can be fired once during the day.</string>
 
 
     <string name="authentication">Authentication</string>

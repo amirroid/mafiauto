@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.game.engine.actions.role
 
+import ir.amirroid.mafiauto.game.engine.effect.GunShotDayActionEffect
 import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.Player
 import ir.amirroid.mafiauto.game.engine.models.target
@@ -137,5 +138,29 @@ data object BuyMafiaAction : RoleAction {
         } else {
             handler.updatePlayers(updatedPlayers)
         }
+    }
+}
+
+
+data object GiveGunAction : RoleAction {
+    override fun apply(
+        nightAction: NightAction,
+        players: List<Player>,
+        handler: NightActionHandler
+    ) {
+        if (nightAction.player.remainingAbilityUses == 0) return
+        val updatedPlayers = updatePlayer(players, nightAction.player.id) {
+            copy(remainingAbilityUses = remainingAbilityUses - 1)
+        }
+        val firstPlayer = nightAction.targets.firstOrNull() ?: return
+        val secondPlayer = nightAction.targets.getOrNull(1) ?: return
+        val firstUpdate = updatePlayer(
+            updatedPlayers, targetId = firstPlayer.id
+        ) { copy(effects = effects + GunShotDayActionEffect(isRealGun = true)) }
+        handler.updatePlayers(
+            updatePlayer(firstUpdate, secondPlayer.id) {
+                copy(effects = effects + GunShotDayActionEffect(isRealGun = false))
+            }
+        )
     }
 }

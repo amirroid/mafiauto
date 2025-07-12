@@ -1,8 +1,8 @@
 package ir.amirroid.mafiauto.data.mappers.role
 
-import ir.amirroid.mafiauto.domain.model.Alignment
-import ir.amirroid.mafiauto.domain.model.InstantAction
-import ir.amirroid.mafiauto.domain.model.RoleDescriptor
+import ir.amirroid.mafiauto.domain.model.role.Alignment
+import ir.amirroid.mafiauto.domain.model.game.InstantAction
+import ir.amirroid.mafiauto.domain.model.role.RoleDescriptor
 import ir.amirroid.mafiauto.game.engine.role.Alignment as EngineAlignment
 import ir.amirroid.mafiauto.game.engine.role.Role
 

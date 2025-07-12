@@ -13,12 +13,14 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import ir.amirroid.mafiauto.common.compose.modifiers.thenIf
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.button.MOutlinedButton
 import ir.amirroid.mafiauto.design_system.components.dialog.MDialog
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
+import ir.amirroid.mafiauto.ui_models.effect.PlayerEffectUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import org.jetbrains.compose.resources.stringResource
 
@@ -27,6 +29,7 @@ fun ShowPlayerRoleDialog(
     playerWithRole: PlayerWithRoleUiModel,
     onKick: () -> Unit,
     onUnKick: () -> Unit,
+    onSelectPlayersForEffect: (PlayerEffectUiModel) -> Unit,
     onDismissRequest: () -> Unit
 ) {
     var visible by remember { mutableStateOf(true) }
@@ -57,10 +60,27 @@ fun ShowPlayerRoleDialog(
                 text = stringResource(playerWithRole.role.explanation),
                 modifier = Modifier.padding(top = 16.dp)
             )
-            MOutlinedButton(onClick = {
-                if (kicked) onUnKick.invoke() else onKick.invoke()
-                visible = false
-            }, modifier = Modifier.padding(top = 16.dp).fillMaxWidth()) {
+            playerWithRole.player.effects.forEach {
+                if (it.buttonInfo == null) return@MDialog
+                MOutlinedButton(onClick = {
+                    visible = false
+                    onSelectPlayersForEffect.invoke(it)
+                }, modifier = Modifier.padding(top = 16.dp).fillMaxWidth()) {
+                    MText(stringResource(it.buttonInfo!!.text))
+                }
+            }
+            MOutlinedButton(
+                onClick = {
+                    if (kicked) onUnKick.invoke() else onKick.invoke()
+                    visible = false
+                },
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .thenIf(playerWithRole.player.effects.isEmpty()) {
+                        padding(top = 8.dp)
+                    }
+                    .fillMaxWidth()
+            ) {
                 if (kicked) {
                     MText(stringResource(Resources.strings.unKick))
                 } else {

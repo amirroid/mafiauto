@@ -70,6 +70,15 @@ object Strings {
     val checkForNewUpdate = Res.string.check_for_new_update
     val view = Res.string.view
     val appUpToDate = Res.string.app_up_to_date
+    val warning = Res.string.warning
+    val info = Res.string.info
+    val nightActionsResult = Res.string.night_actions_result
+    val revivedCount = Res.string.revived_count
+    val deathCount = Res.string.death_count
+    val alignmentCount = Res.string.alignment_count
+    val gunsmithInfo = Res.string.gunsmith_info
+    val bulletBlank = Res.string.bullet_blank
+    val gunShot = Res.string.gun_shot
 
     // Themes
     val green = Res.string.green
@@ -92,12 +101,7 @@ object Strings {
     val bulletproof = Res.string.bulletproof
     val mayor = Res.string.mayor
     val nostradamus = Res.string.nostradamus
-    val warning = Res.string.warning
-    val info = Res.string.info
-    val nightActionsResult = Res.string.night_actions_result
-    val revivedCount = Res.string.revived_count
-    val deathCount = Res.string.death_count
-    val alignmentCount = Res.string.alignment_count
+    val gunsmith = Res.string.gunsmith
 
     // Errors
     val defaultNetworkError = Res.string.network_error_default
@@ -119,6 +123,7 @@ object Strings {
     val nostradamusExplanation = Res.string.nostradamus_explanation
     val jokerExplanation = Res.string.joker_explanation
     val surgeonExplanation = Res.string.surgeon_explanation
+    val gunsmithExplanation = Res.string.gunsmith_explanation
 
     val authenticationLastCardExplanation = Res.string.authentication_last_card_explanation
     val braceletLastCardExplanation = Res.string.bracelet_last_card_explanation

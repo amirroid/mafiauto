@@ -3,7 +3,7 @@ package ir.amirroid.mafiauto.intro.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ir.amirroid.mafiauto.domain.model.Player
+import ir.amirroid.mafiauto.domain.model.player.Player
 import ir.amirroid.mafiauto.domain.usecase.groups.EditGroupNameUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.AddPlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.GetAllPlayersUseCase

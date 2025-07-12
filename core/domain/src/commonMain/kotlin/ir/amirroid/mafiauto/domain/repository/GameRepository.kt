@@ -1,9 +1,9 @@
 package ir.amirroid.mafiauto.domain.repository
 
-import ir.amirroid.mafiauto.domain.model.GamePhase
-import ir.amirroid.mafiauto.domain.model.LastCardDescriptor
-import ir.amirroid.mafiauto.domain.model.NightActionDescriptor
-import ir.amirroid.mafiauto.domain.model.PlayerWithRole
+import ir.amirroid.mafiauto.domain.model.game.GamePhase
+import ir.amirroid.mafiauto.domain.model.game.LastCardDescriptor
+import ir.amirroid.mafiauto.domain.model.game.NightActionDescriptor
+import ir.amirroid.mafiauto.domain.model.player.PlayerWithRole
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import org.jetbrains.compose.resources.StringResource
@@ -41,4 +41,6 @@ interface GameRepository {
     fun handleFinalTrustVotes(trustVotes: Map<PlayerWithRole, PlayerWithRole>)
 
     fun applyLastCard(card: LastCardDescriptor, pickedPlayers: List<PlayerWithRole>)
+
+    fun applyPlayerEffect(effectName: String, player: PlayerWithRole, targetPlayers: List<PlayerWithRole>)
 }

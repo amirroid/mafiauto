@@ -1,5 +1,6 @@
-package ir.amirroid.mafiauto.domain.model
+package ir.amirroid.mafiauto.domain.model.role
 
+import ir.amirroid.mafiauto.domain.model.game.InstantAction
 import org.jetbrains.compose.resources.StringResource
 
 data class RoleDescriptor(

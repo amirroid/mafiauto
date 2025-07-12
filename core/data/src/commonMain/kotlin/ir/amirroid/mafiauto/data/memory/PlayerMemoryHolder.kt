@@ -1,7 +1,7 @@
 package ir.amirroid.mafiauto.data.memory
 
 import ir.amirroid.mafiauto.data.memory.base.MemoryHolder
-import ir.amirroid.mafiauto.domain.model.Player
+import ir.amirroid.mafiauto.domain.model.player.Player
 
 class PlayerMemoryHolder : MemoryHolder<List<Player>> {
     private val _selectedPlayers = mutableListOf<Player>()

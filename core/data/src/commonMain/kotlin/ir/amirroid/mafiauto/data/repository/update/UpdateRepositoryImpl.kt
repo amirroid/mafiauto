@@ -4,7 +4,7 @@ import ir.amirroid.mafiauto.common.app.error.ErrorI
 import ir.amirroid.mafiauto.common.app.response.Response
 import ir.amirroid.mafiauto.common.app.response.map
 import ir.amirroid.mafiauto.data.mappers.release.toDomain
-import ir.amirroid.mafiauto.domain.model.UpdateInfo
+import ir.amirroid.mafiauto.domain.model.settings.UpdateInfo
 import ir.amirroid.mafiauto.domain.repository.UpdateRepository
 import ir.amirroid.mafiauto.update_checker.UpdateChecker
 

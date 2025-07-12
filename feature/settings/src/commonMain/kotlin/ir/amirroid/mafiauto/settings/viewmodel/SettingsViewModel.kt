@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.amirroid.mafiauto.common.app.response.Response
 import ir.amirroid.mafiauto.common.app.response.map
-import ir.amirroid.mafiauto.domain.model.Settings
+import ir.amirroid.mafiauto.domain.model.settings.Settings
 import ir.amirroid.mafiauto.domain.usecase.settings.GetSettingsConfigurationUseCase
 import ir.amirroid.mafiauto.domain.usecase.settings.SetSettingsConfigurationUseCase
 import ir.amirroid.mafiauto.domain.usecase.update.GetLatestUpdateInfoUseCase

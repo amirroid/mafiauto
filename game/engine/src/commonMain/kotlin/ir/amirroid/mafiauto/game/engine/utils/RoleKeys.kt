@@ -15,4 +15,5 @@ object RoleKeys {
     const val BULLETPROOF = "bulletproof"
     const val MAYOR = "mayor"
     const val NOSTRADAMUS = "nostradamus"
+    const val GUNSMITH = "gunsmith"
 }
