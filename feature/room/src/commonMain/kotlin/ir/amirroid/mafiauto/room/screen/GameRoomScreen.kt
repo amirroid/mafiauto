@@ -67,6 +67,7 @@ import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.room.dialogs.FateDialog
 import ir.amirroid.mafiauto.room.dialogs.LastCardDialog
 import ir.amirroid.mafiauto.room.dialogs.NightActionsResultDialog
+import ir.amirroid.mafiauto.room.dialogs.SelectPlayersForEffectDialog
 import ir.amirroid.mafiauto.room.dialogs.ShowPlayerRoleDialog
 import ir.amirroid.mafiauto.room.dialogs.ShowStatusDialog
 import ir.amirroid.mafiauto.room.dialogs.VotingDialog
@@ -88,6 +89,7 @@ fun GameRoomScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val players = state.players
+    val pickedPlayerToApplyEffect = state.pickedPlayerToApplyEffect
     val pickedPlayerToShowRole = state.pickedPlayerToShowRole
     val statusChecksCount = state.statusChecksCount
     val showStatus = state.showStatus
@@ -142,11 +144,17 @@ fun GameRoomScreen(
                 .imePadding().navigationBarsPadding()
         )
     }
-    pickedPlayerToShowRole?.let {
+    pickedPlayerToShowRole?.let { playerRole ->
         ShowPlayerRoleDialog(
-            it,
-            onKick = { viewModel.kick(it.player.id) },
-            onUnKick = { viewModel.unKick(it.player.id) },
+            playerRole,
+            onKick = { viewModel.kick(playerRole.player.id) },
+            onUnKick = { viewModel.unKick(playerRole.player.id) },
+            onSelectPlayersForEffect = { effect ->
+                viewModel.showSelectionPlayersForEffect(
+                    effect = effect,
+                    player = playerRole
+                )
+            },
             onDismissRequest = viewModel::clearPickedPlayer
         )
     }
@@ -185,6 +193,13 @@ fun GameRoomScreen(
         WinnerDialog(
             alignment = currentPhase.winnerAlignment,
             onDismissRequest = onBack
+        )
+    }
+    pickedPlayerToApplyEffect?.let {
+        SelectPlayersForEffectDialog(
+            players = players,
+            effect = it.effect,
+            onSelectPlayers = viewModel::applyPlayerEffect
         )
     }
 }
@@ -255,7 +270,10 @@ fun PlayerItem(playerWithRole: PlayerWithRoleUiModel, isCurrentTurn: Boolean, on
     val primaryColor = AppTheme.colorScheme.primary
     MListItem(
         text = {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
                 MText(
                     playerWithRole.player.name,
                     modifier = Modifier

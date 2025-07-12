@@ -148,10 +148,14 @@ data object GiveGunAction : RoleAction {
         players: List<Player>,
         handler: NightActionHandler
     ) {
+        if (nightAction.player.remainingAbilityUses == 0) return
+        val updatedPlayers = updatePlayer(players, nightAction.player.id) {
+            copy(remainingAbilityUses = remainingAbilityUses - 1)
+        }
         val firstPlayer = nightAction.targets.firstOrNull() ?: return
         val secondPlayer = nightAction.targets.getOrNull(1) ?: return
         val firstUpdate = updatePlayer(
-            players, targetId = firstPlayer.id
+            updatedPlayers, targetId = firstPlayer.id
         ) { copy(effects = effects + GunShotDayActionEffect(isRealGun = true)) }
         handler.updatePlayers(
             updatePlayer(firstUpdate, secondPlayer.id) {

@@ -78,6 +78,18 @@ class GameRepositoryImpl(
         engine.applyLastCard(card.toEngine(), getEnginePlayersFromDomain(pickedPlayers))
     }
 
+    override fun applyPlayerEffect(
+        effectName: String,
+        player: PlayerWithRole,
+        targetPlayers: List<PlayerWithRole>
+    ) {
+        return engine.applyPlayerEffect(
+            effectName,
+            player.toEngine(),
+            targetPlayers.map { it.toEngine() }
+        )
+    }
+
     override fun onStatusChecked() = engine.incrementStatusCheckCount()
     override fun undoStatusCheck() = engine.decreaseStatusCheckCount()
 

@@ -5,6 +5,8 @@ import ir.amirroid.mafiauto.game.engine.actions.schedule.ScheduledAction
 import ir.amirroid.mafiauto.game.engine.base.ActionsHandler
 import ir.amirroid.mafiauto.game.engine.base.PhaseUpdater
 import ir.amirroid.mafiauto.game.engine.base.PlayerTransformer
+import ir.amirroid.mafiauto.game.engine.effect.DayActionEffect
+import ir.amirroid.mafiauto.game.engine.effect.PlayerEffect
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
 import ir.amirroid.mafiauto.game.engine.last_card.LastCardHandler
 import ir.amirroid.mafiauto.game.engine.models.NightAction
@@ -376,6 +378,11 @@ class GameEngine(
         } else {
             updatePhase(Phase.Voting)
         }
+    }
+
+    fun applyPlayerEffect(effectName: String, player: Player, targetPlayers: List<Player>) {
+        player.effects.filterIsInstance<DayActionEffect>().firstOrNull { it.name == effectName }
+            ?.getAction()?.applyAction(player, targetPlayers, players.value, this)
     }
 
 

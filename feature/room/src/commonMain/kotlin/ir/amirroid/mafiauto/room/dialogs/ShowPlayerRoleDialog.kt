@@ -20,6 +20,7 @@ import ir.amirroid.mafiauto.design_system.components.dialog.MDialog
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.resources.Resources
+import ir.amirroid.mafiauto.ui_models.effect.PlayerEffectUiModel
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel
 import org.jetbrains.compose.resources.stringResource
 
@@ -28,6 +29,7 @@ fun ShowPlayerRoleDialog(
     playerWithRole: PlayerWithRoleUiModel,
     onKick: () -> Unit,
     onUnKick: () -> Unit,
+    onSelectPlayersForEffect: (PlayerEffectUiModel) -> Unit,
     onDismissRequest: () -> Unit
 ) {
     var visible by remember { mutableStateOf(true) }
@@ -62,6 +64,7 @@ fun ShowPlayerRoleDialog(
                 if (it.buttonInfo == null) return@MDialog
                 MOutlinedButton(onClick = {
                     visible = false
+                    onSelectPlayersForEffect.invoke(it)
                 }, modifier = Modifier.padding(top = 16.dp).fillMaxWidth()) {
                     MText(stringResource(it.buttonInfo!!.text))
                 }

@@ -41,4 +41,6 @@ interface GameRepository {
     fun handleFinalTrustVotes(trustVotes: Map<PlayerWithRole, PlayerWithRole>)
 
     fun applyLastCard(card: LastCardDescriptor, pickedPlayers: List<PlayerWithRole>)
+
+    fun applyPlayerEffect(effectName: String, player: PlayerWithRole, targetPlayers: List<PlayerWithRole>)
 }
