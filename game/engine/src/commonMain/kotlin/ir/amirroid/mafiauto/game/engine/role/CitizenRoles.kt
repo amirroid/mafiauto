@@ -130,3 +130,18 @@ data object Bomber : Role {
         handler.updatePlayers(currentPlayers)
     }
 }
+
+data object Gunsmith : Role {
+    override val key = RoleKeys.GUNSMITH
+    override val name = Resources.strings.gunsmith
+    override val explanation = Resources.strings.gunsmithExplanation
+    override val alignment = Alignment.Civilian
+    override val maxAbilityUses: Int = 2
+    override val isOptionalAbility: Boolean = true
+    override val nightActionRequiredPicks: Int = 2
+
+    override fun getNightAction(): RoleAction = GiveGunAction
+    override fun getNightActionMessage(players: List<Player>): StringResourcesMessage? {
+        return StringResourcesMessage(Resources.strings.gunsmithInfo)
+    }
+}

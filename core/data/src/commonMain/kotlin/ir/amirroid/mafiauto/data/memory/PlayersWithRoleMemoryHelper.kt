@@ -1,7 +1,7 @@
 package ir.amirroid.mafiauto.data.memory
 
 import ir.amirroid.mafiauto.data.memory.base.MemoryHolder
-import ir.amirroid.mafiauto.domain.model.PlayerWithRole
+import ir.amirroid.mafiauto.domain.model.player.PlayerWithRole
 
 class PlayersWithRoleMemoryHelper : MemoryHolder<List<PlayerWithRole>> {
     private val _value = mutableListOf<PlayerWithRole>()

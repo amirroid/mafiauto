@@ -3,7 +3,7 @@ package ir.amirroid.mafiauto.data.repository.settings
 import ir.amirroid.mafiauot.preferences.source.SettingsConfigPreferencesSource
 import ir.amirroid.mafiauto.data.mappers.settings.toData
 import ir.amirroid.mafiauto.data.mappers.settings.toDomain
-import ir.amirroid.mafiauto.domain.model.Settings
+import ir.amirroid.mafiauto.domain.model.settings.Settings
 import ir.amirroid.mafiauto.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

@@ -1,6 +1,6 @@
 package ir.amirroid.mafiauto.domain.usecase.game
 
-import ir.amirroid.mafiauto.domain.model.NightActionDescriptor
+import ir.amirroid.mafiauto.domain.model.game.NightActionDescriptor
 import ir.amirroid.mafiauto.domain.repository.GameRepository
 
 class HandleNightActionsUseCase(

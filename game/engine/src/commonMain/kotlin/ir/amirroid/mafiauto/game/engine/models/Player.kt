@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.game.engine.models
 
+import ir.amirroid.mafiauto.game.engine.effect.PlayerEffect
 import ir.amirroid.mafiauto.game.engine.role.Role
 
 data class Player(
@@ -12,7 +13,8 @@ data class Player(
     val currentHealthPoints: Int = role.healthPoints,
     val isSilenced: Boolean = false,
     val canUseAbility: Boolean = true,
-    val remainingAbilityUses: Int = role.maxAbilityUses
+    val remainingAbilityUses: Int = role.maxAbilityUses,
+    val effects: List<PlayerEffect> = emptyList()
 ) {
     val isInGame = isAlive && !isKick
 }

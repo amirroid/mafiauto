@@ -1,8 +1,8 @@
 package ir.amirroid.mafiauto.ui_models.role
 
 import androidx.compose.runtime.Immutable
-import ir.amirroid.mafiauto.domain.model.Alignment
-import ir.amirroid.mafiauto.domain.model.InstantAction
+import ir.amirroid.mafiauto.domain.model.role.Alignment
+import ir.amirroid.mafiauto.domain.model.game.InstantAction
 import org.jetbrains.compose.resources.StringResource
 
 @Immutable

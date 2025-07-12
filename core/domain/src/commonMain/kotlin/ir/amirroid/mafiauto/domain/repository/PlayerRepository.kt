@@ -1,6 +1,6 @@
 package ir.amirroid.mafiauto.domain.repository
 
-import ir.amirroid.mafiauto.domain.model.Player
+import ir.amirroid.mafiauto.domain.model.player.Player
 import kotlinx.coroutines.flow.Flow
 
 interface PlayerRepository {

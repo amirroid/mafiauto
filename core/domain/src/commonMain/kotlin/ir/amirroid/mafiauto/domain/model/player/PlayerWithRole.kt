@@ -1,6 +1,7 @@
-package ir.amirroid.mafiauto.domain.model
+package ir.amirroid.mafiauto.domain.model.player
 
 import androidx.compose.runtime.Immutable
+import ir.amirroid.mafiauto.domain.model.role.RoleDescriptor
 
 @Immutable
 data class PlayerWithRole(

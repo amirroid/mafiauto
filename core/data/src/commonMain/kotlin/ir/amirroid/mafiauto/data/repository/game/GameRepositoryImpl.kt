@@ -4,9 +4,9 @@ import ir.amirroid.mafiauto.data.mappers.last_card.toDomain
 import ir.amirroid.mafiauto.data.mappers.phase.toDomain
 import ir.amirroid.mafiauto.data.mappers.player.toEngine
 import ir.amirroid.mafiauto.data.mappers.player_role.toPlayerRoleDomain
-import ir.amirroid.mafiauto.domain.model.LastCardDescriptor
-import ir.amirroid.mafiauto.domain.model.NightActionDescriptor
-import ir.amirroid.mafiauto.domain.model.PlayerWithRole
+import ir.amirroid.mafiauto.domain.model.game.LastCardDescriptor
+import ir.amirroid.mafiauto.domain.model.game.NightActionDescriptor
+import ir.amirroid.mafiauto.domain.model.player.PlayerWithRole
 import ir.amirroid.mafiauto.domain.repository.GameRepository
 import ir.amirroid.mafiauto.game.engine.GameEngine
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard

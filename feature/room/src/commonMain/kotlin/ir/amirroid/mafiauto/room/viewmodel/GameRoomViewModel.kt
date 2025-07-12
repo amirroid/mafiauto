@@ -2,8 +2,8 @@ package ir.amirroid.mafiauto.room.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ir.amirroid.mafiauto.domain.model.LastCardDescriptor
-import ir.amirroid.mafiauto.domain.model.PlayerWithRole
+import ir.amirroid.mafiauto.domain.model.game.LastCardDescriptor
+import ir.amirroid.mafiauto.domain.model.player.PlayerWithRole
 import ir.amirroid.mafiauto.domain.usecase.game.ApplyLastCardUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllLastCardsUseCase

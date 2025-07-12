@@ -12,6 +12,7 @@ class RolesProviderImpl : RolesProvider {
             Detective,
             Doctor,
             Sniper,
+            Gunsmith,
             Silencer,
             Surgeon,
             Bomber,

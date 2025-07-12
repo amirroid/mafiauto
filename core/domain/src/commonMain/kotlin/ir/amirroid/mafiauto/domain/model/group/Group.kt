@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.domain.model
+package ir.amirroid.mafiauto.domain.model.group
 
 data class Group(
     val id: Long,

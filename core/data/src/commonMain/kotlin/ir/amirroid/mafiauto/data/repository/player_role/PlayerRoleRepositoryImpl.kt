@@ -3,7 +3,7 @@ package ir.amirroid.mafiauto.data.repository.player_role
 import ir.amirroid.mafiauto.data.memory.PlayerMemoryHolder
 import ir.amirroid.mafiauto.data.memory.PlayersWithRoleMemoryHelper
 import ir.amirroid.mafiauto.data.memory.RoleMemoryHolder
-import ir.amirroid.mafiauto.domain.model.PlayerWithRole
+import ir.amirroid.mafiauto.domain.model.player.PlayerWithRole
 import ir.amirroid.mafiauto.domain.repository.PlayerRoleRepository
 
 class PlayerRoleRepositoryImpl(

@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.domain.model
+package ir.amirroid.mafiauto.domain.model.settings
 
 data class UpdateInfo(
     val needToUpdate: Boolean,

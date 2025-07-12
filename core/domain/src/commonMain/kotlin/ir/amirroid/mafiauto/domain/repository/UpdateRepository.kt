@@ -2,7 +2,7 @@ package ir.amirroid.mafiauto.domain.repository
 
 import ir.amirroid.mafiauto.common.app.error.ErrorI
 import ir.amirroid.mafiauto.common.app.response.Response
-import ir.amirroid.mafiauto.domain.model.UpdateInfo
+import ir.amirroid.mafiauto.domain.model.settings.UpdateInfo
 
 interface UpdateRepository {
     suspend fun getLatestUpdateInfo(): Response<UpdateInfo, ErrorI>

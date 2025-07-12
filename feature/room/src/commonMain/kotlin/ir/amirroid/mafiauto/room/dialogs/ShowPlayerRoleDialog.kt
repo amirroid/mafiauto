@@ -13,6 +13,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import ir.amirroid.mafiauto.common.compose.modifiers.thenIf
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.button.MOutlinedButton
 import ir.amirroid.mafiauto.design_system.components.dialog.MDialog
@@ -57,10 +58,26 @@ fun ShowPlayerRoleDialog(
                 text = stringResource(playerWithRole.role.explanation),
                 modifier = Modifier.padding(top = 16.dp)
             )
-            MOutlinedButton(onClick = {
-                if (kicked) onUnKick.invoke() else onKick.invoke()
-                visible = false
-            }, modifier = Modifier.padding(top = 16.dp).fillMaxWidth()) {
+            playerWithRole.player.effects.forEach {
+                if (it.buttonInfo == null) return@MDialog
+                MOutlinedButton(onClick = {
+                    visible = false
+                }, modifier = Modifier.padding(top = 16.dp).fillMaxWidth()) {
+                    MText(stringResource(it.buttonInfo!!.text))
+                }
+            }
+            MOutlinedButton(
+                onClick = {
+                    if (kicked) onUnKick.invoke() else onKick.invoke()
+                    visible = false
+                },
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .thenIf(playerWithRole.player.effects.isEmpty()) {
+                        padding(top = 8.dp)
+                    }
+                    .fillMaxWidth()
+            ) {
                 if (kicked) {
                     MText(stringResource(Resources.strings.unKick))
                 } else {

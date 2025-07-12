@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.domain.model
+package ir.amirroid.mafiauto.domain.model.game
 
 import org.jetbrains.compose.resources.StringResource
 

@@ -2,7 +2,7 @@ package ir.amirroid.mafiauto.data.repository.role
 
 import ir.amirroid.mafiauto.data.mappers.role.toDescriptor
 import ir.amirroid.mafiauto.data.memory.RoleMemoryHolder
-import ir.amirroid.mafiauto.domain.model.RoleDescriptor
+import ir.amirroid.mafiauto.domain.model.role.RoleDescriptor
 import ir.amirroid.mafiauto.domain.repository.RoleRepository
 import ir.amirroid.mafiauto.game.engine.provider.roles.RolesProvider
 

@@ -3,7 +3,7 @@ package ir.amirroid.mafiauto.final_debate.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.amirroid.mafiauto.common.app.utils.emptyImmutableList
-import ir.amirroid.mafiauto.domain.model.PlayerWithRole
+import ir.amirroid.mafiauto.domain.model.player.PlayerWithRole
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.HandleFinalTrustVotesUseCase
 import ir.amirroid.mafiauto.ui_models.player_with_role.PlayerWithRoleUiModel

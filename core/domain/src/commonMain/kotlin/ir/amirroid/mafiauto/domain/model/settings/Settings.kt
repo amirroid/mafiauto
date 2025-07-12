@@ -1,4 +1,4 @@
-package ir.amirroid.mafiauto.domain.model
+package ir.amirroid.mafiauto.domain.model.settings
 
 import ir.amirroid.mafiauto.common.compose.utils.LocaleUtils
 

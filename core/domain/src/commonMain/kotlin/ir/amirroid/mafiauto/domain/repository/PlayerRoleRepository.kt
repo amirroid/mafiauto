@@ -1,6 +1,6 @@
 package ir.amirroid.mafiauto.domain.repository
 
-import ir.amirroid.mafiauto.domain.model.PlayerWithRole
+import ir.amirroid.mafiauto.domain.model.player.PlayerWithRole
 
 interface PlayerRoleRepository {
     fun assignRoles(): List<PlayerWithRole>

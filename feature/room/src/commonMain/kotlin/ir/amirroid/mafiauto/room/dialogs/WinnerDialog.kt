@@ -23,7 +23,7 @@ import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.popup.BaseBlurredPopup
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.theme.core.AppTheme
-import ir.amirroid.mafiauto.domain.model.Alignment
+import ir.amirroid.mafiauto.domain.model.role.Alignment
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.getRelatedStringResource
 import org.jetbrains.compose.resources.stringResource

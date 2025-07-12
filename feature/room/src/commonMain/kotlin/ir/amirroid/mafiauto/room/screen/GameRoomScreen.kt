@@ -272,6 +272,9 @@ fun PlayerItem(playerWithRole: PlayerWithRoleUiModel, isCurrentTurn: Boolean, on
                         }
                         .weight(1f)
                 )
+                playerWithRole.player.effects.forEach {
+                    it.buttonInfo?.Image()
+                }
                 AnimatedVisibility(
                     playerWithRole.player.isSilenced,
                     enter = scaleIn(),

@@ -1,6 +1,8 @@
 package ir.amirroid.mafiauto.ui_models.player
 
-import ir.amirroid.mafiauto.domain.model.Player
+import ir.amirroid.mafiauto.domain.model.player.Player
+import ir.amirroid.mafiauto.ui_models.effect.toUiModel
+import kotlinx.collections.immutable.toImmutableList
 
 fun Player.toUiModel() = PlayerUiModel(
     name = name,
@@ -9,5 +11,6 @@ fun Player.toUiModel() = PlayerUiModel(
     isKick = isKick,
     isSilenced = isSilenced,
     canUseAbility = canUseAbility,
-    remainingAbilityUses = remainingAbilityUses
+    remainingAbilityUses = remainingAbilityUses,
+    effects = effects.map { it.toUiModel() }.toImmutableList()
 )

@@ -1,8 +1,8 @@
 package ir.amirroid.mafiauto.ui_models.settings
 
-import ir.amirroid.mafiauto.domain.model.Language
-import ir.amirroid.mafiauto.domain.model.Settings
-import ir.amirroid.mafiauto.domain.model.Theme
+import ir.amirroid.mafiauto.domain.model.settings.Language
+import ir.amirroid.mafiauto.domain.model.settings.Settings
+import ir.amirroid.mafiauto.domain.model.settings.Theme
 
 fun SettingsUiModel.toDomain() = Settings(
     language = Language.valueOf(language.name),

@@ -1,7 +1,7 @@
 package ir.amirroid.mafiauto.data.memory
 
 import ir.amirroid.mafiauto.data.memory.base.MemoryHolder
-import ir.amirroid.mafiauto.domain.model.RoleDescriptor
+import ir.amirroid.mafiauto.domain.model.role.RoleDescriptor
 
 class RoleMemoryHolder : MemoryHolder<List<RoleDescriptor>> {
     private val _selectedRoles = mutableListOf<RoleDescriptor>()

@@ -1,6 +1,6 @@
 package ir.amirroid.mafiauto.domain.repository
 
-import ir.amirroid.mafiauto.domain.model.GroupWithPlayers
+import ir.amirroid.mafiauto.domain.model.group.GroupWithPlayers
 import kotlinx.coroutines.flow.Flow
 
 interface GroupsRepository {

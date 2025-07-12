@@ -2,7 +2,7 @@ package ir.amirroid.mafiauto.assign_roles.viewmodel
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import ir.amirroid.mafiauto.domain.model.Alignment
+import ir.amirroid.mafiauto.domain.model.role.Alignment
 import ir.amirroid.mafiauto.domain.usecase.player.GetSelectedPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.role.GetAllRoleDescriptorsUseCase
 import ir.amirroid.mafiauto.domain.usecase.role.SelectNewRolesUseCase

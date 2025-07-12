@@ -7,10 +7,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.amirroid.mafiauto.common.app.utils.emptyImmutableList
-import ir.amirroid.mafiauto.domain.model.Alignment
-import ir.amirroid.mafiauto.domain.model.InstantAction
-import ir.amirroid.mafiauto.domain.model.NightActionDescriptor
-import ir.amirroid.mafiauto.domain.model.PlayerWithRole
+import ir.amirroid.mafiauto.domain.model.role.Alignment
+import ir.amirroid.mafiauto.domain.model.game.InstantAction
+import ir.amirroid.mafiauto.domain.model.game.NightActionDescriptor
+import ir.amirroid.mafiauto.domain.model.player.PlayerWithRole
 import ir.amirroid.mafiauto.domain.usecase.game.GetAllInRoomPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.GetCurrentPhaseUseCase
 import ir.amirroid.mafiauto.domain.usecase.game.HandleNightActionsUseCase
