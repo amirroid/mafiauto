@@ -4,7 +4,6 @@ package ir.amirroid.mafiauto.buildSrc
 object ProjectPaths {
     // Core
     const val designSystem = ":core:design-system"
-    const val navigation = ":core:navigation"
     const val di = ":core:di"
     const val resources = ":core:resources"
     const val data = ":core:data"
@@ -29,6 +28,7 @@ object ProjectPaths {
 
     // Shared
     const val markdown = ":shared:markdown"
+    const val navigation = ":shared:navigation"
 
     // Engine
     const val engine = ":game:engine"

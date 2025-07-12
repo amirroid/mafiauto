@@ -35,7 +35,6 @@ include(":composeApp")
 include(":core:theme")
 include(":core:design-system")
 include(":core:resources")
-include(":core:navigation")
 include(":core:di")
 include(":core:data")
 include(":core:domain")
@@ -49,6 +48,7 @@ include(":core:common:app")
 
 
 include(":shared:markdown")
+include(":shared:navigation")
 
 include(":game:engine")
 
