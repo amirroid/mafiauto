@@ -102,6 +102,7 @@
     <string name="nostradamus">نوستراداموس</string>
     <string name="surgeon">جراح</string>
     <string name="gunsmith">تفنگدار</string>
+    <string name="ranger">تکاور</string>
 
 
     <string name="god_father_explanation">هر شب می‌توانی یک نفر را برای حذف انتخاب کنی. تصمیم تو نسبت به دیگر اعضای مافیا اولویت دارد.</string>
@@ -119,6 +120,7 @@
     <string name="nostradamus_explanation">در شب معارفه، سه نفر را انتخاب می‌کنی تا گرداننده به تو بگوید چند نفر از آن‌ها مافیا هستند. پدرخوانده در شمارش مافیا حساب نمی‌شود.</string>
     <string name="joker_explanation">در شب نقشی نداری. اگر در روز با رأی بقیه حذف شوی، برنده بازی می‌شوی.</string>
     <string name="gunsmith_explanation">هر شب به دو نفر تفنگ می‌دهد. تفنگ‌ها ممکن است مشقی یا واقعی باشند و فقط یک‌بار در روز قابل شلیک‌اند.</string>
+    <string name="ranger_explanation">    اگر هدف مافیا باشد، می‌تواند شلیک کند. با زدن مافیا زنده می‌ماند، با زدن شهروند حذف می‌شود.</string>
 
 
     <string name="card_bracelet">دستبند</string>

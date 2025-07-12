@@ -12,6 +12,7 @@ data class RoleDescriptor(
     val nightActionRequiredPicks: Int,
     val instantAction: InstantAction?,
     val maxAbilityUses: Int,
+    val triggersWhenTargetedBy: List<String>
 )
 
 enum class Alignment { Mafia, Civilian, Neutral }

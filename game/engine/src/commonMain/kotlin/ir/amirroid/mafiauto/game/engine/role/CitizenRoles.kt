@@ -145,3 +145,14 @@ data object Gunsmith : Role {
         return StringResourcesMessage(Resources.strings.gunsmithInfo)
     }
 }
+
+data object Ranger : Role {
+    override val key = RoleKeys.RANGER
+    override val name = Resources.strings.ranger
+    override val explanation = Resources.strings.rangerExplanation
+    override val alignment = Alignment.Civilian
+    override val triggersWhenTargetedBy: List<String>
+        get() = listOf(RoleKeys.GOD_FATHER)
+
+    override fun getNightAction(): RoleAction = RangerReactiveAction
+}

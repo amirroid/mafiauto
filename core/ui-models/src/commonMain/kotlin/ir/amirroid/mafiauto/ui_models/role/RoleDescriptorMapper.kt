@@ -13,5 +13,6 @@ fun RoleDescriptor.toUiModel() = RoleUiModel(
     isOptionalAbility = isOptionalAbility,
     nightActionRequiredPicks = nightActionRequiredPicks,
     instantAction = instantAction,
-    maxAbilityUses = maxAbilityUses
+    maxAbilityUses = maxAbilityUses,
+    triggersWhenTargetedBy = triggersWhenTargetedBy
 )

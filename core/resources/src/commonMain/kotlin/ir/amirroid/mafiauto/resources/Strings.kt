@@ -102,6 +102,7 @@ object Strings {
     val mayor = Res.string.mayor
     val nostradamus = Res.string.nostradamus
     val gunsmith = Res.string.gunsmith
+    val ranger = Res.string.ranger
 
     // Errors
     val defaultNetworkError = Res.string.network_error_default
@@ -124,6 +125,7 @@ object Strings {
     val jokerExplanation = Res.string.joker_explanation
     val surgeonExplanation = Res.string.surgeon_explanation
     val gunsmithExplanation = Res.string.gunsmith_explanation
+    val rangerExplanation = Res.string.ranger_explanation
 
     val authenticationLastCardExplanation = Res.string.authentication_last_card_explanation
     val braceletLastCardExplanation = Res.string.bracelet_last_card_explanation

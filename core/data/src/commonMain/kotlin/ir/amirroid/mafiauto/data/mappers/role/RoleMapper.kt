@@ -15,7 +15,8 @@ fun Role.toDescriptor(): RoleDescriptor {
         isOptionalAbility = isOptionalAbility,
         nightActionRequiredPicks = nightActionRequiredPicks,
         instantAction = instantActionType?.let { InstantAction.valueOf(it.name) },
-        maxAbilityUses = maxAbilityUses
+        maxAbilityUses = maxAbilityUses,
+        triggersWhenTargetedBy = triggersWhenTargetedBy
     )
 }
 

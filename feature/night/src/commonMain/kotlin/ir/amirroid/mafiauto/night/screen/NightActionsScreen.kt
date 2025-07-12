@@ -113,12 +113,19 @@ fun NightActionsScreen(
                 val playerOptions = options[index]
                 val currentPlayerSelectedTargets =
                     selectedPlayers[playerOptions.player] ?: emptyImmutableList()
+
+                val canTrigger = remember(selectedPlayers) {
+                    canRoleTriggerFromSelectedPlayers(
+                        currentPlayer = playerOptions.player,
+                        selectedPlayers = selectedPlayers.toList()
+                    )
+                }
                 SelectOptionPlayersList(
                     playerOptions = playerOptions,
                     selectedPlayers = currentPlayerSelectedTargets,
                     onSelect = { target -> viewModel.togglePlayer(playerOptions, target) },
                     contentPadding = paddingValues,
-                    enabled = !disablePlayerIdSelections.contains(playerOptions.key) && playerOptions.player.role.nightActionRequiredPicks != currentPlayerSelectedTargets.size
+                    enabled = !disablePlayerIdSelections.contains(playerOptions.key) && playerOptions.player.role.nightActionRequiredPicks != currentPlayerSelectedTargets.size && canTrigger
                 )
             }
         }
@@ -127,8 +134,14 @@ fun NightActionsScreen(
         val nextEnabled =
             selectedPlayers[currentPlayerRole]?.size == currentPlayerRole.role.nightActionRequiredPicks ||
                     currentPlayerOptions.canUseAbilityToNight.not() || currentPlayerRole.role.isOptionalAbility
+        val canTrigger = remember(selectedPlayers, currentPlayerOptions) {
+            canRoleTriggerFromSelectedPlayers(
+                currentPlayer = currentPlayerOptions.player,
+                selectedPlayers = selectedPlayers.toList()
+            )
+        }
         BottomBar(
-            enabledNext = nextEnabled && enabledNextButton,
+            enabledNext = (nextEnabled && enabledNextButton) || canTrigger.not(),
             enabledPreviews = pagerState.currentPage > 0,
             onNext = {
                 scope.launch {
@@ -165,6 +178,22 @@ fun NightActionsScreen(
                 .navigationBarsPadding()
         )
     }
+}
+
+private fun canRoleTriggerFromSelectedPlayers(
+    currentPlayer: PlayerWithRoleUiModel,
+    selectedPlayers: List<Pair<PlayerWithRoleUiModel, ImmutableList<PlayerWithRoleUiModel>>>
+): Boolean {
+    val role = currentPlayer.role
+
+    if (role.triggersWhenTargetedBy.isEmpty()) return true
+
+    val targetedByKeys = selectedPlayers.mapNotNull { (attacker, targets) ->
+        val isTargeted = targets.any { it.player.id == currentPlayer.player.id }
+        if (isTargeted) attacker.role.key else null
+    }
+
+    return role.triggersWhenTargetedBy.all { it in targetedByKeys }
 }
 
 suspend fun performInstantActionForCurrentPage(
