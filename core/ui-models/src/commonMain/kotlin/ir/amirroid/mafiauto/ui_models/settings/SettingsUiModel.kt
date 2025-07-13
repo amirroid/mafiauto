@@ -18,5 +18,6 @@ enum class Language(
 data class SettingsUiModel(
     val language: Language,
     val languageCode: String,
-    val theme: AppThemeUiModel
+    val theme: AppThemeUiModel,
+    val iconColor: String
 )

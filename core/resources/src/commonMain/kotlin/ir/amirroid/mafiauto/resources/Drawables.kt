@@ -7,6 +7,5 @@ object Drawables {
     val backgroundBlue = Res.drawable.bg_blue
     val backgroundGreen = Res.drawable.bg_green
 
-
     val gun = Res.drawable.ic_gun
 }

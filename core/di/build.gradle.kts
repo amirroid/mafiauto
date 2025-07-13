@@ -20,6 +20,7 @@ kotlin.sourceSets.commonMain {
             ProjectPaths.engine,
             ProjectPaths.domain,
             ProjectPaths.data,
+            ProjectPaths.compat,
             ProjectPaths.database,
             ProjectPaths.network,
             ProjectPaths.updateChcker,

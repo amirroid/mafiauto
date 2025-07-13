@@ -6,5 +6,6 @@ import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
 fun Settings.toUiModel() = SettingsUiModel(
     language = Language.valueOf(language.name),
     languageCode = language.languageCode,
-    theme = AppThemeUiModel.valueOf(theme.name)
+    theme = AppThemeUiModel.valueOf(theme.name),
+    iconColor = iconColor
 )

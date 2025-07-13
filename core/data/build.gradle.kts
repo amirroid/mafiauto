@@ -11,6 +11,7 @@ kotlin {
             dependencies {
                 implementation(project(ProjectPaths.engine))
                 implementation(project(ProjectPaths.database))
+                implementation(project(ProjectPaths.compat))
                 implementation(project(ProjectPaths.domain))
                 implementation(project(ProjectPaths.preferences))
                 implementation(project(ProjectPaths.network))

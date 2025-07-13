@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.di
 
 import ir.amirroid.mafiauot.preferences.di.preferencesModule
+import ir.amirroid.mafiauto.compat.compatModule
 import ir.amirroid.mafiauto.database.di.databaseModule
 import ir.amirroid.mafiauto.di.modules.dispatcherModule
 import ir.amirroid.mafiauto.di.modules.jsonModule
@@ -28,6 +29,7 @@ object DependencyInjectionConfiguration {
                 databaseModule,
                 gameEngineModule,
                 preferencesModule,
+                compatModule
             )
         }
     }

@@ -72,6 +72,7 @@
     <string name="app_up_to_date">Your app is the latest version and does not require an update.</string>
     <string name="bullet_blank">The bullet was a blank</string>
     <string name="gun_shot">Gunshot</string>
+    <string name="icon_color">Icon color</string>
 
     <string name="green">Green</string>
     <string name="red">Red</string>
