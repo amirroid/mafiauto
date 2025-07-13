@@ -24,8 +24,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun MLoading(
     size: Dp = 48.dp,
-    shape: Shape
-    = AppTheme.shapes.medium,
+    shape: Shape = AppTheme.shapes.medium,
     color: Color = AppTheme.colorScheme.primary,
     eachAnimationTime: Int = 500,
     delayBetweenAnimations: Int = 300,

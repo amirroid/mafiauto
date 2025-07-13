@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ir.amirroid.mafiauto.domain.model.settings.Settings
 import ir.amirroid.mafiauto.domain.usecase.settings.GetSettingsConfigurationUseCase
 import ir.amirroid.mafiauto.ui_models.settings.toUiModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -12,6 +13,6 @@ class AppViewModel(
     getSettingsConfigurationUseCase: GetSettingsConfigurationUseCase
 ) : ViewModel() {
     val settingsConfiguration = getSettingsConfigurationUseCase()
-        .map { it?.toUiModel() }
+        .map { (it ?: Settings.defaultSettings).toUiModel() }
         .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 }

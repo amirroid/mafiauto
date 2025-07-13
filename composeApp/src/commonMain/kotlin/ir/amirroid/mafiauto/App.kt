@@ -1,5 +1,7 @@
 package ir.amirroid.mafiauto
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -7,9 +9,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ir.amirroid.mafiauto.common.compose.components.ScreenContent
 import ir.amirroid.mafiauto.common.compose.utils.LocaleUtils
+import ir.amirroid.mafiauto.design_system.components.loading.MLoading
 import ir.amirroid.mafiauto.design_system.components.snakebar.MSnackBarHost
 import ir.amirroid.mafiauto.theme.theme.MafiautoTheme
 import ir.amirroid.mafiauto.navigation.MainNavigation
@@ -21,10 +27,20 @@ fun App() {
     val viewModel: AppViewModel = koinViewModel()
     val configuration by viewModel.settingsConfiguration.collectAsStateWithLifecycle()
 
-    HandleAppLanguage(configuration) {
-        MafiautoTheme(theme = configuration?.theme) {
-            MSnackBarHost {
-                MainNavigation()
+    if (configuration == null) {
+        MafiautoTheme(null) {
+            ScreenContent {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    MLoading()
+                }
+            }
+        }
+    } else {
+        HandleAppLanguage(configuration) {
+            MafiautoTheme(theme = configuration!!.theme) {
+                MSnackBarHost {
+                    MainNavigation()
+                }
             }
         }
     }
