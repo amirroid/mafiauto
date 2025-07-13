@@ -28,13 +28,7 @@ fun App() {
     val configuration by viewModel.settingsConfiguration.collectAsStateWithLifecycle()
 
     if (configuration == null) {
-        MafiautoTheme(null) {
-            ScreenContent {
-                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    MLoading()
-                }
-            }
-        }
+        LoadingContent()
     } else {
         HandleAppLanguage(configuration) {
             MafiautoTheme(theme = configuration!!.theme) {
@@ -50,14 +44,31 @@ fun App() {
 private fun HandleAppLanguage(configuration: SettingsUiModel?, content: @Composable () -> Unit) {
     val initialLayoutDirection = LocalLayoutDirection.current
     var currentLayoutDirection by remember { mutableStateOf(initialLayoutDirection) }
+    var isLocaleSet by remember { mutableStateOf(false) }
 
     LaunchedEffect(configuration) {
         LocaleUtils.setDefaultLanguage(configuration?.languageCode ?: return@LaunchedEffect)
         currentLayoutDirection = configuration.language.layoutDirection
+        isLocaleSet = true
     }
 
-    CompositionLocalProvider(
-        LocalLayoutDirection provides currentLayoutDirection,
-        content = content
-    )
+    if (isLocaleSet) {
+        CompositionLocalProvider(
+            LocalLayoutDirection provides currentLayoutDirection,
+            content = content
+        )
+    } else {
+        LoadingContent()
+    }
+}
+
+@Composable
+private fun LoadingContent() {
+    MafiautoTheme(null) {
+        ScreenContent {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                MLoading()
+            }
+        }
+    }
 }
