@@ -6,5 +6,36 @@
         <true />
         <key>CFBundleShortVersionString</key>
         <string>1.0.2</string>
+        <key>CFBundleAlternateIcons</key>
+        <dict>
+            <key>red</key>
+            <dict>
+                <key>CFBundleIconFiles</key>
+                <array>
+                    <string>RedIcon</string>
+                </array>
+                <key>UIPrerenderedIcon</key>
+                <false/>
+            </dict>
+            <key>blue</key>
+            <dict>
+                <key>CFBundleIconFiles</key>
+                <array>
+                    <string>BlueIcon</string>
+                </array>
+                <key>UIPrerenderedIcon</key>
+                <false/>
+            </dict>
+            <key>green</key>
+            <dict>
+                <key>CFBundleIconFiles</key>
+                <array>
+                    <string>GreenIcon</string>
+                </array>
+                <key>UIPrerenderedIcon</key>
+                <false/>
+            </dict>
+        </dict>
+
     </dict>
 </plist>

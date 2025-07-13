@@ -29,6 +29,7 @@ object ProjectPaths {
     // Shared
     const val markdown = ":shared:markdown"
     const val navigation = ":shared:navigation"
+    const val compat = ":shared:compat"
 
     // Engine
     const val engine = ":game:engine"

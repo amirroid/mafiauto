@@ -49,4 +49,5 @@ val useCaseModule = module {
     factoryOf(::DeleteGroupUseCase)
     factoryOf(::GetLatestUpdateInfoUseCase)
     factoryOf(::ApplyPlayerEffectUseCase)
+    factoryOf(::SaveSelectedIconColorUseCase)
 }

@@ -49,6 +49,7 @@ include(":core:common:app")
 
 include(":shared:markdown")
 include(":shared:navigation")
+include(":shared:compat")
 
 include(":game:engine")
 

@@ -6,8 +6,10 @@ import ir.amirroid.mafiauto.common.app.response.Response
 import ir.amirroid.mafiauto.common.app.response.map
 import ir.amirroid.mafiauto.domain.model.settings.Settings
 import ir.amirroid.mafiauto.domain.usecase.settings.GetSettingsConfigurationUseCase
+import ir.amirroid.mafiauto.domain.usecase.settings.SaveSelectedIconColorUseCase
 import ir.amirroid.mafiauto.domain.usecase.settings.SetSettingsConfigurationUseCase
 import ir.amirroid.mafiauto.domain.usecase.update.GetLatestUpdateInfoUseCase
+import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
 import ir.amirroid.mafiauto.ui_models.error.ErrorUiModel
 import ir.amirroid.mafiauto.ui_models.error.mapErrors
 import ir.amirroid.mafiauto.ui_models.settings.SettingsUiModel
@@ -28,6 +30,7 @@ class SettingsViewModel(
     getSettingsConfigurationUseCase: GetSettingsConfigurationUseCase,
     private val setSettingsConfigurationUseCase: SetSettingsConfigurationUseCase,
     private val getLatestUpdateInfoUseCase: GetLatestUpdateInfoUseCase,
+    private val saveSelectedIconColorUseCase: SaveSelectedIconColorUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _updateInfo =
@@ -41,7 +44,14 @@ class SettingsViewModel(
 
 
     fun updateConfigurations(newConfig: SettingsUiModel) = viewModelScope.launch(dispatcher) {
+        if (newConfig.theme != settingsConfiguration.value.theme) {
+            updateIconColor(newConfig.theme)
+        }
         setSettingsConfigurationUseCase(newConfig.toDomain())
+    }
+
+    private fun updateIconColor(theme: AppThemeUiModel) {
+        saveSelectedIconColorUseCase.invoke(theme.colorName)
     }
 
     fun fetchUpdateInfo() = viewModelScope.launch(dispatcher) {
