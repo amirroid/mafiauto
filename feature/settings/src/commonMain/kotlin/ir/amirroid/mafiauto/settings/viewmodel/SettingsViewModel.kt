@@ -47,7 +47,8 @@ class SettingsViewModel(
         setSettingsConfigurationUseCase(newConfig.toDomain())
     }
 
-    fun updateIconColor(colorName: String) {
+    fun updateIconColor(colorName: String) = viewModelScope.launch(dispatcher) {
+        updateConfigurations(settingsConfiguration.value.copy(iconColor = colorName))
         saveSelectedIconColorUseCase.invoke(colorName)
     }
 

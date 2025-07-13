@@ -121,9 +121,7 @@ fun SettingsConfiguration(
                 MSegmentedButton(
                     items = AppThemeUiModel.entries,
                     onClick = onSelectTheme,
-                    selectedItem = remember(configuration.iconColor) {
-                        AppThemeUiModel.entries.first { it.colorName == configuration.iconColor }
-                    },
+                    selectedItem = configuration.theme,
                     modifier = Modifier.fillMaxWidth()
                 ) { theme ->
                     Row(
@@ -148,7 +146,9 @@ fun SettingsConfiguration(
                 MSegmentedButton(
                     items = AppThemeUiModel.entries,
                     onClick = { onChangeIconColor.invoke(it.colorName) },
-                    selectedItem = configuration.theme,
+                    selectedItem = remember(configuration.iconColor) {
+                        AppThemeUiModel.entries.first { it.colorName == configuration.iconColor }
+                    },
                     modifier = Modifier.fillMaxWidth()
                 ) { theme ->
                     Row(
