@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -71,6 +72,7 @@ fun SettingsScreen(
             onSelectTheme = { viewModel.updateConfigurations(configuration.copy(theme = it)) },
             onOpenLibraries = onOpenLibraries,
             onCheckUpdate = viewModel::fetchUpdateInfo,
+            onChangeIconColor = viewModel::updateIconColor,
             contentPadding = paddingValues + defaultContentPadding(),
             fetchingUpdateInfo = updateInfoResponse is Response.Loading
         )
@@ -90,6 +92,7 @@ fun SettingsConfiguration(
     configuration: SettingsUiModel,
     onSelectLanguage: (Language) -> Unit,
     onSelectTheme: (AppThemeUiModel) -> Unit,
+    onChangeIconColor: (String) -> Unit,
     onCheckUpdate: () -> Unit,
     onOpenLibraries: () -> Unit,
     fetchingUpdateInfo: Boolean,
@@ -118,7 +121,9 @@ fun SettingsConfiguration(
                 MSegmentedButton(
                     items = AppThemeUiModel.entries,
                     onClick = onSelectTheme,
-                    selectedItem = configuration.theme,
+                    selectedItem = remember(configuration.iconColor) {
+                        AppThemeUiModel.entries.first { it.colorName == configuration.iconColor }
+                    },
                     modifier = Modifier.fillMaxWidth()
                 ) { theme ->
                     Row(
@@ -132,6 +137,24 @@ fun SettingsConfiguration(
                                 shape = CircleShape
                             ).clip(CircleShape).size(16.dp).background(theme.scheme.primary)
                         )
+                        MText(stringResource(theme.displayName))
+                    }
+                }
+            }
+        }
+        item("icon") {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                MText(stringResource(Resources.strings.iconColor))
+                MSegmentedButton(
+                    items = AppThemeUiModel.entries,
+                    onClick = { onChangeIconColor.invoke(it.colorName) },
+                    selectedItem = configuration.theme,
+                    modifier = Modifier.fillMaxWidth()
+                ) { theme ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
                         MText(stringResource(theme.displayName))
                     }
                 }

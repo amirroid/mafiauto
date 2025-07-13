@@ -13,5 +13,6 @@ enum class Theme {
 @Serializable
 data class SettingsConfig(
     val language: Language,
-    val theme: Theme
+    val theme: Theme,
+    val iconColor: String
 )

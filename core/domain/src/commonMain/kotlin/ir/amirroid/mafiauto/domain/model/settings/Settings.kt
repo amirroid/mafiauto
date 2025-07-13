@@ -15,7 +15,8 @@ enum class Theme {
 
 data class Settings(
     val language: Language,
-    val theme: Theme
+    val theme: Theme,
+    val iconColor: String
 ) {
     companion object {
         val defaultSettings by lazy {
@@ -23,7 +24,8 @@ data class Settings(
             Settings(
                 language = Language.entries.find { it.languageCode == currentLanguage }
                     ?: Language.ENGLISH,
-                theme = Theme.RED
+                theme = Theme.RED,
+                iconColor = "red"
             )
         }
     }

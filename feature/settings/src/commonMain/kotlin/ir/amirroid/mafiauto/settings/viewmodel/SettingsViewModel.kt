@@ -44,14 +44,11 @@ class SettingsViewModel(
 
 
     fun updateConfigurations(newConfig: SettingsUiModel) = viewModelScope.launch(dispatcher) {
-        if (newConfig.theme != settingsConfiguration.value.theme) {
-            updateIconColor(newConfig.theme)
-        }
         setSettingsConfigurationUseCase(newConfig.toDomain())
     }
 
-    private fun updateIconColor(theme: AppThemeUiModel) {
-        saveSelectedIconColorUseCase.invoke(theme.colorName)
+    fun updateIconColor(colorName: String) {
+        saveSelectedIconColorUseCase.invoke(colorName)
     }
 
     fun fetchUpdateInfo() = viewModelScope.launch(dispatcher) {
