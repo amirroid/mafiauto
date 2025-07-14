@@ -63,6 +63,7 @@
     <string name="language">Language</string>
     <string name="persian">Persian</string>
     <string name="english">English</string>
+    <string name="french">French</string>
     <string name="view_source">View source on GitHub</string>
     <string name="open_source_libraries">Open source libraries</string>
     <string name="version">Version: %1$s</string>

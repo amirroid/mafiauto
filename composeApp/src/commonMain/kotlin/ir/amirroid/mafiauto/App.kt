@@ -14,11 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.amirroid.mafiauto.common.compose.components.ScreenContent
+import ir.amirroid.mafiauto.common.compose.locales.LocalLocalization
 import ir.amirroid.mafiauto.common.compose.utils.LocaleUtils
 import ir.amirroid.mafiauto.design_system.components.loading.MLoading
 import ir.amirroid.mafiauto.design_system.components.snakebar.MSnackBarHost
-import ir.amirroid.mafiauto.theme.theme.MafiautoTheme
 import ir.amirroid.mafiauto.navigation.MainNavigation
+import ir.amirroid.mafiauto.theme.theme.MafiautoTheme
 import ir.amirroid.mafiauto.ui_models.settings.SettingsUiModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -45,18 +46,21 @@ private fun HandleAppLanguage(configuration: SettingsUiModel?, content: @Composa
     val initialLayoutDirection = LocalLayoutDirection.current
     var currentLayoutDirection by remember { mutableStateOf(initialLayoutDirection) }
     var isLocaleSet by remember { mutableStateOf(false) }
+    var currentLanguage by remember { mutableStateOf(configuration?.languageCode ?: "en") }
 
     LaunchedEffect(configuration) {
         LocaleUtils.setDefaultLanguage(configuration?.languageCode ?: return@LaunchedEffect)
         currentLayoutDirection = configuration.language.layoutDirection
+        currentLanguage = configuration.languageCode
         isLocaleSet = true
     }
-
     if (isLocaleSet) {
         CompositionLocalProvider(
             LocalLayoutDirection provides currentLayoutDirection,
-            content = content
-        )
+            LocalLocalization provides currentLanguage
+        ) {
+            content.invoke()
+        }
     } else {
         LoadingContent()
     }

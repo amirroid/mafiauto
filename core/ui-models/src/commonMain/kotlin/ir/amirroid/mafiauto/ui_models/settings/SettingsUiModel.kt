@@ -11,6 +11,7 @@ enum class Language(
     val layoutDirection: LayoutDirection = LayoutDirection.Ltr,
 ) {
     ENGLISH(Resources.strings.english),
+    FRENCH(Resources.strings.french),
     PERSIAN(Resources.strings.persian, LayoutDirection.Rtl)
 }
 
