@@ -64,6 +64,7 @@
     <string name="persian">Persan</string>
     <string name="english">Anglais</string>
     <string name="french">Français</string>
+    <string name="arabic">Arabe</string>
     <string name="view_source">Voir le code source sur GitHub</string>
     <string name="open_source_libraries">Bibliothèques open source</string>
     <string name="version">Version : %1$s</string>

@@ -63,7 +63,8 @@
     <string name="language">زبان</string>
     <string name="persian">فارسی</string>
     <string name="english">انگلیسی</string>
-    <string name="french">French</string>
+    <string name="french">فرانسوی</string>
+    <string name="arabic">عربی</string>
     <string name="view_source">مشاهدهٔ سورس در گیت‌هاب</string>
     <string name="open_source_libraries">کتابخانه‌های متن‌باز</string>
     <string name="version">نسخه: %1$s</string>

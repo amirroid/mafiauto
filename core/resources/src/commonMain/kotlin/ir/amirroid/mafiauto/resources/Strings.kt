@@ -62,6 +62,7 @@ object Strings {
     val settings = Res.string.settings
     val language = Res.string.language
     val persian = Res.string.persian
+    val arabic = Res.string.arabic
     val english = Res.string.english
     val french = Res.string.french
     val viewSource = Res.string.view_source

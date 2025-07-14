@@ -3,7 +3,7 @@ package ir.amirroid.mafiauot.preferences.models
 import kotlinx.serialization.Serializable
 
 enum class Language {
-    ENGLISH, PERSIAN, FRENCH
+    ENGLISH, PERSIAN, FRENCH, ARABIC
 }
 
 enum class Theme {
