@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import ir.amirroid.mafiauto.design_system.components.surface.MSurface
 import ir.amirroid.mafiauto.theme.locales.LocalContentColor
@@ -60,6 +61,60 @@ fun MTextField(
                 ) {
                     Box {
                         if (placeholder != null && value.isEmpty()) {
+                            CompositionLocalProvider(
+                                LocalContentColor provides colors.placeholderColor
+                            ) {
+                                placeholder.invoke()
+                            }
+                        }
+                        content.invoke()
+                    }
+                }
+            }
+        }
+    )
+}
+
+@Composable
+fun MTextField(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    modifier: Modifier = Modifier,
+    placeholder: (@Composable () -> Unit)? = null,
+    minHeight: Dp = TextFieldsDefaults.minHeight,
+    colors: TextFieldColors = TextFieldsDefaults.filledTextFieldColors,
+    interactionSource: MutableInteractionSource? = null,
+    borderWidth: Dp = TextFieldsDefaults.defaultBorderWidth,
+    contentPadding: PaddingValues = TextFieldsDefaults.defaultContentPadding,
+    shape: Shape = TextFieldsDefaults.defaultShape,
+    singleLine: Boolean = false,
+    maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
+    minLines: Int = 1,
+) {
+    BasicTextField(
+        value = value,
+        onValueChange = onValueChange,
+        interactionSource = interactionSource,
+        singleLine = singleLine,
+        maxLines = maxLines,
+        minLines = minLines,
+        modifier = modifier.heightIn(min = minHeight),
+        textStyle = LocalTextStyle.current.copy(color = colors.contentColor),
+        cursorBrush = SolidColor(colors.cursorColor),
+        decorationBox = { content ->
+            MSurface(
+                modifier = Modifier.fillMaxWidth(),
+                color = colors.containerColor,
+                contentColor = colors.contentColor,
+                border = BorderStroke(borderWidth, colors.borderColor),
+                shape = shape
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(contentPadding),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box {
+                        if (placeholder != null && value.text.isEmpty()) {
                             CompositionLocalProvider(
                                 LocalContentColor provides colors.placeholderColor
                             ) {

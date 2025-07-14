@@ -4,12 +4,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
+import ir.amirroid.mafiauto.common.compose.extensions.requestFocusCaching
 import ir.amirroid.mafiauto.design_system.components.button.MButton
 import ir.amirroid.mafiauto.design_system.components.dialog.MDialog
 import ir.amirroid.mafiauto.design_system.components.field.MTextField
@@ -27,6 +31,11 @@ fun AddNewGroupDialog(
     var visible by remember { mutableStateOf(true) }
     var groupName by remember { mutableStateOf("") }
 
+    val focusRequester = remember { FocusRequester() }
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocusCaching()
+    }
+
     MDialog(
         isVisible = visible,
         onDismissRequest = onDismissRequest
@@ -38,7 +47,7 @@ fun AddNewGroupDialog(
             MTextField(
                 value = groupName,
                 onValueChange = { groupName = it },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                 placeholder = { MText(stringResource(Resources.strings.groupName)) },
                 singleLine = true,
                 colors = TextFieldsDefaults.outlinedTextFieldColors
