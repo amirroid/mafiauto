@@ -6,7 +6,7 @@ import ir.amirroid.mafiauto.common.compose.utils.LocaleUtils
 enum class Language(
     val languageCode: String
 ) {
-    ENGLISH("en"), PERSIAN("fa"), FRENCH("fr")
+    ENGLISH("en"), PERSIAN("fa"), FRENCH("fr"), ARABIC("ar")
 }
 
 enum class Theme {

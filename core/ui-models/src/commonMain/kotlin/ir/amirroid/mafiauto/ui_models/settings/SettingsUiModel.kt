@@ -12,7 +12,8 @@ enum class Language(
 ) {
     ENGLISH(Resources.strings.english),
     FRENCH(Resources.strings.french),
-    PERSIAN(Resources.strings.persian, LayoutDirection.Rtl)
+    PERSIAN(Resources.strings.persian, LayoutDirection.Rtl),
+    ARABIC(Resources.strings.arabic, LayoutDirection.Rtl)
 }
 
 @Immutable
