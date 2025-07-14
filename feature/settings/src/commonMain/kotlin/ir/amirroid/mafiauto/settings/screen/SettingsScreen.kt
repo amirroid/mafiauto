@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.settings.screen
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,8 +28,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.amirroid.mafiauto.common.app.response.Response
 import ir.amirroid.mafiauto.common.app.response.onError
@@ -45,6 +55,7 @@ import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.settings.dialog.NewUpdateBottomSheet
 import ir.amirroid.mafiauto.settings.viewmodel.SettingsViewModel
 import ir.amirroid.mafiauto.theme.core.AppTheme
+import ir.amirroid.mafiauto.theme.core.ColorScheme
 import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
 import ir.amirroid.mafiauto.theme.utils.CutRoundedCornerShape
 import ir.amirroid.mafiauto.ui_models.icon.AppIconUiModel
@@ -132,13 +143,7 @@ fun SettingsConfiguration(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Box(
-                            Modifier.border(
-                                1.dp,
-                                AppTheme.colorScheme.background,
-                                shape = CircleShape
-                            ).clip(CircleShape).size(16.dp).background(theme.scheme.primary)
-                        )
+                        ThemeSchemePreview(theme.scheme)
                         MText(stringResource(theme.displayName))
                     }
                 }
@@ -256,5 +261,29 @@ private fun LanguageSelector(
         ) { language ->
             MText(text = stringResource(language.displayName))
         }
+    }
+}
+
+
+@Composable
+fun ThemeSchemePreview(scheme: ColorScheme, strokeWidth: Dp = 1.dp) {
+    Canvas(Modifier.size(16.dp)) {
+        val strokeWidthPx = strokeWidth.toPx()
+        drawCircle(scheme.primary)
+        drawCircle(
+            color = scheme.onPrimary,
+            style = Stroke(strokeWidthPx)
+        )
+        val circlePath = Path().apply {
+            addArc(
+                oval = Rect(
+                    Offset(strokeWidthPx.times(2), strokeWidthPx.times(2)),
+                    Size(size.width - strokeWidthPx.times(4), size.height - strokeWidthPx.times(4))
+                ),
+                -90f,
+                190f
+            )
+        }
+        drawPath(circlePath, scheme.onPrimary)
     }
 }
