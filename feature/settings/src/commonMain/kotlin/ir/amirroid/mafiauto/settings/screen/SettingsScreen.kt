@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.settings.screen
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -46,9 +47,11 @@ import ir.amirroid.mafiauto.settings.viewmodel.SettingsViewModel
 import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
 import ir.amirroid.mafiauto.theme.utils.CutRoundedCornerShape
+import ir.amirroid.mafiauto.ui_models.icon.AppIconUiModel
 import ir.amirroid.mafiauto.ui_models.settings.Language
 import ir.amirroid.mafiauto.ui_models.settings.SettingsUiModel
 import kotlinx.collections.immutable.toImmutableList
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -98,7 +101,7 @@ fun SettingsConfiguration(
     configuration: SettingsUiModel,
     onSelectLanguage: (Language) -> Unit,
     onSelectTheme: (AppThemeUiModel) -> Unit,
-    onChangeIconColor: (String) -> Unit,
+    onChangeIconColor: (AppIconUiModel) -> Unit,
     onCheckUpdate: () -> Unit,
     onOpenLibraries: () -> Unit,
     fetchingUpdateInfo: Boolean,
@@ -145,18 +148,21 @@ fun SettingsConfiguration(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 MText(stringResource(Resources.strings.iconColor))
                 MSegmentedButton(
-                    items = AppThemeUiModel.entries,
-                    onClick = { onChangeIconColor.invoke(it.colorName) },
-                    selectedItem = remember(configuration.iconColor) {
-                        AppThemeUiModel.entries.first { it.colorName == configuration.iconColor }
-                    },
+                    items = AppIconUiModel.entries,
+                    onClick = onChangeIconColor,
+                    selectedItem = configuration.iconColor,
                     modifier = Modifier.fillMaxWidth()
-                ) { theme ->
+                ) { iconInfo ->
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        MText(stringResource(theme.displayName))
+                        Image(
+                            painter = painterResource(iconInfo.icon),
+                            contentDescription = null,
+                            modifier = Modifier.clip(AppTheme.shapes.small).size(20.dp)
+                        )
+                        MText(stringResource(iconInfo.displayName))
                     }
                 }
             }

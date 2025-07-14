@@ -1,14 +1,11 @@
 package ir.amirroid.mafiauto.design_system.components.segmented_button
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +36,8 @@ fun <T> MSegmentedButton(
                 AppTheme.colorScheme.primary,
                 shape = shape
             )
-            .clip(shape)
+            .clip(shape),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         items.forEachIndexed { index, item ->
             val selected = selectedItem == item
@@ -59,12 +57,6 @@ fun <T> MSegmentedButton(
                 ) {
                     content.invoke(item)
                 }
-            }
-            if (index != items.size - 1) {
-                Box(
-                    Modifier.fillMaxHeight().width(borderWidth)
-                        .background(AppTheme.colorScheme.primary)
-                )
             }
         }
     }

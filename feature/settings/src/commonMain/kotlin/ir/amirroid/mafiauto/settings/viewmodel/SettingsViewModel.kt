@@ -12,6 +12,7 @@ import ir.amirroid.mafiauto.domain.usecase.update.GetLatestUpdateInfoUseCase
 import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
 import ir.amirroid.mafiauto.ui_models.error.ErrorUiModel
 import ir.amirroid.mafiauto.ui_models.error.mapErrors
+import ir.amirroid.mafiauto.ui_models.icon.AppIconUiModel
 import ir.amirroid.mafiauto.ui_models.settings.SettingsUiModel
 import ir.amirroid.mafiauto.ui_models.settings.toDomain
 import ir.amirroid.mafiauto.ui_models.settings.toUiModel
@@ -47,9 +48,9 @@ class SettingsViewModel(
         setSettingsConfigurationUseCase(newConfig.toDomain())
     }
 
-    fun updateIconColor(colorName: String) = viewModelScope.launch(dispatcher) {
-        updateConfigurations(settingsConfiguration.value.copy(iconColor = colorName))
-        saveSelectedIconColorUseCase.invoke(colorName)
+    fun updateIconColor(color: AppIconUiModel) = viewModelScope.launch(dispatcher) {
+        updateConfigurations(settingsConfiguration.value.copy(iconColor = color))
+        saveSelectedIconColorUseCase.invoke(color.colorName)
     }
 
     fun fetchUpdateInfo() = viewModelScope.launch(dispatcher) {

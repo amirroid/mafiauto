@@ -4,6 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.LayoutDirection
 import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
+import ir.amirroid.mafiauto.ui_models.icon.AppIconUiModel
 import org.jetbrains.compose.resources.StringResource
 
 enum class Language(
@@ -21,5 +22,5 @@ data class SettingsUiModel(
     val language: Language,
     val languageCode: String,
     val theme: AppThemeUiModel,
-    val iconColor: String
+    val iconColor: AppIconUiModel
 )
