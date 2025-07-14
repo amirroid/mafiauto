@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -44,6 +45,7 @@ import ir.amirroid.mafiauto.settings.dialog.NewUpdateBottomSheet
 import ir.amirroid.mafiauto.settings.viewmodel.SettingsViewModel
 import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
+import ir.amirroid.mafiauto.theme.utils.CutRoundedCornerShape
 import ir.amirroid.mafiauto.ui_models.settings.Language
 import ir.amirroid.mafiauto.ui_models.settings.SettingsUiModel
 import kotlinx.collections.immutable.toImmutableList
@@ -107,22 +109,11 @@ fun SettingsConfiguration(
         item("language") {
             Column {
                 MText(stringResource(Resources.strings.language))
-                val chuckedLanguages = remember {
-                    Language.entries.chunked(2).map { it.toImmutableList() }.toImmutableList()
-                }
                 Spacer(Modifier.height(8.dp))
-                chuckedLanguages.forEach { languages ->
-                    MSegmentedButton(
-                        items = languages,
-                        onClick = onSelectLanguage,
-                        selectedItem = configuration.language,
-                        modifier = Modifier.padding(top = 4.dp).fillMaxWidth(),
-                    ) { language ->
-                        MText(
-                            stringResource(language.displayName),
-                        )
-                    }
-                }
+                LanguageSelector(
+                    selectedLanguage = configuration.language,
+                    onLanguageSelected = onSelectLanguage
+                )
             }
         }
         item("theme") {
@@ -212,6 +203,52 @@ fun SettingsConfiguration(
                 style = AppTheme.typography.caption,
                 modifier = Modifier.alpha(.7f)
             )
+        }
+    }
+}
+
+@Composable
+private fun LanguageSelector(
+    selectedLanguage: Language,
+    onLanguageSelected: (Language) -> Unit
+) {
+    val chunkedLanguages = remember {
+        Language.entries.chunked(2).map { it.toImmutableList() }.toImmutableList()
+    }
+
+    val shapeTemplate = AppTheme.shapes.large
+    val smallCorner = CornerSize(4.dp)
+
+    chunkedLanguages.forEachIndexed { index, languages ->
+        val shape = when (index) {
+            0 -> shapeTemplate.copy(
+                bottomStart = smallCorner,
+                bottomEnd = smallCorner
+            )
+
+            chunkedLanguages.lastIndex -> shapeTemplate.copy(
+                topStart = smallCorner,
+                topEnd = smallCorner
+            )
+
+            else -> CutRoundedCornerShape(
+                topStart = smallCorner,
+                topEnd = smallCorner,
+                bottomStart = smallCorner,
+                bottomEnd = smallCorner
+            )
+        }
+
+        MSegmentedButton(
+            items = languages,
+            selectedItem = selectedLanguage,
+            onClick = onLanguageSelected,
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .fillMaxWidth(),
+            shape = shape
+        ) { language ->
+            MText(text = stringResource(language.displayName))
         }
     }
 }
