@@ -63,6 +63,7 @@ object Strings {
     val language = Res.string.language
     val persian = Res.string.persian
     val english = Res.string.english
+    val french = Res.string.french
     val viewSource = Res.string.view_source
     val openSourceLibraries = Res.string.open_source_libraries
     val version = Res.string.version
