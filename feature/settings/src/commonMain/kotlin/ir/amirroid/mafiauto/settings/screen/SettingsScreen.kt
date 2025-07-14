@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -43,6 +46,7 @@ import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
 import ir.amirroid.mafiauto.ui_models.settings.Language
 import ir.amirroid.mafiauto.ui_models.settings.SettingsUiModel
+import kotlinx.collections.immutable.toImmutableList
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -101,17 +105,23 @@ fun SettingsConfiguration(
     val uriHandler = LocalUriHandler.current
     LazyColumn(contentPadding = contentPadding, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item("language") {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column {
                 MText(stringResource(Resources.strings.language))
-                MSegmentedButton(
-                    items = Language.entries.sortedBy { it == configuration.language },
-                    onClick = onSelectLanguage,
-                    selectedItem = configuration.language,
-                    modifier = Modifier.fillMaxWidth()
-                ) { language ->
-                    MText(
-                        stringResource(language.displayName),
-                    )
+                val chuckedLanguages = remember {
+                    Language.entries.chunked(2).map { it.toImmutableList() }.toImmutableList()
+                }
+                Spacer(Modifier.height(8.dp))
+                chuckedLanguages.forEach { languages ->
+                    MSegmentedButton(
+                        items = languages,
+                        onClick = onSelectLanguage,
+                        selectedItem = configuration.language,
+                        modifier = Modifier.padding(top = 4.dp).fillMaxWidth(),
+                    ) { language ->
+                        MText(
+                            stringResource(language.displayName),
+                        )
+                    }
                 }
             }
         }
