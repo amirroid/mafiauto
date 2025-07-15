@@ -1,1 +1,3 @@
-ALTER TABLE Groups ADD COLUMN isPinned INTEGER NOT NULL DEFAULT 0;
+import kotlin.Boolean;
+
+ALTER TABLE Groups ADD COLUMN isPinned INTEGER AS Boolean NOT NULL DEFAULT 0;

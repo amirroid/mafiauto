@@ -31,6 +31,7 @@ sqldelight {
                 file("src/commonMain/sqldelight/${AppInfo.namespace.replace('.', '/')}")
             )
             verifyMigrations.set(true)
+            deriveSchemaFromMigrations.set(true)
         }
     }
 }
