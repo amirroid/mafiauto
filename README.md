@@ -15,7 +15,7 @@ so players can focus on the game itself.
 - Win detection and smooth transitions
 - Friendly and clean UI
 
-![Screenshots](assets/screenshots.png)
+![Screenshots](assets/screenshot.png)
 
 ## 📥 Download
 
