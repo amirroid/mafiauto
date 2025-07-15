@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -31,6 +33,7 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
 import ir.amirroid.mafiauto.common.compose.components.BackButton
+import ir.amirroid.mafiauto.common.compose.components.PinIcon
 import ir.amirroid.mafiauto.common.compose.components.swipe_to_dismiss.SwipeToDismissBox
 import ir.amirroid.mafiauto.common.compose.components.swipe_to_dismiss.SwipeToDismissBoxValue
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
@@ -42,11 +45,11 @@ import ir.amirroid.mafiauto.design_system.components.button.MFloatingActionButto
 import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.surface.MSurface
 import ir.amirroid.mafiauto.design_system.components.text.MText
-import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.groups.dialogs.AddNewGroupDialog
 import ir.amirroid.mafiauto.groups.viewmodel.GroupsViewModel
 import ir.amirroid.mafiauto.resources.Resources
-import ir.amirroid.mafiauto.ui_models.group.GroupWithPlayersUiModel
+import ir.amirroid.mafiauto.theme.core.AppTheme
+import ir.amirroid.mafiauto.ui_models.group_with_player.GroupWithPlayersUiModel
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -54,7 +57,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 fun GroupsScreen(
-    onSelectGroup: (groupId: Long, groupName: String) -> Unit,
+    onSelectGroup: (groupId: Long) -> Unit,
     onBack: () -> Unit,
     animatedContentScope: AnimatedContentScope,
     viewModel: GroupsViewModel = koinViewModel()
@@ -73,7 +76,7 @@ fun GroupsScreen(
         ) { paddingValues ->
             GroupsList(
                 groupsWithPlayers = groups,
-                onSelect = { onSelectGroup.invoke(it.groupId, it.groupName) },
+                onSelect = { onSelectGroup.invoke(it.groupId) },
                 modifier = Modifier.fillMaxSize(),
                 animatedContentScope = animatedContentScope,
                 onDelete = viewModel::deleteGroup,
@@ -149,7 +152,23 @@ fun GroupsList(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         modifier = Modifier.padding(12.dp).fillMaxWidth()
                     ) {
-                        MText(item.groupName, style = AppTheme.typography.h3)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            MText(
+                                item.groupName,
+                                style = AppTheme.typography.h3,
+                                modifier = Modifier.weight(1f)
+                            )
+                            if (item.isPinnedGroup) {
+                                PinIcon(
+                                    tint = AppTheme.colorScheme.primary,
+                                    isPinned = true,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
+                        }
                         MText(text = item.formatedPlayersList)
                     }
                 }

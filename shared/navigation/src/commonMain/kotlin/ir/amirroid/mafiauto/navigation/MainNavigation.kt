@@ -63,13 +63,8 @@ fun MainNavigation() {
                     GroupsScreen(
                         onBack = navController::navigateUp,
                         animatedContentScope = this,
-                        onSelectGroup = { id, name ->
-                            navController.navigateIfNotCurrent(
-                                Screen.Lobby(
-                                    groupId = id,
-                                    groupName = name
-                                )
-                            )
+                        onSelectGroup = { id ->
+                            navController.navigateIfNotCurrent(Screen.Lobby(groupId = id))
                         }
                     )
                 }
@@ -82,7 +77,6 @@ fun MainNavigation() {
                         )
                     ) {
                         LobbyScreen(
-                            groupName = it.toRoute<Screen.Lobby>().groupName,
                             onBack = navController::navigateUp,
                             onPickPlayers = { navController.navigateIfNotCurrent(Screen.AssignRoles) }
                         )

@@ -5,11 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.amirroid.mafiauto.domain.model.player.Player
 import ir.amirroid.mafiauto.domain.usecase.groups.EditGroupNameUseCase
+import ir.amirroid.mafiauto.domain.usecase.groups.GetGroupUseCase
+import ir.amirroid.mafiauto.domain.usecase.groups.UpdateGroupPinStateUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.AddPlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.GetAllPlayersUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.RemovePlayerUseCase
 import ir.amirroid.mafiauto.domain.usecase.player.SelectNewPlayersUseCase
 import ir.amirroid.mafiauto.intro.state.LobbyScreenState
+import ir.amirroid.mafiauto.ui_models.group.toUiModel
 import ir.amirroid.mafiauto.ui_models.player.PlayerUiModel
 import ir.amirroid.mafiauto.ui_models.player.toUiModel
 import kotlinx.collections.immutable.toImmutableList
@@ -28,6 +31,8 @@ class LobbyViewModel(
     private val selectNewPlayersUseCase: SelectNewPlayersUseCase,
     private val editGroupNameUseCase: EditGroupNameUseCase,
     private val dispatcher: CoroutineDispatcher,
+    private val getGroupUseCase: GetGroupUseCase,
+    private val updateGroupPinStateUseCase: UpdateGroupPinStateUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _state = MutableStateFlow(LobbyScreenState())
@@ -39,6 +44,15 @@ class LobbyViewModel(
 
     init {
         observePlayers()
+        observeToGroup()
+    }
+
+    private fun observeToGroup() = viewModelScope.launch(dispatcher) {
+        getGroupUseCase.invoke(groupId).distinctUntilChanged().collectLatest { newGroup ->
+            _state.update {
+                it.copy(group = newGroup.toUiModel())
+            }
+        }
     }
 
     private fun observePlayers() = viewModelScope.launch(dispatcher) {
@@ -102,6 +116,10 @@ class LobbyViewModel(
 
     fun updateGroupName(newName: String) = viewModelScope.launch(dispatcher) {
         editGroupNameUseCase.invoke(groupId, newName)
+    }
+
+    fun togglePinGroup() = viewModelScope.launch(dispatcher) {
+        updateGroupPinStateUseCase.invoke(groupId, isPinned = state.value.group.isPinned.not())
     }
 
     private fun List<Player>.toUiModels() = map { it.toUiModel() }

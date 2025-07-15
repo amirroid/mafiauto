@@ -20,20 +20,17 @@ kotlin {
     sourceSets.nativeMain.dependencies {
         implementation(libs.sqldelight.driver.native)
     }
-
-//    targets.configureEach {
-//        compilations.configureEach {
-//            kotlinOptions {
-//                freeCompilerArgs += "-Xexpect-actual-classes"
-//            }
-//        }
-//    }
 }
 
 sqldelight {
     databases {
         create("AppDatabase") {
             packageName.set(AppInfo.namespace)
+
+            schemaOutputDirectory.set(
+                file("src/commonMain/sqldelight/${AppInfo.namespace.replace('.', '/')}")
+            )
+            verifyMigrations.set(true)
         }
     }
 }

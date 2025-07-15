@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.database.dao.group
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOne
 import ir.amirroid.mafiauto.GroupEntityQueries
 import ir.amirroid.mafiauto.database.models.group.GroupEntity
 import ir.amirroid.mafiauto.database.models.group_with_players.GroupWithPlayers
@@ -20,7 +21,7 @@ class GroupDaoImpl(
             .mapToList(dispatcher)
             .map { rows ->
                 rows
-                    .groupBy { GroupEntity(it.groupId, it.groupName) }
+                    .groupBy { GroupEntity(it.groupId, it.groupName, it.isPinndedGroup) }
                     .map { (group, players) ->
                         GroupWithPlayers(
                             group = group,
@@ -44,5 +45,16 @@ class GroupDaoImpl(
 
     override suspend fun deleteGroup(groupId: Long) {
         queries.deleteGroupById(groupId).await()
+    }
+
+    override suspend fun updateGroupPinState(groupId: Long, isPinned: Boolean) {
+        queries.updateGroupPinState(isPinned, groupId)
+    }
+
+    override fun getGroup(groupId: Long): Flow<GroupEntity> {
+        return queries.selectGroupById(groupId).asFlow()
+            .mapToOne(dispatcher).map {
+                GroupEntity(id = it.id, name = it.name, isPinned = it.isPinned)
+            }
     }
 }

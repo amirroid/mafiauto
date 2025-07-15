@@ -1,17 +1,21 @@
+import kotlin.Boolean;
+
 CREATE TABLE Groups (
   id INTEGER NOT NULL PRIMARY KEY,
-  name TEXT NOT NULL
+  name TEXT NOT NULL,
+  isPinned INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
 selectAllGroupsWithPlayers:
 SELECT
   g.id AS groupId,
   g.name AS groupName,
+  g.isPinned AS isPinndedGroup,
   p.id AS playerId,
   p.name AS playerName
 FROM Groups g
 LEFT JOIN Player p ON g.id = p.group_id
-ORDER BY g.id;
+ORDER BY g.isPinned DESC, g.id ASC;
 
 addNewGroup:
 INSERT INTO Groups(name) VALUES (?);
@@ -21,3 +25,14 @@ DELETE FROM Groups WHERE id = ?;
 
 updateGroupName:
 UPDATE Groups SET name = ? WHERE id = ?;
+
+updateGroupPinState:
+UPDATE Groups SET isPinned = ? WHERE id = ?;
+
+selectGroupById:
+SELECT
+  id,
+  name,
+  isPinned
+FROM Groups
+WHERE id = ?;

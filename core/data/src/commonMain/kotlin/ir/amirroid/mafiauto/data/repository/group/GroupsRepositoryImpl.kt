@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.data.repository.group
 
 import ir.amirroid.mafiauto.data.mappers.group.toDomain
 import ir.amirroid.mafiauto.database.dao.group.GroupDao
+import ir.amirroid.mafiauto.domain.model.group.Group
 import ir.amirroid.mafiauto.domain.model.group.GroupWithPlayers
 import ir.amirroid.mafiauto.domain.repository.GroupsRepository
 import kotlinx.coroutines.flow.Flow
@@ -26,5 +27,13 @@ class GroupsRepositoryImpl(
 
     override suspend fun deleteGroup(groupId: Long) {
         return groupDao.deleteGroup(groupId)
+    }
+
+    override suspend fun updateGroupPinState(groupId: Long, isPinned: Boolean) {
+        return groupDao.updateGroupPinState(groupId, isPinned)
+    }
+
+    override fun getGroup(groupId: Long): Flow<Group> {
+        return groupDao.getGroup(groupId).map { it.toDomain() }
     }
 }
