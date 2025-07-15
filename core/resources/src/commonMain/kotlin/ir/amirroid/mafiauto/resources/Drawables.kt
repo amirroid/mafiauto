@@ -11,5 +11,8 @@ object Drawables {
     val logoBlue = Res.drawable.logo_blue
     val logoGreen = Res.drawable.logo_green
 
+    val pinFilled = Res.drawable.ic_pin_filled
+    val pinOutlined = Res.drawable.ic_pin_outlined
+
     val gun = Res.drawable.ic_gun
 }

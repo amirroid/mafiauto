@@ -5,5 +5,6 @@ import ir.amirroid.mafiauto.domain.model.group.Group
 
 fun GroupEntity.toDomain() = Group(
     id = id,
-    name = name
+    name = name,
+    isPinned = isPinned
 )

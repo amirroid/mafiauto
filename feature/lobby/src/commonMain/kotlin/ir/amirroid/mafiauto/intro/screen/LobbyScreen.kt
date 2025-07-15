@@ -35,6 +35,7 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
 import ir.amirroid.mafiauto.common.compose.components.BackButton
+import ir.amirroid.mafiauto.common.compose.components.PinIcon
 import ir.amirroid.mafiauto.common.compose.components.swipe_to_dismiss.SwipeToDismissBox
 import ir.amirroid.mafiauto.common.compose.components.swipe_to_dismiss.SwipeToDismissBoxValue
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
@@ -66,7 +67,6 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 fun LobbyScreen(
-    groupName: String,
     onBack: () -> Unit,
     onPickPlayers: () -> Unit,
     viewModel: LobbyViewModel = koinViewModel()
@@ -78,6 +78,7 @@ fun LobbyScreen(
     val collapsingAppBarState = rememberCollapsingAppBarState()
     val scope = rememberCoroutineScope()
     val snakeBarController = LocalSnakeBarControllerState.current
+    val group = state.group
 
     Box(contentAlignment = Alignment.BottomCenter) {
         CollapsingTopAppBarScaffold(
@@ -87,6 +88,12 @@ fun LobbyScreen(
             state = collapsingAppBarState,
             hazeStyle = hazeStyle,
             actions = {
+                MIconButton(onClick = viewModel::togglePinGroup) {
+                    PinIcon(
+                        isPinned = group.isPinned,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
                 MIconButton(onClick = viewModel::openEditing) {
                     MIcon(
                         imageVector = EvaIcons.Outline.Edit,
@@ -131,7 +138,7 @@ fun LobbyScreen(
     }
     if (state.isEditing) {
         EditGroupNameDialog(
-            initialName = groupName,
+            initialName = group.name,
             onEdit = viewModel::updateGroupName,
             onDismissRequest = viewModel::closeEditing
         )

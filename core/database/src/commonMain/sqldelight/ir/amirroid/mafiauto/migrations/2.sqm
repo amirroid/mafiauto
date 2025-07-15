@@ -1,0 +1,3 @@
+import kotlin.Boolean;
+
+ALTER TABLE Groups ADD COLUMN isPinned INTEGER AS Boolean NOT NULL DEFAULT 0;

@@ -9,8 +9,8 @@ import ir.amirroid.mafiauto.common.app.utils.emptyImmutableList
 import ir.amirroid.mafiauto.domain.usecase.groups.AddNewGroupUseCase
 import ir.amirroid.mafiauto.domain.usecase.groups.DeleteGroupUseCase
 import ir.amirroid.mafiauto.domain.usecase.groups.GetAllGroupsUseCase
-import ir.amirroid.mafiauto.ui_models.group.GroupWithPlayersUiModel
-import ir.amirroid.mafiauto.ui_models.group.toUiModel
+import ir.amirroid.mafiauto.ui_models.group_with_player.GroupWithPlayersUiModel
+import ir.amirroid.mafiauto.ui_models.group_with_player.toUiModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.SharingStarted

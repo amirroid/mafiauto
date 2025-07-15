@@ -2,6 +2,7 @@ package ir.amirroid.mafiauto.intro.state
 
 import androidx.compose.runtime.Immutable
 import ir.amirroid.mafiauto.common.app.utils.emptyImmutableList
+import ir.amirroid.mafiauto.ui_models.group.GroupUiModel
 import ir.amirroid.mafiauto.ui_models.player.PlayerUiModel
 import kotlinx.collections.immutable.ImmutableList
 
@@ -9,6 +10,7 @@ import kotlinx.collections.immutable.ImmutableList
 data class LobbyScreenState(
     val players: ImmutableList<PlayerUiModel> = emptyImmutableList(),
     val selectedPlayers: ImmutableList<PlayerUiModel> = emptyImmutableList(),
+    val group: GroupUiModel = GroupUiModel("", false),
     val newPlayerName: String = "",
     val isEditing: Boolean = false
 )
