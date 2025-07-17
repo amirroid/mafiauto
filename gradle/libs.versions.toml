@@ -13,6 +13,7 @@ compose = "1.8.2"
 kotlin = "2.2.0"
 kotlinx-serialization = "1.9.0"
 koin-bom = "4.1.0"
+kotlinxCoroutinesTest = "1.10.2"
 navigationCompose = "2.9.0-beta03"
 haze = "1.6.8"
 composeIcons = "1.1.1"
@@ -26,6 +27,8 @@ coroutines = "1.10.2"
 ktor = "3.2.2"
 
 [libraries]
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 kstore = { module = "io.github.xxfast:kstore", version.ref = "kstore" }
 kstore-file = { module = "io.github.xxfast:kstore-file", version.ref = "kstore" }
 confettikit = { module = "io.github.vinceglb:confettikit", version.ref = "confettikit" }

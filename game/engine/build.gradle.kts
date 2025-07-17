@@ -6,8 +6,16 @@ plugins {
     alias(libs.plugins.local.koin)
 }
 
-kotlin.sourceSets.commonMain {
-    dependencies {
-        implementation(project(ProjectPaths.resources))
+kotlin.sourceSets {
+    commonMain {
+        dependencies {
+            implementation(project(ProjectPaths.resources))
+        }
+    }
+    commonTest {
+        dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
+        }
     }
 }
