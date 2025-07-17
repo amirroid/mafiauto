@@ -228,16 +228,20 @@ class GameEngine(
         _currentPhase.update { Phase.LastCard(player) }
     }
 
-    private fun proceedToNightPhase() {
-        val allPlayers = _players.value
-        val currentNight = currentDay.value
-
-        val godfatherReplacement = allPlayers
+    fun getGodFatherReplacement() = players.value.let { allPlayers ->
+        allPlayers
             .filter { it.role.alignment == Alignment.Mafia && it.isInGame }
             .minByOrNull { it.role.executionOrder }
             ?.takeIf {
                 allPlayers.none { p -> p.role.key == RoleKeys.GOD_FATHER && p.isInGame }
             }?.copy(role = GodFather)
+    }
+
+    private fun proceedToNightPhase() {
+        val allPlayers = _players.value
+        val currentNight = currentDay.value
+
+        val godfatherReplacement = getGodFatherReplacement()
 
         val playersForNight = if (godfatherReplacement != null)
             allPlayers + godfatherReplacement else allPlayers

@@ -21,3 +21,4 @@ data class Player(
 
 
 fun List<Player>.findWithId(id: Long) = find { it.id == id }
+fun List<Player>.findWithRoleKey(role: String) = find { it.role.key == role }
