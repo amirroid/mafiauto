@@ -28,6 +28,9 @@ jobs:
           java-version: 21
           distribution: 'temurin'
 
+      - name: Run unit tests
+        run: ./gradlew test
+
       - name: Decode Keystore
         run: |
           echo "${{ secrets.SIGNING_KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
