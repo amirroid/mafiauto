@@ -124,6 +124,11 @@ object AuthenticationCard : LastCard {
         allPlayers: List<Player>,
         handler: LastCardHandler
     ) {
+        handler.updatePlayers(
+            updatePlayer(allPlayers, player.id) {
+                copy(isAlive = false)
+            }
+        )
         handler.sendMessage(player.role.name)
     }
 }
