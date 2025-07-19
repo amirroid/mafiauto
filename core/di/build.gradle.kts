@@ -14,6 +14,7 @@ kotlin.sourceSets.commonMain {
             ProjectPaths.assignRoles,
             ProjectPaths.reveal,
             ProjectPaths.settings,
+            ProjectPaths.gameLogs,
             ProjectPaths.room,
             ProjectPaths.night,
             ProjectPaths.finalDebate,

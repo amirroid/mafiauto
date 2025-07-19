@@ -32,4 +32,7 @@ sealed interface Screen {
 
     @Serializable
     data object Libraries : Screen
+
+    @Serializable
+    data object GameLogs : Screen
 }

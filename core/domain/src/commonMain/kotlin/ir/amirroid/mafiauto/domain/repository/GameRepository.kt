@@ -1,5 +1,6 @@
 package ir.amirroid.mafiauto.domain.repository
 
+import ir.amirroid.mafiauto.domain.model.game.GameLog
 import ir.amirroid.mafiauto.domain.model.game.GamePhase
 import ir.amirroid.mafiauto.domain.model.game.LastCardDescriptor
 import ir.amirroid.mafiauto.domain.model.game.NightActionDescriptor
@@ -16,6 +17,7 @@ interface GameRepository {
     val messages: Flow<StringResource>
     val currentPhase: Flow<GamePhase>
     val lastCards: Flow<List<LastCardDescriptor>>
+    val logs: Flow<List<GameLog>>
 
     fun startNewGame(players: List<PlayerWithRole>)
     fun resetGame()

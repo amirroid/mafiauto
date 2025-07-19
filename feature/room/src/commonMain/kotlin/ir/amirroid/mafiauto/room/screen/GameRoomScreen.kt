@@ -85,6 +85,7 @@ fun GameRoomScreen(
     onBack: () -> Unit,
     onNight: () -> Unit,
     onFinalDebate: () -> Unit,
+    onShowSummary: () -> Unit,
     viewModel: GameRoomViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -120,17 +121,15 @@ fun GameRoomScreen(
             hazeState = hazeState,
             hazeStyle = hazeStyle
         ) { paddingValues ->
-            Column {
-                RoomPlayersList(
-                    players = players,
-                    contentPadding = defaultVerticalContentPadding() + paddingValues + PaddingValues(
-                        bottom = 300.dp
-                    ),
-                    modifier = Modifier.weight(1f),
-                    onPickPlayer = viewModel::pickPlayerToShowRole,
-                    currentTurn = currentTurn
-                )
-            }
+            RoomPlayersList(
+                players = players,
+                contentPadding = defaultVerticalContentPadding() + paddingValues + PaddingValues(
+                    bottom = 300.dp
+                ),
+                modifier = Modifier.fillMaxSize(),
+                onPickPlayer = viewModel::pickPlayerToShowRole,
+                currentTurn = currentTurn
+            )
         }
         BottomBar(
             currentPhase = currentPhase,
@@ -192,6 +191,7 @@ fun GameRoomScreen(
     if (currentPhase is GamePhaseUiModel.End) {
         WinnerDialog(
             alignment = currentPhase.winnerAlignment,
+            onShowSummary = onShowSummary,
             onDismissRequest = onBack
         )
     }

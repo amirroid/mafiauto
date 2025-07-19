@@ -26,6 +26,8 @@ object Strings {
     val revealRoles = Res.string.reveal_roles
     val neutral = Res.string.neutral
     val gameRoom = Res.string.game_room
+    val gameLogs = Res.string.game_logs
+    val viewGameSummary = Res.string.view_game_summary
     val statusChecks = Res.string.status_checks
     val statusCheck = Res.string.status_check
     val unKick = Res.string.un_kick
@@ -36,6 +38,7 @@ object Strings {
     val editGroupName = Res.string.edit_group_name
     val groupName = Res.string.group_name
     val voting = Res.string.voting
+    val eliminatedInVote = Res.string.eliminated_in_vote
     val round = Res.string.round
     val introductionRound = Res.string.introduction_round
     val day = Res.string.day

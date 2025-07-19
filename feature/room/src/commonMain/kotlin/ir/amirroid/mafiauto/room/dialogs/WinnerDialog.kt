@@ -20,6 +20,7 @@ import io.github.vinceglb.confettikit.core.Position
 import io.github.vinceglb.confettikit.core.Spread
 import io.github.vinceglb.confettikit.core.emitter.Emitter
 import ir.amirroid.mafiauto.design_system.components.button.MButton
+import ir.amirroid.mafiauto.design_system.components.button.MOutlinedButton
 import ir.amirroid.mafiauto.design_system.components.popup.BaseBlurredPopup
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.theme.core.AppTheme
@@ -30,10 +31,13 @@ import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
-fun WinnerDialog(alignment: Alignment, onDismissRequest: () -> Unit) {
+fun WinnerDialog(alignment: Alignment, onShowSummary: () -> Unit, onDismissRequest: () -> Unit) {
     var visible by remember { mutableStateOf(true) }
+    var shouldShowSummary by remember { mutableStateOf(true) }
 
-    BaseBlurredPopup(isVisible = visible, onDismissRequest = onDismissRequest) {
+    BaseBlurredPopup(isVisible = visible, onDismissRequest = {
+        if (shouldShowSummary) onShowSummary() else onDismissRequest()
+    }) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = androidx.compose.ui.Alignment.Center
@@ -68,9 +72,21 @@ fun WinnerDialog(alignment: Alignment, onDismissRequest: () -> Unit) {
                     ),
                     style = AppTheme.typography.h1
                 )
-                MButton(
-                    onClick = { visible = false },
+                MOutlinedButton(
+                    onClick = {
+                        visible = false
+                        shouldShowSummary = true
+                    },
                     modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                ) {
+                    MText(stringResource(Resources.strings.viewGameSummary))
+                }
+                MButton(
+                    onClick = {
+                        visible = false
+                        shouldShowSummary = false
+                    },
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 ) {
                     MText(stringResource(Resources.strings.playAgain))
                 }

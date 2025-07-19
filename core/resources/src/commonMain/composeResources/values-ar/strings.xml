@@ -75,6 +75,7 @@
     <string name="bullet_blank">الرصاصة كانت فارغة</string>
     <string name="gun_shot">طلقة نارية</string>
     <string name="icon_color">لون الأيقونة</string>
+    <string name="eliminated_in_vote">تم الإقصاء في التصويت</string>
 
     <string name="green">أخضر</string>
     <string name="red">أحمر</string>
@@ -85,6 +86,7 @@
     <string name="network_error_default">حدث خطأ في الشبكة. الرجاء المحاولة لاحقاً.</string>
     <string name="network_timeout">انتهى مهلة الطلب. تحقق من الاتصال وحاول مرة أخرى.</string>
     <string name="error_unknown">حدث خطأ غير معروف.</string>
+    <string name="game_logs">سجلات اللعبة</string>
 
     <string name="gunsmith_info">يحصل اللاعب الأول على مسدس حقيقي، والثاني على فارغ.</string>
 
@@ -104,6 +106,7 @@
     <string name="surgeon">جراح</string>
     <string name="gunsmith">مسدّس</string>
     <string name="ranger">حارس</string>
+    <string name="view_game_summary">عرض ملخص اللعبة</string>
 
     <string name="god_father_explanation">كل ليلة، تختار لاعباً للإقصاء. قرارك له أولوية أعلى من بقية المافيا.</string>
     <string name="saul_goodman_explanation">إذا مات أحد أفراد المافيا، يمكنك أن تحل محله. مرة واحدة، يمكنك تحويل مدني بسيط إلى عضو في المافيا.</string>

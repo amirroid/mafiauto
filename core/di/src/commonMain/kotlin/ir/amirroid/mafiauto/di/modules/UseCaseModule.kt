@@ -52,4 +52,5 @@ val useCaseModule = module {
     factoryOf(::SaveSelectedIconColorUseCase)
     factoryOf(::UpdateGroupPinStateUseCase)
     factoryOf(::GetGroupUseCase)
+    factoryOf(::GetAllGameLogsUseCase)
 }

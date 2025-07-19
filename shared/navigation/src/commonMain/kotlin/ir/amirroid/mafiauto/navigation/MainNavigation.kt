@@ -21,6 +21,7 @@ import ir.amirroid.mafiauto.groups.screen.GroupsScreen
 import ir.amirroid.mafiauto.intro.screen.IntroScreen
 import ir.amirroid.mafiauto.intro.screen.LobbyScreen
 import ir.amirroid.mafiauto.libraries.screen.LibrariesScreen
+import ir.amirroid.mafiauto.logs.screen.GameLogsScreen
 import ir.amirroid.mafiauto.navigation.utils.Screen
 import ir.amirroid.mafiauto.navigation.utils.navigateIfNotCurrent
 import ir.amirroid.mafiauto.night.screen.NightActionsScreen
@@ -104,7 +105,14 @@ fun MainNavigation() {
                     GameRoomScreen(
                         onBack = navController::navigateUp,
                         onNight = { navController.navigateIfNotCurrent(Screen.NightActions) },
-                        onFinalDebate = { navController.navigateIfNotCurrent(Screen.FinalDebate) }
+                        onFinalDebate = { navController.navigateIfNotCurrent(Screen.FinalDebate) },
+                        onShowSummary = {
+                            navController.navigateIfNotCurrent(Screen.GameLogs) {
+                                popUpTo<Screen.GameRoom> {
+                                    inclusive = true
+                                }
+                            }
+                        }
                     )
                 }
                 composable<Screen.NightActions> {
@@ -125,6 +133,11 @@ fun MainNavigation() {
                 }
                 composable<Screen.Libraries> {
                     LibrariesScreen(
+                        onBack = navController::navigateUp,
+                    )
+                }
+                composable<Screen.GameLogs> {
+                    GameLogsScreen(
                         onBack = navController::navigateUp,
                     )
                 }
