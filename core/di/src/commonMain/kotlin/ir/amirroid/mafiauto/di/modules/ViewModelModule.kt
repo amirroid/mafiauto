@@ -7,6 +7,7 @@ import ir.amirroid.mafiauto.reveal.viewmodel.RevealRolesViewModel
 import ir.amirroid.mafiauto.room.viewmodel.GameRoomViewModel
 import ir.amirroid.mafiauto.groups.viewmodel.GroupsViewModel
 import ir.amirroid.mafiauto.final_debate.viewmodel.FinalDebateViewModel
+import ir.amirroid.mafiauto.logs.viewmodel.GameLogsViewModel
 import ir.amirroid.mafiauto.settings.viewmodel.SettingsViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
@@ -20,4 +21,5 @@ val viewModelModule = module {
     viewModelOf(::GroupsViewModel)
     viewModelOf(::FinalDebateViewModel)
     viewModelOf(::SettingsViewModel)
+    viewModelOf(::GameLogsViewModel)
 }

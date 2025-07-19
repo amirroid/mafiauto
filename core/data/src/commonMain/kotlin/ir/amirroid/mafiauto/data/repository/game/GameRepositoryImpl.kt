@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.data.repository.game
 
 import ir.amirroid.mafiauto.data.mappers.last_card.toDomain
+import ir.amirroid.mafiauto.data.mappers.log.toDomain
 import ir.amirroid.mafiauto.data.mappers.phase.toDomain
 import ir.amirroid.mafiauto.data.mappers.player.toEngine
 import ir.amirroid.mafiauto.data.mappers.player_role.toPlayerRoleDomain
@@ -26,6 +27,7 @@ class GameRepositoryImpl(
     override val currentPhase = engine.currentPhase.map { it.toDomain() }
     override val playerTurnIndex = engine.playerTurn
     override val lastCards = engine.lastCards.map { cards -> cards.map { it.toDomain() } }
+    override val logs = engine.logs.map { logs -> logs.map { it.toDomain() } }
 
     override fun startNewGame(players: List<PlayerWithRole>) {
         val enginePlayers = players.map {

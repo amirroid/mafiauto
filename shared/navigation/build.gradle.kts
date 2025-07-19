@@ -16,6 +16,7 @@ kotlin {
                     ProjectPaths.intro,
                     ProjectPaths.groups,
                     ProjectPaths.lobby,
+                    ProjectPaths.gameLogs,
                     ProjectPaths.libraries,
                     ProjectPaths.night,
                     ProjectPaths.settings,

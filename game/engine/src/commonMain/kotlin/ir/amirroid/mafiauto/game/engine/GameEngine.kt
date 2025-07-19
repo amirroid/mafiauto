@@ -6,9 +6,9 @@ import ir.amirroid.mafiauto.game.engine.base.ActionsHandler
 import ir.amirroid.mafiauto.game.engine.base.PhaseUpdater
 import ir.amirroid.mafiauto.game.engine.base.PlayerTransformer
 import ir.amirroid.mafiauto.game.engine.effect.DayActionEffect
-import ir.amirroid.mafiauto.game.engine.effect.PlayerEffect
 import ir.amirroid.mafiauto.game.engine.last_card.LastCard
 import ir.amirroid.mafiauto.game.engine.last_card.LastCardHandler
+import ir.amirroid.mafiauto.game.engine.log.GameLog
 import ir.amirroid.mafiauto.game.engine.models.NightAction
 import ir.amirroid.mafiauto.game.engine.models.NightActionsResult
 import ir.amirroid.mafiauto.game.engine.models.NightTargetOptions
@@ -40,6 +40,7 @@ class GameEngine(
     private val _lastCards = MutableStateFlow(emptyList<LastCard>())
     private val _statusCheckCount = MutableStateFlow(0)
     private val _playerTurn = MutableStateFlow(0)
+    private val _logs = MutableStateFlow(emptyList<GameLog>())
     private val _messages = Channel<StringResource>(capacity = Channel.BUFFERED)
 
     val currentDay: StateFlow<Int> = _currentDay
@@ -48,6 +49,7 @@ class GameEngine(
     val lastCards: StateFlow<List<LastCard>> = _lastCards
     val statusCheckCount: StateFlow<Int> = _statusCheckCount
     val playerTurn: StateFlow<Int> = _playerTurn
+    val logs: StateFlow<List<GameLog>> = _logs
     val messages: Flow<StringResource> = _messages.receiveAsFlow()
 
     private val nightActionsHistory = mutableMapOf<Int, List<NightAction>>()
@@ -67,6 +69,7 @@ class GameEngine(
         _scheduledActions.value = emptyList()
         _statusCheckCount.value = 0
         _playerTurn.value = 0
+        _logs.value = emptyList()
         _lastCards.value = lastCardsProvider.getAllLastCards().shuffled()
         nightActionsHistory.clear()
     }
@@ -169,10 +172,24 @@ class GameEngine(
 
     fun kickPlayer(playerId: Long) {
         updatePlayer(playerId) { copy(isKick = true) }
+        _logs.update {
+            it + GameLog.Kick(
+                player = players.value.findWithId(playerId)!!,
+                isKicked = true,
+                relatedDay = currentDay.value
+            )
+        }
     }
 
     fun unKickPlayer(playerId: Long) {
         updatePlayer(playerId) { copy(isKick = false) }
+        _logs.update {
+            it + GameLog.Kick(
+                player = players.value.findWithId(playerId)!!,
+                isKicked = false,
+                relatedDay = currentDay.value
+            )
+        }
     }
 
     private fun updatePlayer(
@@ -185,6 +202,13 @@ class GameEngine(
     fun getDefenseCandidates(
         playerVotes: Map<Player, Int>
     ): List<Player> {
+        _logs.update {
+            it + GameLog.DefenseVotes(
+                playerVotes = playerVotes,
+                relatedDay = currentDay.value
+            )
+        }
+
         val threshold = (playerVotes.size - 1) / 2
         return playerVotes
             .filter { it.value >= threshold }
@@ -225,6 +249,7 @@ class GameEngine(
     }
 
     private fun proceedToLastCardPhase(player: Player) {
+        _logs.update { it + GameLog.ElectedInDefense(player, currentDay.value) }
         _currentPhase.update { Phase.LastCard(player) }
     }
 
@@ -279,11 +304,21 @@ class GameEngine(
             allPlayers = players.value,
             handler = this
         )
+        _logs.update {
+            it + GameLog.ApplyLastCard(
+                targetPlayer,
+                card,
+                pickedPlayers,
+                currentDay.value
+            )
+        }
         proceedToNightPhase()
     }
 
     fun handleNightActions(actions: List<NightAction>) {
         nightActionsHistory[_currentDay.value] = actions
+        _logs.update { it + GameLog.NightActions(actions, _currentDay.value) }
+
         val newScheduledActions =
             actions.sortedBy { it.player.role.submitExecutionOrder }.map { action ->
                 ScheduledAction(
@@ -370,6 +405,7 @@ class GameEngine(
     fun handleFinalTrustVotes(
         trustVotes: Map<Player, Player>
     ) {
+        _logs.update { it + GameLog.FinalDebate(trustVotes, relatedDay = currentDay.value) }
         val trustCountByPlayer = trustVotes.values.groupingBy { it }.eachCount()
         val playerWithMajorityTrust = trustCountByPlayer.entries.find { it.value >= 2 }?.key
 

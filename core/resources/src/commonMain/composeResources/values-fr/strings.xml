@@ -75,6 +75,9 @@
     <string name="bullet_blank">La balle était à blanc</string>
     <string name="gun_shot">Coup de feu</string>
     <string name="icon_color">Couleur de l'icône</string>
+    <string name="game_logs">Journaux de jeu</string>
+    <string name="view_game_summary">Voir le résumé du jeu</string>
+    <string name="eliminated_in_vote">Éliminé lors du vote</string>
 
     <string name="green">Vert</string>
     <string name="red">Rouge</string>

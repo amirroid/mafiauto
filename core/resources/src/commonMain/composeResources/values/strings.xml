@@ -75,6 +75,9 @@
     <string name="bullet_blank">The bullet was a blank</string>
     <string name="gun_shot">Gunshot</string>
     <string name="icon_color">Icon color</string>
+    <string name="game_logs">Game logs</string>
+    <string name="view_game_summary">View game summary</string>
+    <string name="eliminated_in_vote">Eliminated in voting</string>
 
     <string name="green">Green</string>
     <string name="red">Red</string>

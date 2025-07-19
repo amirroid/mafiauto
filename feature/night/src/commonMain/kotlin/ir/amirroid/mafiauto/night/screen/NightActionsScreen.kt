@@ -25,6 +25,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -91,6 +92,11 @@ fun NightActionsScreen(
     val selectedPlayers by viewModel.selectedPlayers.collectAsStateWithLifecycle()
     val disablePlayerIdSelections = viewModel.disableActionKeysSelections
     val enabledNextButton = viewModel.enabledNextButton
+
+    if (nightPhase.options.isEmpty()) {
+        LaunchedEffect(Unit) { onBack.invoke() }
+        return
+    }
 
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState { nightPhase.options.size }

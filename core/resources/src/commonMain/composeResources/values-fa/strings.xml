@@ -74,6 +74,9 @@
     <string name="bullet_blank">تیر مشقی بود</string>
     <string name="gun_shot">شلیک تفنگ</string>
     <string name="icon_color">رنگ لوگو</string>
+    <string name="game_logs">گزارش‌های بازی</string>
+    <string name="view_game_summary">دیدن خلاصه بازی</string>
+    <string name="eliminated_in_vote">حذف شده در رأی‌گیری</string>
 
     <string name="neutral">مستقل</string>
 
