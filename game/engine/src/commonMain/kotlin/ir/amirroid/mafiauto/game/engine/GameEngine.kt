@@ -294,7 +294,10 @@ class GameEngine(
     }
 
     fun applyLastCard(card: LastCard, pickedPlayers: List<Player>) {
-        _lastCards.update { previewsList -> previewsList.filter { it.key != card.key } }
+        _lastCards.update { previewsList ->
+            previewsList.filter { it.key != card.key }
+                .ifEmpty { lastCardsProvider.getAllLastCards() }
+        }
         val phase = currentPhase.value
         if (phase !is Phase.LastCard) return
         val targetPlayer = phase.player
