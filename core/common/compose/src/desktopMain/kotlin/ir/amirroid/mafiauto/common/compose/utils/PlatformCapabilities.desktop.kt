@@ -1,0 +1,5 @@
+package ir.amirroid.mafiauto.common.compose.utils
+
+actual object PlatformCapabilities {
+    actual val blurSupported = true
+}

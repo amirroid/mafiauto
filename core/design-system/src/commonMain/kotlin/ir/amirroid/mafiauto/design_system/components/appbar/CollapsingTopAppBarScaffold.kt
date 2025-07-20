@@ -68,8 +68,6 @@ fun calculateTargetOffset(
         LayoutDirection.Rtl -> {
             (textRect.right - navigationIconRect.left + spacing)
         }
-
-        else -> 0f
     }
 
     val calculatedX = lerp(collapsedOffsetX, 0f, easedProgress)
