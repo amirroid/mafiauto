@@ -6,14 +6,22 @@ import ir.amirroid.mafiauto.convention.implementIfNotSelf
 import ir.amirroid.mafiauto.convention.libs
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
+@OptIn(ExperimentalWasmDsl::class)
 internal fun Project.configureKotlinMultiplatformPlugins(extensions: KotlinMultiplatformExtension) {
     extensions.apply {
         applyDefaultHierarchyTemplate()
         androidTarget()
         configureIosTargets()
+        jvm("desktop")
+//        wasmJs {
+//            browser()
+//            nodejs()
+//        }
+
         configureCommonMain(sourceSets)
         configureAndroidMain(sourceSets)
     }

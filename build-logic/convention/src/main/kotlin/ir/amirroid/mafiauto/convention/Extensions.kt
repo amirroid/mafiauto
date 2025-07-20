@@ -12,6 +12,8 @@ internal val NamedDomainObjectContainer<KotlinSourceSet>.androidMain: KotlinSour
     get() = maybeCreate("androidMain")
 internal val NamedDomainObjectContainer<KotlinSourceSet>.commonMain: KotlinSourceSet
     get() = maybeCreate("commonMain")
+internal val NamedDomainObjectContainer<KotlinSourceSet>.desktopMain: KotlinSourceSet
+    get() = maybeCreate("desktopMain")
 
 fun KotlinDependencyHandler.implementIfNotSelf(projectPath: String) {
     if (project.path != projectPath) {

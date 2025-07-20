@@ -20,6 +20,9 @@ kotlin {
     sourceSets.nativeMain.dependencies {
         implementation(libs.sqldelight.driver.native)
     }
+    sourceSets.desktopMain.dependencies {
+        implementation(libs.sqlite.driver)
+    }
 }
 
 sqldelight {

@@ -3,6 +3,7 @@ package ir.amirroid.mafiauto.convention.compose
 import ir.amirroid.mafiauto.convention.androidMain
 import ir.amirroid.mafiauto.convention.commonMain
 import ir.amirroid.mafiauto.convention.composeDependencies
+import ir.amirroid.mafiauto.convention.desktopMain
 import ir.amirroid.mafiauto.convention.implementIfNotSelf
 import ir.amirroid.mafiauto.convention.libs
 import org.gradle.api.NamedDomainObjectContainer
@@ -16,7 +17,7 @@ internal fun Project.configureComposeMultiplatformPlugins(
     extensions.apply {
         configureCommonMain(sourceSets)
         configureAndroidMain(sourceSets)
-
+        configureDesktopMain(sourceSets)
     }
 }
 
@@ -58,5 +59,13 @@ private fun Project.configureAndroidMain(sourceSets: NamedDomainObjectContainer<
     androidMain.dependencies {
         implementation(composeDependencies.preview)
         implementation(libs.findLibrary("androidx-activity.compose").get())
+    }
+}
+
+private fun Project.configureDesktopMain(sourceSets: NamedDomainObjectContainer<KotlinSourceSet>) {
+    val desktopMain = sourceSets.desktopMain
+    desktopMain.dependencies {
+        implementation(composeDependencies.desktop.currentOs)
+        implementation(libs.findLibrary("kotlinx-coroutines-swing").get())
     }
 }
