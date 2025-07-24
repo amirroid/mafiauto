@@ -17,6 +17,14 @@ internal fun Project.configureKotlinMultiplatformPlugins(extensions: KotlinMulti
         androidTarget()
         configureIosTargets()
         jvm("desktop")
+        wasmJs {
+            browser {
+                commonWebpackConfig {
+                    outputFileName = "composeApp.js"
+                }
+            }
+            binaries.executable()
+        }
 
         configureCommonMain(sourceSets)
         configureAndroidMain(sourceSets)

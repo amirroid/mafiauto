@@ -1,6 +1,12 @@
 package ir.amirroid.mafiauot.preferences.di
 
+import io.github.xxfast.kstore.KStore
+import io.github.xxfast.kstore.file.extensions.storeOf
+import ir.amirroid.mafiauot.preferences.models.SettingsConfig
+import ir.amirroid.mafiauot.preferences.utils.SETTINGS_FILENAME
+import ir.amirroid.mafiauot.preferences.utils.SETTINGS_VERSION
 import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.io.files.Path
 import org.koin.core.module.Module
 import platform.Foundation.NSCachesDirectory
 import platform.Foundation.NSFileManager
@@ -21,4 +27,11 @@ private fun getCachePath(): String {
 
 actual fun Module.configurePreferences() {
     factory(qualifier = StorePathQualifier) { getCachePath() }
+    single<KStore<SettingsConfig>> {
+        storeOf(
+            file = Path(get<String>(StorePathQualifier).plus("/$SETTINGS_FILENAME")),
+            version = SETTINGS_VERSION,
+            json = get()
+        )
+    }
 }
