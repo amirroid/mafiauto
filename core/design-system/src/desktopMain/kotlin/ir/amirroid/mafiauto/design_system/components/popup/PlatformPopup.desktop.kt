@@ -8,7 +8,7 @@ import androidx.compose.ui.window.DialogProperties
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-internal actual fun PlatformPopup(
+actual fun PlatformPopup(
     onDismissRequest: () -> Unit,
     dismissOnBackPress: Boolean,
     dismissOnClickOutside: Boolean,

@@ -16,7 +16,7 @@ import androidx.compose.ui.window.DialogWindowProvider
 
 
 @Composable
-internal actual fun PlatformPopup(
+actual fun PlatformPopup(
     onDismissRequest: () -> Unit,
     dismissOnBackPress: Boolean,
     dismissOnClickOutside: Boolean,

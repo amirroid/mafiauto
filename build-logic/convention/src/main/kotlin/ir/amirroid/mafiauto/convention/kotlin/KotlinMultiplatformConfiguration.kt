@@ -17,10 +17,6 @@ internal fun Project.configureKotlinMultiplatformPlugins(extensions: KotlinMulti
         androidTarget()
         configureIosTargets()
         jvm("desktop")
-//        wasmJs {
-//            browser()
-//            nodejs()
-//        }
 
         configureCommonMain(sourceSets)
         configureAndroidMain(sourceSets)
