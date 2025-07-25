@@ -30,7 +30,9 @@ fun main() {
     DependencyInjectionConfiguration.configure { modules(projectModule) }
 
     ComposeViewport(document.body ?: return) {
-        ResponsiveBox { App() }
+        ResponsiveBox {
+            App()
+        }
     }
 }
 
