@@ -1,6 +1,7 @@
 package ir.amirroid.mafiauto.database.di
 
 import androidx.sqlite.db.SupportSQLiteDatabase
+import app.cash.sqldelight.async.coroutines.synchronous
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import ir.amirroid.mafiauto.AppDatabase
@@ -10,13 +11,12 @@ import org.koin.core.module.Module
 
 actual fun Module.configureDriver() {
     single<SqlDriver> {
+        val synchronousScheme = AppDatabase.Schema.synchronous()
         AndroidSqliteDriver(
-            schema = AppDatabase.Schema,
+            schema = synchronousScheme,
             context = androidContext(),
             name = DB_NAME,
-            callback = object : AndroidSqliteDriver.Callback(
-                AppDatabase.Schema
-            ) {
+            callback = object : AndroidSqliteDriver.Callback(synchronousScheme) {
                 override fun onConfigure(db: SupportSQLiteDatabase) {
                     super.onConfigure(db)
                     db.execSQL("PRAGMA foreign_keys=ON;")
