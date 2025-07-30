@@ -76,6 +76,11 @@
     <string name="gun_shot">طلقة نارية</string>
     <string name="icon_color">لون الأيقونة</string>
     <string name="eliminated_in_vote">تم الإقصاء في التصويت</string>
+    <string name="game_guide">دليل اللعبة</string>
+    <string name="name">الاسم</string>
+    <string name="explanation">الشرح</string>
+    <string name="alignment">الانتماء</string>
+    <string name="max_ability_uses">الحد الأقصى لاستخدام القدرة</string>
 
     <string name="green">أخضر</string>
     <string name="red">أحمر</string>

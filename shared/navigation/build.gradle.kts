@@ -24,6 +24,7 @@ kotlin {
                     ProjectPaths.finalDebate,
                     ProjectPaths.room,
                     ProjectPaths.reveal,
+                    ProjectPaths.guide,
                 ).forEach {
                     implementation(project(it))
                 }

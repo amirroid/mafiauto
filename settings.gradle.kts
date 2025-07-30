@@ -62,6 +62,7 @@ include(":feature:reveal")
 include(":feature:room")
 include(":feature:libraries")
 include(":feature:night")
+include(":feature:guide")
 include(":feature:game-logs")
 include(":feature:final-debate")
 

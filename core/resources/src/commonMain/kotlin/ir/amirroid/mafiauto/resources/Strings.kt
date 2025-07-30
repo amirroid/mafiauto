@@ -27,6 +27,11 @@ object Strings {
     val neutral = Res.string.neutral
     val gameRoom = Res.string.game_room
     val gameLogs = Res.string.game_logs
+    val gameGuide = Res.string.game_guide
+    val name = Res.string.name
+    val explanation = Res.string.explanation
+    val alignment = Res.string.alignment
+    val maxAbilityUses = Res.string.max_ability_uses
     val viewGameSummary = Res.string.view_game_summary
     val statusChecks = Res.string.status_checks
     val statusCheck = Res.string.status_check

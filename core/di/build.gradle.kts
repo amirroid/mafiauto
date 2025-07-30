@@ -16,6 +16,7 @@ kotlin.sourceSets.commonMain {
             ProjectPaths.settings,
             ProjectPaths.gameLogs,
             ProjectPaths.room,
+            ProjectPaths.guide,
             ProjectPaths.night,
             ProjectPaths.finalDebate,
             ProjectPaths.engine,
