@@ -78,6 +78,11 @@
     <string name="game_logs">Journaux de jeu</string>
     <string name="view_game_summary">Voir le résumé du jeu</string>
     <string name="eliminated_in_vote">Éliminé lors du vote</string>
+    <string name="game_guide">Guide du jeu</string>
+    <string name="name">Nom</string>
+    <string name="explanation">Explication</string>
+    <string name="alignment">Alignement</string>
+    <string name="max_ability_uses">Utilisations max de la capacité</string>
 
     <string name="green">Vert</string>
     <string name="red">Rouge</string>

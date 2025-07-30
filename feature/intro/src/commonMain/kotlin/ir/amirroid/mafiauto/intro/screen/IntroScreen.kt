@@ -19,6 +19,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline
+import compose.icons.evaicons.outline.Info
 import compose.icons.evaicons.outline.Settings
 import dev.chrisbanes.haze.ExperimentalHazeApi
 import dev.chrisbanes.haze.HazeInputScale
@@ -45,7 +46,8 @@ const val blackPartFraction = .7f
 @Composable
 fun IntroScreen(
     onStartGame: () -> Unit,
-    onSettingsClick: () -> Unit
+    onSettingsClick: () -> Unit,
+    onGuideClick: () -> Unit,
 ) {
     ScreenContent {
         Box(
@@ -92,6 +94,15 @@ fun IntroScreen(
             ) {
                 MIcon(
                     imageVector = EvaIcons.Outline.Settings,
+                    contentDescription = null
+                )
+            }
+            MIconButton(
+                onClick = onGuideClick,
+                modifier = Modifier.align(Alignment.TopEnd).statusBarsPadding().allPadding()
+            ) {
+                MIcon(
+                    imageVector = EvaIcons.Outline.Info,
                     contentDescription = null
                 )
             }

@@ -77,6 +77,11 @@
     <string name="game_logs">گزارش‌های بازی</string>
     <string name="view_game_summary">دیدن خلاصه بازی</string>
     <string name="eliminated_in_vote">حذف شده در رأی‌گیری</string>
+    <string name="game_guide">راهنمای بازی</string>
+    <string name="name">نام</string>
+    <string name="explanation">توضیح</string>
+    <string name="alignment">وابستگی</string>
+    <string name="max_ability_uses">حداکثر استفاده از قابلیت</string>
 
     <string name="neutral">مستقل</string>
 

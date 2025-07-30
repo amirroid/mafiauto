@@ -35,4 +35,7 @@ sealed interface Screen {
 
     @Serializable
     data object GameLogs : Screen
+
+    @Serializable
+    data object Guide : Screen
 }

@@ -78,6 +78,11 @@
     <string name="game_logs">Game logs</string>
     <string name="view_game_summary">View game summary</string>
     <string name="eliminated_in_vote">Eliminated in voting</string>
+    <string name="game_guide">Game Guide</string>
+    <string name="name">Name</string>
+    <string name="explanation">Explanation</string>
+    <string name="alignment">Alignment</string>
+    <string name="max_ability_uses">Max Ability Uses</string>
 
     <string name="green">Green</string>
     <string name="red">Red</string>
