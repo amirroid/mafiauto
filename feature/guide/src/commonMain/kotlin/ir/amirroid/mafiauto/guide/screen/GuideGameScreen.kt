@@ -87,7 +87,7 @@ fun GuideGameScreen(
         ) {
             RoleItem(
                 name = stringResource(Resources.strings.name),
-                explanation = stringResource(Resources.strings.name),
+                explanation = stringResource(Resources.strings.explanation),
                 alignment = stringResource(Resources.strings.alignment),
                 maxAbilityUses = stringResource(Resources.strings.maxAbilityUses),
                 isLastItem = true,
