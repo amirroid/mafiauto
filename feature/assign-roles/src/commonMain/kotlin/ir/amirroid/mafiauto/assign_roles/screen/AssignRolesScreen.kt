@@ -36,6 +36,7 @@ import ir.amirroid.mafiauto.common.app.utils.emptyImmutableList
 import ir.amirroid.mafiauto.common.compose.components.BackButton
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
 import ir.amirroid.mafiauto.common.compose.modifiers.allPadding
+import ir.amirroid.mafiauto.common.compose.modifiers.onSecondaryClick
 import ir.amirroid.mafiauto.common.compose.operators.plus
 import ir.amirroid.mafiauto.common.compose.utils.autoMirrorIosForwardIcon
 import ir.amirroid.mafiauto.design_system.components.appbar.CollapsingTopAppBarScaffold
@@ -45,9 +46,9 @@ import ir.amirroid.mafiauto.design_system.components.icon.MIcon
 import ir.amirroid.mafiauto.design_system.components.list.selectable.MToggleListItem
 import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.text.MText
+import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.theme.locales.LocalContentColor
-import ir.amirroid.mafiauto.resources.Resources
 import ir.amirroid.mafiauto.ui_models.role.RoleUiModel
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
@@ -173,7 +174,8 @@ private fun RolesList(
                     selected = selected,
                     onClick = { onToggle.invoke(role) },
                     shape = itemShape,
-                    onLongClick = { onShowPreview.invoke(role) }
+                    onLongClick = { onShowPreview.invoke(role) },
+                    modifier = Modifier.onSecondaryClick { onShowPreview.invoke(role) }
                 )
             }
         }

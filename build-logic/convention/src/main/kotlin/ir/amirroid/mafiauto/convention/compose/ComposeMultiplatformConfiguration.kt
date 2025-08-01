@@ -58,7 +58,7 @@ private fun Project.configureAndroidMain(sourceSets: NamedDomainObjectContainer<
     val androidMain = sourceSets.androidMain
     androidMain.dependencies {
         implementation(composeDependencies.preview)
-        implementation(libs.findLibrary("androidx-activity.compose").get())
+        implementation(libs.findLibrary("androidx-activity-compose").get())
     }
 }
 

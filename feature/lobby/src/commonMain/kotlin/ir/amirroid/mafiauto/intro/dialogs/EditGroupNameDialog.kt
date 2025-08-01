@@ -3,6 +3,8 @@ package ir.amirroid.mafiauto.intro.dialogs
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -13,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import ir.amirroid.mafiauto.common.compose.extensions.requestFocusCaching
@@ -60,7 +63,13 @@ fun EditGroupNameDialog(
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                 placeholder = { MText(stringResource(Resources.strings.groupName)) },
                 singleLine = true,
-                colors = TextFieldsDefaults.outlinedTextFieldColors
+                colors = TextFieldsDefaults.outlinedTextFieldColors,
+                keyboardActions = KeyboardActions(onDone = {
+                    if (groupName.text.isEmpty()) return@KeyboardActions
+                    onEdit.invoke(groupName.text)
+                    visible = false
+                }),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             )
             MButton(
                 onClick = {

@@ -4,9 +4,11 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.IndicationNodeFactory
+import androidx.compose.foundation.interaction.FocusInteraction
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.node.DelegatableNode
@@ -28,6 +30,7 @@ private class PressScaleIndicationNode(
 ) : Modifier.Node(), DrawModifierNode {
 
     private var currentScale = 1f
+    private var isFocused = false
 
     override fun onAttach() {
         super.onAttach()
@@ -39,6 +42,8 @@ private class PressScaleIndicationNode(
             when (interaction) {
                 is PressInteraction.Press -> animateScaleTo(0.92f)
                 is PressInteraction.Release, is PressInteraction.Cancel -> animateScaleTo(1f)
+                is FocusInteraction.Focus -> toggleFocus(true)
+                is FocusInteraction.Unfocus -> toggleFocus(false)
             }
         }
     }
@@ -54,9 +59,17 @@ private class PressScaleIndicationNode(
         }
     }
 
+    private fun toggleFocus(focused: Boolean) {
+        isFocused = focused
+        invalidateDraw()
+    }
+
     override fun ContentDrawScope.draw() {
         scale(currentScale) {
             this@draw.drawContent()
+            if (isFocused) {
+                drawRect(Color.White.copy(.3f))
+            }
         }
     }
 }
