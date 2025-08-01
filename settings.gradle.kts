@@ -10,6 +10,7 @@ pluginManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
+        maven("https://en-mirror.ir")
         mavenCentral()
         gradlePluginPortal()
     }
@@ -24,6 +25,7 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
+        maven("https://en-mirror.ir")
         mavenCentral()
     }
     versionCatalogs.create("androidLibs") {
