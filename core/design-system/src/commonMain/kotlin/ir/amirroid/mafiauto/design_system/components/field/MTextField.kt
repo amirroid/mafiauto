@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -36,6 +38,8 @@ fun MTextField(
     singleLine: Boolean = false,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     BasicTextField(
         value = value,
@@ -47,6 +51,8 @@ fun MTextField(
         modifier = modifier.heightIn(min = minHeight),
         textStyle = LocalTextStyle.current.copy(color = colors.contentColor),
         cursorBrush = SolidColor(colors.cursorColor),
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
         decorationBox = { content ->
             MSurface(
                 modifier = Modifier.fillMaxWidth(),
@@ -90,6 +96,8 @@ fun MTextField(
     singleLine: Boolean = false,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     BasicTextField(
         value = value,
@@ -101,6 +109,8 @@ fun MTextField(
         modifier = modifier.heightIn(min = minHeight),
         textStyle = LocalTextStyle.current.copy(color = colors.contentColor),
         cursorBrush = SolidColor(colors.cursorColor),
+        keyboardActions = keyboardActions,
+        keyboardOptions = keyboardOptions,
         decorationBox = { content ->
             MSurface(
                 modifier = Modifier.fillMaxWidth(),

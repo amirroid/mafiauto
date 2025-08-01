@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -22,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -235,6 +238,10 @@ private fun AddPlayerBar(
             placeholder = {
                 MText(stringResource(Resources.strings.addNewPlayerHint))
             },
+            keyboardActions = KeyboardActions(onDone = {
+                if (isNewPlayerNameNotEmpty) onAddClick.invoke()
+            }),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             singleLine = true
         )
         MButton(
