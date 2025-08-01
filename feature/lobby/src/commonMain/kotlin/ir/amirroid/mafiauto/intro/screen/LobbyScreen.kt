@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,10 +22,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -105,17 +108,27 @@ fun LobbyScreen(
                 }
             }
         ) { paddingValues ->
-            PlayerList(
-                players = state.players,
-                selectedPlayers = state.selectedPlayers,
-                onToggle = viewModel::togglePlayerSelection,
-                onDelete = {
-                    viewModel.deletePlayer(it)
-                    scope.launch { collapsingAppBarState.animateTo(collapsingAppBarState.maxHeightPx) }
-                },
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = paddingValues + PaddingValues(bottom = 80.dp) + defaultContentPadding()
-            )
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                PlayerList(
+                    players = state.players,
+                    selectedPlayers = state.selectedPlayers,
+                    onToggle = viewModel::togglePlayerSelection,
+                    onDelete = {
+                        viewModel.deletePlayer(it)
+                        scope.launch { collapsingAppBarState.animateTo(collapsingAppBarState.maxHeightPx) }
+                    },
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = paddingValues + PaddingValues(bottom = 80.dp) + defaultContentPadding()
+                )
+                if (state.players.isEmpty()) {
+                    MText(
+                        stringResource(Resources.strings.noPlayersMessage),
+                        style = AppTheme.typography.caption,
+                        modifier = Modifier.fillMaxWidth().padding(paddingValues).alpha(.7f),
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
         }
 
         AddPlayerBar(

@@ -24,6 +24,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import compose.icons.EvaIcons
@@ -169,7 +171,16 @@ fun GroupsList(
                                 )
                             }
                         }
-                        MText(text = item.formatedPlayersList)
+                        if (item.formatedPlayersList.isEmpty()) {
+                            MText(
+                                stringResource(Resources.strings.noPlayersMessage),
+                                style = AppTheme.typography.caption,
+                                modifier = Modifier.fillMaxWidth().alpha(.7f),
+                                textAlign = TextAlign.Center
+                            )
+                        } else {
+                            MText(text = item.formatedPlayersList)
+                        }
                     }
                 }
             }

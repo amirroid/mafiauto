@@ -90,6 +90,7 @@ object Strings {
     val gunsmithInfo = Res.string.gunsmith_info
     val bulletBlank = Res.string.bullet_blank
     val gunShot = Res.string.gun_shot
+    val noPlayersMessage = Res.string.no_players_message
 
     // Themes
     val green = Res.string.green
