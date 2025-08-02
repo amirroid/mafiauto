@@ -1,8 +1,10 @@
 package ir.amirroid.mafiauto.common.compose.modifiers
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
-fun Modifier.thenIf(condition: Boolean, action: Modifier.() -> Modifier): Modifier {
+@Composable
+fun Modifier.thenIf(condition: Boolean, action: @Composable Modifier.() -> Modifier): Modifier {
     return if (condition) {
         this.action()
     } else {
@@ -10,7 +12,8 @@ fun Modifier.thenIf(condition: Boolean, action: Modifier.() -> Modifier): Modifi
     }
 }
 
-fun <D> Modifier.thenIfNotNull(obj: D?, action: Modifier.(D) -> Modifier): Modifier {
+@Composable
+fun <D> Modifier.thenIfNotNull(obj: D?, action: @Composable Modifier.(D) -> Modifier): Modifier {
     return thenIf(obj != null) {
         action(obj!!)
     }
