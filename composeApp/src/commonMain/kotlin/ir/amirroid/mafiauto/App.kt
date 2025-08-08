@@ -24,9 +24,17 @@ import ir.amirroid.mafiauto.ui_models.settings.SettingsUiModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun App() {
+fun App(
+    onConfigurationChange: ((SettingsUiModel) -> Unit)? = null
+) {
     val viewModel: AppViewModel = koinViewModel()
     val configuration by viewModel.settingsConfiguration.collectAsStateWithLifecycle()
+
+    onConfigurationChange?.let { callback ->
+        LaunchedEffect(configuration) {
+            configuration?.let(callback)
+        }
+    }
 
     if (configuration == null) {
         LoadingContent()

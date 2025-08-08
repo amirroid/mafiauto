@@ -36,15 +36,15 @@ class GroupDaoImpl(
     }
 
     override suspend fun addNewGroup(name: String) {
-        queries.addNewGroup(name).await()
+        queries.addNewGroup(name)
     }
 
     override suspend fun editGroupName(groupId: Long, newName: String) {
-        queries.updateGroupName(newName, groupId).await()
+        queries.updateGroupName(newName, groupId)
     }
 
     override suspend fun deleteGroup(groupId: Long) {
-        queries.deleteGroupById(groupId).await()
+        queries.deleteGroupById(groupId)
     }
 
     override suspend fun updateGroupPinState(groupId: Long, isPinned: Boolean) {
