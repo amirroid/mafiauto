@@ -79,19 +79,25 @@ jobs:
         run: |
           IFS=',' read -ra APK_ARRAY <<< "${{ steps.apk_paths.outputs.apk_paths }}"
           for apk in "${APK_ARRAY[@]}"; do
-            ARCH=$(basename "$apk" | grep -oE '(armeabi-v7a|arm64-v8a)')
-            if [ -z "$ARCH" ]; then
-              ARCH="all"
+            FILE_NAME=$(basename "$apk")
+            if [[ "$FILE_NAME" == *"universal"* ]] || [[ "$FILE_NAME" =~ (armeabi-v7a|arm64-v8a) ]]; then
+              if [[ "$FILE_NAME" =~ (armeabi-v7a|arm64-v8a) ]]; then
+                ARCH=$(echo "$FILE_NAME" | grep -oE '(armeabi-v7a|arm64-v8a)')
+              else
+                ARCH="all"
+              fi
+              echo "Uploading $apk with architecture $ARCH"
+              curl --request POST \
+                --url https://api.pishkhan.cafebazaar.ir/v1/apps/releases/upload/ \
+                --header "CAFEBAZAAR-PISHKHAN-API-SECRET: $BAZAAR_TOKEN" \
+                --header "Content-Type: multipart/form-data" \
+                --form architecture=$ARCH \
+                --form "apk=@$apk;type=application/vnd.android.package-archive"
+            else
+              echo "Skipping $apk — not universal or recognized architecture"
             fi
-            echo "Uploading $apk with architecture $ARCH"
-            curl --request POST \
-              --url https://api.pishkhan.cafebazaar.ir/v1/apps/releases/upload/ \
-              --header "CAFEBAZAAR-PISHKHAN-API-SECRET: $BAZAAR_TOKEN" \
-              --header "Content-Type: multipart/form-data" \
-              --form architecture=$ARCH \
-              --form "apk=@$apk;type=application/vnd.android.package-archive"
           done
-
+      
 
       - name: Read changelog and developer note
         id: changelog
