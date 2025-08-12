@@ -76,14 +76,24 @@ fun GroupsScreen(
             hazeState = hazeState,
             hazeStyle = hazeStyle
         ) { paddingValues ->
-            GroupsList(
-                groupsWithPlayers = groups,
-                onSelect = { onSelectGroup.invoke(it.groupId) },
-                modifier = Modifier.fillMaxSize(),
-                animatedContentScope = animatedContentScope,
-                onDelete = viewModel::deleteGroup,
-                contentPadding = paddingValues + PaddingValues(bottom = 80.dp) + defaultContentPadding() + WindowInsets.navigationBars.asPaddingValues()
-            )
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                GroupsList(
+                    groupsWithPlayers = groups,
+                    onSelect = { onSelectGroup.invoke(it.groupId) },
+                    modifier = Modifier.fillMaxSize(),
+                    animatedContentScope = animatedContentScope,
+                    onDelete = viewModel::deleteGroup,
+                    contentPadding = paddingValues + PaddingValues(bottom = 80.dp) + defaultContentPadding() + WindowInsets.navigationBars.asPaddingValues()
+                )
+                if (groups.isEmpty()) {
+                    MText(
+                        stringResource(Resources.strings.noGroupssMessage),
+                        style = AppTheme.typography.caption,
+                        modifier = Modifier.fillMaxWidth().padding(paddingValues).alpha(.7f),
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
         }
         MFloatingActionButton(
             onClick = viewModel::showAddNewGroup,
