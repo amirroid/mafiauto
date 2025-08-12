@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ReusableContent
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -87,16 +88,18 @@ fun SettingsScreen(
         title = { MText(stringResource(Resources.strings.settings)) },
         navigationIcon = { BackButton(onBack) },
     ) { paddingValues ->
-        SettingsConfiguration(
-            configuration = configuration,
-            onSelectLanguage = { viewModel.updateConfigurations(configuration.copy(language = it)) },
-            onSelectTheme = { viewModel.updateConfigurations(configuration.copy(theme = it)) },
-            onOpenLibraries = onOpenLibraries,
-            onCheckUpdate = viewModel::fetchUpdateInfo,
-            onChangeIconColor = viewModel::updateIconColor,
-            contentPadding = paddingValues + defaultContentPadding(),
-            fetchingUpdateInfo = updateInfoResponse is Response.Loading
-        )
+        ReusableContent(configuration.language) {
+            SettingsConfiguration(
+                configuration = configuration,
+                onSelectLanguage = { viewModel.updateConfigurations(configuration.copy(language = it)) },
+                onSelectTheme = { viewModel.updateConfigurations(configuration.copy(theme = it)) },
+                onOpenLibraries = onOpenLibraries,
+                onCheckUpdate = viewModel::fetchUpdateInfo,
+                onChangeIconColor = viewModel::updateIconColor,
+                contentPadding = paddingValues + defaultContentPadding(),
+                fetchingUpdateInfo = updateInfoResponse is Response.Loading
+            )
+        }
     }
 
     updateInfoResponse.onSuccess {
