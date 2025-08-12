@@ -11,6 +11,7 @@ import ir.amirroid.mafiauto.di.modules.useCaseModule
 import ir.amirroid.mafiauto.di.modules.viewModelModule
 import ir.amirroid.mafiauto.game.engine.di.gameEngineModule
 import ir.amirroid.mafiauto.network.di.networkModule
+import ir.amirroid.mafiauto.update_checker.updaterModule
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 
@@ -29,7 +30,8 @@ object DependencyInjectionConfiguration {
                 databaseModule,
                 gameEngineModule,
                 preferencesModule,
-                compatModule
+                compatModule,
+                updaterModule
             )
         }
     }

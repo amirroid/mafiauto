@@ -14,4 +14,8 @@ data class ReleaseInfo(
     val createdAt: String,
     @SerialName("html_url")
     val url: String
-)
+) {
+    companion object {
+        val Empty = ReleaseInfo(1, "", "", "", "", "")
+    }
+}

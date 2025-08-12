@@ -21,7 +21,7 @@ internal fun Project.configureAndroidApplicationPlugins(
         defaultConfig {
             minSdk = "minSdk".versionInt()
             versionName = rootProject.version.toString()
-            versionCode = 2
+            versionCode = versionCodeFromString(rootProject.version.toString())
             targetSdk = "targetSdk".versionInt()
             setProperty("archivesBaseName", "${rootProject.name}-v$versionName")
         }
@@ -52,6 +52,11 @@ internal fun Project.configureAndroidApplicationPlugins(
             disable.add("NullSafeMutableLiveData")
         }
     }
+}
+
+fun versionCodeFromString(version: String): Int {
+    val (major, minor, patch) = version.split(".").map { it.toIntOrNull() ?: 0 }
+    return major * 10000 + minor * 100 + patch
 }
 
 private fun Project.configureSigningIfAvailable(android: ApplicationExtension) {
