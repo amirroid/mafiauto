@@ -11,5 +11,10 @@ buildkonfig {
     packageName = AppInfo.namespace
     defaultConfigs {
         buildConfigField(FieldSpec.Type.STRING, "APP_VERSION", rootProject.version.toString())
+        buildConfigField(FieldSpec.Type.STRING, "FLAVOR", "default")
+    }
+    defaultConfigs("bazaar") {
+        buildConfigField(FieldSpec.Type.STRING, "APP_VERSION", rootProject.version.toString())
+        buildConfigField(FieldSpec.Type.STRING, "FLAVOR", "bazaar")
     }
 }

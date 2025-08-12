@@ -1,0 +1,93 @@
+name: Bazaar Android Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build & Upload Release APKs
+    runs-on: ubuntu-latest
+
+    env:
+      SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+      SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+      SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+      BAZAAR_TOKEN: ${{ secrets.BAZAAR_TOKEN }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'temurin'
+
+      - name: Run unit tests
+        run: ./gradlew test
+
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.SIGNING_KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
+
+      - name: Create local.properties
+        run: |
+          echo "signing.store.file=keystore.jks" >> local.properties
+          echo "signing.store.password=$SIGNING_STORE_PASSWORD" >> local.properties
+          echo "signing.key.alias=$SIGNING_KEY_ALIAS" >> local.properties
+          echo "signing.key.password=$SIGNING_KEY_PASSWORD" >> local.properties
+
+      - name: Grant execute permission to Gradle
+        run: chmod +x ./gradlew
+
+      - name: Build Release APKs
+        run: ./gradlew assembleRelease -Pbuildkonfig.flavor=bazaar
+
+      - name: Get all APK paths
+        id: apk_paths
+        run: |
+          APK_FILES=$(find . -name "*release*.apk" | paste -sd "," -)
+          echo "Found APK files: $APK_FILES"
+          echo "apk_paths=$APK_FILES" >> $GITHUB_OUTPUT
+
+      - name: Verify APK Signatures
+        run: |
+          if [ -z "$ANDROID_HOME" ]; then
+            echo "ANDROID_HOME not set!"
+            exit 1
+          fi
+          IFS=',' read -ra APK_ARRAY <<< "${{ steps.apk_paths.outputs.apk_paths }}"
+          for apk in "${APK_ARRAY[@]}"; do
+            echo "Verifying $apk"
+            "$ANDROID_HOME/build-tools/34.0.0/apksigner" verify "$apk"
+          done
+
+      - name: Create Bazaar Release
+        run: |
+          curl --request POST \
+            --url https://api.pishkhan.cafebazaar.ir/v1/apps/releases/ \
+            --header "CAFEBAZAAR-PISHKHAN-API-SECRET: $BAZAAR_TOKEN"
+          
+
+      - name: Upload APKs to Bazaar
+        run: |
+          IFS=',' read -ra APK_ARRAY <<< "${{ steps.apk_paths.outputs.apk_paths }}"
+          for apk in "${APK_ARRAY[@]}"; do
+            ARCH=$(basename "$apk" | grep -oE '(armeabi-v7a|arm64-v8a)')
+            if [ -z "$ARCH" ]; then
+              ARCH="all"
+            fi
+            echo "Uploading $apk with architecture $ARCH"
+            curl --request POST \
+              --url https://api.pishkhan.cafebazaar.ir/v1/apps/releases/upload/ \
+              --header "CAFEBAZAAR-PISHKHAN-API-SECRET: $BAZAAR_TOKEN" \
+              --header "Content-Type: multipart/form-data" \
+              --form architecture=$ARCH \
+              --form "apk=@$apk;type=application/vnd.android.package-archive"
+          done
