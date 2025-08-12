@@ -27,6 +27,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
@@ -139,11 +140,19 @@ private fun TextBox(
             .width(width)
             .thenIf(!isLastItem) {
                 drawBehind {
-                    drawLine(
-                        primaryColor, start = Offset(size.width, 0f),
-                        end = Offset(size.width, size.height),
-                        strokeWidth = 1.dp.toPx()
-                    )
+                    if (layoutDirection == LayoutDirection.Ltr) {
+                        drawLine(
+                            primaryColor, start = Offset(size.width, 0f),
+                            end = Offset(size.width, size.height),
+                            strokeWidth = 1.dp.toPx()
+                        )
+                    } else {
+                        drawLine(
+                            primaryColor, start = Offset(0f, 0f),
+                            end = Offset(0f, size.height),
+                            strokeWidth = 1.dp.toPx()
+                        )
+                    }
                 }
             }.fillMaxHeight(),
         contentAlignment = align
