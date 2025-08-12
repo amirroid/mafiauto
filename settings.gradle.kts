@@ -11,6 +11,7 @@ pluginManagement {
             }
         }
         maven("https://en-mirror.ir")
+        maven("https://jitpack.io")
         mavenCentral()
         gradlePluginPortal()
     }
@@ -26,6 +27,7 @@ dependencyResolutionManagement {
             }
         }
         maven("https://en-mirror.ir")
+        maven("https://jitpack.io")
         mavenCentral()
     }
     versionCatalogs.create("androidLibs") {

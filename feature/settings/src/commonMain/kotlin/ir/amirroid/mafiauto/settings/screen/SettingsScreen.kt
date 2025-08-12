@@ -52,6 +52,7 @@ import ir.amirroid.mafiauto.design_system.components.segmented_button.MSegmented
 import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.resources.Resources
+import ir.amirroid.mafiauto.settings.components.getPlatformUpdaterDialog
 import ir.amirroid.mafiauto.settings.dialog.NewUpdateBottomSheet
 import ir.amirroid.mafiauto.settings.viewmodel.SettingsViewModel
 import ir.amirroid.mafiauto.theme.core.AppTheme
@@ -99,7 +100,8 @@ fun SettingsScreen(
     }
 
     updateInfoResponse.onSuccess {
-        NewUpdateBottomSheet(
+        val platformUpdater = remember { getPlatformUpdaterDialog(it) }
+        platformUpdater?.invoke() ?: NewUpdateBottomSheet(
             updateInfo = it,
             onDismissRequest = viewModel::clearUpdateInfoResponse
         )

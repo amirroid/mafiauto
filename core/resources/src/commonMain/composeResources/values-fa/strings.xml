@@ -81,7 +81,7 @@
     <string name="name">نام</string>
     <string name="explanation">توضیح</string>
     <string name="alignment">وابستگی</string>
-    <string name="max_ability_uses">حداکثر استفاده از قابلیت</string>
+    <string name="max_ability_uses">حداکثر استفاده</string>
     <string name="no_players_message">هنوز بازیکنی اضافه نشده</string>
 
     <string name="neutral">مستقل</string>

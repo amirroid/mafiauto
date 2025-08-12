@@ -15,5 +15,8 @@ kotlin {
                 implementation(project(ProjectPaths.markdown))
             }
         }
+        androidMain.dependencies {
+            implementation(libs.bazaar.updater)
+        }
     }
 }
