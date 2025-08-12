@@ -91,3 +91,30 @@ jobs:
               --form architecture=$ARCH \
               --form "apk=@$apk;type=application/vnd.android.package-archive"
           done
+
+
+      - name: Read changelog and developer note
+        id: changelog
+        run: |
+          changelog_fa=$(cat changelogs/changelog-fa.md | jq -Rs .)
+          changelog_en=$(cat changelogs/changelog-en.md | jq -Rs .)
+          dev_note=$(echo "${{ github.event.head_commit.message }}" | jq -Rs .)
+          echo "changelog_fa=$changelog_fa" >> $GITHUB_OUTPUT
+          echo "changelog_en=$changelog_en" >> $GITHUB_OUTPUT
+          echo "developer_note=$dev_note" >> $GITHUB_OUTPUT
+
+      - name: Commit release to Bazaar
+        run: |
+          curl --request POST \
+            --url https://api.pishkhan.cafebazaar.ir/v1/apps/releases/commit/ \
+            --header "Content-Type: application/json" \
+            --header "CAFEBAZAAR-PISHKHAN-API-SECRET: $BAZAAR_TOKEN" \
+            --data @- <<EOF
+          {
+            "changelog_en": ${{ steps.changelog.outputs.changelog_en }},
+            "changelog_fa": ${{ steps.changelog.outputs.changelog_fa }},
+            "developer_note": ${{ steps.changelog.outputs.developer_note }},
+            "staged_rollout_percentage": 100,
+            "auto_publish": true
+          }
+          EOF
