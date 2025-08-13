@@ -104,10 +104,17 @@ fun SettingsScreen(
 
     updateInfoResponse.onSuccess {
         val platformUpdater = remember { getPlatformUpdaterDialog(it) }
-        platformUpdater?.invoke() ?: NewUpdateBottomSheet(
-            updateInfo = it,
-            onDismissRequest = viewModel::clearUpdateInfoResponse
-        )
+        if (it.needToUpdate) {
+            platformUpdater?.invoke() ?: NewUpdateBottomSheet(
+                updateInfo = it,
+                onDismissRequest = viewModel::clearUpdateInfoResponse
+            )
+        } else {
+            NewUpdateBottomSheet(
+                updateInfo = it,
+                onDismissRequest = viewModel::clearUpdateInfoResponse
+            )
+        }
     }
 }
 
