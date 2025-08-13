@@ -1,1 +1,2 @@
-Improvements and bug fixes
+- Fix issue with language update in settings screen
+- Fix updater problem
