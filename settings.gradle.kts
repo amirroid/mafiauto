@@ -10,7 +10,7 @@ pluginManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
-        maven("https://en-mirror.ir")
+//        maven("https://en-mirror.ir")
         maven("https://jitpack.io")
         mavenCentral()
         gradlePluginPortal()
@@ -26,7 +26,7 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
-        maven("https://en-mirror.ir")
+//        maven("https://en-mirror.ir")
         maven("https://jitpack.io")
         mavenCentral()
     }
