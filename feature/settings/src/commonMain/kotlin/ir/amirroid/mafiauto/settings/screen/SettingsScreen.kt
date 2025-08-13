@@ -23,7 +23,9 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ReusableContent
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,6 +47,7 @@ import ir.amirroid.mafiauto.common.app.response.onSuccess
 import ir.amirroid.mafiauto.common.app.utils.AppInfo
 import ir.amirroid.mafiauto.common.compose.components.BackButton
 import ir.amirroid.mafiauto.common.compose.extra.defaultContentPadding
+import ir.amirroid.mafiauto.common.compose.locales.LocalLocalization
 import ir.amirroid.mafiauto.common.compose.operators.plus
 import ir.amirroid.mafiauto.design_system.components.appbar.CollapsingTopAppBarScaffold
 import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
@@ -88,23 +91,21 @@ fun SettingsScreen(
         title = { MText(stringResource(Resources.strings.settings)) },
         navigationIcon = { BackButton(onBack) },
     ) { paddingValues ->
-        ReusableContent(configuration.language) {
-            SettingsConfiguration(
-                configuration = configuration,
-                onSelectLanguage = { viewModel.updateConfigurations(configuration.copy(language = it)) },
-                onSelectTheme = { viewModel.updateConfigurations(configuration.copy(theme = it)) },
-                onOpenLibraries = onOpenLibraries,
-                onCheckUpdate = viewModel::fetchUpdateInfo,
-                onChangeIconColor = viewModel::updateIconColor,
-                contentPadding = paddingValues + defaultContentPadding(),
-                fetchingUpdateInfo = updateInfoResponse is Response.Loading
-            )
-        }
+        SettingsConfiguration(
+            configuration = configuration,
+            onSelectLanguage = { viewModel.updateConfigurations(configuration.copy(language = it)) },
+            onSelectTheme = { viewModel.updateConfigurations(configuration.copy(theme = it)) },
+            onOpenLibraries = onOpenLibraries,
+            onCheckUpdate = viewModel::fetchUpdateInfo,
+            onChangeIconColor = viewModel::updateIconColor,
+            contentPadding = paddingValues + defaultContentPadding(),
+            fetchingUpdateInfo = updateInfoResponse is Response.Loading
+        )
     }
 
     updateInfoResponse.onSuccess {
-        val platformUpdater = remember { getPlatformUpdaterDialog(it) }
         if (it.needToUpdate) {
+            val platformUpdater = remember { getPlatformUpdaterDialog(it) }
             platformUpdater?.invoke() ?: NewUpdateBottomSheet(
                 updateInfo = it,
                 onDismissRequest = viewModel::clearUpdateInfoResponse
@@ -131,101 +132,108 @@ fun SettingsConfiguration(
     contentPadding: PaddingValues = PaddingValues()
 ) {
     val uriHandler = LocalUriHandler.current
-    LazyColumn(contentPadding = contentPadding, verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        item("language") {
-            Column {
-                MText(stringResource(Resources.strings.language))
-                Spacer(Modifier.height(8.dp))
-                LanguageSelector(
-                    selectedLanguage = configuration.language,
-                    onLanguageSelected = onSelectLanguage
-                )
-            }
-        }
-        item("theme") {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                MText(stringResource(Resources.strings.theme))
-                MSegmentedButton(
-                    items = AppThemeUiModel.entries,
-                    onClick = onSelectTheme,
-                    selectedItem = configuration.theme,
-                    modifier = Modifier.fillMaxWidth()
-                ) { theme ->
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        ThemeSchemePreview(theme.scheme)
-                        MText(stringResource(theme.displayName))
-                    }
+    val language = LocalLocalization.current
+
+    key(language) {
+        LazyColumn(
+            contentPadding = contentPadding,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            item("language") {
+                Column {
+                    MText(stringResource(Resources.strings.language))
+                    Spacer(Modifier.height(8.dp))
+                    LanguageSelector(
+                        selectedLanguage = configuration.language,
+                        onLanguageSelected = onSelectLanguage
+                    )
                 }
             }
-        }
-        item("icon") {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                MText(stringResource(Resources.strings.iconColor))
-                MSegmentedButton(
-                    items = AppIconUiModel.entries,
-                    onClick = onChangeIconColor,
-                    selectedItem = configuration.iconColor,
-                    modifier = Modifier.fillMaxWidth()
-                ) { iconInfo ->
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(iconInfo.icon),
-                            contentDescription = null,
-                            modifier = Modifier.clip(AppTheme.shapes.small).size(20.dp)
-                        )
-                        MText(stringResource(iconInfo.displayName))
-                    }
-                }
-            }
-        }
-        item("updater") {
-            MListItem(
-                text = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween,
+            item("theme") {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    MText(stringResource(Resources.strings.theme))
+                    MSegmentedButton(
+                        items = AppThemeUiModel.entries,
+                        onClick = onSelectTheme,
+                        selectedItem = configuration.theme,
                         modifier = Modifier.fillMaxWidth()
-                    ) {
-                        MText(stringResource(Resources.strings.checkForNewUpdate))
-                        AnimatedVisibility(fetchingUpdateInfo) {
-                            MLoading(size = 24.dp)
+                    ) { theme ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            ThemeSchemePreview(theme.scheme)
+                            MText(stringResource(theme.displayName))
                         }
                     }
-                },
-                onClick = onCheckUpdate,
-                enabled = !fetchingUpdateInfo
-            )
-        }
-        item("code") {
-            MListItem(
-                text = {
-                    MText(stringResource(Resources.strings.viewSource))
-                },
-                onClick = {
-                    uriHandler.openUri(AppInfo.githubLink)
                 }
-            )
-        }
-        item("libs") {
-            MListItem(
-                text = {
-                    MText(stringResource(Resources.strings.openSourceLibraries))
-                },
-                onClick = onOpenLibraries
-            )
-        }
-        item("version") {
-            MText(
-                text = stringResource(Resources.strings.version, AppInfo.version),
-                style = AppTheme.typography.caption,
-                modifier = Modifier.alpha(.7f)
-            )
+            }
+            item("icon") {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    MText(stringResource(Resources.strings.iconColor))
+                    MSegmentedButton(
+                        items = AppIconUiModel.entries,
+                        onClick = onChangeIconColor,
+                        selectedItem = configuration.iconColor,
+                        modifier = Modifier.fillMaxWidth()
+                    ) { iconInfo ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(iconInfo.icon),
+                                contentDescription = null,
+                                modifier = Modifier.clip(AppTheme.shapes.small).size(20.dp)
+                            )
+                            MText(stringResource(iconInfo.displayName))
+                        }
+                    }
+                }
+            }
+            item("updater") {
+                MListItem(
+                    text = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            MText(stringResource(Resources.strings.checkForNewUpdate))
+                            AnimatedVisibility(fetchingUpdateInfo) {
+                                MLoading(size = 24.dp)
+                            }
+                        }
+                    },
+                    onClick = onCheckUpdate,
+                    enabled = !fetchingUpdateInfo
+                )
+            }
+            item("code") {
+                MListItem(
+                    text = {
+                        MText(stringResource(Resources.strings.viewSource))
+                    },
+                    onClick = {
+                        uriHandler.openUri(AppInfo.githubLink)
+                    }
+                )
+            }
+            item("libs") {
+                MListItem(
+                    text = {
+                        MText(stringResource(Resources.strings.openSourceLibraries))
+                    },
+                    onClick = onOpenLibraries
+                )
+            }
+            item("version") {
+                MText(
+                    text = stringResource(Resources.strings.version, AppInfo.version),
+                    style = AppTheme.typography.caption,
+                    modifier = Modifier.alpha(.7f)
+                )
+            }
         }
     }
 }
