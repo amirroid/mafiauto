@@ -16,5 +16,6 @@ data class RoleUiModel(
     val nightActionRequiredPicks: Int,
     val instantAction: InstantAction?,
     val maxAbilityUses: Int,
-    val triggersWhenTargetedBy: List<String>
+    val triggersWhenTargetedBy: List<String>,
+    val executionOrder: Int
 )
