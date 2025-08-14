@@ -18,7 +18,7 @@ import ir.amirroid.mafiauto.assign_roles.screen.AssignRolesScreen
 import ir.amirroid.mafiauto.common.compose.locales.LocalSharedTransitionScope
 import ir.amirroid.mafiauto.final_debate.screen.FinalDebateScreen
 import ir.amirroid.mafiauto.groups.screen.GroupsScreen
-import ir.amirroid.mafiauto.guide.screen.GuideGameScreen
+import ir.amirroid.mafiauto.guide.screen.GameGuideScreen
 import ir.amirroid.mafiauto.intro.screen.IntroScreen
 import ir.amirroid.mafiauto.intro.screen.LobbyScreen
 import ir.amirroid.mafiauto.libraries.screen.LibrariesScreen
@@ -144,7 +144,7 @@ fun MainNavigation() {
                     )
                 }
                 composable<Screen.Guide> {
-                    GuideGameScreen(
+                    GameGuideScreen(
                         onBack = navController::navigateUp,
                     )
                 }

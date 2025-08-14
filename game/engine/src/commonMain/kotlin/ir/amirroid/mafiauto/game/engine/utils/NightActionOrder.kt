@@ -15,8 +15,8 @@ val NightActionOrder: Map<String, Int> = mapOf(
     RoleKeys.RANGER to 11,
     RoleKeys.BULLETPROOF to 12,
     RoleKeys.MAYOR to 13,
-    RoleKeys.CIVILIAN to 14,
-    RoleKeys.JOKER to 15
+    RoleKeys.JOKER to 14,
+    RoleKeys.CIVILIAN to 15
 )
 
 val SubmitNightActionOrder: Map<String, Int> = mapOf(
@@ -34,6 +34,6 @@ val SubmitNightActionOrder: Map<String, Int> = mapOf(
     RoleKeys.RANGER to 11,
     RoleKeys.BULLETPROOF to 12,
     RoleKeys.MAYOR to 13,
-    RoleKeys.CIVILIAN to 14,
-    RoleKeys.JOKER to 15
+    RoleKeys.JOKER to 14,
+    RoleKeys.CIVILIAN to 15
 )
