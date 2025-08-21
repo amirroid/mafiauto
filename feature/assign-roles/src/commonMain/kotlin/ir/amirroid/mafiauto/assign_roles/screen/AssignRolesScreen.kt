@@ -98,7 +98,9 @@ fun AssignRolesScreen(
             enabledNextPage = enabledNextPage,
             modifier = Modifier
                 .fillMaxWidth()
-                .hazeEffect(hazeState, hazeStyle)
+                .hazeEffect(hazeState, hazeStyle) {
+                    blurEnabled = true
+                }
                 .allPadding()
                 .imePadding()
                 .navigationBarsPadding()

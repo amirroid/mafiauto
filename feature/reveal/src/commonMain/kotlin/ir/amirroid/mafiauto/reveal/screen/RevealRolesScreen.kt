@@ -116,7 +116,9 @@ fun RevealRolesScreen(
             isLastItem = currentPlayerIndex == playerWithRoles.size.minus(1),
             modifier = Modifier
                 .fillMaxWidth()
-                .hazeEffect(hazeState, hazeStyle)
+                .hazeEffect(hazeState, hazeStyle) {
+                    blurEnabled = true
+                }
                 .allPadding()
                 .imePadding()
                 .navigationBarsPadding()

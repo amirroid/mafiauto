@@ -143,7 +143,9 @@ fun CollapsingTopAppBarScaffold(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(appBarHeight + statusBarHeight)
-                .hazeEffect(hazeState, style = hazeStyle)
+                .hazeEffect(hazeState, style = hazeStyle) {
+                    blurEnabled = true
+                }
                 .padding(16.dp)
         ) {
             navigationIcon?.let { iconContent ->

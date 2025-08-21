@@ -147,7 +147,9 @@ fun LobbyScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .imePadding()
-                .hazeEffect(hazeState, hazeStyle)
+                .hazeEffect(hazeState, hazeStyle) {
+                    blurEnabled = true
+                }
                 .allPadding()
                 .navigationBarsPadding()
         )

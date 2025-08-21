@@ -78,6 +78,7 @@ fun BaseBlurredPopup(
                             tints = listOf(HazeTint(Color.Black.copy(.5f)))
                             backgroundColor = Color.Black.copy(.5f)
                             blurRadius = 10.dp
+                            blurEnabled = true
                         }
                 ) {
                 }

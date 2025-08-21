@@ -139,7 +139,10 @@ fun GameRoomScreen(
             onCheckStatus = viewModel::increaseStatusCheck,
             onDecreaseCheckStatus = viewModel::decreaseStatusCheck,
             onNextPhase = viewModel::nextPhase,
-            modifier = Modifier.fillMaxWidth().hazeEffect(hazeState, hazeStyle).allPadding()
+            modifier = Modifier.fillMaxWidth()
+                .hazeEffect(hazeState, hazeStyle) {
+                    blurEnabled = true
+                }.allPadding()
                 .imePadding().navigationBarsPadding()
         )
     }
