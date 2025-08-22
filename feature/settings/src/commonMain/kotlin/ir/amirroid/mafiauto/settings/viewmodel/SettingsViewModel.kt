@@ -53,6 +53,10 @@ class SettingsViewModel(
         saveSelectedIconColorUseCase.invoke(color.colorName)
     }
 
+    fun updateFontScale(fontScale: Float) = viewModelScope.launch(dispatcher) {
+        updateConfigurations(settingsConfiguration.value.copy(fontScale = fontScale))
+    }
+
     fun fetchUpdateInfo() = viewModelScope.launch(dispatcher) {
         _updateInfo.update { Response.Loading }
         val newResponse = getLatestUpdateInfoUseCase()

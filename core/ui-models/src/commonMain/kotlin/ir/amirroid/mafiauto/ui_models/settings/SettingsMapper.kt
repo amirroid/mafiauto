@@ -9,4 +9,5 @@ fun Settings.toUiModel() = SettingsUiModel(
     languageCode = language.languageCode,
     theme = AppThemeUiModel.valueOf(theme.name),
     iconColor = AppIconUiModel.entries.first { it.colorName == iconColor },
+    fontScale = fontScale
 )

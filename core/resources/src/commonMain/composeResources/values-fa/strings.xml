@@ -84,6 +84,7 @@
     <string name="max_ability_uses">حداکثر استفاده</string>
     <string name="no_players_message">هنوز بازیکنی اضافه نشده</string>
     <string name="no_groups_message">هنوز گروهی اضافه نشده</string>
+    <string name="font_scale">اندازه فونت</string>
 
     <string name="neutral">مستقل</string>
 

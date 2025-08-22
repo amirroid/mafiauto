@@ -14,5 +14,6 @@ enum class Theme {
 data class SettingsConfig(
     val language: Language,
     val theme: Theme,
-    val iconColor: String
+    val iconColor: String,
+    val fontScale: Float? = null
 )

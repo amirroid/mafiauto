@@ -83,6 +83,7 @@
     <string name="max_ability_uses">الحد الأقصى للاستخدام</string>
     <string name="no_players_message">لم يتم إضافة أي لاعبين بعد</string>
     <string name="no_groups_message">لم يتم إضافة مجموعات بعد</string>
+    <string name="font_scale">حجم الخط</string>
 
     <string name="green">أخضر</string>
     <string name="red">أحمر</string>

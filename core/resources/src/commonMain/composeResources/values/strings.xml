@@ -85,6 +85,7 @@
     <string name="max_ability_uses">Max Ability Uses</string>
     <string name="no_players_message">No players added yet</string>
     <string name="no_groups_message">No groups added yet</string>
+    <string name="font_scale">Font Size</string>
 
     <string name="green">Green</string>
     <string name="red">Red</string>
