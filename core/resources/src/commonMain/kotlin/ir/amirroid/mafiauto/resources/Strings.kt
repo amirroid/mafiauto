@@ -77,6 +77,7 @@ object Strings {
     val openSourceLibraries = Res.string.open_source_libraries
     val version = Res.string.version
     val theme = Res.string.theme
+    val fontScale = Res.string.font_scale
     val iconColor = Res.string.icon_color
     val checkForNewUpdate = Res.string.check_for_new_update
     val view = Res.string.view

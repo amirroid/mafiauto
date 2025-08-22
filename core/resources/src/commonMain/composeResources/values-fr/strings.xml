@@ -85,6 +85,7 @@
     <string name="max_ability_uses">Utilisations max de la capacité</string>
     <string name="no_players_message">Aucun joueur ajouté pour le moment</string>
     <string name="no_groups_message">Aucun groupe ajouté pour le moment</string>
+    <string name="font_scale">Taille de police</string>
 
     <string name="green">Vert</string>
     <string name="red">Rouge</string>

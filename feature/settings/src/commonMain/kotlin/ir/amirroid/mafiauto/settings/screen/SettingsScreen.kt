@@ -3,30 +3,24 @@ package ir.amirroid.mafiauto.settings.screen
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.ReusableContent
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -34,12 +28,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.amirroid.mafiauto.common.app.response.Response
 import ir.amirroid.mafiauto.common.app.response.onError
@@ -53,6 +51,7 @@ import ir.amirroid.mafiauto.design_system.components.appbar.CollapsingTopAppBarS
 import ir.amirroid.mafiauto.design_system.components.list.base.MListItem
 import ir.amirroid.mafiauto.design_system.components.loading.MLoading
 import ir.amirroid.mafiauto.design_system.components.segmented_button.MSegmentedButton
+import ir.amirroid.mafiauto.design_system.components.slider.MSlider
 import ir.amirroid.mafiauto.design_system.components.snakebar.LocalSnakeBarControllerState
 import ir.amirroid.mafiauto.design_system.components.text.MText
 import ir.amirroid.mafiauto.resources.Resources
@@ -61,6 +60,7 @@ import ir.amirroid.mafiauto.settings.dialog.NewUpdateBottomSheet
 import ir.amirroid.mafiauto.settings.viewmodel.SettingsViewModel
 import ir.amirroid.mafiauto.theme.core.AppTheme
 import ir.amirroid.mafiauto.theme.core.ColorScheme
+import ir.amirroid.mafiauto.theme.locales.LocalTextStyle
 import ir.amirroid.mafiauto.theme.theme.AppThemeUiModel
 import ir.amirroid.mafiauto.theme.utils.CutRoundedCornerShape
 import ir.amirroid.mafiauto.ui_models.icon.AppIconUiModel
@@ -98,6 +98,7 @@ fun SettingsScreen(
             onOpenLibraries = onOpenLibraries,
             onCheckUpdate = viewModel::fetchUpdateInfo,
             onChangeIconColor = viewModel::updateIconColor,
+            onFontScaleChange = viewModel::updateFontScale,
             contentPadding = paddingValues + defaultContentPadding(),
             fetchingUpdateInfo = updateInfoResponse is Response.Loading
         )
@@ -126,6 +127,7 @@ fun SettingsConfiguration(
     onSelectLanguage: (Language) -> Unit,
     onSelectTheme: (AppThemeUiModel) -> Unit,
     onChangeIconColor: (AppIconUiModel) -> Unit,
+    onFontScaleChange: (Float) -> Unit,
     onCheckUpdate: () -> Unit,
     onOpenLibraries: () -> Unit,
     fetchingUpdateInfo: Boolean,
@@ -133,6 +135,12 @@ fun SettingsConfiguration(
 ) {
     val uriHandler = LocalUriHandler.current
     val language = LocalLocalization.current
+    val density = LocalDensity.current
+    var currentFontScale by remember(configuration.fontScale) {
+        mutableFloatStateOf(
+            configuration.fontScale ?: density.fontScale
+        )
+    }
 
     key(language) {
         LazyColumn(
@@ -190,6 +198,12 @@ fun SettingsConfiguration(
                         }
                     }
                 }
+            }
+            item("font_cale") {
+                FontScaleSlider(
+                    currentFontScale, onValueChange = { currentFontScale = it },
+                    onValueChangeFinished = { onFontScaleChange.invoke(currentFontScale) }
+                )
             }
             item("updater") {
                 MListItem(
@@ -286,7 +300,7 @@ private fun LanguageSelector(
 
 
 @Composable
-fun ThemeSchemePreview(scheme: ColorScheme, strokeWidth: Dp = 1.dp) {
+private fun ThemeSchemePreview(scheme: ColorScheme, strokeWidth: Dp = 1.dp) {
     Canvas(Modifier.size(16.dp)) {
         val strokeWidthPx = strokeWidth.toPx()
         drawCircle(scheme.primary)
@@ -305,5 +319,57 @@ fun ThemeSchemePreview(scheme: ColorScheme, strokeWidth: Dp = 1.dp) {
             )
         }
         drawPath(circlePath, scheme.onPrimary)
+    }
+}
+
+
+@Composable
+private fun FontScaleSlider(
+    value: Float,
+    onValueChange: (Float) -> Unit,
+    onValueChangeFinished: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val min = 0.6f
+    val max = 1.7f
+    val steps = 5
+
+    Column(modifier) {
+        MText(stringResource(Resources.strings.fontScale))
+        Spacer(Modifier.height(8.dp))
+        MSlider(
+            value = value,
+            onValueChange = onValueChange,
+            onValueChangeFinished = onValueChangeFinished,
+            min = min,
+            max = max,
+            steps = steps,
+            modifier = Modifier.fillMaxWidth()
+        )
+        FontScaleLabels()
+    }
+}
+
+@Composable
+private fun FontScaleLabels() {
+    val labels = listOf("XS", "S", "M", "L", "XL")
+    val textMeasurer = rememberTextMeasurer()
+    val textStyle = LocalTextStyle.current.copy(color = AppTheme.colorScheme.onBackground)
+    val density = LocalDensity.current
+
+    Canvas(Modifier.fillMaxWidth().height(with(density) { textStyle.fontSize.toDp() })) {
+        val eachWidth = size.width / labels.size.minus(1)
+        labels.forEachIndexed { index, label ->
+            val result = textMeasurer.measure(label, style = textStyle)
+            val textSize = result.size
+            val x = when (index) {
+                0 -> 0f
+                labels.size - 1 -> size.width - textSize.width
+                else -> eachWidth.times(index) - textSize.width.div(2)
+            }
+            drawText(
+                result, topLeft = Offset(x, 0f)
+            )
+        }
     }
 }

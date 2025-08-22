@@ -9,6 +9,7 @@ fun Settings.toData(): SettingsConfig {
     return SettingsConfig(
         language = Language.valueOf(language.name),
         theme = Theme.valueOf(theme.name),
-        iconColor = iconColor
+        iconColor = iconColor,
+        fontScale = fontScale
     )
 }

@@ -7,5 +7,6 @@ import ir.amirroid.mafiauto.domain.model.settings.Theme
 fun SettingsUiModel.toDomain() = Settings(
     language = Language.valueOf(language.name),
     theme = Theme.valueOf(theme.name),
-    iconColor = iconColor.colorName
+    iconColor = iconColor.colorName,
+    fontScale = fontScale
 )
