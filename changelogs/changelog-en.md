@@ -1,1 +1,1 @@
-Improved guide screen
+Improvements and bug fixes

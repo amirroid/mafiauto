@@ -31,11 +31,12 @@ actual fun PlatformPopup(
             decorFitsSystemWindows = false
         )
     ) {
-        (LocalView.current.parent as? DialogWindowProvider)?.window?.apply {
+        (LocalView.current.parent as? DialogWindowProvider)?.window?.let { dialogWindow ->
             SideEffect {
-                setDimAmount(0f)
-                navigationBarColor = Color.Transparent.toArgb()
-                statusBarColor = Color.Transparent.toArgb()
+                dialogWindow.navigationBarColor = Color.Transparent.toArgb()
+                dialogWindow.statusBarColor = Color.Transparent.toArgb()
+                dialogWindow.setWindowAnimations(-1)
+                dialogWindow.setDimAmount(0f)
             }
         }
         Box(
