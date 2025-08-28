@@ -54,9 +54,11 @@ internal fun Project.configureAndroidApplicationPlugins(
     }
 }
 
-fun versionCodeFromString(version: String): Int {
-    val (major, minor, patch) = version.split(".").map { it.toIntOrNull() ?: 0 }
-    return major * 10000 + minor * 100 + patch
+private fun versionCodeFromString(version: String): Int {
+    return runCatching {
+        val (major, minor, patch) = version.split(".").map { it.toIntOrNull() ?: 0 }
+        major * 10000 + minor * 100 + patch
+    }.getOrDefault(1)
 }
 
 private fun Project.configureSigningIfAvailable(android: ApplicationExtension) {
