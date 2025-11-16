@@ -22,7 +22,7 @@ so players can focus on the game itself.
 <a href='https://github.com/amirroid/mafiauto/releases/latest'>
   <img height="70" alt='Get it on GitHub' src='https://raw.githubusercontent.com/persian-calendar/persian-calendar/main/assets/GitHub.svg'/>
 </a>
-<a href='https://cafebazaar.ir/app/ir.amirroid.mafiauto'>
+<a href='https://cafebazaar.ir/app/ir.amirroid.mafiauto?l=en'>
   <img height="70" alt='Get it on Bazaar' src='https://raw.githubusercontent.com/persian-calendar/persian-calendar/main/assets/Bazaar.svg'/>
 </a>
 
