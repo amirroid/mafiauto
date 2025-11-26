@@ -23,7 +23,7 @@ aboutLibraries = "13.1.0"
 buildKonfig = "0.17.1"
 kotlinx-collections = "0.4.0"
 coroutines = "1.10.2"
-ktor = "3.3.2"
+ktor = "3.3.3"
 kotlinxCoroutinesSwing = "1.10.2"
 
 [libraries]
