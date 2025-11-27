@@ -22,10 +22,10 @@ class PlayerDaoImpl(
     }
 
     override suspend fun addPlayer(name: String, groupId: Long) {
-        queries.addPlayer(name, groupId).await()
+        queries.addPlayer(name, groupId)
     }
 
     override suspend fun deletePlayer(id: Long) {
-        queries.deletePlayer(id).await()
+        queries.deletePlayer(id)
     }
 }
