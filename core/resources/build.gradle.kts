@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.local.android.library)
     alias(libs.plugins.local.compose.multiplatform)
+    alias(libs.plugins.local.android.library)
     alias(libs.plugins.aboutLibraries)
 }
 
@@ -16,4 +16,16 @@ tasks.named("copyNonXmlValueResourcesForCommonMain") {
     if (!aboutLibsOutput.exists()) {
         dependsOn("exportLibraryDefinitions")
     }
+}
+
+kotlin {
+    androidLibrary {
+        androidResources {
+            enable = true
+        }
+    }
+}
+
+compose.resources {
+    packageOfResClass = "ir.amirroid.mafiauto.resources"
 }

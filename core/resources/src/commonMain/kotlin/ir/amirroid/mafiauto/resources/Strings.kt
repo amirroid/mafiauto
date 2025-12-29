@@ -1,8 +1,5 @@
 package ir.amirroid.mafiauto.resources
 
-import mafiauto.core.resources.generated.resources.Res
-import mafiauto.core.resources.generated.resources.*
-
 object Strings {
     val appName = Res.string.app_name
     val introTitle = Res.string.intro_title

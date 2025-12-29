@@ -1,30 +1,26 @@
 package ir.amirroid.mafiauto.convention.android.library
 
-import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.dsl.androidLibrary
 import ir.amirroid.mafiauto.convention.PACKAGE_NAME
 import ir.amirroid.mafiauto.convention.androidLibs
-import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun Project.configureAndroidLibraryPlugins(
-    extensions: LibraryExtension
+    extensions: KotlinMultiplatformExtension
 ) {
     fun String.versionInt(): Int =
         androidLibs.findVersion(this).get().requiredVersion.toInt()
 
-    extensions.apply {
+    extensions.androidLibrary {
         namespace = PACKAGE_NAME
         compileSdk = "compileSdk".versionInt()
 
-        defaultConfig {
-            minSdk = "minSdk".versionInt()
-        }
+        withJava()
 
-        packaging.resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
-
-        compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_21
-            targetCompatibility = JavaVersion.VERSION_21
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
         }
 
         lint {

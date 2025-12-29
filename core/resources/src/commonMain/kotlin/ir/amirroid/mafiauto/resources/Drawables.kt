@@ -1,6 +1,5 @@
 package ir.amirroid.mafiauto.resources
 
-import mafiauto.core.resources.generated.resources.*
 
 object Drawables {
     val backgroundRed = Res.drawable.bg_red

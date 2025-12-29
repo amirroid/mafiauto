@@ -1,8 +1,5 @@
 package ir.amirroid.mafiauto.resources
 
-import mafiauto.core.resources.generated.resources.Res
-import mafiauto.core.resources.generated.resources.*
-
 object Fonts {
     val sfBold = Res.font.sf_bold
     val sfNormal = Res.font.sf
