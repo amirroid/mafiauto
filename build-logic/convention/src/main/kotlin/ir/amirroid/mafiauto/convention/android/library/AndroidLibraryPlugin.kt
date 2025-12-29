@@ -1,11 +1,11 @@
 package ir.amirroid.mafiauto.convention.android.library
 
-import com.android.build.api.dsl.LibraryExtension
-import ir.amirroid.mafiauto.convention.libs
 import ir.amirroid.mafiauto.convention.findPluginId
+import ir.amirroid.mafiauto.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class AndroidLibraryPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -18,6 +18,6 @@ class AndroidLibraryPlugin : Plugin<Project> {
     }
 
     private fun Project.configureExtensions() {
-        extensions.configure<LibraryExtension>(::configureAndroidLibraryPlugins)
+        extensions.configure<KotlinMultiplatformExtension>(::configureAndroidLibraryPlugins)
     }
 }

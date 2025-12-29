@@ -2,8 +2,8 @@ import ir.amirroid.mafiauto.buildSrc.ProjectPaths
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    alias(libs.plugins.local.android.application)
     alias(libs.plugins.local.compose.multiplatform)
+    alias(libs.plugins.local.android.library)
     alias(libs.plugins.local.koin)
 }
 

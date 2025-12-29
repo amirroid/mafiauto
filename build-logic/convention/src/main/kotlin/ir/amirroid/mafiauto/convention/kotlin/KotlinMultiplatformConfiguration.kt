@@ -14,7 +14,6 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 internal fun Project.configureKotlinMultiplatformPlugins(extensions: KotlinMultiplatformExtension) {
     extensions.apply {
         applyDefaultHierarchyTemplate()
-        androidTarget()
         configureIosTargets()
         jvm("desktop")
 
