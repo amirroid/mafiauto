@@ -16,6 +16,7 @@ kotlin.sourceSets.commonMain {
     }
 }
 
+
 compose.desktop {
     application {
         mainClass = "ir.amirroid.mafiauto.MainKt"

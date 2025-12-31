@@ -4,9 +4,11 @@ plugins {
 
 dependencies {
     // Android & Compose plugins
-    implementation(libs.plugin.android.compiler)
-    implementation(libs.plugin.kotlin.compiler)
-    implementation(libs.plugin.compose.compiler)
+    implementation(libs.android.gradle.plguin)
+    implementation(libs.compose.gradle.plugin)
+    implementation(libs.compose.compiler.gradle.plugin)
+    implementation(libs.kotlin.gradle.compiler)
+
 }
 
 val namespace = "ir.amirroid.mafiauto.convention"
