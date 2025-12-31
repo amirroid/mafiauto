@@ -25,9 +25,9 @@ class GitVersionExtension(project: Project) {
                 return extractVersionFromTag(tag)
             }
 
-            val branch = repository.fullBranch ?: return "dev"
+            val branch = repository.fullBranch ?: return DEFAULT_VERSION
             sanitizeBranch(branch)
-        }.getOrDefault("dev")
+        }.getOrDefault(DEFAULT_VERSION)
     }
 
     private fun extractVersionFromTag(tag: String): String {
@@ -42,5 +42,10 @@ class GitVersionExtension(project: Project) {
             .removePrefix("refs/heads/")
             .replace("/", "-")
             .replace("[^a-zA-Z0-9.-]".toRegex(), "-")
+    }
+
+
+    companion object {
+        const val DEFAULT_VERSION = "1.0.0-dev"
     }
 }
