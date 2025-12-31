@@ -5,6 +5,7 @@ import ir.amirroid.mafiauto.convention.findPluginId
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class ComposeMultiplatformPlugin : Plugin<Project> {
@@ -23,5 +24,6 @@ class ComposeMultiplatformPlugin : Plugin<Project> {
 
     private fun Project.configureExtensions() {
         extensions.configure<KotlinMultiplatformExtension>(::configureComposeMultiplatformPlugins)
+        extensions.configure<ComposeCompilerGradlePluginExtension>(::configureComposeCompiler)
     }
 }
