@@ -23,6 +23,12 @@ kotlin {
     sourceSets.desktopMain.dependencies {
         implementation(libs.sqlite.driver)
     }
+    sourceSets.wasmJsMain.dependencies {
+        implementation("app.cash.sqldelight:web-worker-driver:2.1.0")
+        implementation(devNpm("copy-webpack-plugin", "9.1.0"))
+        implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.1.0"))
+        implementation(npm("sql.js", "1.8.0"))
+    }
 }
 
 sqldelight {
@@ -34,6 +40,7 @@ sqldelight {
                 file("src/commonMain/sqldelight/${AppInfo.namespace.replace('.', '/')}")
             )
             verifyMigrations.set(true)
+            generateAsync.set(true)
             deriveSchemaFromMigrations.set(true)
         }
     }
