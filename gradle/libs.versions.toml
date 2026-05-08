@@ -24,7 +24,7 @@ buildKonfig = "0.18.0"
 kotlinx-collections = "0.4.0"
 coroutines = "1.10.2"
 ktor = "3.4.3"
-kotlinxCoroutinesSwing = "1.10.2"
+kotlinxCoroutinesSwing = "1.11.0"
 
 [libraries]
 bazaar-updater = { module = "com.github.cafebazaar:bazaarUpdater", version.ref = "bazaar-updater" }
