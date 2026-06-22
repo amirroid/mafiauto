@@ -3,6 +3,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     repositories {
+        maven("https://en-mirror.ir")
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
@@ -18,6 +19,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        maven("https://en-mirror.ir")
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
