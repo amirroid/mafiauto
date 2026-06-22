@@ -23,7 +23,7 @@ internal fun Project.configureAndroidApplicationPlugins(
             versionName = rootProject.version.toString()
             versionCode = versionCodeFromString(rootProject.version.toString())
             targetSdk = "targetSdk".versionInt()
-            setProperty("archivesBaseName", "${rootProject.name}-v$versionName")
+
         }
 
         splits {
