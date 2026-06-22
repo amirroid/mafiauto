@@ -1,7 +1,6 @@
 package ir.amirroid.mafiauto.convention.android.library
 
-import com.android.build.api.dsl.androidLibrary
-import ir.amirroid.mafiauto.convention.PACKAGE_NAME
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
 import ir.amirroid.mafiauto.convention.androidLibs
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -13,11 +12,15 @@ internal fun Project.configureAndroidLibraryPlugins(
     fun String.versionInt(): Int =
         androidLibs.findVersion(this).get().requiredVersion.toInt()
 
-    extensions.androidLibrary {
-        namespace = PACKAGE_NAME
+    val namespace = path.replace(":", ".").removePrefix(".")
+
+    val android = extensions.targets.getByName("android") as KotlinMultiplatformAndroidLibraryTarget
+    android.apply {
+        this.namespace = namespace
         compileSdk = "compileSdk".versionInt()
 
         withJava()
+        withHostTest {}
 
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_21)

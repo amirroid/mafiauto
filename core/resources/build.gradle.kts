@@ -19,7 +19,7 @@ tasks.named("copyNonXmlValueResourcesForCommonMain") {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         androidResources {
             enable = true
         }
