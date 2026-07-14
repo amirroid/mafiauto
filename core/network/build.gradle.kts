@@ -20,5 +20,8 @@ kotlin {
         desktopMain.dependencies {
             implementation(libs.ktor.client.okhttp)
         }
+        wasmJsMain.dependencies {
+            implementation(libs.ktor.client.js)
+        }
     }
 }

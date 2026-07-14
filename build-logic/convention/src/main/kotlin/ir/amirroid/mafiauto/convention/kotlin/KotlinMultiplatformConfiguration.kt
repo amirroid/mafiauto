@@ -9,6 +9,7 @@ import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 @OptIn(ExperimentalWasmDsl::class)
 internal fun Project.configureKotlinMultiplatformPlugins(extensions: KotlinMultiplatformExtension) {
@@ -16,6 +17,14 @@ internal fun Project.configureKotlinMultiplatformPlugins(extensions: KotlinMulti
         applyDefaultHierarchyTemplate()
         configureIosTargets()
         jvm("desktop")
+        wasmJs {
+            browser {
+                commonWebpackConfig {
+                    outputFileName = "composeApp.js"
+                }
+            }
+            binaries.executable()
+        }
 
         configureCommonMain(sourceSets)
         configureAndroidMain(sourceSets)
