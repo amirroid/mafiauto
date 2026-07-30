@@ -3,6 +3,7 @@ package ir.amirroid.mafiauto.common.app.utils
 enum class Platform {
     ANDROID,
     IOS,
+    WEB,
     DESKTOP
 }
 

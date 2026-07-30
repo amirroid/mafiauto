@@ -9,3 +9,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.runtime)
 }
+
+base {
+    archivesName.set("${rootProject.name}-v${android.defaultConfig.versionName}")
+}

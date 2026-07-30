@@ -23,7 +23,6 @@ internal fun Project.configureAndroidApplicationPlugins(
             versionName = rootProject.version.toString()
             versionCode = versionCodeFromString(rootProject.version.toString())
             targetSdk = "targetSdk".versionInt()
-
         }
 
         splits {
